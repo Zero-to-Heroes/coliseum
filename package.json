@@ -1,0 +1,49 @@
+{
+  "name": "Coliseum",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "rimraf dist && webpack --watch --config webpack.config.js --env.development --progress --profile --bail --colors",
+    "build": "rimraf dist && webpack --config webpack.config.js --env.production --progress --profile --bail --colors",
+    "serve": "webpack-dev-server --config webpack.config.js --env.development --content-base ./dist"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@angular/animations": "6.0.0",
+    "@angular/cdk": "6.0.0",
+    "@angular/common": "6.0.0",
+    "@angular/compiler": "6.0.0",
+    "@angular/core": "6.0.0",
+    "@angular/elements": "6.0.0",
+    "@angular/forms": "6.0.0",
+    "@angular/http": "6.0.0",
+    "@angular/platform-browser": "6.0.0",
+    "@angular/platform-browser-dynamic": "6.0.0",
+    "@angular/platform-server": "6.0.0",
+    "@angular/router": "6.0.0",
+    "lodash": "4.17.10",
+    "rxjs": "6.0.0",
+    "rxjs-compat": "6.2.1"
+  },
+  "devDependencies": {
+    "@angular/compiler-cli": "6.0.0",
+    "@artonge/webpack": "6.0.1",
+    "@types/lodash": "4.14.112",
+    "@types/node": "9.6.7",
+    "@types/webpack": "4.1.4",
+    "copy-webpack-plugin": "4.5.1",
+    "css-loader": "0.28.11",
+    "extract-text-webpack-plugin": "4.0.0-beta.0",
+    "file-loader": "1.1.11",
+    "html-loader": "0.5.5",
+    "mini-css-extract-plugin": "0.4.0",
+    "node-sass": "4.9.3",
+    "raw-loader": "0.5.1",
+    "rimraf": "2.6.2",
+    "sass-loader": "7.0.1",
+    "style-loader": "0.21.0",
+    "typescript": "2.7.2",
+    "webpack": "4.8.1",
+    "webpack-cli": "2.1.3",
+    "webpack-dev-server": "3.1.4"
+  }
+}
