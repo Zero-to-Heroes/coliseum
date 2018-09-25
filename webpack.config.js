@@ -91,6 +91,7 @@ module.exports = function(env, argv) {
         { from: path.join(process.cwd(), "/../*") },
         { from: path.join(process.cwd(), "src/assets"), to: "assets" },
         { from: path.join(process.cwd(), "dependencies"), to: "dependencies" },
+        { from: path.join(process.cwd(), "replay.xml"), to: "html" },
       ]),
     ]
   };

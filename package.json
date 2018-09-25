@@ -20,15 +20,21 @@
     "@angular/platform-browser-dynamic": "6.0.0",
     "@angular/platform-server": "6.0.0",
     "@angular/router": "6.0.0",
+    "immutable": "^3.8.2",
     "lodash": "4.17.10",
+    "moment": "2.22.2",
     "rxjs": "6.0.0",
-    "rxjs-compat": "6.2.1"
+    "rxjs-compat": "6.2.1",
+    "sax": "1.2.4",
+    "ts-data.stack": "1.0.6",
+    "zone.js": "0.8.26"
   },
   "devDependencies": {
     "@angular/compiler-cli": "6.0.0",
     "@artonge/webpack": "6.0.1",
     "@types/lodash": "4.14.112",
     "@types/node": "9.6.7",
+    "@types/sax": "1.0.1",
     "@types/webpack": "4.1.4",
     "copy-webpack-plugin": "4.5.1",
     "css-loader": "0.28.11",

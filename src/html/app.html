@@ -1,11 +1,12 @@
 ﻿<!DOCTYPE html>
-<html style="display: none">
+<html>
 	<head>
 		<title>Coliseum</title>
     	<meta charset="UTF-8">
 		<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
 		<!-- Other Zero to Heroes libraries -->
-		<script src="../dependencies/parseCardsText.js"></script>
+		<!-- <script src="../dependencies/parseCardsText.js"></script> -->
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" ></script>
 	</head>
 
 	<body>
@@ -18,6 +19,19 @@
 			</div>
 		</div>
 
-  		<script src="../app.js"></script>
+		<script src="../app.js"></script>
+		<script>
+		  	console.log('ok', window.coliseum)
+			$.ajax({
+				url: 'replay.xml',
+				dataType: 'xml',
+				success: function(response) {
+					console.log('successfully loaded replay', response);
+					window.coliseum.zone.run(() => {
+						window.coliseum.component.loadReplay(response);
+					})
+				}
+			})
+		</script>
 	</body>
 </html>
