@@ -40,14 +40,7 @@ export class XmlParserService {
     private timestamp: number;
 
     public parseXml(xmlAsString: string): ReadonlyArray<HistoryItem> {
-        this.stack = [];
-        this.state = ['root'];
-        this.index = 0;
-        this.history = [];
-        this.entityDefinition = {
-            tags: {}
-        };
-
+        this.reset();
         const saxParser: SAXParser = parser(true, {
             trim: true
         });
@@ -55,8 +48,7 @@ export class XmlParserService {
         saxParser.onclosetag = (tagName: string) => this.onCloseTag();
         saxParser.onerror = (error) => console.error('Error while parsing xml', error);
         saxParser.write(xmlAsString).end();
-
-        console.log('parsed game', this.history);
+        // console.log('parsed game', this.history);
         return this.history;
     }
 
@@ -108,6 +100,10 @@ export class XmlParserService {
 				if (node.attributes.name) {
 					this.entityDefinition.name = node.attributes.name;
                 }
+
+                if (node.name === 'Player') {
+                    this.entityDefinition.playerID = parseInt(node.attributes.playerID);
+                }
                 break;
             case 'TagChange':
                 const tag: EntityTag = {
@@ -156,8 +152,6 @@ export class XmlParserService {
 
 				if (node.attributes.cardID) {
 					this.entityDefinition.cardID = node.attributes.cardID;
-                    // this.game.mainPlayer(this.stack[this.stack.length - 2].attributes.entity);
-                    console.warn('Not handling main player yet. Should be done as postprocessing step, once replay is parsed');
                 }
 				if (node.attributes.name) {
 					this.entityDefinition.name = node.attributes.name;
@@ -404,6 +398,16 @@ export class XmlParserService {
             throw new Error("History item doesn't have timestamp" + item);
         }
         this.history = [...this.history || [], item];
+    }
+
+    private reset() {
+        this.stack = [];
+        this.state = ['root'];
+        this.index = 0;
+        this.history = [];
+        this.entityDefinition = {
+            tags: {}
+        };
     }
 
     private tsToSeconds(ts: string): number {

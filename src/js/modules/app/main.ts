@@ -12,10 +12,10 @@ if (process.env.NODE_ENV === 'production') {
 
 platformBrowserDynamic().bootstrapModule(AppModule)
 		.then((ng2ModuleRef) => {
-			console.log('I have a reference to the module ref and injector: ', ng2ModuleRef, ng2ModuleRef.injector);
+			// console.log('I have a reference to the module ref and injector: ', ng2ModuleRef, ng2ModuleRef.injector);
 			const ng2Loader = new DynamicNg2Loader(ng2ModuleRef.injector);
 			const container = document.getElementById('externalPlayer');
-			console.log('app container', container);
+			// console.log('app container', container);
 			ng2Loader.loadComponentAtDom(AppComponent, container);
 		})
 		.catch(err => console.log(err));

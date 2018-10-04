@@ -4,6 +4,7 @@ import { EnrichedTag } from "./enriched-tag";
 export interface EntityDefinition {
     id?: number;
     cardID?: string;
+    playerID?: number;
     name?: string;
     tags;
     attributes?: EntityDefinitionAttribute;
