@@ -1,5 +1,5 @@
 import { EnrichedTag } from "./enriched-tag";
-import { GameTag } from "./game-tags";
+import { GameTag } from "./enums/game-tags";
 
 export interface EntityTag {
     entity: number;

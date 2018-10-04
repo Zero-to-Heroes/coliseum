@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HistoryItem } from '../models/history-item';
+import { HistoryItem } from '../models/history/history-item';
 import { Entity } from '../models/entity';
 import { Game } from '../models/game';
 import { Map } from 'immutable';
-import { CardType } from '../models/card-type';
+import { CardType } from '../models/enums/card-type';
 import { GameHepler } from '../models/game-helper';
 import { PlayerEntity } from '../models/player-entity';
 

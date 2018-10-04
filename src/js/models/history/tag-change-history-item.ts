@@ -1,5 +1,5 @@
 import { HistoryItem } from "./history-item";
-import { EntityTag } from "./entity-tag";
+import { EntityTag } from "../entity-tag";
 
 export class TagChangeHistoryItem extends HistoryItem {
 

@@ -1,6 +1,6 @@
 import { EntityDefinition } from "./entity-definition";
 import { Map, fromJS } from "immutable";
-import { GameTag } from "./game-tags";
+import { GameTag } from "./enums/game-tags";
 
 export class Entity {
 

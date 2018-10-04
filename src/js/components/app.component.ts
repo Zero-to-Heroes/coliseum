@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, NgZone } from '@angular/core';
 import { XmlParserService } from '../services/xml-parser.service';
-import { HistoryItem } from '../models/history-item';
+import { HistoryItem } from '../models/history/history-item';
 import { GamePopulationService } from '../services/game-population.service';
 import { Entity } from '../models/entity';
 import { Map } from 'immutable';
@@ -42,9 +42,10 @@ export class AppComponent {
         console.debug('[perf] Populating initial entities done after ', (Date.now() - start), 'ms');
 		entities = this.gameStateParser.populateEntitiesUntilMulliganState(history, entities);
         console.debug('[perf] Populating entities with mulligan state done after ', (Date.now() - start), 'ms');
-		console.log('initialized entities', entities.toJS());
 		const game: Game = this.gameInitializer.initializeGameWithPlayers(history, entities);
         console.debug('[perf] initializeGameWithPlayers done after ', (Date.now() - start), 'ms');
+		console.log('initialized entities', entities.toJS());
+		console.log('initialized game', game);
 		// game = this.gameInitializer.populateEntities(game);
 		// game = this.gameInitializer.createMulliganStartState(game);
 		// game = this.actionParser.createActions(game);

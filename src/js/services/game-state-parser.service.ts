@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Map } from "immutable";
-import { HistoryItem } from '../models/history-item';
+import { HistoryItem } from '../models/history/history-item';
 import { Entity } from '../models/entity';
-import { TagChangeHistoryItem } from '../models/tag-change-history-item';
+import { TagChangeHistoryItem } from '../models/history/tag-change-history-item';
 import { EntityDefinition } from '../models/entity-definition';
-import { ShowEntityHistoryItem } from '../models/show-entity-history-item';
-import { GameTag } from '../models/game-tags';
+import { ShowEntityHistoryItem } from '../models/history/show-entity-history-item';
+import { GameTag } from '../models/enums/game-tags';
 import { Step } from '../models/enums/step';
 
 @Injectable()

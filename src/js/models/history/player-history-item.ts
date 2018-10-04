@@ -1,7 +1,7 @@
 import { HistoryItem } from "./history-item";
-import { EntityDefinition } from "./entity-definition";
+import { EntityDefinition } from "../entity-definition";
 
-export class GameHistoryItem extends HistoryItem {
+export class PlayerHistoryItem extends HistoryItem {
 
     readonly entityDefintion: EntityDefinition;
 

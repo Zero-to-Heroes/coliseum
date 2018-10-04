@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Tag, parser, SAXParser } from 'sax';
 import moment from 'moment';
-import { Game } from '../models/game';
-import { HistoryItem } from '../models/history-item';
-import { tagNames, GameTag } from '../models/game-tags';
-import { metaTagNames } from '../models/meta-tags';
+import { HistoryItem } from '../models/history/history-item';
+import { tagNames, GameTag } from '../models/enums/game-tags';
+import { metaTagNames } from '../models/enums/meta-tags';
 import { EnrichedTag } from '../models/enriched-tag';
 import { EntityDefinition } from '../models/entity-definition';
 import { EntityTag } from '../models/entity-tag';
@@ -13,17 +12,16 @@ import { Option } from '../models/option';
 import { MetaData } from '../models/metadata';
 import { Choices } from '../models/choices';
 import { Info } from '../models/info';
-import { PlayerHistoryItem } from '../models/player-history-item';
-import { ActionHistoryItem } from '../models/action-history-item';
-import { TagChangeHistoryItem } from '../models/tag-change-history-item';
-import { ChosenEntityHistoryItem } from '../models/chosen-entities-history-item';
-import { OptionsHistoryItem } from '../models/options-history-item';
-import { GameHistoryItem } from '../models/game-history-item';
-import { FullEntityHistoryItem } from '../models/full-entity-history-item';
-import { ShowEntityHistoryItem } from '../models/show-entity-history-item';
-import { ChangeEntityHistoryItem } from '../models/change-entity-history-item';
-import { ChoicesHistoryItem } from '../models/choices-history-item';
-import { CardType } from '../models/card-type';
+import { PlayerHistoryItem } from '../models/history/player-history-item';
+import { ActionHistoryItem } from '../models/history/action-history-item';
+import { TagChangeHistoryItem } from '../models/history/tag-change-history-item';
+import { ChosenEntityHistoryItem } from '../models/history/chosen-entities-history-item';
+import { OptionsHistoryItem } from '../models/history/options-history-item';
+import { GameHistoryItem } from '../models/history/game-history-item';
+import { FullEntityHistoryItem } from '../models/history/full-entity-history-item';
+import { ShowEntityHistoryItem } from '../models/history/show-entity-history-item';
+import { ChangeEntityHistoryItem } from '../models/history/change-entity-history-item';
+import { ChoicesHistoryItem } from '../models/history/choices-history-item';
 
 @Injectable()
 export class XmlParserService {
