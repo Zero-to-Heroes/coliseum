@@ -1,9 +1,11 @@
 import { Component, ChangeDetectionStrategy, NgZone } from '@angular/core';
+import { Map } from 'immutable';
+import * as _ from 'lodash';
+
 import { XmlParserService } from '../services/xml-parser.service';
 import { HistoryItem } from '../models/history/history-item';
 import { GamePopulationService } from '../services/game-population.service';
 import { Entity } from '../models/entity';
-import { Map } from 'immutable';
 import { Game } from '../models/game';
 import { GameInitializerService } from '../services/game-initializer.service';
 import { GameStateParserService } from '../services/game-state-parser.service';
@@ -35,15 +37,12 @@ export class AppComponent {
 	public loadReplay(replayXml: Node) {
         const start = Date.now();
 		const replayAsString = new XMLSerializer().serializeToString(replayXml);
-        console.debug('[perf] Parsing replay done after ', (Date.now() - start), 'ms');
+		this.logPerf('Parsing replay', start);
 		const history: ReadonlyArray<HistoryItem> = this.replayParser.parseXml(replayAsString);
-        console.debug('[perf] Creating history done after ', (Date.now() - start), 'ms');
-		let entities: Map<number, Entity> = this.gamePopulationService.populateInitialEntities(history);
-        console.debug('[perf] Populating initial entities done after ', (Date.now() - start), 'ms');
-		entities = this.gameStateParser.populateEntitiesUntilMulliganState(history, entities);
-        console.debug('[perf] Populating entities with mulligan state done after ', (Date.now() - start), 'ms');
+		this.logPerf('Creating history', start);
+		const entities: Map<number, Entity> = this.createEntitiesPipeline(history, start);
 		const game: Game = this.gameInitializer.initializeGameWithPlayers(history, entities);
-        console.debug('[perf] initializeGameWithPlayers done after ', (Date.now() - start), 'ms');
+		this.logPerf('initializeGameWithPlayers', start);
 		console.log('initialized entities', entities.toJS());
 		console.log('initialized game', game);
 		// game = this.gameInitializer.populateEntities(game);
@@ -53,5 +52,19 @@ export class AppComponent {
         // this.game = Game.createGame({} as Game);
         // this.game = Game.createGame(this.game, { startTimestamp: this.tsToSeconds(node.attributes.ts) });
         // this.game = Game.createGame(this.game, { history });
+	}
+
+	private createEntitiesPipeline(history: ReadonlyArray<HistoryItem>, start: number): Map<number, Entity> {
+		return _.flow(
+			(result) => this.gamePopulationService.populateInitialEntities(result),
+			(result) => this.logPerf('Populating initial entities', start, result),
+			(result: Map<number, Entity>) => this.gameStateParser.populateEntitiesUntilMulliganState(history, result),
+			(result) => this.logPerf('Populating entities with mulligan state', start, result), 
+		)(history);
+	}
+
+	private logPerf<T>(what: string, start: number, result?: T): T {
+		console.log('[perf] ', what, 'done after ', (Date.now() - start), 'ms');
+		return result;
 	}
 }
