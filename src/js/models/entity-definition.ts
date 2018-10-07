@@ -1,13 +1,14 @@
 import { EntityDefinitionAttribute } from "./entity-definition-attribute";
 import { EnrichedTag } from "./enriched-tag";
+import { Map } from "immutable";
 
 export interface EntityDefinition {
-    id?: number;
-    cardID?: string;
-    playerID?: number;
-    name?: string;
-    tags;
-    attributes?: EntityDefinitionAttribute;
-    index?: number;
-    parent?: EnrichedTag;
+    readonly id?: number;
+    readonly cardID?: string;
+    readonly playerID?: number;
+    readonly name?: string;
+    readonly tags: Map<string, number>;
+    readonly attributes?: EntityDefinitionAttribute;
+    readonly index?: number;
+    readonly parentIndex?: number;
 }

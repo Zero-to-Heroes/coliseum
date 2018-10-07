@@ -408,7 +408,7 @@ export enum GameTag {
     PUZZLE_MODE = 1073,
 
 	// Not sure what this is, it seems to indicate that a temporary effect (shadow madness, corruption) is active?,
-	_333 = 333,
+    _333 = 333
 }
 
 export const tagNames = _.invert(GameTag);

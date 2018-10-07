@@ -1,11 +1,11 @@
 export interface Choices {
-    entity: number;
-    min: number;
-    max: number;
-    playerID: number;
-    source: number;
-    type: number;
-    ts: number;
-    index: number;
-    cards: number[];
+    readonly entity: number;
+    readonly min: number;
+    readonly max: number;
+    readonly playerID: number;
+    readonly source: number;
+    readonly type: number;
+    readonly ts: number;
+    readonly index: number;
+    readonly cards: ReadonlyArray<number>;
 }

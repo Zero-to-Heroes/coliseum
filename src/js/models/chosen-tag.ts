@@ -1,7 +1,7 @@
 export interface ChosenTag {
-    entity: number;
-    playerID: number;
-    ts: number;
-    cards: number[];
-    index: number;
+    readonly entity: number;
+    readonly playerID: number;
+    readonly ts: number;
+    readonly cards: ReadonlyArray<number>;
+    readonly index: number;
 }

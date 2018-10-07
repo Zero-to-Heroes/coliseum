@@ -1,6 +1,6 @@
 import { MetaData } from "./metadata";
 
 export interface Info {
-    entity: number;
-    parent: MetaData;
+    readonly entity: number;
+    readonly parent: MetaData;
 }

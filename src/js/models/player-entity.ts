@@ -16,17 +16,17 @@ export class PlayerEntity extends Entity {
         }
         if (definition.tags) {
             newAttributes.tags = definition.tags;
-            if (definition.tags.PLAYSTATE == 8) {
-                definition.tags.CONCEDED = 1;
+            if (newAttributes.tags.PLAYSTATE == 8) {
+                newAttributes.tags.CONCEDED = 1;
             }
         }
         return PlayerEntity.create(this, newAttributes);
     }
 
-    public static create(base: PlayerEntity, newAttributes?: any): PlayerEntity {
+    public static create(base: PlayerEntity, newAttributes?: EntityDefinition): PlayerEntity {
         // Merge tags
         const newTags: Map<string, number> = (newAttributes && newAttributes.tags) 
-                ? Map(newAttributes.tags)
+                ? newAttributes.tags
                 : Map();
         const tags: Map<string, number> = (base.tags || Map()).merge(newTags);
         const newEntity: PlayerEntity = Object.assign(new PlayerEntity(), {...base, ...newAttributes, tags});

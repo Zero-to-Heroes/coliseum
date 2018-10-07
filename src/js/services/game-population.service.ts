@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Map } from "immutable";
+import { Map, fromJS } from "immutable";
 import { HistoryItem } from '../models/history/history-item';
 import { Entity } from '../models/entity';
 import { PlayerHistoryItem } from '../models/history/player-history-item';
@@ -69,10 +69,13 @@ export class GamePopulationService {
     
     private initializeFullEntity(historyItem: FullEntityHistoryItem) {
         // Not in the game yet
-        historyItem.entityDefintion.tags.ZONE = historyItem.entityDefintion.tags.ZONE || Zone.SETASIDE;
+        const newTags = historyItem.entityDefintion.tags.set(
+                GameTag[GameTag.ZONE], 
+                historyItem.entityDefintion.tags.get(GameTag[GameTag.ZONE]) || Zone.SETASIDE);
         const entity: Entity = this.entities
                 .get(historyItem.entityDefintion.id, Entity.create({ id: historyItem.entityDefintion.id } as Entity))
-                .update(historyItem.entityDefintion);
+                .update(historyItem.entityDefintion)
+                .update({ tags: newTags});
         this.entities = this.entities.set(entity.id, entity);
     }
     
@@ -103,44 +106,44 @@ export class GamePopulationService {
         if (item.tag.tag === GameTag.SECRET && item.tag.value === 1) {
             const entity: Entity = this.entities
                     .get(item.tag.entity)
-                    .update({ tags: { [item.tag.tag.toString()]: 1} });
+                    .update({ tags: fromJS({ [GameTag[item.tag.tag]]: 1}) });
             this.entities = this.entities.set(entity.id, entity);
         }
         else if (item.tag.tag === GameTag.QUEST && item.tag.value === 1) {
             const entity: Entity = this.entities
                     .get(item.tag.entity)
-                    .update({ tags: { [item.tag.tag.toString()]: 1} });
+                    .update({ tags: fromJS({ [GameTag[item.tag.tag]]: 1}) });
             this.entities = this.entities.set(entity.id, entity);
         }
         else if (item.tag.tag === GameTag.PARENT_CARD) {
             const entity: Entity = this.entities
                     .get(item.tag.entity)
-                    .update({ tags: { [item.tag.tag.toString()]: item.tag.value} });
+                    .update({ tags: fromJS({ [GameTag[item.tag.tag]]: item.tag.value}) });
             this.entities = this.entities.set(entity.id, entity);
         }
     }
     
     private addEntityInformation(item: ShowEntityHistoryItem) {
-        if (item.entityDefintion.tags.SECRET == 1) {
+        if (item.entityDefintion.tags.get(GameTag[GameTag.SECRET]) == 1) {
             const entity: Entity = this.entities
                     .get(item.entityDefintion.id)
-                    .update({ tags: { 'SECRET': 1} });
+                    .update({ tags: Map<string, number>().set(GameTag[GameTag.SECRET], 1) });
             this.entities = this.entities.set(entity.id, entity);
         }
+        const newTags: Map<string, number> = Map<string, number>()
+                .set(GameTag[GameTag.CREATOR], item.entityDefintion.tags.get(GameTag[GameTag.CREATOR]))
+                .set(GameTag[GameTag.TAG_SCRIPT_DATA_NUM_1], item.entityDefintion.tags.get(GameTag[GameTag.TAG_SCRIPT_DATA_NUM_1]))
+                .set(GameTag[GameTag.TAG_SCRIPT_DATA_NUM_2], item.entityDefintion.tags.get(GameTag[GameTag.TAG_SCRIPT_DATA_NUM_2]));
         const entity: Entity = this.entities
                 .get(item.entityDefintion.id)
-                .update({ tags: { 
-                    'CREATOR': item.entityDefintion.tags.CREATOR,
-                    'TAG_SCRIPT_DATA_NUM_1': item.entityDefintion.tags.TAG_SCRIPT_DATA_NUM_1,
-                    'TAG_SCRIPT_DATA_NUM_2': item.entityDefintion.tags.TAG_SCRIPT_DATA_NUM_2,
-                } });
+                .update({ tags: newTags });
         this.entities = this.entities.set(entity.id, entity);
     }
 
     private addBasicData() {
         this.entities = this.entities.map((value: Entity) => {
             const card = this.allCards.getCard(value.cardID);
-            let newTags = Map();
+            let newTags = Map<string, number>();
             if (card) {
                 if (card.type == 'Spell' && !value.getTag(GameTag.CARDTYPE)) {
                     newTags = value.tags.set(GameTag[GameTag.CARDTYPE], CardType.SPELL);

@@ -1,10 +1,10 @@
 import { EnrichedTag } from "./enriched-tag";
 
 export interface Option {
-    entity: number;
-    optionIndex: number;
-    error: number;
-    type: number;
-    parent: EnrichedTag;
-    index: number;
+    readonly entity: number;
+    readonly optionIndex: number;
+    readonly error: number;
+    readonly type: number;
+    readonly parentIndex: number;
+    readonly index: number;
 }

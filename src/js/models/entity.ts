@@ -33,18 +33,18 @@ export class Entity {
         }
         if (definition.tags) {
             newAttributes.tags = definition.tags;
-            if (definition.tags.PLAYSTATE == 8) {
-                definition.tags.CONCEDED = 1;
+            if (newAttributes.tags.PLAYSTATE == 8) {
+                newAttributes.tags.CONCEDED = 1;
             }
         }
         // console.log('\tcreating with new attributes', newAttributes);
         return Entity.create(this, newAttributes);
     }
 
-    public static create(base: Entity, newAttributes?: any): Entity {
+    public static create(base: Entity, newAttributes?: EntityDefinition): Entity {
         // Merge tags
         const newTags: Map<string, number> = (newAttributes && newAttributes.tags) 
-                ? fromJS(newAttributes.tags)
+                ? newAttributes.tags
                 : Map();
         // console.log('\tcreating with new tags', newTags.toJS());
         const tags: Map<string, number> = (base.tags || Map()).merge(newTags);

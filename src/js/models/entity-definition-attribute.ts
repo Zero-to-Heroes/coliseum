@@ -1,4 +1,4 @@
 export interface EntityDefinitionAttribute {
-    ts?: number;
-    triggerKeyword?: number;
+    readonly ts?: number;
+    readonly triggerKeyword?: number;
 }
