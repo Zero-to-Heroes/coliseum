@@ -9,6 +9,7 @@ import { Entity } from '../models/entity';
 import { Game } from '../models/game';
 import { GameInitializerService } from '../services/game-initializer.service';
 import { GameStateParserService } from '../services/game-state-parser.service';
+import { Turn } from '../models/turn';
 
 @Component({
 	selector: 'app-root',
@@ -43,15 +44,9 @@ export class AppComponent {
 		const entities: Map<number, Entity> = this.createEntitiesPipeline(history, start);
 		const game: Game = this.gameInitializer.initializeGameWithPlayers(history, entities);
 		this.logPerf('initializeGameWithPlayers', start);
+		const turns: Map<number, Turn> = this.gameStateParser.createTurns(game, history);
 		console.log('initialized entities', entities.toJS());
 		console.log('initialized game', game);
-		// game = this.gameInitializer.populateEntities(game);
-		// game = this.gameInitializer.createMulliganStartState(game);
-		// game = this.actionParser.createActions(game);
-		
-        // this.game = Game.createGame({} as Game);
-        // this.game = Game.createGame(this.game, { startTimestamp: this.tsToSeconds(node.attributes.ts) });
-        // this.game = Game.createGame(this.game, { history });
 	}
 
 	private createEntitiesPipeline(history: ReadonlyArray<HistoryItem>, start: number): Map<number, Entity> {

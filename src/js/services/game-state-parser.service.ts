@@ -7,6 +7,8 @@ import { EntityDefinition } from '../models/entity-definition';
 import { ShowEntityHistoryItem } from '../models/history/show-entity-history-item';
 import { GameTag } from '../models/enums/game-tags';
 import { Step } from '../models/enums/step';
+import { Game } from '../models/game';
+import { Turn } from '../models/turn';
 
 @Injectable()
 export class GameStateParserService {
@@ -30,6 +32,10 @@ export class GameStateParserService {
             }
         }
         return entities;
+    }
+
+    public createTurns(game: Game, history: ReadonlyArray<HistoryItem>): Map<number, Turn> {
+        
     }
 
     private updateWithTagChange(historyItem: TagChangeHistoryItem, entities: Map<number, Entity>): Map<number, Entity> {
