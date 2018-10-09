@@ -9,6 +9,8 @@ import { GamePopulationService } from '../../services/game-population.service';
 import { AllCardsService } from '../../services/all-cards.service';
 import { GameInitializerService } from '../../services/game-initializer.service';
 import { GameStateParserService } from '../../services/game-state-parser.service';
+import { TurnParserService } from '../../services/turn-parser.service';
+import { ActionParserService } from '../../services/action-parser.service';
 
 @NgModule({
 	imports: [
@@ -20,10 +22,12 @@ import { GameStateParserService } from '../../services/game-state-parser.service
 		AppComponent
 	],
 	providers: [
+		ActionParserService,
 		AllCardsService,
 		GameInitializerService,
 		GamePopulationService,
 		GameStateParserService,
+		TurnParserService,
 		XmlParserService
 	],
 	entryComponents: [

@@ -152,7 +152,7 @@ export class GamePopulationService {
                     newTags = value.tags.set(GameTag[GameTag.CARDTYPE], CardType.ENCHANTMENT);
                 }
             }
-            return Entity.create(value, { tags: newTags });
+            return value.update({ tags: newTags });
         }).toMap();
     }
 }

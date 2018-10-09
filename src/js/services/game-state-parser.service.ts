@@ -34,10 +34,6 @@ export class GameStateParserService {
         return entities;
     }
 
-    public createTurns(game: Game, history: ReadonlyArray<HistoryItem>): Map<number, Turn> {
-        
-    }
-
     private updateWithTagChange(historyItem: TagChangeHistoryItem, entities: Map<number, Entity>): Map<number, Entity> {
         const tags = { };
         tags[historyItem.tag.tag] = historyItem.tag.value;

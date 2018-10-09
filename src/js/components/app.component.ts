@@ -10,6 +10,8 @@ import { Game } from '../models/game';
 import { GameInitializerService } from '../services/game-initializer.service';
 import { GameStateParserService } from '../services/game-state-parser.service';
 import { Turn } from '../models/turn';
+import { TurnParserService } from '../services/turn-parser.service';
+import { ActionParserService } from '../services/action-parser.service';
 
 @Component({
 	selector: 'app-root',
@@ -24,7 +26,9 @@ import { Turn } from '../models/turn';
 export class AppComponent {
 
 	constructor(
+		private actionParser: ActionParserService,
 		private replayParser: XmlParserService, 
+		private turnParser: TurnParserService,
 		private gamePopulationService: GamePopulationService, 
 		private gameStateParser: GameStateParserService,
 		private gameInitializer: GameInitializerService, 
@@ -42,10 +46,17 @@ export class AppComponent {
 		const history: ReadonlyArray<HistoryItem> = this.replayParser.parseXml(replayAsString);
 		this.logPerf('Creating history', start);
 		const entities: Map<number, Entity> = this.createEntitiesPipeline(history, start);
-		const game: Game = this.gameInitializer.initializeGameWithPlayers(history, entities);
+		let game: Game = this.gameInitializer.initializeGameWithPlayers(history, entities);
 		this.logPerf('initializeGameWithPlayers', start);
-		const turns: Map<number, Turn> = this.gameStateParser.createTurns(game, history);
+		const turns: Map<number, Turn> = this.turnParser.createTurns(game, history);
+		this.logPerf('parsed turns', start);
+		game = Game.createGame(game, { turns: turns });
+		const turnsWithActions: Map<number, Turn> = this.actionParser.parseActions(game, history);
+		this.logPerf('parsed actions', start);
+
 		console.log('initialized entities', entities.toJS());
+		console.log('initialized turns', turns.toJS());
+		console.log('initialized actions', turnsWithActions.toJS());
 		console.log('initialized game', game);
 	}
 
