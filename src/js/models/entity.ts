@@ -41,6 +41,13 @@ export class Entity {
         return Entity.create(this, newAttributes);
     }
 
+    public updateTag(tag: GameTag, value: number): Entity {
+        const newTags: Map<string, number> = this.tags
+                .set(GameTag[tag], value);
+        const base: Entity = this;
+        return Object.assign(new Entity(), {...base, newTags});
+    }
+
     public static create(base: Entity, newAttributes?: EntityDefinition): Entity {
         // Merge tags
         const newTags: Map<string, number> = (newAttributes && newAttributes.tags) 

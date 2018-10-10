@@ -5,8 +5,8 @@ export class TagChangeHistoryItem extends HistoryItem {
 
     readonly tag: EntityTag;
 
-    constructor(tag: EntityTag, timestamp: number) {
-        super(timestamp);
+    constructor(tag: EntityTag, timestamp: number, index: number) {
+        super(timestamp, index);
         this.tag = tag;
     }
 }

@@ -6,8 +6,8 @@ export class ChoicesHistoryItem extends HistoryItem {
 
     readonly choices: Choices;
 
-    constructor(choices: Choices, timestamp: number) {
-        super(timestamp);
+    constructor(choices: Choices, timestamp: number, index: number) {
+        super(timestamp, index);
         this.choices = choices;
     }
 }

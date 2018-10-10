@@ -5,8 +5,8 @@ export class PlayerHistoryItem extends HistoryItem {
 
     readonly entityDefintion: EntityDefinition;
 
-    constructor(entityDefintion: EntityDefinition, timestamp: number) {
-        super(timestamp);
+    constructor(entityDefintion: EntityDefinition, timestamp: number, index: number) {
+        super(timestamp, index);
         this.entityDefintion = entityDefintion;
     }
 }

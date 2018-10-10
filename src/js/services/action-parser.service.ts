@@ -67,8 +67,9 @@ export class ActionParserService {
                 && this.isPlayerEntity(parseInt(item.node.attributes.entity), game)) {
             return [MulliganCardAction.create({
                 timestamp: item.timestamp,
+                index: item.index,
                 playerMulligan: item.node.hideEntities
-            } as MulliganCardAction)];
+            })];
         }
         // TODO: Opponent mulligan
         return null;
@@ -84,8 +85,9 @@ export class ActionParserService {
             if (item.tag.tag == GameTag.ZONE && item.tag.value == Zone.HAND) {
                 return [CardDrawAction.create({
                     timestamp: item.timestamp,
+                    index: item.index,
                     data: [item.tag.entity],
-                } as CardDrawAction)];
+                })];
             }
         }
         // Otherwise when we draw a card it's a ShowEntity or FullEntity
@@ -97,8 +99,9 @@ export class ActionParserService {
                     .map((entity) => {
                         return CardDrawAction.create({
                             timestamp: item.timestamp,
+                            index: entity.index,
                             data: [entity.id],
-                        } as CardDrawAction);
+                        });
                     });
         }
         
@@ -110,6 +113,9 @@ export class ActionParserService {
                 && this.isGameEntity(item.tag.entity, game)
                 && item.tag.tag == GameTag.TURN) {
             let turnToUpdate: Turn = game.turns.get(this.currentTurn);
+            if (!turnToUpdate) {
+                console.warn('could not find turn to update', item, this.currentTurn, game.turns.toJS());
+            }
             turnToUpdate = turnToUpdate.update({ actions: actions });
             this.currentTurn = item.tag.value - 1;
             return turnToUpdate;

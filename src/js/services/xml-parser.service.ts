@@ -75,7 +75,7 @@ export class XmlParserService {
             case 'Action':
             case 'Block':
                 const ts = this.tsToSeconds(node.attributes.ts);
-                const item: ActionHistoryItem = new ActionHistoryItem(node, this.buildTimestamp(ts));
+                const item: ActionHistoryItem = new ActionHistoryItem(node, this.buildTimestamp(ts), node.index);
                 this.enqueueHistoryItem(item);
                 this.state.push('action');
                 break;
@@ -112,7 +112,7 @@ export class XmlParserService {
                 let parentTags: ReadonlyArray<EntityTag> = this.stack[this.stack.length - 2].tags || [];
                 parentTags = [...parentTags, tag];
                 this.stack[this.stack.length - 2].tags = parentTags;
-                const tagItem: TagChangeHistoryItem = new TagChangeHistoryItem(tag, this.buildTimestamp(ts));
+                const tagItem: TagChangeHistoryItem = new TagChangeHistoryItem(tag, this.buildTimestamp(ts), node.index);
                 this.enqueueHistoryItem(tagItem);
                 break;
             case 'Options':
@@ -191,7 +191,7 @@ export class XmlParserService {
                 let parentTags: ReadonlyArray<EntityTag> = this.stack[this.stack.length - 2].tags || [];
                 parentTags = [...parentTags, tag];
                 this.stack[this.stack.length - 2].tags = parentTags;
-                const tagItem: TagChangeHistoryItem = new TagChangeHistoryItem(tag, this.buildTimestamp(ts));
+                const tagItem: TagChangeHistoryItem = new TagChangeHistoryItem(tag, this.buildTimestamp(ts), node.index);
                 this.enqueueHistoryItem(tagItem);
                 break;
             case 'MetaData':
@@ -212,7 +212,7 @@ export class XmlParserService {
             case 'Block':
                 const newNode = Object.assign({}, node, {parentIndex: this.stack[this.stack.length - 2].index });
 				this.state.push('action');
-                const item: ActionHistoryItem = new ActionHistoryItem(newNode, this.buildTimestamp(ts));
+                const item: ActionHistoryItem = new ActionHistoryItem(newNode, this.buildTimestamp(ts), node.index);
                 this.enqueueHistoryItem(item);
                 break;
 			case 'Choices':
@@ -295,7 +295,7 @@ export class XmlParserService {
 		switch (node.name) {
 			case 'ChosenEntities':
                 this.state.pop();
-                const item: ChosenEntityHistoryItem = new ChosenEntityHistoryItem(this.chosen, this.buildTimestamp(this.chosen.ts));
+                const item: ChosenEntityHistoryItem = new ChosenEntityHistoryItem(this.chosen, this.buildTimestamp(this.chosen.ts), node.index);
                 this.enqueueHistoryItem(item);
         }
     }
@@ -323,7 +323,7 @@ export class XmlParserService {
 			case 'Options':
                 this.state.pop();
                 const ts = this.tsToSeconds(node.attributes.ts);
-                const item: OptionsHistoryItem = new OptionsHistoryItem(node, this.buildTimestamp(ts));
+                const item: OptionsHistoryItem = new OptionsHistoryItem(node, this.buildTimestamp(ts), node.index);
                 this.enqueueHistoryItem(item);
         }
     }
@@ -343,31 +343,31 @@ export class XmlParserService {
         switch (node.name) {
             case 'GameEntity':
                 this.state.pop();
-                const gameItem: GameHistoryItem = new GameHistoryItem(this.entityDefinition, this.buildTimestamp(ts));
+                const gameItem: GameHistoryItem = new GameHistoryItem(this.entityDefinition, this.buildTimestamp(ts), node.index);
                 this.enqueueHistoryItem(gameItem);
                 this.entityDefinition = { tags: Map() };
                 break;
             case 'Player':
                 this.state.pop();
-                const playerItem: PlayerHistoryItem = new PlayerHistoryItem(this.entityDefinition, this.buildTimestamp(ts));
+                const playerItem: PlayerHistoryItem = new PlayerHistoryItem(this.entityDefinition, this.buildTimestamp(ts), node.index);
                 this.enqueueHistoryItem(playerItem);
                 this.entityDefinition = { tags: Map() };
                 break;
             case 'FullEntity':
                 this.state.pop();
-                const fullEntityItem: FullEntityHistoryItem = new FullEntityHistoryItem(this.entityDefinition, this.buildTimestamp(ts));
+                const fullEntityItem: FullEntityHistoryItem = new FullEntityHistoryItem(this.entityDefinition, this.buildTimestamp(ts), node.index);
                 this.enqueueHistoryItem(fullEntityItem);
                 this.entityDefinition = { tags: Map() };
                 break;
             case 'ShowEntity':
                 this.state.pop();
-                const showEntityItem: ShowEntityHistoryItem = new ShowEntityHistoryItem(this.entityDefinition, this.buildTimestamp(ts));
+                const showEntityItem: ShowEntityHistoryItem = new ShowEntityHistoryItem(this.entityDefinition, this.buildTimestamp(ts), node.index);
                 this.enqueueHistoryItem(showEntityItem);
                 this.entityDefinition = { tags: Map() };
                 break;
             case 'ChangeEntity':
                 this.state.pop();
-                const changeEntityItem: ChangeEntityHistoryItem = new ChangeEntityHistoryItem(this.entityDefinition, this.buildTimestamp(ts));
+                const changeEntityItem: ChangeEntityHistoryItem = new ChangeEntityHistoryItem(this.entityDefinition, this.buildTimestamp(ts), node.index);
                 this.enqueueHistoryItem(changeEntityItem);
                 this.entityDefinition = { tags: Map() };
                 break;
@@ -388,7 +388,7 @@ export class XmlParserService {
 		switch (node.name) {
 			case 'Choices':
 				this.state.pop();
-                const choicesItem: ChoicesHistoryItem = new ChoicesHistoryItem(this.choices, this.buildTimestamp(this.choices.ts));
+                const choicesItem: ChoicesHistoryItem = new ChoicesHistoryItem(this.choices, this.buildTimestamp(this.choices.ts), node.index);
                 this.enqueueHistoryItem(choicesItem);
         }
     }

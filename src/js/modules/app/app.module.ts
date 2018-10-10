@@ -11,6 +11,7 @@ import { GameInitializerService } from '../../services/game-initializer.service'
 import { GameStateParserService } from '../../services/game-state-parser.service';
 import { TurnParserService } from '../../services/turn-parser.service';
 import { ActionParserService } from '../../services/action-parser.service';
+import { StateProcessorService } from '../../services/state-processor.service';
 
 @NgModule({
 	imports: [
@@ -27,6 +28,7 @@ import { ActionParserService } from '../../services/action-parser.service';
 		GameInitializerService,
 		GamePopulationService,
 		GameStateParserService,
+		StateProcessorService,
 		TurnParserService,
 		XmlParserService
 	],

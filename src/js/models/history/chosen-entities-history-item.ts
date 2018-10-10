@@ -5,8 +5,8 @@ export class ChosenEntityHistoryItem extends HistoryItem {
 
     readonly tag: ChosenTag;
 
-    constructor(tag: ChosenTag, timestamp: number) {
-        super(timestamp);
+    constructor(tag: ChosenTag, timestamp: number, index: number) {
+        super(timestamp, index);
         this.tag = tag;
     }
 }

@@ -28,11 +28,11 @@ export class GamePopulationService {
         // const start = Date.now();
         this.entities = Map();
         this.initializeEntities(history);
-        // console.debug('[perf] Initializing entities done after ', (Date.now() - start), 'ms');
+        // console.log('entities after init', this.entities.toJS());
         this.completeMissingInformation(history);
-        // console.debug('[perf] Completing missing history done after ', (Date.now() - start), 'ms');
+        // console.log('entities after missing info', this.entities.toJS());
         this.addBasicData();
-        // console.debug('[perf] Adding basic data done after ', (Date.now() - start), 'ms');
+        // console.log('entities after basic data', this.entities.toJS());
         return this.entities;
     }
 
@@ -69,13 +69,19 @@ export class GamePopulationService {
     
     private initializeFullEntity(historyItem: FullEntityHistoryItem) {
         // Not in the game yet
-        const newTags = historyItem.entityDefintion.tags.set(
-                GameTag[GameTag.ZONE], 
-                historyItem.entityDefintion.tags.get(GameTag[GameTag.ZONE]) || Zone.SETASIDE);
+        // const newTags = historyItem.entityDefintion.tags.set(
+        //         GameTag[GameTag.ZONE], 
+        //         // historyItem.entityDefintion.tags.get(GameTag[GameTag.ZONE]) || Zone.SETASIDE);
+        //         Zone.SETASIDE);
+        const newAttributes: any = {};
+        // We use the ShowEntity only to update the cardID at this stage (and register the entity to the list of all entities if need be)
+        if (historyItem.entityDefintion.cardID) {
+            newAttributes.cardID = historyItem.entityDefintion.cardID;
+        }
         const entity: Entity = this.entities
                 .get(historyItem.entityDefintion.id, Entity.create({ id: historyItem.entityDefintion.id } as Entity))
-                .update(historyItem.entityDefintion)
-                .update({ tags: newTags});
+                .update(newAttributes);
+                // .update({ tags: newTags});
         this.entities = this.entities.set(entity.id, entity);
     }
     

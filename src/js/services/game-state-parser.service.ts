@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Map } from "immutable";
+import { Map, fromJS } from "immutable";
 import { HistoryItem } from '../models/history/history-item';
 import { Entity } from '../models/entity';
 import { TagChangeHistoryItem } from '../models/history/tag-change-history-item';
@@ -35,12 +35,9 @@ export class GameStateParserService {
     }
 
     private updateWithTagChange(historyItem: TagChangeHistoryItem, entities: Map<number, Entity>): Map<number, Entity> {
-        const tags = { };
-        tags[historyItem.tag.tag] = historyItem.tag.value;
-        // No default creation - if the entity is not registered yet, it's a bug
         const entity: Entity = entities
                 .get(historyItem.tag.entity)
-                .update({ tags } as EntityDefinition)
+                .updateTag(historyItem.tag.tag, historyItem.tag.value);
         return entities.set(entity.id, entity);
     }
     

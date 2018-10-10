@@ -24,6 +24,7 @@ export class TurnParserService {
                 turns = turns.set(parseInt(turn.turn), turn);
             }
         }
+        console.log('created turns', turns.toJS());
         return turns;
     }
 
@@ -59,9 +60,9 @@ export class TurnParserService {
 
     private isMulligan(item: HistoryItem, game: Game) {
         return item instanceof TagChangeHistoryItem 
-                && this.isPlayerEntity(item.tag.entity, game)
                 && item.tag.tag == GameTag.MULLIGAN_STATE
-                && item.tag.value == 1;
+                && item.tag.value == 1
+                && this.isPlayerEntity(item.tag.entity, game);
     }
 
     private isStartOfTurn(item: HistoryItem, game: Game) {

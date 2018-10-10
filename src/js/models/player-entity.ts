@@ -1,6 +1,7 @@
 import { Entity } from "./entity";
 import { EntityDefinition } from "./entity-definition";
 import { Map } from "immutable";
+import { GameTag } from "./enums/game-tags";
 
 export class PlayerEntity extends Entity {
 
@@ -21,6 +22,13 @@ export class PlayerEntity extends Entity {
             }
         }
         return PlayerEntity.create(this, newAttributes);
+    }
+
+    public updateTag(tag: GameTag, value: number): PlayerEntity {
+        const newTags: Map<string, number> = this.tags
+                .set(GameTag[tag], value);
+        const base: PlayerEntity = this;
+        return Object.assign(new PlayerEntity(), {...base, newTags});
     }
 
     public static create(base: PlayerEntity, newAttributes?: EntityDefinition): PlayerEntity {

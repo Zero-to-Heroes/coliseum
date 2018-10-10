@@ -12,6 +12,7 @@ import { GameStateParserService } from '../services/game-state-parser.service';
 import { Turn } from '../models/turn';
 import { TurnParserService } from '../services/turn-parser.service';
 import { ActionParserService } from '../services/action-parser.service';
+import { StateProcessorService } from '../services/state-processor.service';
 
 @Component({
 	selector: 'app-root',
@@ -26,13 +27,14 @@ import { ActionParserService } from '../services/action-parser.service';
 export class AppComponent {
 
 	constructor(
-		private actionParser: ActionParserService,
-		private replayParser: XmlParserService, 
-		private turnParser: TurnParserService,
-		private gamePopulationService: GamePopulationService, 
-		private gameStateParser: GameStateParserService,
-		private gameInitializer: GameInitializerService, 
-		private zone: NgZone) {
+			private actionParser: ActionParserService,
+			private replayParser: XmlParserService, 
+			private turnParser: TurnParserService,
+			private gamePopulationService: GamePopulationService, 
+			private gameStateParser: GameStateParserService,
+			private gameInitializer: GameInitializerService, 
+			private stateProcessor: StateProcessorService,
+			private zone: NgZone) {
 		window['coliseum'] = {
 			zone: this.zone,
 			component: this
@@ -53,10 +55,12 @@ export class AppComponent {
 		game = Game.createGame(game, { turns: turns });
 		const turnsWithActions: Map<number, Turn> = this.actionParser.parseActions(game, history);
 		this.logPerf('parsed actions', start);
+		const turnsWithActionsAndEntities: Map<number, Turn> = this.stateProcessor.populateIntermediateStates(game, history, turnsWithActions);
 
 		console.log('initialized entities', entities.toJS());
 		console.log('initialized turns', turns.toJS());
 		console.log('initialized actions', turnsWithActions.toJS());
+		console.log('initialized actions with entities', turnsWithActionsAndEntities.toJS());
 		console.log('initialized game', game);
 	}
 
