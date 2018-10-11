@@ -1,11 +1,11 @@
 import { Action } from "./action";
-import { EntityDefinition } from "../entity-definition";
 import { Map } from "immutable";
+import { Entity } from "../entity";
 
 export class CardDrawAction extends Action {
     readonly data: ReadonlyArray<number>;
 
-    public update(entities: Map<number, EntityDefinition>): CardDrawAction {
+    public update(entities: Map<number, Entity>): CardDrawAction {
         return Object.assign(new CardDrawAction(), this, { entities: entities });
     }
 

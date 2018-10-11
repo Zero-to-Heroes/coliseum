@@ -27,6 +27,7 @@
     "rxjs-compat": "6.2.1",
     "sax": "1.2.4",
     "ts-data.stack": "1.0.6",
+    "ts-keycode-enum": "1.0.6",
     "zone.js": "0.8.26"
   },
   "devDependencies": {

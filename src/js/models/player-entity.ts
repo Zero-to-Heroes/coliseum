@@ -28,7 +28,7 @@ export class PlayerEntity extends Entity {
         const newTags: Map<string, number> = this.tags
                 .set(GameTag[tag], value);
         const base: PlayerEntity = this;
-        return Object.assign(new PlayerEntity(), {...base, newTags});
+        return Object.assign(new PlayerEntity(), {...base, tags: newTags});
     }
 
     public static create(base: PlayerEntity, newAttributes?: EntityDefinition): PlayerEntity {

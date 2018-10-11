@@ -12,6 +12,8 @@ import { GameStateParserService } from '../../services/game-state-parser.service
 import { TurnParserService } from '../../services/turn-parser.service';
 import { ActionParserService } from '../../services/action-parser.service';
 import { StateProcessorService } from '../../services/state-processor.service';
+import { HandComponent } from '../../components/game/hand.component';
+import { GameComponent } from '../../components/game/game.component';
 
 @NgModule({
 	imports: [
@@ -20,7 +22,9 @@ import { StateProcessorService } from '../../services/state-processor.service';
 		BrowserAnimationsModule
 	],
 	declarations: [
-		AppComponent
+		AppComponent,
+		GameComponent,
+		HandComponent,
 	],
 	providers: [
 		ActionParserService,

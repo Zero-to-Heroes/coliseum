@@ -1,12 +1,12 @@
 import { Action } from "./action";
-import { EntityDefinition } from "../entity-definition";
 import { Map } from "immutable";
+import { Entity } from "../entity";
 
 export class MulliganCardAction extends Action {
     readonly playerMulligan: ReadonlyArray<number>;
     readonly opponentMulligan: ReadonlyArray<number>;
 
-    public update(entities: Map<number, EntityDefinition>): MulliganCardAction {
+    public update(entities: Map<number, Entity>): MulliganCardAction {
         return Object.assign(new MulliganCardAction(), this, { entities: entities });
     }
     

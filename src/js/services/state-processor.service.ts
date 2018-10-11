@@ -46,6 +46,7 @@ export class StateProcessorService {
                         break;
                     }
                 }
+                currentAction = turnsWithActions.get(currentTurnIndex).actions[currentActionIndexInTurn];
             }
         }
         return turnsWithActions;

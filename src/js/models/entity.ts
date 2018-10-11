@@ -45,7 +45,7 @@ export class Entity {
         const newTags: Map<string, number> = this.tags
                 .set(GameTag[tag], value);
         const base: Entity = this;
-        return Object.assign(new Entity(), {...base, newTags});
+        return Object.assign(new Entity(), {...base, tags: newTags});
     }
 
     public static create(base: Entity, newAttributes?: EntityDefinition): Entity {

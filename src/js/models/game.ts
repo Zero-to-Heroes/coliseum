@@ -12,6 +12,6 @@ export class Game {
     private constructor() { }
 
     public static createGame(baseGame: Game, newAttributes?: any): Game {
-        return Object.assign(new Game(), {...baseGame, ...newAttributes} as Game);
+        return Object.assign(new Game(), {...baseGame}, {...newAttributes});
     }
 }
