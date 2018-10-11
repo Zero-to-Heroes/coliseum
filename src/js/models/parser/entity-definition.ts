@@ -1,5 +1,4 @@
 import { EntityDefinitionAttribute } from "./entity-definition-attribute";
-import { EnrichedTag } from "./enriched-tag";
 import { Map } from "immutable";
 
 export interface EntityDefinition {

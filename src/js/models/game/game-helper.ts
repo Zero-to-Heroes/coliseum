@@ -1,7 +1,7 @@
 import { Map } from "immutable";
 import { Entity } from "./entity";
-import { GameTag } from "./enums/game-tags";
-import { Zone } from "./enums/zone";
+import { GameTag } from "../enums/game-tags";
+import { Zone } from "../enums/zone";
 
 export class GameHepler {
 

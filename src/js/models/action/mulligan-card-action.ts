@@ -1,6 +1,6 @@
 import { Action } from "./action";
 import { Map } from "immutable";
-import { Entity } from "../entity";
+import { Entity } from "../game/entity";
 
 export class MulliganCardAction extends Action {
     readonly playerMulligan: ReadonlyArray<number>;

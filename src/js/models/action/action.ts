@@ -1,5 +1,5 @@
 import { Map } from "immutable";
-import { Entity } from "../entity";
+import { Entity } from "../game/entity";
 
 export abstract class Action {
     readonly timestamp: number;

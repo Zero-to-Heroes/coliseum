@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Map, fromJS } from "immutable";
 import { HistoryItem } from '../models/history/history-item';
-import { Entity } from '../models/entity';
+import { Entity } from '../models/game/entity';
 import { PlayerHistoryItem } from '../models/history/player-history-item';
 import { GameHistoryItem } from '../models/history/game-history-item';
 import { FullEntityHistoryItem } from '../models/history/full-entity-history-item';
 import { TagChangeHistoryItem } from '../models/history/tag-change-history-item';
-import { EntityDefinition } from '../models/entity-definition';
+import { EntityDefinition } from '../models/parser/entity-definition';
 import { ShowEntityHistoryItem } from '../models/history/show-entity-history-item';
 import { GameTag } from '../models/enums/game-tags';
 import { AllCardsService } from './all-cards.service';
 import { CardType } from '../models/enums/card-type';
-import { PlayerEntity } from '../models/player-entity';
+import { PlayerEntity } from '../models/game/player-entity';
 import { Zone } from '../models/enums/zone';
 
 @Injectable()

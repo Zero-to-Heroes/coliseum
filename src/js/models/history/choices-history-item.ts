@@ -1,6 +1,6 @@
 import { HistoryItem } from "./history-item";
-import { EntityDefinition } from "../entity-definition";
-import { Choices } from "../choices";
+import { EntityDefinition } from "../parser/entity-definition";
+import { Choices } from "../parser/choices";
 
 export class ChoicesHistoryItem extends HistoryItem {
 

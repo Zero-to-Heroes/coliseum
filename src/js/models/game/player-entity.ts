@@ -1,7 +1,7 @@
 import { Entity } from "./entity";
-import { EntityDefinition } from "./entity-definition";
+import { EntityDefinition } from "../parser/entity-definition";
 import { Map } from "immutable";
-import { GameTag } from "./enums/game-tags";
+import { GameTag } from "../enums/game-tags";
 
 export class PlayerEntity extends Entity {
 

@@ -1,5 +1,5 @@
 import { HistoryItem } from "./history-item";
-import { EntityDefinition } from "../entity-definition";
+import { EntityDefinition } from "../parser/entity-definition";
 
 export class PlayerHistoryItem extends HistoryItem {
 

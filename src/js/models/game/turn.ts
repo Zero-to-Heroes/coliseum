@@ -1,4 +1,4 @@
-import { Action } from "./action/action";
+import { Action } from "../action/action";
 
 export abstract class Turn {
     readonly turn: string;

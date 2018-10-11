@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, NgZone, Input } from '@angular/core';
 import { Map } from 'immutable';
-import { Entity } from '../../models/entity';
+import { Entity } from '../../models/game/entity';
 import { GameTag } from '../../models/enums/game-tags';
 import { Zone } from '../../models/enums/zone';
 

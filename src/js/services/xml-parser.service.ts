@@ -4,14 +4,14 @@ import moment from 'moment';
 import { HistoryItem } from '../models/history/history-item';
 import { tagNames, GameTag } from '../models/enums/game-tags';
 import { metaTagNames } from '../models/enums/meta-tags';
-import { EnrichedTag } from '../models/enriched-tag';
-import { EntityDefinition } from '../models/entity-definition';
-import { EntityTag } from '../models/entity-tag';
-import { ChosenTag } from '../models/chosen-tag';
-import { Option } from '../models/option';
-import { MetaData } from '../models/metadata';
-import { Choices } from '../models/choices';
-import { Info } from '../models/info';
+import { EnrichedTag } from '../models/parser/enriched-tag';
+import { EntityDefinition } from '../models/parser/entity-definition';
+import { EntityTag } from '../models/parser/entity-tag';
+import { ChosenTag } from '../models/parser/chosen-tag';
+import { Option } from '../models/parser/option';
+import { MetaData } from '../models/parser/metadata';
+import { Choices } from '../models/parser/choices';
+import { Info } from '../models/parser/info';
 import { PlayerHistoryItem } from '../models/history/player-history-item';
 import { ActionHistoryItem } from '../models/history/action-history-item';
 import { TagChangeHistoryItem } from '../models/history/tag-change-history-item';
@@ -23,7 +23,7 @@ import { ShowEntityHistoryItem } from '../models/history/show-entity-history-ite
 import { ChangeEntityHistoryItem } from '../models/history/change-entity-history-item';
 import { ChoicesHistoryItem } from '../models/history/choices-history-item';
 import { Map } from 'immutable';
-import { EntityDefinitionAttribute } from '../models/entity-definition-attribute';
+import { EntityDefinitionAttribute } from '../models/parser/entity-definition-attribute';
 
 @Injectable()
 export class XmlParserService {

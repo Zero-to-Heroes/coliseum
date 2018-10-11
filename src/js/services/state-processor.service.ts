@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HistoryItem } from '../models/history/history-item';
 import { Map } from 'immutable';
-import { Turn } from '../models/turn';
-import { Game } from '../models/game';
-import { EntityDefinition } from '../models/entity-definition';
+import { Turn } from '../models/game/turn';
+import { Game } from '../models/game/game';
+import { EntityDefinition } from '../models/parser/entity-definition';
 import { Action } from '../models/action/action';
 import { TagChangeHistoryItem } from '../models/history/tag-change-history-item';
-import { Entity } from '../models/entity';
+import { Entity } from '../models/game/entity';
 import { GameTag } from '../models/enums/game-tags';
 import { ShowEntityHistoryItem } from '../models/history/show-entity-history-item';
 import { FullEntityHistoryItem } from '../models/history/full-entity-history-item';

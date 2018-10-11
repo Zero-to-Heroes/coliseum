@@ -3,18 +3,18 @@ import { Map } from "immutable";
 import { HistoryItem } from '../models/history/history-item';
 import { TagChangeHistoryItem } from '../models/history/tag-change-history-item';
 import { GameTag } from '../models/enums/game-tags';
-import { Game } from '../models/game';
-import { Turn } from '../models/turn';
-import { PlayerEntity } from '../models/player-entity';
-import { MulliganTurn } from '../models/mulligan-turn';
-import { ActionTurn } from '../models/action-turn';
+import { Game } from '../models/game/game';
+import { Turn } from '../models/game/turn';
+import { PlayerEntity } from '../models/game/player-entity';
+import { MulliganTurn } from '../models/game/mulligan-turn';
+import { ActionTurn } from '../models/game/action-turn';
 import { ActionHistoryItem } from '../models/history/action-history-item';
 import { CardType } from '../models/enums/card-type';
 import { Action } from '../models/action/action';
 import { MulliganCardAction } from '../models/action/mulligan-card-action';
 import { Zone } from '../models/enums/zone';
 import { CardDrawAction } from '../models/action/card-draw-action';
-import { EntityDefinition } from '../models/entity-definition';
+import { EntityDefinition } from '../models/parser/entity-definition';
 
 @Injectable()
 export class ActionParserService {

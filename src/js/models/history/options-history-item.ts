@@ -1,5 +1,5 @@
 import { HistoryItem } from "./history-item";
-import { EnrichedTag } from "../enriched-tag";
+import { EnrichedTag } from "../parser/enriched-tag";
 
 export class OptionsHistoryItem extends HistoryItem {
 
