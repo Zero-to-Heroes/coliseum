@@ -1,27 +1,25 @@
 import { Injectable } from '@angular/core';
-import { HistoryItem } from '../models/history/history-item';
+import { HistoryItem } from '../../models/history/history-item';
 import { Map } from 'immutable';
-import { Turn } from '../models/game/turn';
-import { Game } from '../models/game/game';
-import { EntityDefinition } from '../models/parser/entity-definition';
-import { Action } from '../models/action/action';
-import { TagChangeHistoryItem } from '../models/history/tag-change-history-item';
-import { Entity } from '../models/game/entity';
-import { GameTag } from '../models/enums/game-tags';
-import { ShowEntityHistoryItem } from '../models/history/show-entity-history-item';
-import { FullEntityHistoryItem } from '../models/history/full-entity-history-item';
-import { ChangeEntityHistoryItem } from '../models/history/change-entity-history-item';
+import { Turn } from '../../models/game/turn';
+import { Game } from '../../models/game/game';
+import { EntityDefinition } from '../../models/parser/entity-definition';
+import { Action } from '../../models/action/action';
+import { TagChangeHistoryItem } from '../../models/history/tag-change-history-item';
+import { Entity } from '../../models/game/entity';
+import { GameTag } from '../../models/enums/game-tags';
+import { ShowEntityHistoryItem } from '../../models/history/show-entity-history-item';
+import { FullEntityHistoryItem } from '../../models/history/full-entity-history-item';
+import { ChangeEntityHistoryItem } from '../../models/history/change-entity-history-item';
 
 @Injectable()
 export class StateProcessorService {
 
-	public populateIntermediateStates(
-                game: Game, 
-                history: ReadonlyArray<HistoryItem>, 
-                turnsWithActions: Map<number, Turn>): Map<number, Turn> {
+	public populateIntermediateStates(game: Game, history: ReadonlyArray<HistoryItem>): Game {
         let previousStateEntities: Map<number, Entity> = game.entities;
         let currentActionIndexInTurn = 0;
         let currentTurnIndex = 0;
+        let turnsWithActions = game.turns;
         let currentAction: Action = turnsWithActions.get(currentTurnIndex).actions[currentActionIndexInTurn];
         for (const item of history) {
             if (!item.index) {
@@ -49,7 +47,7 @@ export class StateProcessorService {
                 currentAction = turnsWithActions.get(currentTurnIndex).actions[currentActionIndexInTurn];
             }
         }
-        return turnsWithActions;
+        return Game.createGame(game, { turns: turnsWithActions });;
 	}
 
     private applyHistory(entities: Map<number, Entity>, item: HistoryItem): Map<number, Entity> {

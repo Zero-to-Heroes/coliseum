@@ -4,16 +4,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpModule }    from '@angular/http';
 
 import { AppComponent }  from '../../components/app.component';
-import { XmlParserService } from '../../services/xml-parser.service';
-import { GamePopulationService } from '../../services/game-population.service';
+import { XmlParserService } from '../../services/parser/xml-parser.service';
+import { GamePopulationService } from '../../services/parser/game-population.service';
 import { AllCardsService } from '../../services/all-cards.service';
-import { GameInitializerService } from '../../services/game-initializer.service';
-import { GameStateParserService } from '../../services/game-state-parser.service';
-import { TurnParserService } from '../../services/turn-parser.service';
-import { ActionParserService } from '../../services/action-parser.service';
-import { StateProcessorService } from '../../services/state-processor.service';
+import { GameInitializerService } from '../../services/parser/game-initializer.service';
+import { GameStateParserService } from '../../services/parser/game-state-parser.service';
+import { TurnParserService } from '../../services/parser/turn-parser.service';
+import { ActionParserService } from '../../services/parser/action-parser.service';
+import { StateProcessorService } from '../../services/parser/state-processor.service';
 import { HandComponent } from '../../components/game/hand.component';
 import { GameComponent } from '../../components/game/game.component';
+import { GameParserService } from '../../services/parser/game-parser.service';
 
 @NgModule({
 	imports: [
@@ -30,6 +31,7 @@ import { GameComponent } from '../../components/game/game.component';
 		ActionParserService,
 		AllCardsService,
 		GameInitializerService,
+		GameParserService,
 		GamePopulationService,
 		GameStateParserService,
 		StateProcessorService,

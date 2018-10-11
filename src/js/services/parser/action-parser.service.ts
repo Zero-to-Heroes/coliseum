@@ -1,27 +1,27 @@
 import { Injectable } from '@angular/core';
 import { Map } from "immutable";
-import { HistoryItem } from '../models/history/history-item';
-import { TagChangeHistoryItem } from '../models/history/tag-change-history-item';
-import { GameTag } from '../models/enums/game-tags';
-import { Game } from '../models/game/game';
-import { Turn } from '../models/game/turn';
-import { PlayerEntity } from '../models/game/player-entity';
-import { MulliganTurn } from '../models/game/mulligan-turn';
-import { ActionTurn } from '../models/game/action-turn';
-import { ActionHistoryItem } from '../models/history/action-history-item';
-import { CardType } from '../models/enums/card-type';
-import { Action } from '../models/action/action';
-import { MulliganCardAction } from '../models/action/mulligan-card-action';
-import { Zone } from '../models/enums/zone';
-import { CardDrawAction } from '../models/action/card-draw-action';
-import { EntityDefinition } from '../models/parser/entity-definition';
+import { HistoryItem } from '../../models/history/history-item';
+import { TagChangeHistoryItem } from '../../models/history/tag-change-history-item';
+import { GameTag } from '../../models/enums/game-tags';
+import { Game } from '../../models/game/game';
+import { Turn } from '../../models/game/turn';
+import { PlayerEntity } from '../../models/game/player-entity';
+import { MulliganTurn } from '../../models/game/mulligan-turn';
+import { ActionTurn } from '../../models/game/action-turn';
+import { ActionHistoryItem } from '../../models/history/action-history-item';
+import { CardType } from '../../models/enums/card-type';
+import { Action } from '../../models/action/action';
+import { MulliganCardAction } from '../../models/action/mulligan-card-action';
+import { Zone } from '../../models/enums/zone';
+import { CardDrawAction } from '../../models/action/card-draw-action';
+import { EntityDefinition } from '../../models/parser/entity-definition';
 
 @Injectable()
 export class ActionParserService {
 
     private currentTurn: number = 0;
 
-	public parseActions(game: Game, history: ReadonlyArray<HistoryItem>): Map<number, Turn> {
+	public parseActions(game: Game, history: ReadonlyArray<HistoryItem>): Game {
         this.currentTurn = 0;
         let actionsForTurn: ReadonlyArray<Action> = [];
         let turns: Map<number, Turn> = Map<number, Turn>();
@@ -54,7 +54,7 @@ export class ActionParserService {
         }
         actionsForTurn = [];
 
-        return turns;
+        return Game.createGame(game, { turns: turns });
     }
 
     private parseMulliganCards(item: ActionHistoryItem, game: Game): Action[] {
