@@ -40,20 +40,41 @@ export class AppComponent {
 
 	public loadReplay(replayXml: Node) {
 		this.game = this.gameParser.parse(replayXml);
-		this.entities = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].entities;
+		this.entities = this.computeNewEntities();
 		this.cdr.detectChanges();
 	}
 
 	@HostListener('document:keyup', ['$event'])
 	onKeyPressHandler(event: KeyboardEvent) {
-		if (event.which === Key.RightArrow) {
-			this.currentActionInTurn++;
-			if (this.currentActionInTurn >= this.game.turns.get(this.currentTurn).actions.length) {
-				this.currentActionInTurn = 0;
-				this.currentTurn++;
-			}
-			this.entities = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].entities;
-			this.cdr.detectChanges();
+		switch (event.which) {
+			case Key.RightArrow:
+				this.moveCursorToNextAction();
+				break;
+			case Key.LeftArrow:
+				this.moveCursorToPreviousAction();
+				break;
+		}
+		this.entities = this.computeNewEntities();
+		this.cdr.detectChanges();
+	}
+
+	private computeNewEntities(): Map<number, Entity> {
+		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].entities;
+	}
+
+	private moveCursorToNextAction() {
+		this.currentActionInTurn++;
+		if (this.currentActionInTurn >= this.game.turns.get(this.currentTurn).actions.length) {
+			this.currentActionInTurn = 0;
+			this.currentTurn++;
+		}
+	}
+
+	private moveCursorToPreviousAction() {
+		this.currentActionInTurn--;
+		if (this.currentActionInTurn < 0) {
+			this.currentTurn--;
+			this.currentActionInTurn = this.game.turns.get(this.currentTurn).actions.length - 1;
 		}
 	}
 }
