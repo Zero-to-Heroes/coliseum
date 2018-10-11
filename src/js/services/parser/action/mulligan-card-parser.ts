@@ -30,4 +30,8 @@ export class MulliganCardParser implements Parser {
         // TODO: Opponent mulligan
         return null;
     }
+
+    public reduce(actions: ReadonlyArray<Action>): ReadonlyArray<Action> {
+        return actions;
+    }
 }

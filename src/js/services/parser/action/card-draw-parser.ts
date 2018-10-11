@@ -46,4 +46,8 @@ export class CardDrawParser implements Parser {
         
         return null;
     }
+
+    public reduce(actions: ReadonlyArray<Action>): ReadonlyArray<Action> {
+        return actions;
+    }
 }

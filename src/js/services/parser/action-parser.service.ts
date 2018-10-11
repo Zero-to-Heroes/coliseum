@@ -29,6 +29,10 @@ export class ActionParserService {
         for (const item of history) {
             const updatedTurn: Turn = this.updateCurrentTurn(item, game, actionsForTurn);
             if (updatedTurn) {
+                // Give an opportunity to each parser to "reduce" the action it produced by merging them
+                // For instance, if we two card draws in a row, we might want to display them as a single 
+                // action that draws two cards
+                actionsForTurn = this.reduceActions(actionParsers, actionsForTurn);
                 turns = turns.set(updatedTurn.turn == 'mulligan' ? 0 : parseInt(updatedTurn.turn), updatedTurn);
                 actionsForTurn = [];
             }
@@ -62,6 +66,14 @@ export class ActionParserService {
             return turnToUpdate;
         }
         return null;
+    }
+    
+    private reduceActions(actionParsers: Parser[], actionsForTurn: ReadonlyArray<Action>): ReadonlyArray<Action> {
+        let reducedActions = actionsForTurn;
+        for (const parser of actionParsers) {
+            reducedActions = parser.reduce(reducedActions);
+        }
+        return reducedActions;
     }
 
     private registerActionParsers(): Parser[] {
