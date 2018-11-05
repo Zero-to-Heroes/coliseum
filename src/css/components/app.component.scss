@@ -1,0 +1,10 @@
+.coliseum {
+    display: flex;
+    flex-direction: column;
+    user-select: none;
+    height: 100%;
+
+    game {
+        flex-basis: 79%;
+    }
+}

@@ -1,0 +1,10 @@
+.card {
+    position: relative;
+    
+	&::before {
+		content: "";
+		padding-top: 148%;
+		position: relative;
+		display: block;
+	}
+}

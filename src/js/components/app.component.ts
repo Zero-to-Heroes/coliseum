@@ -7,9 +7,11 @@ import { GameParserService } from '../services/parser/game-parser.service';
 
 @Component({
 	selector: 'app-root',
-	styleUrls: [],
+	styleUrls: [
+		'../../css/components/app.component.scss'
+	],
 	template: `
-		<div>
+		<div class="coliseum">
 			<game *ngIf="game"
 				[playerId]="game.players[0].playerId" 
 				[opponentId]="game.players[1].playerId"
@@ -40,6 +42,7 @@ export class AppComponent {
 
 	public loadReplay(replayXml: Node) {
 		this.game = this.gameParser.parse(replayXml);
+		console.log('[app] Converted game', this.game);
 		this.entities = this.computeNewEntities();
 		this.cdr.detectChanges();
 	}
