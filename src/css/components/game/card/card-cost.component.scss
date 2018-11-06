@@ -1,3 +1,5 @@
+@import '../../../global/variables';
+
 :host {
     position: absolute;
     width: 100%;
@@ -22,10 +24,12 @@
 
     .cost {
         position: relative;
-        top: 4%;
+        top: 2%;
         font-size: 1.3em;
         margin-left: auto;
         margin-right: auto;
-        color: white; 
+        color: white;
+        font-weight: bold;
+        text-shadow: $text-shadow;
     }
 }

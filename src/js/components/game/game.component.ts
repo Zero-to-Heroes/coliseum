@@ -9,8 +9,8 @@ import { Entity } from '../../models/game/entity';
     ],
 	template: `
         <div class="game">
-            <board class="top" [entities]="_entities" [playerId]="_opponentId"></board>
-            <board class="bottom" [entities]="_entities" [playerId]="_playerId"></board>
+            <play-area class="top" [entities]="_entities" [playerId]="_opponentId"></play-area>
+            <play-area class="bottom" [entities]="_entities" [playerId]="_playerId"></play-area>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,

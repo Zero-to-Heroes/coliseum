@@ -16,7 +16,7 @@ import { StateProcessorService } from '../../services/parser/state-processor.ser
 import { HandComponent } from '../../components/game/hand.component';
 import { GameComponent } from '../../components/game/game.component';
 import { GameParserService } from '../../services/parser/game-parser.service';
-import { BoardComponent } from '../../components/game/board.component';
+import { PlayAreaComponent } from '../../components/game/play-area.component';
 import { CardComponent } from '../../components/game/card/card.component';
 import { CardArtComponent } from '../../components/game/card/card-art.component';
 import { CardFrameComponent } from '../../components/game/card/card-frame.component';
@@ -26,6 +26,8 @@ import { CardTextComponent } from '../../components/game/card/card-text.componen
 import { CardRaceComponent } from '../../components/game/card/card-race.component';
 import { CardStatsComponent } from '../../components/game/card/card-stats.component';
 import { CardCostComponent } from '../../components/game/card/card-cost.component';
+import { BoardComponent } from 'src/js/components/game/board.component';
+import { HeroComponent } from 'src/js/components/game/hero/hero.component';
 
 @NgModule({
 	imports: [
@@ -38,8 +40,10 @@ import { CardCostComponent } from '../../components/game/card/card-cost.componen
 		AppComponent,
 		GameComponent,
 		HandComponent,
-		BoardComponent,
+		PlayAreaComponent,
 		HandComponent,
+		BoardComponent,
+		HeroComponent,
 		CardComponent,
 		CardArtComponent,
 		CardFrameComponent,
