@@ -1,0 +1,17 @@
+:host {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    top: 0;
+    left: 0;
+}
+
+.hero-art {
+    position: relative;
+    width: 100%;
+    object-fit: contain;
+    clip-path: polygon(0% 100%, 0% 56%, 15% 19%, 50% 0%, 80% 19%, 90% 56%, 90% 100%);
+}

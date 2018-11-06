@@ -28,6 +28,13 @@ import { CardStatsComponent } from '../../components/game/card/card-stats.compon
 import { CardCostComponent } from '../../components/game/card/card-cost.component';
 import { BoardComponent } from 'src/js/components/game/board.component';
 import { HeroComponent } from 'src/js/components/game/hero/hero.component';
+import { HeroCardComponent } from 'src/js/components/game/hero/hero-card.component';
+import { HeroPowerComponent } from 'src/js/components/game/hero/hero-power.component';
+import { WeaponComponent } from 'src/js/components/game/hero/weapon.component';
+import { HeroArtComponent } from 'src/js/components/game/hero/hero-art.component';
+import { HeroFrameComponent } from 'src/js/components/game/hero/hero-frame.component';
+import { HeroPowerArtComponent } from 'src/js/components/game/hero/hero-power-art.component';
+import { HeroPowerFrameComponent } from 'src/js/components/game/hero/hero-power-frame.component';
 
 @NgModule({
 	imports: [
@@ -44,6 +51,13 @@ import { HeroComponent } from 'src/js/components/game/hero/hero.component';
 		HandComponent,
 		BoardComponent,
 		HeroComponent,
+		HeroPowerComponent,
+		HeroCardComponent,
+		HeroArtComponent,
+		HeroFrameComponent,
+		HeroPowerArtComponent,
+		HeroPowerFrameComponent,
+		WeaponComponent,
 		CardComponent,
 		CardArtComponent,
 		CardFrameComponent,

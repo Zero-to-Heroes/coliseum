@@ -12,16 +12,18 @@ import { CardType } from 'src/js/models/enums/card-type';
     ],
 	template: `
         <div class="hero">
-
+            <weapon [weapon]="_weapon"></weapon>
+            <hero-card [hero]="_hero"></hero-card>
+            <hero-power [heroPower]="_heroPower"></hero-power>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeroComponent {
 
-    private _hero: Entity;
-    private _heroPower: Entity;
-    private _weapon: Entity;
+    _hero: Entity;
+    _heroPower: Entity;
+    _weapon: Entity;
 
     @Input('hero') set hero(hero: Entity) {
         console.log('[hero] setting new entity', hero);

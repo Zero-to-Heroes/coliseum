@@ -1,0 +1,21 @@
+.hero {
+    position: relative;
+    display: flex;
+    width: 100%;
+
+    hero-card {
+        position: absolute;
+        top: 0;
+        left: 42.5%;
+        width: 16%;
+        height: 100%;
+    }
+
+    hero-power {
+        position: absolute;
+        top: 0;
+        left: 60%; 
+        width: 13%;
+        height: 100%;
+    }
+}
