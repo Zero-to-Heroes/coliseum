@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Tag, parser, SAXParser } from 'sax';
+import { Map } from 'immutable';
+
 import moment from 'moment';
 import { HistoryItem } from '../../models/history/history-item';
-import { tagNames, GameTag } from '../../models/enums/game-tags';
-import { metaTagNames } from '../../models/enums/meta-tags';
 import { EnrichedTag } from '../../models/parser/enriched-tag';
 import { EntityDefinition } from '../../models/parser/entity-definition';
 import { EntityTag } from '../../models/parser/entity-tag';
@@ -22,8 +22,9 @@ import { FullEntityHistoryItem } from '../../models/history/full-entity-history-
 import { ShowEntityHistoryItem } from '../../models/history/show-entity-history-item';
 import { ChangeEntityHistoryItem } from '../../models/history/change-entity-history-item';
 import { ChoicesHistoryItem } from '../../models/history/choices-history-item';
-import { Map } from 'immutable';
 import { EntityDefinitionAttribute } from '../../models/parser/entity-definition-attribute';
+import { GameTag } from '../../models/enums/game-tags';
+import { MetaTags } from '../../models/enums/meta-tags';
 
 @Injectable()
 export class XmlParserService {
@@ -196,7 +197,7 @@ export class XmlParserService {
                 break;
             case 'MetaData':
 				this.metaData = {
-					meta: metaTagNames[parseInt(node.attributes.meta || node.attributes.entity)],
+					meta: MetaTags[parseInt(node.attributes.meta || node.attributes.entity)],
 					data: parseInt(node.attributes.data),
 					parentIndex: this.stack[this.stack.length - 2].index,
                     ts: ts,
@@ -333,7 +334,7 @@ export class XmlParserService {
 		switch (node.name) {
             case 'Tag':
                 const newTags: Map<string, number> = 
-                        this.entityDefinition.tags.set(tagNames[parseInt(node.attributes.tag)], parseInt(node.attributes.value));
+                        this.entityDefinition.tags.set(GameTag[parseInt(node.attributes.tag)], parseInt(node.attributes.value));
                 Object.assign(this.entityDefinition, { tags: newTags });
         }
     }

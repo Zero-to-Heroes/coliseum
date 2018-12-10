@@ -1,5 +1,3 @@
-import * as _ from 'lodash';
-
 export enum GameTag {
     IGNORE_DAMAGE = 1,
     TAG_SCRIPT_DATA_NUM_1 = 2,
@@ -410,5 +408,3 @@ export enum GameTag {
 	// Not sure what this is, it seems to indicate that a temporary effect (shadow madness, corruption) is active?,
     _333 = 333
 }
-
-export const tagNames = _.invert(GameTag);

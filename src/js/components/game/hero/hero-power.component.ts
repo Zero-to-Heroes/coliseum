@@ -1,9 +1,5 @@
-import { Component, ChangeDetectionStrategy, NgZone, Input } from '@angular/core';
-import { Map } from 'immutable';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { Entity } from '../../../models/game/entity';
-import { GameTag } from '../../../models/enums/game-tags';
-import { Zone } from '../../../models/enums/zone';
-import { CardType } from 'src/js/models/enums/card-type';
 
 @Component({
 	selector: 'hero-power',
