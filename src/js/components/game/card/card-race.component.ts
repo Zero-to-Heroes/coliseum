@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, HostListener, ElementRef, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { AllCardsService } from '../../../services/all-cards.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { AllCardsService } from '../../../services/all-cards.service';
 	template: `
         <div class="card-race" *ngIf="race">
             <img class="banner" src="http://static.zerotoheroes.com/hearthstone/asset/manastorm/card/race-banner.png" />
-            <div class="text">{{race}}</div>
+            <div class="text"><div>{{race}}</div></div>
         </div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -19,7 +19,7 @@ export class CardRaceComponent {
 
     race: string;
 
-    constructor(private cards: AllCardsService) { }
+    constructor(private cards: AllCardsService, private elRef: ElementRef, private cdr: ChangeDetectorRef) { }
 
     @Input('cardId') set cardId(cardId: string) {
         this.race = undefined;
@@ -28,6 +28,20 @@ export class CardRaceComponent {
         if (!originalCard.race) {
             return;
         }
-        this.race = originalCard.race;
+        this.race = originalCard.race.toLowerCase();
+        setTimeout(() => this.resizeText());
+    }
+
+    @HostListener('window:resize', ['$event'])
+    onResize(event) {
+        this.resizeText();
+    }
+
+    private resizeText() {
+        const el = this.elRef.nativeElement.querySelector(".card-race");
+        const fontSize = 0.3 * el.getBoundingClientRect().width;
+        const textEl = this.elRef.nativeElement.querySelector(".card-race");
+        textEl.style.fontSize = fontSize + 'px';
+        this.cdr.detectChanges();
     }
 }
