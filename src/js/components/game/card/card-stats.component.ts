@@ -9,9 +9,15 @@ import { AllCardsService } from '../../../services/all-cards.service';
 	],
 	template: `
         <div class="card-stats" *ngIf="hasStats">
-            <div class="{{attackClass}}"><span>{{_attack}}</span></div>
-            <div class="{{healthClass}}"><span>{{healthLeft}}</span></div>
-            <div class="armor"><span>{{_armor}}</span></div>
+            <div class="{{attackClass}}">
+                <span [fittext]="true" [minFontSize]="2" [activateOnResize]="true">{{_attack}}</span>
+            </div>
+            <div class="{{healthClass}}">
+                <span [fittext]="true" [minFontSize]="2" [activateOnResize]="true">{{healthLeft}}</span>
+            </div>
+            <div class="armor">
+                <span [fittext]="true" [minFontSize]="2" [activateOnResize]="true">{{_armor}}</span>
+            </div>
         </div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,

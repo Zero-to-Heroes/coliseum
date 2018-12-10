@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, ViewEncapsulation, AfterViewInit, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, ViewEncapsulation, AfterViewInit, ElementRef, ChangeDetectorRef, HostListener } from '@angular/core';
 import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 import { CardType } from '../../../models/enums/card-type';
 import { AllCardsService } from '../../../services/all-cards.service';
@@ -41,6 +41,11 @@ export class CardNameComponent implements AfterViewInit {
         this.resizeText();
     }
 
+    @HostListener('window:resize', ['$event'])
+    onResize(event) {
+        this.resizeText();
+    }
+
     private buildNameSvg(cardType: CardType, name: string): string {
         const pathId: string = `${CardType[cardType].toLowerCase()}Path`;
         const path: string = this.buildPath(cardType, pathId);
@@ -70,7 +75,7 @@ export class CardNameComponent implements AfterViewInit {
 
     private resizeText() {
         const svgEl = this.elRef.nativeElement.querySelector("#svg");
-        const fontSize = svgEl.getBoundingClientRect().width;
+        const fontSize = 1.7 * svgEl.getBoundingClientRect().width;
         const textEl = this.elRef.nativeElement.querySelector("#svgText");
         textEl.setAttribute('font-size', fontSize);
     }

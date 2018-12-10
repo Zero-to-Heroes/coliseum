@@ -9,7 +9,9 @@ import { AllCardsService } from '../../../services/all-cards.service';
 	template: `
         <div class="card-cost {{costClass}}">
             <img class="mana-icon" src="http://static.zerotoheroes.com/hearthstone/asset/manastorm/mana.png" />
-            <div class="cost">{{_cost}}</div>
+            <div class="cost">
+                <div [fittext]="true" [minFontSize]="2" [activateOnResize]="true">{{_cost}}</div>
+            </div>
         </div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,

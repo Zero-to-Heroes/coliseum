@@ -24,10 +24,14 @@
 
     .cost {
         position: relative;
+        width: 60%;
+        height: 100%;
         top: 2%;
-        font-size: 1.3em;
         margin-left: auto;
         margin-right: auto;
+        display: flex;
+        align-content: center;
+        justify-content: center;
         color: white;
         font-weight: bold;
         text-shadow: $text-shadow;

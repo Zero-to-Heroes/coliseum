@@ -10,7 +10,7 @@ import { AllCardsService } from '../../../services/all-cards.service';
 	],
 	template: `
         <div class="card-text" *ngIf="text">
-            <div class="text" [fittext]="true" [minFontSize]="2" [innerHTML]="text"></div>
+            <div class="text" [fittext]="true" [minFontSize]="2" [activateOnResize]="true" [innerHTML]="text"></div>
         </div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
