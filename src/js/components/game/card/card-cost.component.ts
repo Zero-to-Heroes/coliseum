@@ -1,29 +1,32 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, AfterViewInit, HostListener, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { AllCardsService } from '../../../services/all-cards.service';
 
 @Component({
 	selector: 'card-cost',
 	styleUrls: [
-		'../../../../css/components/game/card/card-cost.component.scss'
+		'../../../../css/global/text.scss',
+		'../../../../css/components/game/card/card-cost.component.scss',
 	],
 	template: `
         <div class="card-cost {{costClass}}">
             <img class="mana-icon" src="http://static.zerotoheroes.com/hearthstone/asset/manastorm/mana.png" />
             <div class="cost">
-                <div [fittext]="true" [minFontSize]="2" [activateOnResize]="true">{{_cost}}</div>
+                <div>{{_cost}}</div>
             </div>
         </div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CardCostComponent {
+export class CardCostComponent implements AfterViewInit {
 
     _cost: number;
     costClass: string;
     
     private _cardId: string;
 
-    constructor(private cards: AllCardsService) { }
+    constructor(private cards: AllCardsService, private elRef: ElementRef, private cdr: ChangeDetectorRef) { 
+        this.cdr.detach();
+    }
 
     @Input('cardId') set cardId(cardId: string) {
         console.log('[card-cost] setting cardId', cardId);
@@ -35,6 +38,15 @@ export class CardCostComponent {
         console.log('[card-cost] setting cost', cost);
         this._cost = cost;
         this.updateCost();
+    }
+
+    @HostListener('window:resize', ['$event'])
+    onResize(event) {
+        this.resizeText();
+    }
+
+    ngAfterViewInit() {
+        setTimeout(() => this.resizeText());
     }
 
     private updateCost() {
@@ -54,5 +66,14 @@ export class CardCostComponent {
         else if (this._cost > originalCost) {
             this.costClass = 'higher-cost';
         }
+        this.cdr.detectChanges();
+    }
+
+    private resizeText() {
+        const el = this.elRef.nativeElement.querySelector(".card-cost");
+        const fontSize = 0.8 * el.getBoundingClientRect().width;
+        const textEl = this.elRef.nativeElement.querySelector(".cost");
+        textEl.style.fontSize = fontSize + 'px';
+        this.cdr.detectChanges();
     }
 }
