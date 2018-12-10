@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, ChangeDetectorRef, AfterViewInit, ElementRef } from '@angular/core';
 import { AllCardsService } from '../../../services/all-cards.service';
 
 @Component({
@@ -9,20 +9,22 @@ import { AllCardsService } from '../../../services/all-cards.service';
 	],
 	template: `
         <div class="card-stats" *ngIf="hasStats">
-            <div class="{{attackClass}}">
-                <span [fittext]="true" [minFontSize]="2" [activateOnResize]="true">{{_attack}}</span>
+            <div class="stat {{attackClass}}">
+                <img class="stat-icon" src="http://static.zerotoheroes.com/hearthstone/asset/manastorm/attack.png" />
+                <div class="stat-value"><span>{{_attack}}</span></div>
             </div>
-            <div class="{{healthClass}}">
-                <span [fittext]="true" [minFontSize]="2" [activateOnResize]="true">{{healthLeft}}</span>
+            <div class="stat {{healthClass}}">
+                <img class="stat-icon" src="http://static.zerotoheroes.com/hearthstone/asset/manastorm/health_new.png" />
+                <div class="stat-value"><span>{{healthLeft}}</span></div>
             </div>
-            <div class="armor">
-                <span [fittext]="true" [minFontSize]="2" [activateOnResize]="true">{{_armor}}</span>
+            <div class="stat armor">
+                <span>{{_armor}}</span>
             </div>
         </div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CardStatsComponent {
+export class CardStatsComponent implements AfterViewInit {
 
     hasStats: boolean;
 
@@ -38,7 +40,9 @@ export class CardStatsComponent {
     private _damage: number;
     private _durability: number;
 
-    constructor(private cards: AllCardsService) { }
+    constructor(private cards: AllCardsService, private cdr: ChangeDetectorRef, private elRef: ElementRef) { 
+        // this.cdr.detach();
+    }
 
     @Input('cardId') set cardId(cardId: string) {
         console.log('[card-stats] setting cardId', cardId);
@@ -76,6 +80,10 @@ export class CardStatsComponent {
         this.updateStats();
     }
 
+    ngAfterViewInit() {
+        setTimeout(() => this.resizeText());
+    }
+
     private updateStats() {
         this.attackClass = undefined;
         this.healthClass = undefined;
@@ -106,6 +114,7 @@ export class CardStatsComponent {
         this.healthLeft = (this._health || this._durability) - (this._damage);
         this.updateAttackClass(originalCard);
         this.updateHealthClass(originalCard);
+        this.cdr.detectChanges();
     }
 
     private updateAttackClass(originalCard) {
@@ -126,5 +135,13 @@ export class CardStatsComponent {
         else if (this._health < originalCard.health) {
             this.healthClass += ' damanged';
         }
+    }
+
+    private resizeText() {
+        const el = this.elRef.nativeElement.querySelector(".card-stats");
+        const fontSize = 0.2 * el.getBoundingClientRect().width;
+        const textEl = this.elRef.nativeElement.querySelector(".card-stats");
+        textEl.style.fontSize = fontSize + 'px';
+        this.cdr.detectChanges();
     }
 }
