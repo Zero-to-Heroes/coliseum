@@ -19,7 +19,9 @@ export class CardRaceComponent {
 
     race: string;
 
-    constructor(private cards: AllCardsService, private elRef: ElementRef, private cdr: ChangeDetectorRef) { }
+    constructor(private cards: AllCardsService, private elRef: ElementRef, private cdr: ChangeDetectorRef) { 
+        this.cdr.detach();
+    }
 
     @Input('cardId') set cardId(cardId: string) {
         this.race = undefined;
@@ -29,6 +31,9 @@ export class CardRaceComponent {
             return;
         }
         this.race = originalCard.race.toLowerCase();
+        // We need to detect the changes so that the component is rendered first (because 
+        // of the *ngIf)
+        this.cdr.detectChanges();
         setTimeout(() => this.resizeText());
     }
 
