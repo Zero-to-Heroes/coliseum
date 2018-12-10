@@ -1,6 +1,7 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { Entity } from '../../../models/game/entity';
 import { CardType } from '../../../models/enums/card-type';
+import { GameTag } from '../../../models/enums/game-tags';
 
 @Component({
 	selector: 'hero-card',
@@ -11,6 +12,13 @@ import { CardType } from '../../../models/enums/card-type';
         <div class="hero-card">
             <hero-art [cardId]="cardId"></hero-art>
             <hero-frame></hero-frame>
+			<hero-stats 
+					[cardId]="cardId" 
+					[attack]="attack"
+					[health]="health"
+					[damage]="damage"
+                    [armor]="armor">
+            </hero-stats>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -19,11 +27,19 @@ export class HeroCardComponent {
 
     cardId: string;
     cardType: CardType;
+	attack: number;
+	health: number;
+	damage: number;
+	armor: number;
 
     @Input('hero') set hero(hero: Entity) {
-        // TODO: iverkats (frozen, etc), secrets, highlight, stats
+        // TODO: overlays (frozen, etc), secrets, highlight, stats
         console.log('[hero-card] setting new entity', hero);
         this.cardId = hero.cardID;
         this.cardType = CardType.HERO;
+		this.attack = hero.getTag(GameTag.ATK);
+		this.health = hero.getTag(GameTag.HEALTH);
+		this.damage = hero.getTag(GameTag.DAMAGE);
+		this.armor = hero.getTag(GameTag.ARMOR);
     }
 }
