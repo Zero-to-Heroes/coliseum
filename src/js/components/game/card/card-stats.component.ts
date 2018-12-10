@@ -139,6 +139,10 @@ export class CardStatsComponent implements AfterViewInit {
 
     private resizeText() {
         const el = this.elRef.nativeElement.querySelector(".card-stats");
+        if (!el) {
+            setTimeout(() => this.resizeText());
+            return;
+        }
         const fontSize = 0.2 * el.getBoundingClientRect().width;
         const textEl = this.elRef.nativeElement.querySelector(".card-stats");
         textEl.style.fontSize = fontSize + 'px';
