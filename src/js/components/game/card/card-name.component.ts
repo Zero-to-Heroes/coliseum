@@ -17,7 +17,7 @@ import { AllCardsService } from '../../../services/all-cards.service';
 	`,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CardNameComponent implements AfterViewInit {
+export class CardNameComponent {
 
     banner: string;
     textSvg: SafeHtml;
@@ -35,10 +35,7 @@ export class CardNameComponent implements AfterViewInit {
         const cardType: CardType = CardType[originalCard.type.toUpperCase() as string];
         this.banner = `http://static.zerotoheroes.com/hearthstone/asset/manastorm/card/name-banner-${CardType[cardType].toLowerCase()}.png`;
 		this.textSvg = this.domSanitizer.bypassSecurityTrustHtml(this.buildNameSvg(cardType, originalCard.name));
-    }
-
-    ngAfterViewInit() {
-        this.resizeText();
+        setTimeout(() => this.resizeText());
     }
 
     @HostListener('window:resize', ['$event'])
@@ -75,7 +72,7 @@ export class CardNameComponent implements AfterViewInit {
 
     private resizeText() {
         const svgEl = this.elRef.nativeElement.querySelector("#svg");
-        const fontSize = 1.7 * svgEl.getBoundingClientRect().width;
+        const fontSize = 1.25 * svgEl.getBoundingClientRect().width;
         const textEl = this.elRef.nativeElement.querySelector("#svgText");
         textEl.setAttribute('font-size', fontSize);
     }
