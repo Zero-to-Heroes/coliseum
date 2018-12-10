@@ -7,7 +7,7 @@
     background-image: url(http://static.zerotoheroes.com/hearthstone/asset/manastorm/game-board-bg.png), url(http://static.zerotoheroes.com/hearthstone/asset/manastorm/app-bg-wood.jpg);
     background-position: 50% 50%;
     background-size: contain;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat, repeat-y;
 
     play-area {
         height: 50%;
