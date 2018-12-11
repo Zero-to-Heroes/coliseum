@@ -72,7 +72,7 @@ export class CardNameComponent {
 
     private resizeText() {
         const svgEl = this.elRef.nativeElement.querySelector("#svg");
-        const fontSize = 1.25 * svgEl.getBoundingClientRect().width;
+        const fontSize = 1.15 * svgEl.getBoundingClientRect().width;
         const textEl = this.elRef.nativeElement.querySelector("#svgText");
         textEl.setAttribute('font-size', fontSize);
     }

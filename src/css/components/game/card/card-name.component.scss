@@ -30,6 +30,7 @@
         overflow: hidden; 
         fill: white;
         text-shadow: $text-shadow;
+        font-weight: bold;
 
         ::ng-deep svg {
             width: 100%;
