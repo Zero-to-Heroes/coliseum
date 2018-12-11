@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, ElementRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 import { AllCardsService } from '../../../services/all-cards.service';
 
@@ -20,7 +20,13 @@ export class CardTextComponent {
     text: SafeHtml;
     maxFontSize: number;
 
-    constructor(private cards: AllCardsService, private domSanitizer: DomSanitizer, private elRef: ElementRef) { }
+    constructor(
+        private cards: AllCardsService, 
+        private domSanitizer: DomSanitizer, 
+        private elRef: ElementRef, 
+        private cdr: ChangeDetectorRef) { 
+
+        }
     
     @Input('cardId') set cardId(cardId: string) {
         console.log('[card-text] setting cardId', cardId);
@@ -34,5 +40,6 @@ export class CardTextComponent {
                 .replace(/\u00a0/g, " ")
                 .replace(/^\[x\]/, "");
         this.text = this.domSanitizer.bypassSecurityTrustHtml(description);
+        setTimeout(() => this.cdr.detectChanges());
     }
 }
