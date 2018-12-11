@@ -21,6 +21,8 @@ export class StateProcessorService {
         GameTag.PREMIUM,
         GameTag.STEP,
         GameTag.TURN,
+        GameTag.RESOURCES_USED,
+        GameTag.RESOURCES,
         GameTag.HERO_ENTITY,
         GameTag.PLAYER_ID,
         GameTag.DAMAGE,
@@ -33,9 +35,11 @@ export class StateProcessorService {
         GameTag.CARDTYPE,
         GameTag.SECRET,
         GameTag.ZONE_POSITION,
+        GameTag.OVERLOAD_OWED,
         GameTag.MULLIGAN_STATE,
         GameTag.CREATOR,
         GameTag.PARENT_CARD,
+        GameTag.OVERLOAD_LOCKED,
         GameTag.QUEST,
     ];
     

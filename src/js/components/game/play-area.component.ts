@@ -15,6 +15,13 @@ import { CardType } from '../../models/enums/card-type';
             <hand [entities]="hand"></hand>
             <hero [hero]="hero" [heroPower]="heroPower" [weapon]="weapon"></hero>
             <board></board>
+            <mana-tray 
+                    [total]="totalCrystals" 
+                    [available]="availableCrystals"
+                    [empty]="emptyCrystals"
+                    [locked]="lockedCrystals"
+                    [futureLocked]="futureLockedCrystals">
+            </mana-tray>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -28,6 +35,14 @@ export class PlayAreaComponent {
     hero: Entity;
     heroPower: Entity;
     weapon: Entity;
+
+    totalCrystals: number;
+    availableCrystals: number;
+    emptyCrystals: number;
+    lockedCrystals: number;
+    futureLockedCrystals: number;
+
+    private playerEntity: Entity;
 
     @Input('entities') set entities(entities: Map<number, Entity>) {
         console.log('[play-area] setting new entities', entities.toJS());
@@ -47,22 +62,28 @@ export class PlayAreaComponent {
             return;
         }
         
+        this.playerEntity = this._entities.find((entity) => entity.getTag(GameTag.PLAYER_ID) === this._playerId);
         this.hand = this.getHandEntities(this._playerId);
-        this.hero = this.getHeroEntity(this._playerId);
+        this.hero = this.getHeroEntity(this.playerEntity);
         this.heroPower = this.getHeroPowerEntity(this._playerId); 
         this.weapon = this.getWeaponEntity(this._playerId); 
-        console.log('[bplay-areaard] hand entities updated', this.hand);
+
+        this.totalCrystals = this.playerEntity.getTag(GameTag.RESOURCES) || 0;
+        this.availableCrystals = this.totalCrystals - (this.playerEntity.getTag(GameTag.RESOURCES_USED) || 0);
+        this.lockedCrystals = this.playerEntity.getTag(GameTag.OVERLOAD_LOCKED) || 0;
+        this.emptyCrystals = this.totalCrystals - this.availableCrystals - this.lockedCrystals;
+        this.futureLockedCrystals = this.playerEntity.getTag(GameTag.OVERLOAD_OWED) || 0;
+        console.log('[play-area] play-area entities updated', this.hand);
     }
 
     private getHandEntities(playerId: number): ReadonlyArray<Entity> {
         return this._entities.toArray()
-                .filter((entity) => entity.getTag(GameTag.CONTROLLER) == playerId)
-                .filter((entity) => entity.getTag(GameTag.ZONE) == Zone.HAND)
+                .filter((entity) => entity.getTag(GameTag.CONTROLLER) === playerId)
+                .filter((entity) => entity.getTag(GameTag.ZONE) === Zone.HAND)
                 .sort((a, b) => a.getTag(GameTag.ZONE_POSITION) - b.getTag(GameTag.ZONE_POSITION));
     }
 
-    private getHeroEntity(playerId: number): Entity {
-        const playerEntity = this._entities.find((entity) => entity.getTag(GameTag.PLAYER_ID) === playerId);
+    private getHeroEntity(playerEntity: Entity): Entity {
         const heroEntityId = playerEntity.getTag(GameTag.HERO_ENTITY);
         return this._entities.get(heroEntityId);
     }
