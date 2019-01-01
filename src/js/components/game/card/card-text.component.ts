@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, ChangeDetectorRef } from '@angular/core';
 import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 import { AllCardsService } from '../../../services/all-cards.service';
 
@@ -10,7 +10,11 @@ import { AllCardsService } from '../../../services/all-cards.service';
 	],
 	template: `
         <div class="card-text" *ngIf="text">
-            <div class="text" [fittext]="true" [minFontSize]="2" [activateOnResize]="true" [innerHTML]="text"></div>
+            <div class="text" 
+                    [fittext]="true" 
+                    [minFontSize]="2" 
+                    [activateOnResize]="true"
+                    [innerHTML]="text"></div>
         </div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -22,10 +26,8 @@ export class CardTextComponent {
 
     constructor(
         private cards: AllCardsService, 
-        private domSanitizer: DomSanitizer, 
-        private elRef: ElementRef, 
-        private cdr: ChangeDetectorRef) { 
-
+        private domSanitizer: DomSanitizer,
+        private cdr: ChangeDetectorRef) {
         }
     
     @Input('cardId') set cardId(cardId: string) {
@@ -33,6 +35,7 @@ export class CardTextComponent {
         this.text = undefined;
         const originalCard = this.cards.getCard(cardId);
         if (!originalCard.text) {
+            this.cdr.detectChanges();
             return;
         }
         const description = originalCard.text
@@ -40,6 +43,7 @@ export class CardTextComponent {
                 .replace(/\u00a0/g, " ")
                 .replace(/^\[x\]/, "");
         this.text = this.domSanitizer.bypassSecurityTrustHtml(description);
+        this.cdr.detectChanges();
         setTimeout(() => this.cdr.detectChanges());
     }
 }

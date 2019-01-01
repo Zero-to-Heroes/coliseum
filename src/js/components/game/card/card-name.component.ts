@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, ViewEncapsulation, AfterViewInit, ElementRef, ChangeDetectorRef, HostListener } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, ElementRef } from '@angular/core';
 import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 import { CardType } from '../../../models/enums/card-type';
 import { AllCardsService } from '../../../services/all-cards.service';
@@ -35,12 +35,6 @@ export class CardNameComponent {
         const cardType: CardType = CardType[originalCard.type.toUpperCase() as string];
         this.banner = `https://static.zerotoheroes.com/hearthstone/asset/manastorm/card/name-banner-${CardType[cardType].toLowerCase()}.png`;
 		this.textSvg = this.domSanitizer.bypassSecurityTrustHtml(this.buildNameSvg(cardType, originalCard.name));
-        setTimeout(() => this.resizeText());
-    }
-
-    @HostListener('window:resize', ['$event'])
-    onResize(event) {
-        this.resizeText();
     }
 
     private buildNameSvg(cardType: CardType, name: string): string {
@@ -49,7 +43,7 @@ export class CardNameComponent {
         return `
             <svg x="0" y ="0" viewBox="0 0 1000 200" id="svg">
                 <defs>${path}</defs>
-                <text id="svgText">
+                <text id="svgText" font-size="97">
                     <textPath startOffset="50%" href="#${pathId}">${name}</textPath>
                 </text>
             </svg>`;
@@ -68,12 +62,5 @@ export class CardNameComponent {
             case CardType.HERO:
                 return `<path id=${pathId} d="M 0,180 Q 500,-63 1000,180" />`;
         }
-    }
-
-    private resizeText() {
-        const svgEl = this.elRef.nativeElement.querySelector("#svg");
-        const fontSize = 1.15 * svgEl.getBoundingClientRect().width;
-        const textEl = this.elRef.nativeElement.querySelector("#svgText");
-        textEl.setAttribute('font-size', fontSize);
     }
 }

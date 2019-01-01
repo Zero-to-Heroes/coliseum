@@ -28,6 +28,7 @@ export class CardRaceComponent {
         console.log('[card-race] setting cardId', cardId);
         const originalCard = this.cards.getCard(cardId);
         if (!originalCard.race) {
+            this.cdr.detectChanges();
             return;
         }
         this.race = originalCard.race.toLowerCase();
