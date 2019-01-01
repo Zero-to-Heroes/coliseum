@@ -1,9 +1,10 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, HostListener, ElementRef } from '@angular/core';
 import { Entity } from '../../../models/game/entity';
 import { GameTag } from '../../../models/enums/game-tags';
 import { CardType } from '../../../models/enums/card-type';
 import { CardClass } from '../../../models/enums/card-class';
 import { AllCardsService } from '../../../services/all-cards.service';
+import { Events } from '../../../services/events.service';
 
 @Component({
 	selector: 'card-on-board',
@@ -33,7 +34,7 @@ export class CardOnBoardComponent {
 	armor: number;
 	cost: number;
 
-	constructor(private cards: AllCardsService) { }
+	constructor(private cards: AllCardsService, private elRef: ElementRef, private events: Events) { }
 
     @Input('entity') set entity(entity: Entity) {
 		console.log('[card-on-board] setting entity', entity);
@@ -53,4 +54,23 @@ export class CardOnBoardComponent {
 		this.armor = entity.getTag(GameTag.ARMOR);
 		this.cost = entity.getTag(GameTag.COST);
     }
+
+	@HostListener('mouseenter') onMouseEnter() {
+		let x = 100;
+		let y = 0;
+		let element = this.elRef.nativeElement;
+		while (element && !element.classList.contains("external-player-container")) {
+			x += element.offsetLeft;
+			y += element.offsetTop;
+			element = element.offsetParent;
+		}
+		// TODO: compute this once at component init + after each resize, instead of every time
+		// TODO: move the logic away to tooltips component, so it can take care of auto positioning
+		this.events.broadcast(Events.SHOW_TOOLTIP, this._entity, x, y);
+	}
+
+	@HostListener('mouseleave')
+	onMouseLeave() {
+		this.events.broadcast(Events.HIDE_TOOLTIP, this._entity);
+	}
 }
