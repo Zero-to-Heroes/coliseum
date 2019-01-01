@@ -80,10 +80,16 @@ export class CardComponent {
 		if (!this._hasTooltip) {
 			return;
 		}
-		let rect = this.elRef.nativeElement.getBoundingClientRect();
-		let x = rect.left;
-		let y = rect.top;
-		console.log('showing tooltip', rect, x, y);
+		let x = 100;
+		let y = 0;
+		let element = this.elRef.nativeElement;
+		while (element && !element.classList.contains("external-player-container")) {
+			x += element.offsetLeft;
+			y += element.offsetTop;
+			element = element.offsetParent;
+		}
+		// TODO: compute this once at component init + after each resize, instead of every time
+		// TODO: move the logic away to tooltips component, so it can take care of auto positioning
 		this.events.broadcast(Events.SHOW_TOOLTIP, this._entity, x, y);
 	}
 
