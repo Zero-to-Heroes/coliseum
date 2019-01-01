@@ -1,9 +1,10 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, HostListener, ElementRef } from '@angular/core';
 import { Entity } from '../../../models/game/entity';
 import { GameTag } from '../../../models/enums/game-tags';
 import { CardType } from '../../../models/enums/card-type';
 import { CardClass } from '../../../models/enums/card-class';
 import { AllCardsService } from '../../../services/all-cards.service';
+import { Events } from '../../../services/events.service';
 
 @Component({
 	selector: 'card',
@@ -48,7 +49,9 @@ export class CardComponent {
 	armor: number;
 	cost: number;
 
-	constructor(private cards: AllCardsService) { }
+	private _hasTooltip: boolean = true;
+
+	constructor(private cards: AllCardsService, private events: Events, private elRef: ElementRef) { }
 
     @Input('entity') set entity(entity: Entity) {
 		console.log('[card] setting entity', entity);
@@ -67,5 +70,25 @@ export class CardComponent {
 		this.durability = entity.getTag(GameTag.DURABILITY);
 		this.armor = entity.getTag(GameTag.ARMOR);
 		this.cost = entity.getTag(GameTag.COST);
-    }
+	}
+
+	@Input("hasTooltip") set hasTooltip(hasTooltip: boolean) {
+		this._hasTooltip = hasTooltip;
+	}
+
+	@HostListener('mouseenter') onMouseEnter() {
+		if (!this._hasTooltip) {
+			return;
+		}
+		let rect = this.elRef.nativeElement.getBoundingClientRect();
+		let x = rect.left;
+		let y = rect.top;
+		console.log('showing tooltip', rect, x, y);
+		this.events.broadcast(Events.SHOW_TOOLTIP, this._entity, x, y);
+	}
+
+	@HostListener('mouseleave')
+	onMouseLeave() {
+		this.events.broadcast(Events.HIDE_TOOLTIP, this._entity);
+	}
 }

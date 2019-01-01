@@ -9,4 +9,13 @@
         flex-basis: 90%;
         max-height: 90%;
     }
+
+    tooltips {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        pointer-events: none;
+    }
 }

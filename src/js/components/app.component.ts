@@ -4,6 +4,7 @@ import { Key } from 'ts-keycode-enum';
 import { Entity } from '../models/game/entity';
 import { Game } from '../models/game/game';
 import { GameParserService } from '../services/parser/game-parser.service';
+import { Events } from '../services/events.service';
 
 @Component({
 	selector: 'app-root',
@@ -17,6 +18,7 @@ import { GameParserService } from '../services/parser/game-parser.service';
 				[opponentId]="game.players[1].playerId"
 				[entities]="entities">
 			</game>
+			<tooltips></tooltips>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -31,6 +33,7 @@ export class AppComponent {
 
 	constructor(
 			private gameParser: GameParserService,
+			private events: Events,
 			private cdr: ChangeDetectorRef,
 			private zone: NgZone) {
 		window['coliseum'] = {
