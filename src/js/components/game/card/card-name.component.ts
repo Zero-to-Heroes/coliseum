@@ -33,7 +33,7 @@ export class CardNameComponent {
         console.log('[card-name] setting cardId', cardId);
         const originalCard = this.cards.getCard(cardId);
         const cardType: CardType = CardType[originalCard.type.toUpperCase() as string];
-        this.banner = `http://static.zerotoheroes.com/hearthstone/asset/manastorm/card/name-banner-${CardType[cardType].toLowerCase()}.png`;
+        this.banner = `https://static.zerotoheroes.com/hearthstone/asset/manastorm/card/name-banner-${CardType[cardType].toLowerCase()}.png`;
 		this.textSvg = this.domSanitizer.bypassSecurityTrustHtml(this.buildNameSvg(cardType, originalCard.name));
         setTimeout(() => this.resizeText());
     }

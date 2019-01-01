@@ -9,7 +9,7 @@ import { AllCardsService } from '../../../services/all-cards.service';
 	],
 	template: `
         <div class="card-cost {{costClass}}">
-            <img class="mana-icon" src="http://static.zerotoheroes.com/hearthstone/asset/manastorm/mana.png" />
+            <img class="mana-icon" src="https://static.zerotoheroes.com/hearthstone/asset/manastorm/mana.png" />
             <div class="cost">
                 <div>{{_cost}}</div>
             </div>

@@ -9,7 +9,7 @@ import { AllCardsService } from '../../../services/all-cards.service';
 	],
 	template: `
         <div class="card-race" *ngIf="race">
-            <img class="banner" src="http://static.zerotoheroes.com/hearthstone/asset/manastorm/card/race-banner.png" />
+            <img class="banner" src="https://static.zerotoheroes.com/hearthstone/asset/manastorm/card/race-banner.png" />
             <div class="text"><div>{{race}}</div></div>
         </div>
 	`,

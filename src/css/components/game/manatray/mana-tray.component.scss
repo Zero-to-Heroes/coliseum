@@ -14,7 +14,7 @@
     padding: 10px 5px;
     
     .summary {
-        background: url(http://static.zerotoheroes.com/hearthstone/asset/manastorm/mana-container.png) center center no-repeat;
+        background: url(https://static.zerotoheroes.com/hearthstone/asset/manastorm/mana-container.png) center center no-repeat;
         background-size: contain;
 		display: flex;
 		color: white;
@@ -46,7 +46,7 @@
 	}
 
 	.mana {
-		background: url(http://static.zerotoheroes.com/hearthstone/asset/manastorm/mana.png) center center no-repeat;
+		background: url(https://static.zerotoheroes.com/hearthstone/asset/manastorm/mana.png) center center no-repeat;
 		background-size: contain;
         width: 10%;
         overflow: hidden;
@@ -59,11 +59,11 @@
 	    }
 
 		&.spent {
-			background-image: url(http://static.zerotoheroes.com/hearthstone/asset/manastorm/mana_spent.png);
+			background-image: url(https://static.zerotoheroes.com/hearthstone/asset/manastorm/mana_spent.png);
 		}
 
 		&.locked {
-			background-image: url(http://static.zerotoheroes.com/hearthstone/asset/manastorm/mana_locked.png);
+			background-image: url(https://static.zerotoheroes.com/hearthstone/asset/manastorm/mana_locked.png);
 			margin-top: -1%;
 			padding: 0;
 		}

@@ -6,7 +6,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 		'../../../../css/components/game/hero/hero-frame.component.scss'
 	],
 	template: `
-        <img src="http://static.zerotoheroes.com/hearthstone/asset/manastorm/hero_frame.png" class="hero-frame" />
+        <img src="https://static.zerotoheroes.com/hearthstone/asset/manastorm/hero_frame.png" class="hero-frame" />
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

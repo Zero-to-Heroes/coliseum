@@ -10,11 +10,11 @@ import { AllCardsService } from '../../../services/all-cards.service';
 	template: `
         <div class="card-stats" *ngIf="hasStats">
             <div class="stat {{attackClass}}">
-                <img class="stat-icon" src="http://static.zerotoheroes.com/hearthstone/asset/manastorm/attack.png" />
+                <img class="stat-icon" src="https://static.zerotoheroes.com/hearthstone/asset/manastorm/attack.png" />
                 <div class="stat-value"><span>{{_attack}}</span></div>
             </div>
             <div class="stat {{healthClass}}">
-                <img class="stat-icon" src="http://static.zerotoheroes.com/hearthstone/asset/manastorm/health_new.png" />
+                <img class="stat-icon" src="https://static.zerotoheroes.com/hearthstone/asset/manastorm/health_new.png" />
                 <div class="stat-value"><span>{{healthLeft}}</span></div>
             </div>
             <div class="stat armor">

@@ -7,7 +7,7 @@ import { AllCardsService } from '../../../services/all-cards.service';
 		'../../../../css/components/game/hero/hero-power-frame.component.scss'
 	],
 	template: `
-        <img src="http://static.zerotoheroes.com/hearthstone/asset/manastorm/hero_power.png" class="hero-power-frame" />
+        <img src="https://static.zerotoheroes.com/hearthstone/asset/manastorm/hero_power.png" class="hero-power-frame" />
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

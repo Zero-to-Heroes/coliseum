@@ -18,7 +18,7 @@ export class CardArtComponent {
 
     @Input('cardId') set cardId(cardId: string) {
         console.log('[card-art] setting cardId', cardId);
-        this.image = `http://static.zerotoheroes.com/hearthstone/cardart/256x/${cardId}.jpg`;
+        this.image = `https://static.zerotoheroes.com/hearthstone/cardart/256x/${cardId}.jpg`;
 	}
 	
     @Input('cardType') set cardType(cardType: CardType) {

@@ -42,7 +42,7 @@ export class CardFrameComponent {
         const cardClass: CardClass = this.buildPlayerClass(originalCard);
         const cardType: CardType = CardType[originalCard.type.toUpperCase() as string];
         const frame: string = this.buildFrame(cardClass, cardType, this._premium);
-        this.image = `http://static.zerotoheroes.com/hearthstone/asset/manastorm/card/${frame}.png`;
+        this.image = `https://static.zerotoheroes.com/hearthstone/asset/manastorm/card/${frame}.png`;
     }
 
     private buildPlayerClass(originalCard): CardClass {

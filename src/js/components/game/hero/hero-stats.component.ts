@@ -10,7 +10,7 @@ import { AllCardsService } from '../../../services/all-cards.service';
 	template: `
         <div class="hero-stats" *ngIf="hasStats">
             <div class="stat {{attackClass}}" [style.opacity]="_attack ? 1 : 0">
-                <img class="stat-icon" src="http://static.zerotoheroes.com/hearthstone/asset/manastorm/attack.png" />
+                <img class="stat-icon" src="https://static.zerotoheroes.com/hearthstone/asset/manastorm/attack.png" />
                 <div class="stat-value"><span>{{_attack}}</span></div>
             </div>
             <div class="stat {{healthClass}}">
