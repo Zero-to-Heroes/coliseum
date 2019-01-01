@@ -36,6 +36,10 @@ import { GameStateParserService } from '../../services/parser/game-state-parser.
 import { StateProcessorService } from '../../services/parser/state-processor.service';
 import { TurnParserService } from '../../services/parser/turn-parser.service';
 import { XmlParserService } from '../../services/parser/xml-parser.service';
+import { HeroPowerCostComponent } from '../../components/game/hero/hero-power-cost.component';
+import { HeroStatsComponent } from '../../components/game/hero/hero-stats.component';
+import { ManaTrayComponent } from '../../components/game/manatray/mana-tray.component';
+import { TooltipsComponent, Tooltip } from '../../components/tooltips.component';
 
 
 @NgModule({
@@ -53,13 +57,21 @@ import { XmlParserService } from '../../services/parser/xml-parser.service';
 		HandComponent,
 		BoardComponent,
 		CardOnBoardComponent,
+		ManaTrayComponent,
+		
+		TooltipsComponent,
+		Tooltip,
+
 		HeroComponent,
-		HeroPowerComponent,
 		HeroCardComponent,
 		HeroArtComponent,
+		HeroStatsComponent,
 		HeroFrameComponent,
+		HeroPowerComponent,
 		HeroPowerArtComponent,
+		HeroPowerCostComponent,
 		HeroPowerFrameComponent,
+
 		WeaponComponent,
 		CardComponent,
 		CardArtComponent,

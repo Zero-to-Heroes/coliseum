@@ -1,0 +1,14 @@
+.card-on-board {
+    position: relative;
+    
+	&::before {
+		content: "";
+		padding-top: 148%;
+		position: relative;
+		display: block;
+    }
+    
+    ::ng-deep .card-art {
+        width: 100%;
+    }
+}
