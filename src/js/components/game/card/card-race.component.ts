@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, HostListener, ElementRef, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, HostListener, ElementRef, AfterViewInit, ChangeDetectorRef, ViewRef } from '@angular/core';
 import { AllCardsService } from '../../../services/all-cards.service';
 
 @Component({
@@ -28,13 +28,17 @@ export class CardRaceComponent {
         console.log('[card-race] setting cardId', cardId);
         const originalCard = this.cards.getCard(cardId);
         if (!originalCard.race) {
-            this.cdr.detectChanges();
+            if (!(<ViewRef>this.cdr).destroyed) {
+                this.cdr.detectChanges();
+            }
             return;
         }
         this.race = originalCard.race.toLowerCase();
         // We need to detect the changes so that the component is rendered first (because 
         // of the *ngIf)
-        this.cdr.detectChanges();
+        if (!(<ViewRef>this.cdr).destroyed) {
+            this.cdr.detectChanges();
+        }
         setTimeout(() => this.resizeText());
     }
 
@@ -48,6 +52,8 @@ export class CardRaceComponent {
         const fontSize = 0.3 * el.getBoundingClientRect().width;
         const textEl = this.elRef.nativeElement.querySelector(".card-race");
         textEl.style.fontSize = fontSize + 'px';
-        this.cdr.detectChanges();
+        if (!(<ViewRef>this.cdr).destroyed) {
+            this.cdr.detectChanges();
+        }
     }
 }

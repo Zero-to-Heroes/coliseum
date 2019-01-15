@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, ChangeDetectorRef, ViewRef } from '@angular/core';
 import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 import { AllCardsService } from '../../../services/all-cards.service';
 
@@ -35,7 +35,9 @@ export class CardTextComponent {
         this.text = undefined;
         const originalCard = this.cards.getCard(cardId);
         if (!originalCard.text) {
-            this.cdr.detectChanges();
+            if (!(<ViewRef>this.cdr).destroyed) {
+                this.cdr.detectChanges();
+            }
             return;
         }
         const description = originalCard.text
@@ -43,7 +45,9 @@ export class CardTextComponent {
                 .replace(/\u00a0/g, " ")
                 .replace(/^\[x\]/, "");
         this.text = this.domSanitizer.bypassSecurityTrustHtml(description);
-        this.cdr.detectChanges();
-        setTimeout(() => this.cdr.detectChanges());
+        if (!(<ViewRef>this.cdr).destroyed) {
+            this.cdr.detectChanges();
+        }
+        // setTimeout(() => this.cdr.detectChanges());
     }
 }

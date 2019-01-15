@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, ChangeDetectorRef, AfterViewInit, ElementRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, ChangeDetectorRef, AfterViewInit, ElementRef, ViewRef } from '@angular/core';
 import { AllCardsService } from '../../../services/all-cards.service';
 
 @Component({
@@ -41,7 +41,7 @@ export class CardStatsComponent implements AfterViewInit {
     private _durability: number;
 
     constructor(private cards: AllCardsService, private cdr: ChangeDetectorRef, private elRef: ElementRef) { 
-        // this.cdr.detach();
+        this.cdr.detach();
     }
 
     @Input('cardId') set cardId(cardId: string) {
@@ -114,7 +114,9 @@ export class CardStatsComponent implements AfterViewInit {
         this.healthLeft = (this._health || this._durability) - (this._damage);
         this.updateAttackClass(originalCard);
         this.updateHealthClass(originalCard);
-        this.cdr.detectChanges();
+        if (!(<ViewRef>this.cdr).destroyed) {
+            this.cdr.detectChanges();
+        }
     }
 
     private updateAttackClass(originalCard) {
@@ -146,6 +148,8 @@ export class CardStatsComponent implements AfterViewInit {
         const fontSize = 0.2 * el.getBoundingClientRect().width;
         const textEl = this.elRef.nativeElement.querySelector(".card-stats");
         textEl.style.fontSize = fontSize + 'px';
-        this.cdr.detectChanges();
+        if (!(<ViewRef>this.cdr).destroyed) {
+            this.cdr.detectChanges();
+        }
     }
 }
