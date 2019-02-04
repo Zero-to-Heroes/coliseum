@@ -1,0 +1,48 @@
+@import '../../../global/variables';
+
+:host {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    top: 0;
+    left: 0;
+}
+
+.card-stats {
+    position: relative;
+    top: 70%;
+    height: 20%;
+    width: 100%;
+    display: flex;
+    color: white;
+    font-weight: bold;
+    text-shadow: $text-shadow;
+
+    .stat-value {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+    }
+
+    .attack {
+        position: relative;
+        left: 3%;
+        width: 33%;
+    }
+
+    .health {
+        position: relative;
+        left: 31%;        
+        width: 33%;
+    }
+
+    span { 
+        height: 100%;
+    }
+}

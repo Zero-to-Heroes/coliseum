@@ -15,6 +15,12 @@ import { Events } from '../../../services/events.service';
 		<div class="card-on-board">
 			<card-art [cardId]="cardId" [cardType]="cardType"></card-art>
 			<board-card-frame [taunt]="taunt" [premium]="premium"></board-card-frame>
+			<board-card-stats 
+					[cardId]="cardId" 
+					[attack]="attack"
+					[health]="health"
+					[damage]="damage">
+			</board-card-stats>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,

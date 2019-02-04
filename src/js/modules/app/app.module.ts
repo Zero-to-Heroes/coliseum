@@ -41,6 +41,7 @@ import { HeroStatsComponent } from '../../components/game/hero/hero-stats.compon
 import { ManaTrayComponent } from '../../components/game/manatray/mana-tray.component';
 import { TooltipsComponent, Tooltip } from '../../components/tooltips.component';
 import { BoardCardFrameComponent } from '../../components/game/board/board-card-frame.component';
+import { BoardCardStatsComponent } from '../../components/game/board/board-card-stats.component';
 
 
 @NgModule({
@@ -61,6 +62,7 @@ import { BoardCardFrameComponent } from '../../components/game/board/board-card-
 		BoardComponent,
 		CardOnBoardComponent,
 		BoardCardFrameComponent,
+		BoardCardStatsComponent,
 		
 		TooltipsComponent,
 		Tooltip,
