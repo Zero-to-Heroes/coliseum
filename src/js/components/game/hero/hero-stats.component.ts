@@ -133,6 +133,7 @@ export class HeroStatsComponent implements AfterViewInit {
             return;
         }
         const fontSize = 0.15 * el.getBoundingClientRect().width;
+        console.log('[hero-stats] Element width', el.getBoundingClientRect());
         const textEl = this.elRef.nativeElement.querySelector(".hero-stats");
         textEl.style.fontSize = fontSize + 'px';
         this.cdr.detectChanges();

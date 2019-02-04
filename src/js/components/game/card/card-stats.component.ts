@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, ChangeDetectorRef, AfterViewInit, ElementRef, ViewRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, ChangeDetectorRef, AfterViewInit, ElementRef, ViewRef, HostListener } from '@angular/core';
 import { AllCardsService } from '../../../services/all-cards.service';
 
 @Component({
@@ -42,6 +42,10 @@ export class CardStatsComponent implements AfterViewInit {
 
     constructor(private cards: AllCardsService, private cdr: ChangeDetectorRef, private elRef: ElementRef) { 
         this.cdr.detach();
+        document.addEventListener(
+            'card-resize',
+            (event) => this.resizeText(),
+            true);
     }
 
     @Input('cardId') set cardId(cardId: string) {
@@ -83,6 +87,16 @@ export class CardStatsComponent implements AfterViewInit {
     ngAfterViewInit() {
         setTimeout(() => this.resizeText());
     }
+
+    // @HostListener('window:resize', ['$event'])
+    // onResize(event) {
+    //     this.resizeText();
+    // }
+    // @HostListener('card-resize', ['$event'])
+    // onResize(event) {
+    //     console.log('handling custom card-resize event', event);
+    //     this.resizeText();
+    // }
 
     private updateStats() {
         this.attackClass = undefined;

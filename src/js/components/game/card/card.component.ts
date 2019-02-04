@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, HostListener, ElementRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, HostListener, ElementRef, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { Entity } from '../../../models/game/entity';
 import { GameTag } from '../../../models/enums/game-tags';
 import { CardType } from '../../../models/enums/card-type';
@@ -33,7 +33,7 @@ import { Events } from '../../../services/events.service';
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CardComponent {
+export class CardComponent implements AfterViewInit {
 
 	_entity: Entity;
 
@@ -51,7 +51,11 @@ export class CardComponent {
 
 	private _hasTooltip: boolean = true;
 
-	constructor(private cards: AllCardsService, private events: Events, private elRef: ElementRef) { }
+	constructor(
+		private cards: AllCardsService, 
+		private events: Events, 
+		private cdr: ChangeDetectorRef,
+		private elRef: ElementRef) { }
 
     @Input('entity') set entity(entity: Entity) {
 		console.log('[card] setting entity', entity);
@@ -83,7 +87,7 @@ export class CardComponent {
 		let x = 100;
 		let y = 0;
 		let element = this.elRef.nativeElement;
-		while (element && !element.classList.contains("external-player-container")) {
+		while (element && !element.classList.contains("external-player")) {
 			x += element.offsetLeft;
 			y += element.offsetTop;
 			element = element.offsetParent;
@@ -96,5 +100,26 @@ export class CardComponent {
 	@HostListener('mouseleave')
 	onMouseLeave() {
 		this.events.broadcast(Events.HIDE_TOOLTIP, this._entity);
+	}
+
+	ngAfterViewInit() {
+		setTimeout(() => this.resize());
+	}
+
+    @HostListener('window:resize', ['$event'])
+    onResize(event) {
+        this.resize();
+    }
+
+	private resize() {
+        const el = this.elRef.nativeElement;
+        const width = 120.0 / 187 * el.getBoundingClientRect().height;
+		const textEl = this.elRef.nativeElement;
+        console.log('[card] Element width', width, el.getBoundingClientRect(), textEl);
+		textEl.style.width = width + 'px';
+        this.cdr.detectChanges();
+		setTimeout(() => {
+			el.dispatchEvent(new Event('card-resize', { bubbles: false }));
+		});
 	}
 }

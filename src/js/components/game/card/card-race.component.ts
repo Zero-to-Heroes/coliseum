@@ -21,6 +21,10 @@ export class CardRaceComponent {
 
     constructor(private cards: AllCardsService, private elRef: ElementRef, private cdr: ChangeDetectorRef) { 
         this.cdr.detach();
+        document.addEventListener(
+            'card-resize',
+            (event) => this.resizeText(),
+            true);
     }
 
     @Input('cardId') set cardId(cardId: string) {
@@ -42,13 +46,22 @@ export class CardRaceComponent {
         setTimeout(() => this.resizeText());
     }
 
-    @HostListener('window:resize', ['$event'])
-    onResize(event) {
-        this.resizeText();
-    }
+    // @HostListener('window:resize', ['$event'])
+    // onResize(event) {
+    //     this.resizeText();
+    // }
+    // @HostListener('card-resize', ['$event'])
+    // onResize(event) {
+    //     console.log('handling custom card-resize event', event);
+    //     this.resizeText();
+    // }
 
     private resizeText() {
         const el = this.elRef.nativeElement.querySelector(".card-race");
+        if (!el) {
+            setTimeout(() => this.resizeText());
+            return; 
+        }
         const fontSize = 0.3 * el.getBoundingClientRect().width;
         const textEl = this.elRef.nativeElement.querySelector(".card-race");
         textEl.style.fontSize = fontSize + 'px';

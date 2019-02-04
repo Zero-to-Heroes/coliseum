@@ -23,7 +23,7 @@
     "immutable": "3.8.2",
     "lodash": "4.17.10",
     "moment": "2.22.2",
-    "ng2-fittext": "1.1.1",
+    "ng2-fittext": "1.2.0",
     "rxjs": "6.0.0",
     "rxjs-compat": "6.2.1",
     "sax": "1.2.4",

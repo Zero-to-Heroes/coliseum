@@ -68,6 +68,10 @@ export class HeroPowerCostComponent implements AfterViewInit {
 
     private resizeText() {
         const el = this.elRef.nativeElement.querySelector(".hero-power-cost");
+        if (!el) {
+            setTimeout(() => this.resizeText());
+            return; 
+        }
         const fontSize = 0.8 * el.getBoundingClientRect().width;
         const textEl = this.elRef.nativeElement.querySelector(".cost");
         textEl.style.fontSize = fontSize + 'px';

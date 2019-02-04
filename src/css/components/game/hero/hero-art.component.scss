@@ -1,11 +1,11 @@
 :host {
     position: absolute;
     width: 100%;
-    height: 100%;
+    height: auto;
     display: flex;
     align-content: center;
     justify-content: center;
-    top: 0;
+    bottom: 9%;
     left: 0;
 }
 
@@ -13,5 +13,5 @@
     position: relative;
     width: 100%;
     object-fit: contain;
-    clip-path: polygon(0% 100%, 0% 56%, 15% 19%, 50% 0%, 80% 19%, 90% 56%, 90% 100%);
+    clip-path: polygon(0% 100%, 0% 56%, 15% 20%, 50% 5%, 80% 20%, 90% 56%, 90% 100%);
 }

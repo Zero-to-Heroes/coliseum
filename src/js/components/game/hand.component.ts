@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, AfterViewInit, HostListener, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { Entity } from '../../models/game/entity';
 
 @Component({
@@ -9,16 +9,19 @@ import { Entity } from '../../models/game/entity';
 	template: `
 		<ul class="hand">
 			<li *ngFor="let entity of _entities; trackBy: trackByFn">
-				<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
 				<card [entity]="entity"></card>
 			</li>
 		</ul>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HandComponent {
+export class HandComponent implements AfterViewInit {
 
 	_entities: ReadonlyArray<Entity>;
+
+	constructor(private elRef: ElementRef, private cdr: ChangeDetectorRef) {
+		// this.cdr.detach();
+	}
 
     @Input('entities') set entities(entities: ReadonlyArray<Entity>) {
         console.log('[hand] setting new entities', entities);
@@ -27,5 +30,13 @@ export class HandComponent {
 	
 	trackByFn(index, item: Entity) {
 		return item.id;
+	}
+
+    ngAfterViewInit() {
+		// To trigger the resizing of all text elements
+		// setTimeout(() => {
+		// 	console.log('resizing');
+		// 	window.dispatchEvent(new Event('resize'));
+		// });
 	}
 }

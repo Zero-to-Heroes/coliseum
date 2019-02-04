@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, NgZone, ChangeDetectorRef, HostListener } from '@angular/core';
+import { Component, ChangeDetectionStrategy, NgZone, ChangeDetectorRef, HostListener, AfterViewInit } from '@angular/core';
 import { Map } from 'immutable';
 import { Key } from 'ts-keycode-enum';
 import { Entity } from '../models/game/entity';

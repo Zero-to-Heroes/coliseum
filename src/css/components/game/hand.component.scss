@@ -8,19 +8,11 @@
 
     li {
         height: 100%;
-        position: relative; 
-
-        img {
-            height: 68%;
-            opacity: 0;
-        }
+        position: relative;
 
         card {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
+            height: 100%;
+            display: flex;
         }
     }
 }

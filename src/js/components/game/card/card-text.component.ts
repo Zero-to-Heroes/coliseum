@@ -13,7 +13,9 @@ import { AllCardsService } from '../../../services/all-cards.service';
             <div class="text" 
                     [fittext]="true" 
                     [minFontSize]="2" 
-                    [activateOnResize]="true"
+                    [useMaxFontSize]="true" 
+                    [activateOnResize]="false"
+                    [modelToWatch]="dirtyFlag"
                     [innerHTML]="text"></div>
         </div>
 	`,
@@ -23,11 +25,16 @@ export class CardTextComponent {
 
     text: SafeHtml;
     maxFontSize: number;
+    dirtyFlag: boolean = false;
 
     constructor(
         private cards: AllCardsService, 
         private domSanitizer: DomSanitizer,
         private cdr: ChangeDetectorRef) {
+            document.addEventListener(
+                'card-resize',
+                (event) => this.resizeText(),
+                true);
         }
     
     @Input('cardId') set cardId(cardId: string) {
@@ -49,5 +56,13 @@ export class CardTextComponent {
             this.cdr.detectChanges();
         }
         // setTimeout(() => this.cdr.detectChanges());
+    }
+
+    private resizeText() {
+        this.dirtyFlag = !this.dirtyFlag;
+        console.log('resizing in text');
+        if (!(<ViewRef>this.cdr).destroyed) {
+            this.cdr.detectChanges();
+        }
     }
 }

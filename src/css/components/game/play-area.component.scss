@@ -9,9 +9,8 @@
     
     hand {
         height: 37%;
-        max-height: 37%;
-        flex-basis: 37%;
-        flex-grow: 0;
+        max-height: 80%; // just any big number will do
+        flex-grow: 1;
         flex-shrink: 0;
         display: flex;
         overflow: hidden;
@@ -28,9 +27,9 @@
     }
 
     board {
-        height: 28%;
-        max-height: 28%;
-        flex-basis: 28%;
+        height: 23%;
+        max-height: 23%;
+        flex-basis: 23%;
         flex-grow: 0;
         flex-shrink: 0;
         display: flex;
@@ -44,6 +43,14 @@
     }
     hero {
         order: 2;
+        ::ng-deep hero-frame {
+            top: 0;
+            bottom: auto;
+        }
+        ::ng-deep hero-art {
+            top: 2%;
+            bottom: auto;
+        }
     }
     hand {
         order: 3;

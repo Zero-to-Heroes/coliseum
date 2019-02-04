@@ -69,7 +69,7 @@ export class CardOnBoardComponent {
 		let x = 100;
 		let y = 0;
 		let element = this.elRef.nativeElement;
-		while (element && !element.classList.contains("external-player-container")) {
+		while (element && !element.classList.contains("external-player")) {
 			x += element.offsetLeft;
 			y += element.offsetTop;
 			element = element.offsetParent;
