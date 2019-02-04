@@ -14,6 +14,7 @@ import { Events } from '../../../services/events.service';
 	template: `
 		<div class="card-on-board">
 			<card-art [cardId]="cardId" [cardType]="cardType"></card-art>
+			<board-card-frame [taunt]="taunt" [premium]="premium"></board-card-frame>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -33,6 +34,7 @@ export class CardOnBoardComponent {
 	durability: number;
 	armor: number;
 	cost: number;
+	taunt: boolean;
 
 	constructor(private cards: AllCardsService, private elRef: ElementRef, private events: Events) { }
 
@@ -53,6 +55,8 @@ export class CardOnBoardComponent {
 		this.durability = entity.getTag(GameTag.DURABILITY);
 		this.armor = entity.getTag(GameTag.ARMOR);
 		this.cost = entity.getTag(GameTag.COST);
+
+		this.taunt = entity.getTag(GameTag.TAUNT) == 1;
     }
 
 	@HostListener('mouseenter') onMouseEnter() {

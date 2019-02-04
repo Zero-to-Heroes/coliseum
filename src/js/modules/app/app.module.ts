@@ -40,6 +40,7 @@ import { HeroPowerCostComponent } from '../../components/game/hero/hero-power-co
 import { HeroStatsComponent } from '../../components/game/hero/hero-stats.component';
 import { ManaTrayComponent } from '../../components/game/manatray/mana-tray.component';
 import { TooltipsComponent, Tooltip } from '../../components/tooltips.component';
+import { BoardCardFrameComponent } from '../../components/game/board/board-card-frame.component';
 
 
 @NgModule({
@@ -55,9 +56,11 @@ import { TooltipsComponent, Tooltip } from '../../components/tooltips.component'
 		HandComponent,
 		PlayAreaComponent,
 		HandComponent,
+		ManaTrayComponent,
+
 		BoardComponent,
 		CardOnBoardComponent,
-		ManaTrayComponent,
+		BoardCardFrameComponent,
 		
 		TooltipsComponent,
 		Tooltip,

@@ -1,5 +1,6 @@
 .card-on-board {
     position: relative;
+    height: 100%;
     
 	&::before {
 		content: "";
@@ -9,6 +10,9 @@
     }
     
     ::ng-deep .card-art {
-        width: 100%;
+        width: 123%;
+        clip-path: ellipse(37% 41% at 50% 50%);
+        top: 0;        
+        left: 0;           
     }
 }
