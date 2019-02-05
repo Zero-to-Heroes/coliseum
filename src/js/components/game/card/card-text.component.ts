@@ -1,6 +1,7 @@
 import { Component, ChangeDetectionStrategy, Input, ChangeDetectorRef, ViewRef } from '@angular/core';
 import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 import { AllCardsService } from '../../../services/all-cards.service';
+import { CardType } from '../../../models/enums/card-type';
 
 @Component({
 	selector: 'card-text',
@@ -9,7 +10,7 @@ import { AllCardsService } from '../../../services/all-cards.service';
 		'../../../../css/components/game/card/card-text.component.scss'
 	],
 	template: `
-        <div class="card-text" *ngIf="text">
+        <div class="card-text {{_cardType}}" *ngIf="text">
             <div class="text" 
                     [fittext]="true" 
                     [minFontSize]="2" 
@@ -23,6 +24,7 @@ import { AllCardsService } from '../../../services/all-cards.service';
 })
 export class CardTextComponent {
 
+	_cardType: string;
     text: SafeHtml;
     maxFontSize: number;
     dirtyFlag: boolean = false;
@@ -55,12 +57,15 @@ export class CardTextComponent {
         if (!(<ViewRef>this.cdr).destroyed) {
             this.cdr.detectChanges();
         }
-        // setTimeout(() => this.cdr.detectChanges());
+    }
+	
+    @Input('cardType') set cardType(cardType: CardType) {
+        console.log('[card-text] setting cardType', cardType);
+        this._cardType = CardType[cardType].toLowerCase();
     }
 
     private resizeText() {
         this.dirtyFlag = !this.dirtyFlag;
-        // console.log('resizing in text');
         if (!(<ViewRef>this.cdr).destroyed) {
             this.cdr.detectChanges();
         }

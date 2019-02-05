@@ -18,7 +18,7 @@ import { Events } from '../../../services/events.service';
 			<card-rarity [cardId]="cardId"></card-rarity>
 			<card-name [cardId]="cardId"></card-name>
 			<!-- TODO: handle all text updates -->
-			<card-text [cardId]="cardId"></card-text>
+			<card-text [cardId]="cardId" [cardType]="cardType"></card-text>
 			<card-race [cardId]="cardId"></card-race>
 			<card-cost [cardId]="cardId" [cost]="cost"></card-cost>
 			<card-stats 
