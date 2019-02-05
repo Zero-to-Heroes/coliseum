@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, AfterViewInit, HostListener, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, AfterViewInit, HostListener, ElementRef, ChangeDetectorRef, ViewRef } from '@angular/core';
 import { AllCardsService } from '../../../services/all-cards.service';
 
 @Component({
@@ -63,7 +63,9 @@ export class HeroPowerCostComponent implements AfterViewInit {
         else if (this._cost > originalCost) {
             this.costClass = 'higher-cost';
         }
-        this.cdr.detectChanges();
+        if (!(<ViewRef>this.cdr).destroyed) {
+            this.cdr.detectChanges();
+        }
     }
 
     private resizeText() {
@@ -75,6 +77,8 @@ export class HeroPowerCostComponent implements AfterViewInit {
         const fontSize = 0.8 * el.getBoundingClientRect().width;
         const textEl = this.elRef.nativeElement.querySelector(".cost");
         textEl.style.fontSize = fontSize + 'px';
-        this.cdr.detectChanges();
+        if (!(<ViewRef>this.cdr).destroyed) {
+            this.cdr.detectChanges();
+        }
     }
 }

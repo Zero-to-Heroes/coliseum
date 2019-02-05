@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, NgZone, ChangeDetectorRef, HostListener, AfterViewInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, NgZone, ChangeDetectorRef, HostListener, AfterViewInit, ViewRef } from '@angular/core';
 import { Map } from 'immutable';
 import { Key } from 'ts-keycode-enum';
 import { Entity } from '../models/game/entity';
@@ -47,7 +47,9 @@ export class AppComponent {
 		this.game = this.gameParser.parse(replayXml);
 		console.log('[app] Converted game', this.game);
 		this.entities = this.computeNewEntities();
-		this.cdr.detectChanges();
+        if (!(<ViewRef>this.cdr).destroyed) {
+            this.cdr.detectChanges();
+        }
 	}
 
 	@HostListener('document:keyup', ['$event'])
@@ -61,7 +63,9 @@ export class AppComponent {
 				break;
 		}
 		this.entities = this.computeNewEntities();
-		this.cdr.detectChanges();
+        if (!(<ViewRef>this.cdr).destroyed) {
+            this.cdr.detectChanges();
+        }
 	}
 
 	private computeNewEntities(): Map<number, Entity> {

@@ -60,7 +60,7 @@ export class CardTextComponent {
 
     private resizeText() {
         this.dirtyFlag = !this.dirtyFlag;
-        console.log('resizing in text');
+        // console.log('resizing in text');
         if (!(<ViewRef>this.cdr).destroyed) {
             this.cdr.detectChanges();
         }

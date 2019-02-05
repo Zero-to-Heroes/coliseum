@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, HostListener, ElementRef, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, HostListener, ElementRef, AfterViewInit, ChangeDetectorRef, ViewRef } from '@angular/core';
 import { Entity } from '../../../models/game/entity';
 import { GameTag } from '../../../models/enums/game-tags';
 import { CardType } from '../../../models/enums/card-type';
@@ -115,9 +115,11 @@ export class CardComponent implements AfterViewInit {
         const el = this.elRef.nativeElement;
         const width = 120.0 / 187 * el.getBoundingClientRect().height;
 		const textEl = this.elRef.nativeElement;
-        console.log('[card] Element width', width, el.getBoundingClientRect(), textEl);
+        // console.log('[card] Element width', width, el.getBoundingClientRect(), textEl);
 		textEl.style.width = width + 'px';
-        this.cdr.detectChanges();
+        if (!(<ViewRef>this.cdr).destroyed) {
+            this.cdr.detectChanges();
+        }
 		setTimeout(() => {
 			el.dispatchEvent(new Event('card-resize', { bubbles: false }));
 		});
