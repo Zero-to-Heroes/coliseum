@@ -17,7 +17,7 @@ import { AllCardsService } from '../../../services/all-cards.service';
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CardCostComponent implements AfterViewInit {
+export class CardCostComponent {
 
     _cost: number;
     costClass: string;
@@ -42,21 +42,6 @@ export class CardCostComponent implements AfterViewInit {
         console.log('[card-cost] setting cost', cost);
         this._cost = cost;
         this.updateCost();
-    }
-
-    // @HostListener('window:resize', ['$event'])
-    // onResize(event) {
-    //     this.resizeText();
-    // }
-
-    // @HostListener('card-resize', ['$event'])
-    // onResize(event) {
-    //     console.log('handling custom card-resize event', event);
-    //     this.resizeText();
-    // }
-
-    ngAfterViewInit() {
-        setTimeout(() => this.resizeText());
     }
 
     private updateCost() {

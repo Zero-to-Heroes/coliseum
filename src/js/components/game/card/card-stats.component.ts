@@ -24,7 +24,7 @@ import { AllCardsService } from '../../../services/all-cards.service';
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CardStatsComponent implements AfterViewInit {
+export class CardStatsComponent {
 
     hasStats: boolean;
 
@@ -83,20 +83,6 @@ export class CardStatsComponent implements AfterViewInit {
         this._armor = armor;
         this.updateStats();
     }
-
-    ngAfterViewInit() {
-        setTimeout(() => this.resizeText());
-    }
-
-    // @HostListener('window:resize', ['$event'])
-    // onResize(event) {
-    //     this.resizeText();
-    // }
-    // @HostListener('card-resize', ['$event'])
-    // onResize(event) {
-    //     console.log('handling custom card-resize event', event);
-    //     this.resizeText();
-    // }
 
     private updateStats() {
         this.attackClass = undefined;

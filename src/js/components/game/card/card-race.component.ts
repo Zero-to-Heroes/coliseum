@@ -46,16 +46,6 @@ export class CardRaceComponent {
         setTimeout(() => this.resizeText());
     }
 
-    // @HostListener('window:resize', ['$event'])
-    // onResize(event) {
-    //     this.resizeText();
-    // }
-    // @HostListener('card-resize', ['$event'])
-    // onResize(event) {
-    //     console.log('handling custom card-resize event', event);
-    //     this.resizeText();
-    // }
-
     private resizeText() {
         const el = this.elRef.nativeElement.querySelector(".card-race");
         if (!el) {
