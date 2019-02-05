@@ -1,0 +1,19 @@
+@import '../../../global/variables';
+
+.attack {
+    &.buff {
+        color: #31C331;
+    }
+    &.debuff {
+        color: red;
+    }
+}
+
+.health {
+    &.buff {
+        color: #31C331;
+    }
+    &.damaged {
+        color: red;
+    }
+}

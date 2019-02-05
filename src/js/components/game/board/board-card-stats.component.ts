@@ -5,7 +5,8 @@ import { AllCardsService } from '../../../services/all-cards.service';
 	selector: 'board-card-stats',
 	styleUrls: [
 		'../../../../css/global/text.scss',
-		'../../../../css/components/game/board/board-card-stats.component.scss'
+		'../../../../css/components/game/board/board-card-stats.component.scss',
+		'../../../../css/components/game/card/card-stats-colors.scss',
 	],
 	template: `
         <div class="card-stats" *ngIf="hasStats">
