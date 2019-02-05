@@ -19,7 +19,7 @@ import { AllCardsService } from '../../../services/all-cards.service';
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BoardCardStatsComponent implements AfterViewInit {
+export class BoardCardStatsComponent {
 
     hasStats: boolean;
 
@@ -59,10 +59,6 @@ export class BoardCardStatsComponent implements AfterViewInit {
         console.log('[board-card-stats] setting damage', damage);
         this._damage = damage;
         this.updateStats();
-    }
-
-    ngAfterViewInit() {
-        setTimeout(() => this.resizeText());
     }
 
     private updateStats() {

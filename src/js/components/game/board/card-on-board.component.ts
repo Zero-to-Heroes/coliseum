@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, HostListener, ElementRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, HostListener, ElementRef, AfterViewInit, ViewRef, ChangeDetectorRef } from '@angular/core';
 import { Entity } from '../../../models/game/entity';
 import { GameTag } from '../../../models/enums/game-tags';
 import { CardType } from '../../../models/enums/card-type';
@@ -25,7 +25,7 @@ import { Events } from '../../../services/events.service';
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CardOnBoardComponent {
+export class CardOnBoardComponent implements AfterViewInit {
 
 	_entity: Entity;
 
@@ -42,7 +42,11 @@ export class CardOnBoardComponent {
 	cost: number;
 	taunt: boolean;
 
-	constructor(private cards: AllCardsService, private elRef: ElementRef, private events: Events) { }
+	constructor(
+		private cards: AllCardsService, 
+		private elRef: ElementRef, 
+		private cdr: ChangeDetectorRef,
+		private events: Events) { }
 
     @Input('entity') set entity(entity: Entity) {
 		console.log('[card-on-board] setting entity', entity);
@@ -82,5 +86,28 @@ export class CardOnBoardComponent {
 	@HostListener('mouseleave')
 	onMouseLeave() {
 		this.events.broadcast(Events.HIDE_TOOLTIP, this._entity);
+	}
+
+	ngAfterViewInit() {
+		setTimeout(() => this.resize());
+	}
+
+    @HostListener('window:resize', ['$event'])
+    onResize(event) {
+        this.resize();
+    }
+
+	private resize() {
+        const el = this.elRef.nativeElement;
+        const width = 120.0 / 187 * el.getBoundingClientRect().height;
+		const textEl = this.elRef.nativeElement;
+        // console.log('[card] Element width', width, el.getBoundingClientRect(), textEl);
+		textEl.style.width = width + 'px';
+        if (!(<ViewRef>this.cdr).destroyed) {
+            this.cdr.detectChanges();
+        }
+		setTimeout(() => {
+			el.dispatchEvent(new Event('card-resize', { bubbles: false }));
+		});
 	}
 }

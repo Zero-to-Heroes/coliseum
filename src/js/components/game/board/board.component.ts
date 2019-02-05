@@ -9,7 +9,6 @@ import { Entity } from '../../../models/game/entity';
 	template: `
 		<ul class="board">
 			<li *ngFor="let entity of _entities; trackBy: trackByFn">
-				<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
 				<card-on-board [entity]="entity"></card-on-board>
 			</li>
 		</ul>
