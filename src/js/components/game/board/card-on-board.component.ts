@@ -99,7 +99,7 @@ export class CardOnBoardComponent implements AfterViewInit {
 
 	private resize() {
         const el = this.elRef.nativeElement;
-        const width = 120.0 / 187 * el.getBoundingClientRect().height;
+        const width = 140.0 / 187 * el.getBoundingClientRect().height;
 		const textEl = this.elRef.nativeElement;
         // console.log('[card] Element width', width, el.getBoundingClientRect(), textEl);
 		textEl.style.width = width + 'px';
