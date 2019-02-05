@@ -1,6 +1,7 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { Map } from 'immutable';
 import { Entity } from '../../models/game/entity';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'game',
@@ -21,18 +22,20 @@ export class GameComponent {
     _playerId: number;
     _opponentId: number;
 
+    constructor(private logger: NGXLogger) { } 
+
     @Input('entities') set entities(entities: Map<number, Entity>) {
-        console.log('[game] setting new entities', entities.toJS());
+        this.logger.debug('[game] setting new entities', entities.toJS());
         this._entities = entities;
     }
 
     @Input('playerId') set playerId(playerId: number) {
-        console.log('[game] setting playerId', playerId);
+        this.logger.debug('[game] setting playerId', playerId);
         this._playerId = playerId;
     }
 
     @Input('opponentId') set opponentId(opponentId: number) {
-        console.log('[game] setting opponentId', opponentId);
+        this.logger.debug('[game] setting opponentId', opponentId);
         this._opponentId = opponentId;
     }
 

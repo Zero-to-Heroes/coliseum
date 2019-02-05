@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { Entity } from '../../../models/game/entity';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'hero',
@@ -21,18 +22,20 @@ export class HeroComponent {
     _heroPower: Entity;
     _weapon: Entity;
 
+    constructor(private logger: NGXLogger) {}
+
     @Input('hero') set hero(hero: Entity) {
-        console.log('[hero] setting new entity', hero);
+        this.logger.debug('[hero] setting new entity', hero);
         this._hero = hero;
     }
 
     @Input('heroPower') set heroPower(heroPower: Entity) {
-        console.log('[hero] setting new heroPower', heroPower);
+        this.logger.debug('[hero] setting new heroPower', heroPower);
         this._heroPower = heroPower;
     }
 
     @Input('weapon') set weapon(weapon: Entity) {
-        console.log('[hero] setting new weapon', weapon);
+        this.logger.debug('[hero] setting new weapon', weapon);
         this._weapon = weapon;
     }
 }

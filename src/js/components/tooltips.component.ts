@@ -63,7 +63,6 @@ export class TooltipsComponent implements AfterViewInit {
 
 		this.events.on(Events.HIDE_TOOLTIP).subscribe(
 			(data) => {
-				// console.log('hiding tooltip', data);
 				this.destroy();
 			}
 		);

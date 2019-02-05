@@ -33,7 +33,6 @@
 				url: 'replay.xml',
 				dataType: 'xml',
 				success: function(response) {
-					console.log('successfully loaded replay', response);
 					window.coliseum.zone.run(() => {
 						window.coliseum.component.loadReplay(response);
 					})

@@ -2,6 +2,7 @@ import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { AllCardsService } from '../../../services/all-cards.service';
 import { CardClass } from '../../../models/enums/card-class';
 import { CardType } from '../../../models/enums/card-type';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'card-frame',
@@ -20,16 +21,16 @@ export class CardFrameComponent {
     private _cardId: string;
     private _premium: boolean = undefined;
 
-    constructor(private cards: AllCardsService) { }
+    constructor(private cards: AllCardsService, private logger: NGXLogger) { }
 
     @Input('cardId') set cardId(cardId: string) {
-        console.log('[card-frame] setting cardId', cardId);
+        this.logger.debug('[card-frame] setting cardId', cardId);
         this._cardId = cardId;
         this.updateImage();
     }
 
     @Input('premium') set premium(premium: boolean) {
-        console.log('[card-frame] setting premium', premium);
+        this.logger.debug('[card-frame] setting premium', premium);
         this._premium = premium;
         this.updateImage();
     }

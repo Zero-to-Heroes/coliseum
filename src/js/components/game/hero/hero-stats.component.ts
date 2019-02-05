@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy, Input, ChangeDetectorRef, AfterViewInit, ElementRef, ViewRef } from '@angular/core';
 import { AllCardsService } from '../../../services/all-cards.service';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'hero-stats',
@@ -38,36 +39,40 @@ export class HeroStatsComponent implements AfterViewInit {
     private _health: number;
     private _damage: number;
 
-    constructor(private cards: AllCardsService, private cdr: ChangeDetectorRef, private elRef: ElementRef) { 
-        // this.cdr.detach();
+    constructor(
+        private cards: AllCardsService, 
+        private cdr: ChangeDetectorRef, 
+        private logger: NGXLogger,
+        private elRef: ElementRef) { 
+            this.cdr.detach();
     }
 
     @Input('cardId') set cardId(cardId: string) {
-        console.log('[card-stats] setting cardId', cardId);
+        this.logger.debug('[card-stats] setting cardId', cardId);
         this._cardId = cardId;
         this.updateStats();
     }
 
     @Input('attack') set attack(attack: number) {
-        console.log('[card-stats] setting attack', attack);
+        this.logger.debug('[card-stats] setting attack', attack);
         this._attack = attack;
         this.updateStats();
     }
 
     @Input('health') set health(health: number) {
-        console.log('[card-stats] setting health', health);
+        this.logger.debug('[card-stats] setting health', health);
         this._health = health;
         this.updateStats();
     }
 
     @Input('damage') set damage(damage: number) {
-        console.log('[card-stats] setting damage', damage);
+        this.logger.debug('[card-stats] setting damage', damage);
         this._damage = damage;
         this.updateStats();
     }
 
     @Input('armor') set armor(armor: number) {
-        console.log('[card-stats] setting armor', armor);
+        this.logger.debug('[card-stats] setting armor', armor);
         this._armor = armor;
         this.updateStats();
     }
@@ -135,7 +140,6 @@ export class HeroStatsComponent implements AfterViewInit {
             return;
         }
         const fontSize = 0.15 * el.getBoundingClientRect().width;
-        console.log('[hero-stats] Element width', el.getBoundingClientRect());
         const textEl = this.elRef.nativeElement.querySelector(".hero-stats");
         textEl.style.fontSize = fontSize + 'px';
         if (!(<ViewRef>this.cdr).destroyed) {

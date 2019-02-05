@@ -11,9 +11,12 @@ import { GameTag } from '../../models/enums/game-tags';
 import { ShowEntityHistoryItem } from '../../models/history/show-entity-history-item';
 import { FullEntityHistoryItem } from '../../models/history/full-entity-history-item';
 import { ChangeEntityHistoryItem } from '../../models/history/change-entity-history-item';
+import { NGXLogger } from 'ngx-logger';
 
 @Injectable()
 export class StateProcessorService {
+
+    constructor(private logger: NGXLogger) { }
 
     private readonly USEFUL_TAGS: ReadonlyArray<GameTag> = [
         GameTag.TAG_SCRIPT_DATA_NUM_1,
@@ -51,7 +54,7 @@ export class StateProcessorService {
         let currentAction: Action = turnsWithActions.get(currentTurnIndex).actions[currentActionIndexInTurn];
         for (const item of history) {
             if (!item.index) {
-                console.error('No index in item', item);
+                this.logger.error('No index in item', item);
             }
             if (item.index <= currentAction.index) {
                 previousStateEntities = this.applyHistory(previousStateEntities, item);
@@ -86,7 +89,7 @@ export class StateProcessorService {
             return this.updateWithEntity(item, entities);
         }
         else if (item instanceof ChangeEntityHistoryItem) {
-            console.warn('Change entity update not implemented yet', item);
+            this.logger.error('Change entity update not implemented yet', item);
             // return this.updateWithChangeEntity(item, entities);
         }
         return entities;

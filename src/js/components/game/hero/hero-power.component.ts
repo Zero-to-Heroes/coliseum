@@ -1,6 +1,7 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { Entity } from '../../../models/game/entity';
 import { GameTag } from '../../../models/enums/game-tags';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'hero-power',
@@ -19,10 +20,12 @@ import { GameTag } from '../../../models/enums/game-tags';
 export class HeroPowerComponent {
 
     cardId: string;
-	cost: number;
+    cost: number;
+    
+    constructor(private logger: NGXLogger) {}
 
     @Input('heroPower') set heroPower(heroPower: Entity) {
-        console.log('[hero-power] setting new heroPower', heroPower);
+        this.logger.debug('[hero-power] setting new heroPower', heroPower);
         this.cardId = heroPower.cardID;
 		this.cost = heroPower.getTag(GameTag.COST);
     }

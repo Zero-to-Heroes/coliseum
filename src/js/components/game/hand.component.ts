@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy, Input, AfterViewInit, HostListener, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { Entity } from '../../models/game/entity';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'hand',
@@ -21,12 +22,11 @@ export class HandComponent {
 	_entities: ReadonlyArray<Entity>;
 	marginLeft: number;
 
-	constructor(private elRef: ElementRef, private cdr: ChangeDetectorRef) {
-		// this.cdr.detach();
+	constructor(private logger: NGXLogger) {
 	}
 
     @Input('entities') set entities(entities: ReadonlyArray<Entity>) {
-        console.log('[hand] setting new entities', entities);
+        this.logger.debug('[hand] setting new entities', entities);
 		this._entities = entities;
 		switch (entities.length) {
 			case 7:

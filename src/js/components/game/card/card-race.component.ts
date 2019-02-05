@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy, Input, HostListener, ElementRef, AfterViewInit, ChangeDetectorRef, ViewRef } from '@angular/core';
 import { AllCardsService } from '../../../services/all-cards.service';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'card-race',
@@ -19,7 +20,11 @@ export class CardRaceComponent {
 
     race: string;
 
-    constructor(private cards: AllCardsService, private elRef: ElementRef, private cdr: ChangeDetectorRef) { 
+    constructor(
+            private cards: AllCardsService, 
+            private elRef: ElementRef, 
+            private logger: NGXLogger,
+            private cdr: ChangeDetectorRef) { 
         this.cdr.detach();
         document.addEventListener(
             'card-resize',
@@ -29,7 +34,7 @@ export class CardRaceComponent {
 
     @Input('cardId') set cardId(cardId: string) {
         this.race = undefined;
-        console.log('[card-race] setting cardId', cardId);
+        this.logger.debug('[card-race] setting cardId', cardId);
         const originalCard = this.cards.getCard(cardId);
         if (!originalCard.race) {
             if (!(<ViewRef>this.cdr).destroyed) {

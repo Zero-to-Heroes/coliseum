@@ -25,14 +25,10 @@ export class GamePopulationService {
     }
 
 	public populateInitialEntities(history: ReadonlyArray<HistoryItem>): Map<number, Entity> {
-        // const start = Date.now();
         this.entities = Map();
         this.initializeEntities(history);
-        // console.log('entities after init', this.entities.toJS());
         this.completeMissingInformation(history);
-        // console.log('entities after missing info', this.entities.toJS());
         this.addBasicData();
-        // console.log('entities after basic data', this.entities.toJS());
         return this.entities;
     }
 

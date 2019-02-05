@@ -1,6 +1,7 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { AllCardsService } from '../../../services/all-cards.service';
 import { CardRarity } from '../../../models/enums/card-rarity';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'card-rarity',
@@ -16,10 +17,10 @@ export class CardRarityComponent {
 
     image: string;
 
-    constructor(private cards: AllCardsService) { }
+    constructor(private cards: AllCardsService, private logger: NGXLogger) { }
 
     @Input('cardId') set cardId(cardId: string) {
-        console.log('[card-rarity] setting cardId', cardId);
+        this.logger.debug('[card-rarity] setting cardId', cardId);
         this.image = undefined;
         const originalCard = this.cards.getCard(cardId);
         const cardRarity: CardRarity = this.buildRarity(originalCard);

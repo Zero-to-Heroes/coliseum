@@ -5,6 +5,7 @@ import { Entity } from '../models/game/entity';
 import { Game } from '../models/game/game';
 import { GameParserService } from '../services/parser/game-parser.service';
 import { Events } from '../services/events.service';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'app-root',
@@ -35,6 +36,7 @@ export class AppComponent {
 			private gameParser: GameParserService,
 			private events: Events,
 			private cdr: ChangeDetectorRef,
+			private logger: NGXLogger,
 			private zone: NgZone) {
 		window['coliseum'] = {
 			zone: this.zone,
@@ -45,7 +47,7 @@ export class AppComponent {
 
 	public loadReplay(replayXml: Node) {
 		this.game = this.gameParser.parse(replayXml);
-		console.log('[app] Converted game', this.game);
+		this.logger.info('[app] Converted game', this.game);
 		this.entities = this.computeNewEntities();
         if (!(<ViewRef>this.cdr).destroyed) {
             this.cdr.detectChanges();

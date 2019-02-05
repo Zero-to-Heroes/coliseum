@@ -1,4 +1,5 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'mana-tray',
@@ -36,31 +37,33 @@ export class ManaTrayComponent {
     emptyArray: number[];
     lockedArray: number[];
 
+    constructor(private logger: NGXLogger) {}
+
     @Input('total') set total(total: number) {
-        console.log('[mana-tray] setting total crystals', total);
+        this.logger.debug('[mana-tray] setting total crystals', total);
         this._total = total;
     }
 
     @Input('available') set available(available: number) {
-        console.log('[mana-tray] setting available crystals', available);
+        this.logger.debug('[mana-tray] setting available crystals', available);
         this._available = available;
         this.availableArray = Array(available).fill(0);
     }
 
     @Input('empty') set empty(empty: number) {
-        console.log('[mana-tray] setting empty crystals', empty);
+        this.logger.debug('[mana-tray] setting empty crystals', empty);
         this._empty = empty;
         this.emptyArray = Array(empty).fill(0);
     }
 
     @Input('locked') set locked(locked: number) {
-        console.log('[mana-tray] setting locked crystals', locked);
+        this.logger.debug('[mana-tray] setting locked crystals', locked);
         this._locked = locked;
         this.lockedArray = Array(locked).fill(0);
     }
 
     @Input('futureLocked') set futureLocked(futureLocked: number) {
-        console.log('[mana-tray] setting futureLocked crystals', futureLocked);
+        this.logger.debug('[mana-tray] setting futureLocked crystals', futureLocked);
         this._futureLocked = futureLocked;
     }
 }

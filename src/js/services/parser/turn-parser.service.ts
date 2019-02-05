@@ -8,9 +8,12 @@ import { Turn } from '../../models/game/turn';
 import { PlayerEntity } from '../../models/game/player-entity';
 import { MulliganTurn } from '../../models/game/mulligan-turn';
 import { ActionTurn } from '../../models/game/action-turn';
+import { NGXLogger } from 'ngx-logger';
 
 @Injectable()
 export class TurnParserService {
+
+    constructor(private logger: NGXLogger) { }
 
     public createTurns(game: Game, history: ReadonlyArray<HistoryItem>): Game {
         let turns: Map<number, Turn> = Map<number, Turn>();
@@ -24,7 +27,7 @@ export class TurnParserService {
                 turns = turns.set(parseInt(turn.turn), turn);
             }
         }
-        console.log('created turns', turns.toJS());
+        this.logger.info('created turns', turns.toJS());
         return Game.createGame(game, { turns: turns });
     }
 

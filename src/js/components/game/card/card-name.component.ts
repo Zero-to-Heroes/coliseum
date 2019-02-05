@@ -2,6 +2,7 @@ import { Component, ChangeDetectionStrategy, Input, ElementRef } from '@angular/
 import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 import { CardType } from '../../../models/enums/card-type';
 import { AllCardsService } from '../../../services/all-cards.service';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'card-name',
@@ -25,12 +26,13 @@ export class CardNameComponent {
     constructor(
         private cards: AllCardsService, 
         private domSanitizer: DomSanitizer, 
+        private logger: NGXLogger,
         private elRef: ElementRef) { 
 
     }
 
     @Input('cardId') set cardId(cardId: string) {
-        console.log('[card-name] setting cardId', cardId);
+        this.logger.debug('[card-name] setting cardId', cardId);
         const originalCard = this.cards.getCard(cardId);
         const cardType: CardType = CardType[originalCard.type.toUpperCase() as string];
         this.banner = `https://static.zerotoheroes.com/hearthstone/asset/manastorm/card/name-banner-${CardType[cardType].toLowerCase()}.png`;

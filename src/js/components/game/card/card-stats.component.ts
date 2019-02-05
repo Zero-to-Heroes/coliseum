@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy, Input, ChangeDetectorRef, AfterViewInit, ElementRef, ViewRef, HostListener } from '@angular/core';
 import { AllCardsService } from '../../../services/all-cards.service';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'card-stats',
@@ -41,7 +42,11 @@ export class CardStatsComponent {
     private _damage: number;
     private _durability: number;
 
-    constructor(private cards: AllCardsService, private cdr: ChangeDetectorRef, private elRef: ElementRef) { 
+    constructor(
+            private cards: AllCardsService, 
+            private logger: NGXLogger,
+            private cdr: ChangeDetectorRef, 
+            private elRef: ElementRef) { 
         this.cdr.detach();
         document.addEventListener(
             'card-resize',
@@ -50,37 +55,37 @@ export class CardStatsComponent {
     }
 
     @Input('cardId') set cardId(cardId: string) {
-        console.log('[card-stats] setting cardId', cardId);
+        this.logger.debug('[card-stats] setting cardId', cardId);
         this._cardId = cardId;
         this.updateStats();
     }
 
     @Input('attack') set attack(attack: number) {
-        console.log('[card-stats] setting attack', attack);
+        this.logger.debug('[card-stats] setting attack', attack);
         this._attack = attack;
         this.updateStats();
     }
 
     @Input('health') set health(health: number) {
-        console.log('[card-stats] setting health', health);
+        this.logger.debug('[card-stats] setting health', health);
         this._health = health;
         this.updateStats();
     }
 
     @Input('damage') set damage(damage: number) {
-        console.log('[card-stats] setting damage', damage);
+        this.logger.debug('[card-stats] setting damage', damage);
         this._damage = damage;
         this.updateStats();
     }
 
     @Input('durability') set durability(durability: number) {
-        console.log('[card-stats] setting durability', durability);
+        this.logger.debug('[card-stats] setting durability', durability);
         this._durability = durability;
         this.updateStats();
     }
 
     @Input('armor') set armor(armor: number) {
-        console.log('[card-stats] setting armor', armor);
+        this.logger.debug('[card-stats] setting armor', armor);
         this._armor = armor;
         this.updateStats();
     }

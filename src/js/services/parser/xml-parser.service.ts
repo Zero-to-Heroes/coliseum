@@ -25,6 +25,7 @@ import { ChoicesHistoryItem } from '../../models/history/choices-history-item';
 import { EntityDefinitionAttribute } from '../../models/parser/entity-definition-attribute';
 import { GameTag } from '../../models/enums/game-tags';
 import { MetaTags } from '../../models/enums/meta-tags';
+import { NGXLogger } from 'ngx-logger';
 
 @Injectable()
 export class XmlParserService {
@@ -40,6 +41,8 @@ export class XmlParserService {
     private metaData: MetaData;
     private timestamp: number;
 
+    constructor(private logger: NGXLogger) { }
+
     public parseXml(xmlAsString: string): ReadonlyArray<HistoryItem> {
         this.reset();
         const saxParser: SAXParser = parser(true, {
@@ -47,7 +50,7 @@ export class XmlParserService {
         });
         saxParser.onopentag = (tag: Tag) => this.onOpenTag(tag);
         saxParser.onclosetag = (tagName: string) => this.onCloseTag();
-        saxParser.onerror = (error) => console.error('Error while parsing xml', error);
+        saxParser.onerror = (error) => this.logger.error('Error while parsing xml', error);
         saxParser.write(xmlAsString).end();
         return this.history;
     }
@@ -402,7 +405,7 @@ export class XmlParserService {
                 
     private enqueueHistoryItem(item: HistoryItem) {
         if (item.timestamp === undefined) {
-            console.error("History item doesn't have timestamp", item);
+            this.logger.error("History item doesn't have timestamp", item);
             throw new Error("History item doesn't have timestamp" + item);
         }
         this.history = [...this.history || [], item];

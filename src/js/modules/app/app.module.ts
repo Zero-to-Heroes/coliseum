@@ -3,6 +3,8 @@ import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Ng2FittextModule } from "ng2-fittext";
+import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
+
 import { AppComponent } from '../../components/app.component';
 import { BoardComponent } from '../../components/game/board/board.component';
 import { CardOnBoardComponent } from '../../components/game/board/card-on-board.component';
@@ -50,6 +52,9 @@ import { BoardCardStatsComponent } from '../../components/game/board/board-card-
 		HttpModule,
 		BrowserAnimationsModule,
 		Ng2FittextModule,
+		LoggerModule.forRoot({ 
+			level: process.env.NODE_ENV === 'production' ? NgxLoggerLevel.INFO : NgxLoggerLevel.DEBUG 
+		}),
 	],
 	declarations: [
 		AppComponent,

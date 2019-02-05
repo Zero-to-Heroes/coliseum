@@ -12,6 +12,7 @@ import { GameStateParserService } from './game-state-parser.service';
 import { GameInitializerService } from './game-initializer.service';
 import { StateProcessorService } from './state-processor.service';
 import { Entity } from '../../models/game/entity';
+import { NGXLogger } from 'ngx-logger';
 
 @Injectable()
 export class GameParserService {
@@ -23,6 +24,7 @@ export class GameParserService {
 			private gamePopulationService: GamePopulationService, 
 			private gameStateParser: GameStateParserService,
 			private gameInitializer: GameInitializerService, 
+			private logger: NGXLogger,
 			private stateProcessor: StateProcessorService) {
     }
 
@@ -59,7 +61,7 @@ export class GameParserService {
 	}
 
 	private logPerf<T>(what: string, start: number, result?: T): T {
-		console.log('[perf] ', what, 'done after ', (Date.now() - start), 'ms');
+		this.logger.info('[perf] ', what, 'done after ', (Date.now() - start), 'ms');
 		return result;
 	}
 }

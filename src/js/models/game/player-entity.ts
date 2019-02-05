@@ -38,7 +38,6 @@ export class PlayerEntity extends Entity {
                 : Map();
         const tags: Map<string, number> = (base.tags || Map()).merge(newTags);
         const newEntity: PlayerEntity = Object.assign(new PlayerEntity(), {...base, ...newAttributes, tags});
-        // console.log('creating new entity', newEntity, 'from', base, newAttributes);
         return newEntity;
     }
 }

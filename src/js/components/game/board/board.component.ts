@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy, NgZone, Input } from '@angular/core';
 import { Entity } from '../../../models/game/entity';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'board',
@@ -19,8 +20,10 @@ export class BoardComponent {
 
 	_entities: ReadonlyArray<Entity>;
 
+	constructor(private logger: NGXLogger) { }
+
     @Input('entities') set entities(entities: ReadonlyArray<Entity>) {
-        console.log('[board] setting new entities', entities);
+        this.logger.debug('[board] setting new entities', entities);
 		this._entities = entities;
 	}
 	

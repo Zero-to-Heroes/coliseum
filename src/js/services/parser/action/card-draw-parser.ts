@@ -31,9 +31,7 @@ export class CardDrawParser implements Parser {
         }
         // Otherwise when we draw a card it's a ShowEntity or FullEntity
         if (item instanceof ActionHistoryItem) {
-            // console.log('parsing card draw', item);
             return (item.node.showEntities || item.node.fullEntities || [])
-                    // .map((entity) => { console.log("\t", entity); return entity; })
                     .filter((entity) => entity.tags.get(GameTag[GameTag.ZONE]) == 3)
                     .map((entity) => {
                         return CardDrawAction.create({

@@ -19,7 +19,6 @@ export class Entity {
     }
 
     public isRevealed(): boolean {
-        console.log('is revealed?', this, !!this.cardID);
         return !!this.cardID;
     }
 
@@ -37,7 +36,6 @@ export class Entity {
                 newAttributes.tags.CONCEDED = 1;
             }
         }
-        // console.log('\tcreating with new attributes', newAttributes);
         return Entity.create(this, newAttributes);
     }
 
@@ -53,12 +51,8 @@ export class Entity {
         const newTags: Map<string, number> = (newAttributes && newAttributes.tags) 
                 ? newAttributes.tags
                 : Map();
-        // console.log('\tcreating with new tags', newTags.toJS());
         const tags: Map<string, number> = (base.tags || Map()).merge(newTags);
-        // console.log('\tmerged tags', tags.toJS());
         const newEntity: Entity = Object.assign(new Entity(), {...base, ...newAttributes, tags});
-        // console.log('\tnewEntity', newEntity, newEntity.tags.toJS());
-        // console.log('creating new entity', newEntity, 'from', base, newAttributes);
         return newEntity;
     }
 }

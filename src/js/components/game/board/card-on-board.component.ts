@@ -5,6 +5,7 @@ import { CardType } from '../../../models/enums/card-type';
 import { CardClass } from '../../../models/enums/card-class';
 import { AllCardsService } from '../../../services/all-cards.service';
 import { Events } from '../../../services/events.service';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'card-on-board',
@@ -46,10 +47,11 @@ export class CardOnBoardComponent implements AfterViewInit {
 		private cards: AllCardsService, 
 		private elRef: ElementRef, 
 		private cdr: ChangeDetectorRef,
+		private logger: NGXLogger,
 		private events: Events) { }
 
     @Input('entity') set entity(entity: Entity) {
-		console.log('[card-on-board] setting entity', entity);
+		this.logger.debug('[card-on-board] setting entity', entity);
 		
 		this._entity = entity;
 
@@ -101,7 +103,6 @@ export class CardOnBoardComponent implements AfterViewInit {
         const el = this.elRef.nativeElement;
         const width = 140.0 / 187 * el.getBoundingClientRect().height;
 		const textEl = this.elRef.nativeElement;
-        // console.log('[card] Element width', width, el.getBoundingClientRect(), textEl);
 		textEl.style.width = width + 'px';
         if (!(<ViewRef>this.cdr).destroyed) {
             this.cdr.detectChanges();

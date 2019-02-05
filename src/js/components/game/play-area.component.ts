@@ -4,6 +4,7 @@ import { Entity } from '../../models/game/entity';
 import { GameTag } from '../../models/enums/game-tags';
 import { Zone } from '../../models/enums/zone';
 import { CardType } from '../../models/enums/card-type';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'play-area',
@@ -45,21 +46,23 @@ export class PlayAreaComponent {
 
     private playerEntity: Entity;
 
+    constructor(private logger: NGXLogger) {}
+
     @Input('entities') set entities(entities: Map<number, Entity>) {
-        console.log('[play-area] setting new entities', entities.toJS());
+        this.logger.debug('[play-area] setting new entities', entities.toJS());
         this._entities = entities;
         this.updateEntityGroups();
     }
 
     @Input('playerId') set playerId(playerId: number) {
-        console.log('[play-area] setting playerId', playerId);
+        this.logger.debug('[play-area] setting playerId', playerId);
         this._playerId = playerId;
         this.updateEntityGroups();
     }
 
     private updateEntityGroups() {
         if (!this._entities || ! this._playerId) {
-            console.log('[play-area] entities not initialized yet');
+            this.logger.debug('[play-area] entities not initialized yet');
             return;
         }
         
@@ -75,7 +78,7 @@ export class PlayAreaComponent {
         this.lockedCrystals = this.playerEntity.getTag(GameTag.OVERLOAD_LOCKED) || 0;
         this.emptyCrystals = this.totalCrystals - this.availableCrystals - this.lockedCrystals;
         this.futureLockedCrystals = this.playerEntity.getTag(GameTag.OVERLOAD_OWED) || 0;
-        console.log('[play-area] play-area entities updated', this.hand);
+        this.logger.debug('[play-area] play-area entities updated', this.hand);
     }
 
     private getHandEntities(playerId: number): ReadonlyArray<Entity> {

@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy, Input, AfterViewInit, HostListener, ElementRef, ChangeDetectorRef, ViewRef } from '@angular/core';
 import { AllCardsService } from '../../../services/all-cards.service';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'card-cost',
@@ -24,7 +25,11 @@ export class CardCostComponent {
     
     private _cardId: string;
 
-    constructor(private cards: AllCardsService, private elRef: ElementRef, private cdr: ChangeDetectorRef) { 
+    constructor(
+            private cards: AllCardsService, 
+            private elRef: ElementRef, 
+            private logger: NGXLogger,
+            private cdr: ChangeDetectorRef) { 
         this.cdr.detach();
         document.addEventListener(
             'card-resize',
@@ -33,13 +38,13 @@ export class CardCostComponent {
     }
 
     @Input('cardId') set cardId(cardId: string) {
-        console.log('[card-cost] setting cardId', cardId);
+        this.logger.debug('[card-cost] setting cardId', cardId);
         this._cardId = cardId;
         this.updateCost();
     }
 
     @Input('cost') set cost(cost: number) {
-        console.log('[card-cost] setting cost', cost);
+        this.logger.debug('[card-cost] setting cost', cost);
         this._cost = cost;
         this.updateCost();
     }

@@ -2,6 +2,7 @@ import { Component, ChangeDetectionStrategy, Input, ChangeDetectorRef, ViewRef }
 import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 import { AllCardsService } from '../../../services/all-cards.service';
 import { CardType } from '../../../models/enums/card-type';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'card-text',
@@ -30,17 +31,18 @@ export class CardTextComponent {
     dirtyFlag: boolean = false;
 
     constructor(
-        private cards: AllCardsService, 
-        private domSanitizer: DomSanitizer,
-        private cdr: ChangeDetectorRef) {
-            document.addEventListener(
-                'card-resize',
-                (event) => this.resizeText(),
-                true);
+            private cards: AllCardsService, 
+            private domSanitizer: DomSanitizer,
+            private logger: NGXLogger,
+            private cdr: ChangeDetectorRef) {
+        document.addEventListener(
+            'card-resize',
+            (event) => this.resizeText(),
+            true);
         }
     
     @Input('cardId') set cardId(cardId: string) {
-        console.log('[card-text] setting cardId', cardId);
+        this.logger.debug('[card-text] setting cardId', cardId);
         this.text = undefined;
         const originalCard = this.cards.getCard(cardId);
         if (!originalCard.text) {
@@ -60,7 +62,7 @@ export class CardTextComponent {
     }
 	
     @Input('cardType') set cardType(cardType: CardType) {
-        console.log('[card-text] setting cardType', cardType);
+        this.logger.debug('[card-text] setting cardType', cardType);
         this._cardType = CardType[cardType].toLowerCase();
     }
 

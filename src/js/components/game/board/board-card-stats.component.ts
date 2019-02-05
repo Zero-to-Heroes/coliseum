@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy, Input, ChangeDetectorRef, AfterViewInit, ElementRef, ViewRef } from '@angular/core';
 import { AllCardsService } from '../../../services/all-cards.service';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'board-card-stats',
@@ -34,30 +35,34 @@ export class BoardCardStatsComponent {
     private _health: number;
     private _damage: number;
 
-    constructor(private cards: AllCardsService, private cdr: ChangeDetectorRef, private elRef: ElementRef) { 
+    constructor(
+        private cards: AllCardsService, 
+        private cdr: ChangeDetectorRef, 
+        private elRef: ElementRef, 
+        private logger: NGXLogger) { 
         this.cdr.detach();
     }
 
     @Input('cardId') set cardId(cardId: string) {
-        console.log('[board-card-stats] setting cardId', cardId);
+        this.logger.debug('[board-card-stats] setting cardId', cardId);
         this._cardId = cardId;
         this.updateStats();
     }
 
     @Input('attack') set attack(attack: number) {
-        console.log('[board-card-stats] setting attack', attack);
+        this.logger.debug('[board-card-stats] setting attack', attack);
         this._attack = attack;
         this.updateStats();
     }
 
     @Input('health') set health(health: number) {
-        console.log('[board-card-stats] setting health', health);
+        this.logger.debug('[board-card-stats] setting health', health);
         this._health = health;
         this.updateStats();
     }
 
     @Input('damage') set damage(damage: number) {
-        console.log('[board-card-stats] setting damage', damage);
+        this.logger.debug('[board-card-stats] setting damage', damage);
         this._damage = damage;
         this.updateStats();
     }

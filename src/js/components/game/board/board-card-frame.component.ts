@@ -2,6 +2,7 @@ import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { AllCardsService } from '../../../services/all-cards.service';
 import { CardClass } from '../../../models/enums/card-class';
 import { CardType } from '../../../models/enums/card-type';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'board-card-frame',
@@ -20,16 +21,16 @@ export class BoardCardFrameComponent {
     private _taunt: boolean;
     private _premium: boolean = undefined;
 
-    constructor(private cards: AllCardsService) { }
+    constructor(private cards: AllCardsService, private logger: NGXLogger) { }
 
     @Input('taunt') set taunt(taunt: boolean) {
-        console.log('[board-card-frame] setting taunt', taunt);
+        this.logger.debug('[board-card-frame] setting taunt', taunt);
         this._taunt = taunt;
         this.updateImage();
     }
 
     @Input('premium') set premium(premium: boolean) {
-        console.log('[board-card-frame] setting premium', premium);
+        this.logger.debug('[board-card-frame] setting premium', premium);
         this._premium = premium;
         this.updateImage();
     }

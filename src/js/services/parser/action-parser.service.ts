@@ -10,13 +10,14 @@ import { Parser } from './action/parser';
 import { MulliganCardParser } from './action/mulligan-card-parser';
 import { GameHepler } from '../../models/game/game-helper';
 import { CardDrawParser } from './action/card-draw-parser';
+import { NGXLogger } from 'ngx-logger';
 
 @Injectable()
 export class ActionParserService {
 
     private currentTurn: number = 0;
 
-    constructor() {
+    constructor(private logger: NGXLogger) {
     }
 
 	public parseActions(game: Game, history: ReadonlyArray<HistoryItem>): Game {
@@ -59,7 +60,7 @@ export class ActionParserService {
                 && item.tag.tag == GameTag.TURN) {
             let turnToUpdate: Turn = game.turns.get(this.currentTurn);
             if (!turnToUpdate) {
-                console.warn('could not find turn to update', item, this.currentTurn, game.turns.toJS());
+                this.logger.warn('could not find turn to update', item, this.currentTurn, game.turns.toJS());
             }
             turnToUpdate = turnToUpdate.update({ actions: actions });
             this.currentTurn = item.tag.value - 1;

@@ -2,6 +2,7 @@ import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { Entity } from '../../../models/game/entity';
 import { CardType } from '../../../models/enums/card-type';
 import { GameTag } from '../../../models/enums/game-tags';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'hero-card',
@@ -32,9 +33,11 @@ export class HeroCardComponent {
 	damage: number;
 	armor: number;
 
+	constructor(private logger: NGXLogger) { }
+
     @Input('hero') set hero(hero: Entity) {
         // TODO: overlays (frozen, etc), secrets, highlight, stats
-        console.log('[hero-card] setting new entity', hero);
+        this.logger.debug('[hero-card] setting new entity', hero);
         this.cardId = hero.cardID;
         this.cardType = CardType.HERO;
 		this.attack = hero.getTag(GameTag.ATK);
