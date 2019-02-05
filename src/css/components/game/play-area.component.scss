@@ -51,6 +51,10 @@
             top: 2%;
             bottom: auto;
         }
+        ::ng-deep hero-stats {    
+            top: auto;
+            bottom: 12%;
+        }
     }
     hand {
         order: 3;
