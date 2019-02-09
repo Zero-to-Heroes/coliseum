@@ -8,6 +8,7 @@ export class Game {
     readonly entities: Map<number, Entity>;
     readonly players: ReadonlyArray<PlayerEntity> = [];
     readonly turns: Map<number, Turn> = Map<number, Turn>();
+    readonly fullStoryRaw: string;
 
     private constructor() { }
 

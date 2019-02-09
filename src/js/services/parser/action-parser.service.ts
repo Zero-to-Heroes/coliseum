@@ -11,13 +11,16 @@ import { MulliganCardParser } from './action/mulligan-card-parser';
 import { GameHepler } from '../../models/game/game-helper';
 import { CardDrawParser } from './action/card-draw-parser';
 import { NGXLogger } from 'ngx-logger';
+import { StartTurnAction } from '../../models/action/start-turn-action';
+import { StartTurnParser } from './action/start-turn-parser';
+import { AllCardsService } from '../all-cards.service';
 
 @Injectable()
 export class ActionParserService {
 
     private currentTurn: number = 0;
 
-    constructor(private logger: NGXLogger) {
+    constructor(private logger: NGXLogger, private allCards: AllCardsService) {
     }
 
 	public parseActions(game: Game, history: ReadonlyArray<HistoryItem>): Game {
@@ -34,7 +37,8 @@ export class ActionParserService {
                 // For instance, if we two card draws in a row, we might want to display them as a single 
                 // action that draws two cards
                 actionsForTurn = this.reduceActions(actionParsers, actionsForTurn);
-                turns = turns.set(updatedTurn.turn == 'mulligan' ? 0 : parseInt(updatedTurn.turn), updatedTurn);
+                const turnWithNewActions = updatedTurn.update({actions: actionsForTurn});
+                turns = turns.set(turnWithNewActions.turn == 'mulligan' ? 0 : parseInt(turnWithNewActions.turn), turnWithNewActions);
                 actionsForTurn = [];
             }
 
@@ -79,7 +83,8 @@ export class ActionParserService {
 
     private registerActionParsers(): Parser[] {
         return [
-            new MulliganCardParser(),
+            new StartTurnParser(),
+            new MulliganCardParser(this.allCards),
             new CardDrawParser(),
         ];
     }

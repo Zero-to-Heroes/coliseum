@@ -13,6 +13,7 @@ import { GameInitializerService } from './game-initializer.service';
 import { StateProcessorService } from './state-processor.service';
 import { Entity } from '../../models/game/entity';
 import { NGXLogger } from 'ngx-logger';
+import { NarratorService } from './narrator.service';
 
 @Injectable()
 export class GameParserService {
@@ -24,6 +25,7 @@ export class GameParserService {
 			private gamePopulationService: GamePopulationService, 
 			private gameStateParser: GameStateParserService,
 			private gameInitializer: GameInitializerService, 
+			private narrator: NarratorService,
 			private logger: NGXLogger,
 			private stateProcessor: StateProcessorService) {
     }
@@ -35,7 +37,9 @@ export class GameParserService {
 		const history: ReadonlyArray<HistoryItem> = this.replayParser.parseXml(replayAsString);
 		this.logPerf('Creating history', start);
         const entities: Map<number, Entity> = this.createEntitiesPipeline(history, start);
-        return this.createGamePipeline(history, entities, start);
+		const game: Game = this.createGamePipeline(history, entities, start);
+		this.logger.info('full story', game.fullStoryRaw);
+		return game;
     }
 
 	private createEntitiesPipeline(history: ReadonlyArray<HistoryItem>, start: number): Map<number, Entity> {
@@ -57,6 +61,10 @@ export class GameParserService {
 			(game) => this.logPerf('parseActions', start, game),
             (game) => this.stateProcessor.populateIntermediateStates(game, history),
 			(game) => this.logPerf('populateIntermediateStates', start, game),
+			(game) => this.narrator.populateActionText(game),
+			(game) => this.logPerf('populateActionText', start, game),
+			(game) => this.narrator.createGameStory(game),
+			(game) => this.logPerf('game story', start, game),
 		)(history, entities);
 	}
 

@@ -13,6 +13,7 @@ import { AllCardsService } from '../all-cards.service';
 import { CardType } from '../../models/enums/card-type';
 import { PlayerEntity } from '../../models/game/player-entity';
 import { Zone } from '../../models/enums/zone';
+import { NGXLogger } from 'ngx-logger';
 
 @Injectable()
 export class GamePopulationService {
@@ -20,7 +21,7 @@ export class GamePopulationService {
     // Map of entityId - entity definition
     private entities: Map<number, Entity>;
 
-    constructor(private allCards: AllCardsService) {
+    constructor(private allCards: AllCardsService, private logger: NGXLogger) {
 
     }
 
@@ -51,8 +52,13 @@ export class GamePopulationService {
     
     private initializePlayer(historyItem: PlayerHistoryItem) {
         const entity: PlayerEntity = PlayerEntity
-                .create({ id: historyItem.entityDefintion.id, playerId: historyItem.entityDefintion.playerID } as PlayerEntity)
+                .create({ 
+                    id: historyItem.entityDefintion.id, 
+                    playerId: historyItem.entityDefintion.playerID,
+                    name: historyItem.entityDefintion.name 
+                } as PlayerEntity)
                 .update(historyItem.entityDefintion);
+        this.logger.debug('initializing player', entity, historyItem);
         this.entities = this.entities.set(entity.id, entity);
     }
     

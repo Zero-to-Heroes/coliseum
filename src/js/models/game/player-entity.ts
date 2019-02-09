@@ -6,6 +6,7 @@ import { GameTag } from "../enums/game-tags";
 export class PlayerEntity extends Entity {
 
     readonly playerId: number;
+    readonly name: string;
 
     public update(definition: EntityDefinition): PlayerEntity {
         const newAttributes: any = { };

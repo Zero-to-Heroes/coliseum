@@ -6,8 +6,12 @@ import { CardType } from "../../../models/enums/card-type";
 import { MulliganCardAction } from "../../../models/action/mulligan-card-action";
 import { GameHepler } from "../../../models/game/game-helper";
 import { Action } from "../../../models/action/action";
+import { PlayerEntity } from "../../../models/game/player-entity";
+import { AllCardsService } from "../../all-cards.service";
 
 export class MulliganCardParser implements Parser {
+
+    constructor(private allCards: AllCardsService) {}
 
     public applies(item: HistoryItem): boolean {
         return item instanceof ActionHistoryItem;
@@ -25,7 +29,8 @@ export class MulliganCardParser implements Parser {
                 timestamp: item.timestamp,
                 index: item.index,
                 playerMulligan: item.node.hideEntities
-            })];
+            },
+            this.allCards)];
         }
         // TODO: Opponent mulligan
         return null;

@@ -78,7 +78,7 @@ export class StateProcessorService {
                 currentAction = turnsWithActions.get(currentTurnIndex).actions[currentActionIndexInTurn];
             }
         }
-        return Game.createGame(game, { turns: turnsWithActions });;
+        return Game.createGame(game, { turns: turnsWithActions });
 	}
 
     private applyHistory(entities: Map<number, Entity>, item: HistoryItem): Map<number, Entity> {

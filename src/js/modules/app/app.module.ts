@@ -44,6 +44,7 @@ import { ManaTrayComponent } from '../../components/game/manatray/mana-tray.comp
 import { TooltipsComponent, Tooltip } from '../../components/tooltips.component';
 import { BoardCardFrameComponent } from '../../components/game/board/board-card-frame.component';
 import { BoardCardStatsComponent } from '../../components/game/board/board-card-stats.component';
+import { NarratorService } from '../../services/parser/narrator.service';
 
 
 @NgModule({
@@ -101,6 +102,7 @@ import { BoardCardStatsComponent } from '../../components/game/board/board-card-
 		GameParserService,
 		GamePopulationService,
 		GameStateParserService,
+		NarratorService,
 		StateProcessorService,
 		TurnParserService,
 		XmlParserService
