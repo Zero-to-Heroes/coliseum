@@ -12,7 +12,6 @@ import { GameTag } from '../../models/enums/game-tags';
 import { AllCardsService } from '../all-cards.service';
 import { CardType } from '../../models/enums/card-type';
 import { PlayerEntity } from '../../models/game/player-entity';
-import { Zone } from '../../models/enums/zone';
 import { NGXLogger } from 'ngx-logger';
 
 @Injectable()
@@ -58,7 +57,6 @@ export class GamePopulationService {
                     name: historyItem.entityDefintion.name 
                 } as PlayerEntity)
                 .update(historyItem.entityDefintion);
-        this.logger.debug('initializing player', entity, historyItem);
         this.entities = this.entities.set(entity.id, entity);
     }
     
@@ -70,32 +68,16 @@ export class GamePopulationService {
     }
     
     private initializeFullEntity(historyItem: FullEntityHistoryItem) {
-        // Not in the game yet
-        // const newTags = historyItem.entityDefintion.tags.set(
-        //         GameTag[GameTag.ZONE], 
-        //         // historyItem.entityDefintion.tags.get(GameTag[GameTag.ZONE]) || Zone.SETASIDE);
-        //         Zone.SETASIDE);
-        const newAttributes: any = {};
-        // We use the ShowEntity only to update the cardID at this stage (and register the entity to the list of all entities if need be)
-        if (historyItem.entityDefintion.cardID) {
-            newAttributes.cardID = historyItem.entityDefintion.cardID;
-        }
         const entity: Entity = this.entities
                 .get(historyItem.entityDefintion.id, Entity.create({ id: historyItem.entityDefintion.id } as Entity))
-                .update(newAttributes);
-                // .update({ tags: newTags});
+                .update(historyItem.entityDefintion as EntityDefinition);
         this.entities = this.entities.set(entity.id, entity);
     }
     
     private initializeShowEntity(historyItem: ShowEntityHistoryItem) {
-        const newAttributes: any = {};
-        // We use the ShowEntity only to update the cardID at this stage (and register the entity to the list of all entities if need be)
-        if (historyItem.entityDefintion.cardID) {
-            newAttributes.cardID = historyItem.entityDefintion.cardID;
-        }
         const entity: Entity = this.entities
                 .get(historyItem.entityDefintion.id, Entity.create({ id: historyItem.entityDefintion.id } as Entity))
-                .update(newAttributes as EntityDefinition);
+                .update(historyItem.entityDefintion as EntityDefinition);
         this.entities = this.entities.set(entity.id, entity);
     }
 

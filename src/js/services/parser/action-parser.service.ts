@@ -11,9 +11,9 @@ import { MulliganCardParser } from './action/mulligan-card-parser';
 import { GameHepler } from '../../models/game/game-helper';
 import { CardDrawParser } from './action/card-draw-parser';
 import { NGXLogger } from 'ngx-logger';
-import { StartTurnAction } from '../../models/action/start-turn-action';
 import { StartTurnParser } from './action/start-turn-parser';
 import { AllCardsService } from '../all-cards.service';
+import { HeroPowerUsedParser } from './action/hero-power-used-parser';
 
 @Injectable()
 export class ActionParserService {
@@ -44,7 +44,11 @@ export class ActionParserService {
 
             actionParsers.forEach((parser) => {
                 if (parser.applies(item)) {
-                    const actions: Action[] = parser.parse(item, game, this.currentTurn);
+                    // It feels weird to not be able to feed it the entities that were created by the previous 
+                    // action, and instead feed it the base entities. Maybe it's better to assign the entities 
+                    // right after having created the action, instead of doing it in two completely separate 
+                    // steps?
+                    const actions: Action[] = parser.parse(item, game.entities, this.currentTurn);
                     if (actions && actions.length > 0) {
                         actionsForTurn = [...actionsForTurn, ...actions];
                     }
@@ -60,7 +64,7 @@ export class ActionParserService {
     
     private updateCurrentTurn(item: HistoryItem, game: Game, actions: ReadonlyArray<Action>): Turn {
         if (item instanceof TagChangeHistoryItem 
-                && GameHepler.isGameEntity(item.tag.entity, game)
+                && GameHepler.isGameEntity(item.tag.entity, game.entities)
                 && item.tag.tag == GameTag.TURN) {
             let turnToUpdate: Turn = game.turns.get(this.currentTurn);
             if (!turnToUpdate) {
@@ -86,6 +90,7 @@ export class ActionParserService {
             new StartTurnParser(),
             new MulliganCardParser(this.allCards, this.logger),
             new CardDrawParser(this.allCards),
+            new HeroPowerUsedParser(this.allCards),
         ];
     }
 }

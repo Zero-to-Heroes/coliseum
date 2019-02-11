@@ -1,14 +1,14 @@
 import { Parser } from "./parser";
 import { HistoryItem } from "../../../models/history/history-item";
 import { ActionHistoryItem } from "../../../models/history/action-history-item";
-import { Game } from "../../../models/game/game";
 import { Action } from "../../../models/action/action";
 import { TagChangeHistoryItem } from "../../../models/history/tag-change-history-item";
 import { GameTag } from "../../../models/enums/game-tags";
 import { Zone } from "../../../models/enums/zone";
 import { CardDrawAction } from "../../../models/action/card-draw-action";
-import { ActionHelper } from "./action-helper";
 import { AllCardsService } from "../../all-cards.service";
+import { Entity } from "../../../models/game/entity";
+import { Map } from "immutable";
 
 export class CardDrawParser implements Parser {
 
@@ -18,7 +18,7 @@ export class CardDrawParser implements Parser {
         return item instanceof TagChangeHistoryItem || item instanceof ActionHistoryItem;
     }
 
-    public parse(item: TagChangeHistoryItem | ActionHistoryItem, game: Game, currentTurn: number): Action[] {
+    public parse(item: TagChangeHistoryItem | ActionHistoryItem, entities: Map<number, Entity>, currentTurn: number): Action[] {
         if (currentTurn == 0) {
             return;
         }

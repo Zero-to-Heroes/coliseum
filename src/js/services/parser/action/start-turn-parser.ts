@@ -1,11 +1,12 @@
 import { Parser } from "./parser";
 import { HistoryItem } from "../../../models/history/history-item";
 import { ActionHistoryItem } from "../../../models/history/action-history-item";
-import { Game } from "../../../models/game/game";
 import { Action } from "../../../models/action/action";
 import { TagChangeHistoryItem } from "../../../models/history/tag-change-history-item";
 import { GameTag } from "../../../models/enums/game-tags";
 import { StartTurnAction } from "../../../models/action/start-turn-action";
+import { Map } from "immutable";
+import { Entity } from "../../../models/game/entity";
 
 export class StartTurnParser implements Parser {
 
@@ -13,7 +14,7 @@ export class StartTurnParser implements Parser {
         return item instanceof TagChangeHistoryItem && item.tag.tag == GameTag.TURN;
     }
 
-    public parse(item: TagChangeHistoryItem | ActionHistoryItem, game: Game, currentTurn: number): Action[] {
+    public parse(item: TagChangeHistoryItem | ActionHistoryItem, entities: Map<number, Entity>, currentTurn: number): Action[] {
         return [StartTurnAction.create({
             timestamp: item.timestamp,
             turn: currentTurn,

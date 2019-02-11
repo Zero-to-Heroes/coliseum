@@ -1,16 +1,16 @@
 import { Parser } from "./parser";
 import { HistoryItem } from "../../../models/history/history-item";
 import { ActionHistoryItem } from "../../../models/history/action-history-item";
-import { Game } from "../../../models/game/game";
-import { CardType } from "../../../models/enums/card-type";
 import { MulliganCardAction } from "../../../models/action/mulligan-card-action";
 import { GameHepler } from "../../../models/game/game-helper";
 import { Action } from "../../../models/action/action";
-import { PlayerEntity } from "../../../models/game/player-entity";
 import { AllCardsService } from "../../all-cards.service";
 import { GameTag } from "../../../models/enums/game-tags";
 import { Zone } from "../../../models/enums/zone";
 import { NGXLogger } from "ngx-logger";
+import { BlockType } from "../../../models/enums/block-type";
+import { Entity } from "../../../models/game/entity";
+import { Map } from "immutable";
 
 export class MulliganCardParser implements Parser {
 
@@ -20,14 +20,14 @@ export class MulliganCardParser implements Parser {
         return item instanceof ActionHistoryItem;
     }
 
-    public parse(item: ActionHistoryItem, game: Game, currentTurn: number): Action[] {
+    public parse(item: ActionHistoryItem, entities: Map<number, Entity>, currentTurn: number): Action[] {
         if (currentTurn > 0) {
             return;
         }
         // Adding the cards mulliganed by the player
-        if (parseInt(item.node.attributes.type) == CardType.ABILITY 
+        if (parseInt(item.node.attributes.type) == BlockType.TRIGGER
                 && item.node.hideEntities
-                && GameHepler.isPlayerEntity(parseInt(item.node.attributes.entity), game)) {
+                && GameHepler.isPlayerEntity(parseInt(item.node.attributes.entity), entities)) {
             return [MulliganCardAction.create(
                 {
                     timestamp: item.timestamp,
@@ -36,8 +36,8 @@ export class MulliganCardParser implements Parser {
                 },
                 this.allCards)];
         }
-        if (parseInt(item.node.attributes.type) == CardType.ABILITY 
-                && GameHepler.isPlayerEntity(parseInt(item.node.attributes.entity), game)
+        if (parseInt(item.node.attributes.type) == BlockType.TRIGGER 
+                && GameHepler.isPlayerEntity(parseInt(item.node.attributes.entity), entities)
                 && item.node.tags) {
             return item.node.tags
                 .filter((tag) => tag.tag === GameTag.ZONE)
