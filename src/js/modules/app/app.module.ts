@@ -45,6 +45,7 @@ import { TooltipsComponent, Tooltip } from '../../components/tooltips.component'
 import { BoardCardFrameComponent } from '../../components/game/board/board-card-frame.component';
 import { BoardCardStatsComponent } from '../../components/game/board/board-card-stats.component';
 import { NarratorService } from '../../services/parser/narrator.service';
+import { TurnNarratorComponent } from '../../components/turn-narrator.component';
 
 
 @NgModule({
@@ -60,6 +61,7 @@ import { NarratorService } from '../../services/parser/narrator.service';
 	declarations: [
 		AppComponent,
 		GameComponent,
+		TurnNarratorComponent,
 		HandComponent,
 		PlayAreaComponent,
 		HandComponent,

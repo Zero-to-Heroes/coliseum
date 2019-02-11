@@ -19,6 +19,7 @@ import { NGXLogger } from 'ngx-logger';
 				[opponentId]="game.players[1].playerId"
 				[entities]="entities">
 			</game>
+			<turn-narrator [text]="text"></turn-narrator>
 			<tooltips></tooltips>
 		</div>
 	`,
@@ -28,6 +29,7 @@ export class AppComponent {
 
 	game: Game;
 	entities: Map<number, Entity>;
+	text: string;
 
 	private currentActionInTurn: number = 0;
 	private currentTurn: number = 0;
@@ -49,6 +51,7 @@ export class AppComponent {
 		this.game = this.gameParser.parse(replayXml);
 		this.logger.info('[app] Converted game', this.game);
 		this.entities = this.computeNewEntities();
+		this.text = this.computeText();
         if (!(<ViewRef>this.cdr).destroyed) {
             this.cdr.detectChanges();
         }
@@ -65,6 +68,8 @@ export class AppComponent {
 				break;
 		}
 		this.entities = this.computeNewEntities();
+		this.text = this.computeText();
+		this.logger.debug('set text', this.text);
         if (!(<ViewRef>this.cdr).destroyed) {
             this.cdr.detectChanges();
         }
@@ -72,6 +77,10 @@ export class AppComponent {
 
 	private computeNewEntities(): Map<number, Entity> {
 		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].entities;
+	}
+
+	private computeText(): string {
+		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].textRaw;
 	}
 
 	private moveCursorToNextAction() {
