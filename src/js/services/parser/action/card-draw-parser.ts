@@ -10,6 +10,7 @@ import { AllCardsService } from "../../all-cards.service";
 import { Entity } from "../../../models/game/entity";
 import { Map } from "immutable";
 import { ShowEntityHistoryItem } from "../../../models/history/show-entity-history-item";
+import { uniq } from 'lodash';
 
 export class CardDrawParser implements Parser {
 
@@ -30,7 +31,10 @@ export class CardDrawParser implements Parser {
 
         // We typically get a TagChange when the card is hidden, so typically when our opponent draws a card
         if (item instanceof TagChangeHistoryItem) {
-            if (item.tag.tag == GameTag.ZONE && item.tag.value == Zone.HAND) {
+            const previousZone = entitiesBeforeAction.get(item.tag.entity).getTag(GameTag.ZONE);
+            if (item.tag.tag == GameTag.ZONE 
+                    && item.tag.value == Zone.HAND 
+                    && (previousZone === Zone.DECK || !previousZone)) {
                 return [CardDrawAction.create(
                     {
                         timestamp: item.timestamp,
@@ -43,8 +47,9 @@ export class CardDrawParser implements Parser {
         }
         // ShowEntity also happens, for instance when you draw a card with Life Tap
         if (item instanceof ShowEntityHistoryItem) {
-            console.log('considering card draw for show history', GameTag[GameTag.ZONE], item.entityDefintion.id, item, item.entityDefintion.tags.toJS(), item.entityDefintion.tags.get(GameTag[GameTag.ZONE]))
-            if (item.entityDefintion.tags.get(GameTag[GameTag.ZONE]) === Zone.HAND) {
+            const previousZone = entitiesBeforeAction.get(item.entityDefintion.id).getTag(GameTag.ZONE);
+            if (item.entityDefintion.tags.get(GameTag[GameTag.ZONE]) === Zone.HAND 
+                    && (previousZone === Zone.DECK || !previousZone)) {
                 return [CardDrawAction.create(
                     {
                         timestamp: item.timestamp,
@@ -59,6 +64,10 @@ export class CardDrawParser implements Parser {
         if (item instanceof ActionHistoryItem) {
             return (item.node.showEntities || item.node.fullEntities || [])
                     .filter((entity) => entity.tags.get(GameTag[GameTag.ZONE]) == 3)
+                    .filter((entity) => {
+                        const previousZone = entitiesBeforeAction.get(entity.id).getTag(GameTag.ZONE);
+                        return (previousZone === Zone.DECK || !previousZone);
+                    })
                     .map((entity) => {
                         return CardDrawAction.create(
                             {
@@ -75,6 +84,31 @@ export class CardDrawParser implements Parser {
     }
 
     public reduce(actions: ReadonlyArray<Action>): ReadonlyArray<Action> {
-        return actions;
+        const result: Action[] = [];
+        let previousAction: Action;
+        for (let i = 0; i < actions.length; i++) {
+            const currentAction = actions[i];
+            if (previousAction instanceof CardDrawAction && currentAction instanceof CardDrawAction) {
+                const index = result.indexOf(previousAction);
+                previousAction = this.mergeActions(previousAction, currentAction);
+                result[index] = previousAction;
+            }
+            else {
+                previousAction = currentAction;
+                result.push(currentAction);
+            }
+        }
+        return result;
+    }
+
+    private mergeActions(previousAction: CardDrawAction, currentAction: CardDrawAction): CardDrawAction {
+        return CardDrawAction.create(
+            {
+                timestamp: previousAction.timestamp,
+                index: previousAction.index,
+                entities: currentAction.entities,
+                data: uniq([...uniq(previousAction.data || []), ...uniq(currentAction.data || [])]),
+            },
+            this.allCards)
     }
 }
