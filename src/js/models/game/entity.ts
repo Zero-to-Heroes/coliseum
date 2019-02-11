@@ -15,7 +15,7 @@ export class Entity {
     }
 
     public getTag(tag: GameTag): number {
-        return this.tags.get(GameTag[tag]);
+        return !this.tags ? -1 : this.tags.get(GameTag[tag]);
     }
 
     public isRevealed(): boolean {
