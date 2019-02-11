@@ -68,16 +68,29 @@ export class GamePopulationService {
     }
     
     private initializeFullEntity(historyItem: FullEntityHistoryItem) {
+        const newAttributes: any = {};
+        // We use the ShowEntity only to update the cardID at this stage 
+        // and for a few other tags.
+        // Since we don't stop at mulligan stage, this means that otherwise 
+        // a lot of other entities will be created
+        if (historyItem.entityDefintion.cardID) {
+            newAttributes.cardID = historyItem.entityDefintion.cardID;
+        }
         const entity: Entity = this.entities
                 .get(historyItem.entityDefintion.id, Entity.create({ id: historyItem.entityDefintion.id } as Entity))
-                .update(historyItem.entityDefintion as EntityDefinition);
+                .update(newAttributes as EntityDefinition);
         this.entities = this.entities.set(entity.id, entity);
     }
     
     private initializeShowEntity(historyItem: ShowEntityHistoryItem) {
+        const newAttributes: any = {};
+        // Same here
+        if (historyItem.entityDefintion.cardID) {
+            newAttributes.cardID = historyItem.entityDefintion.cardID;
+        }
         const entity: Entity = this.entities
                 .get(historyItem.entityDefintion.id, Entity.create({ id: historyItem.entityDefintion.id } as Entity))
-                .update(historyItem.entityDefintion as EntityDefinition);
+                .update(newAttributes as EntityDefinition);
         this.entities = this.entities.set(entity.id, entity);
     }
 

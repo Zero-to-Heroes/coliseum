@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Map, fromJS } from "immutable";
+import { Map } from "immutable";
 import { HistoryItem } from '../../models/history/history-item';
 import { Entity } from '../../models/game/entity';
 import { TagChangeHistoryItem } from '../../models/history/tag-change-history-item';
-import { EntityDefinition } from '../../models/parser/entity-definition';
 import { ShowEntityHistoryItem } from '../../models/history/show-entity-history-item';
 import { GameTag } from '../../models/enums/game-tags';
 import { Step } from '../../models/enums/step';
-import { Game } from '../../models/game/game';
-import { Turn } from '../../models/game/turn';
+import { FullEntityHistoryItem } from '../../models/history/full-entity-history-item';
 
 @Injectable()
 export class GameStateParserService {
@@ -30,6 +28,9 @@ export class GameStateParserService {
             else if (item instanceof ShowEntityHistoryItem) {
                 entities = this.updateWithShowEntity(item, entities);
             }
+            else if (item instanceof FullEntityHistoryItem) {
+                entities = this.updateWithFullEntity(item, entities);
+            }
         }
         return entities;
     }
@@ -42,6 +43,14 @@ export class GameStateParserService {
     }
     
     private updateWithShowEntity(historyItem: ShowEntityHistoryItem, entities: Map<number, Entity>): Map<number, Entity> {
+        // No default creation - if the entity is not registered yet, it's a bug
+        const entity: Entity = entities
+                .get(historyItem.entityDefintion.id)
+                .update(historyItem.entityDefintion);
+        return entities.set(entity.id, entity);
+    }
+    
+    private updateWithFullEntity(historyItem: FullEntityHistoryItem, entities: Map<number, Entity>): Map<number, Entity> {
         // No default creation - if the entity is not registered yet, it's a bug
         const entity: Entity = entities
                 .get(historyItem.entityDefintion.id)

@@ -9,16 +9,20 @@ import { CardDrawAction } from "../../../models/action/card-draw-action";
 import { AllCardsService } from "../../all-cards.service";
 import { Entity } from "../../../models/game/entity";
 import { Map } from "immutable";
+import { ShowEntityHistoryItem } from "../../../models/history/show-entity-history-item";
 
 export class CardDrawParser implements Parser {
 
     constructor(private allCards: AllCardsService) {}
 
     public applies(item: HistoryItem): boolean {
-        return item instanceof TagChangeHistoryItem || item instanceof ActionHistoryItem;
+        return item instanceof TagChangeHistoryItem || item instanceof ActionHistoryItem || item instanceof ShowEntityHistoryItem;
     }
 
-    public parse(item: TagChangeHistoryItem | ActionHistoryItem, entities: Map<number, Entity>, currentTurn: number): Action[] {
+    public parse(
+            item: TagChangeHistoryItem | ActionHistoryItem | ShowEntityHistoryItem, 
+            entities: Map<number, Entity>, 
+            currentTurn: number): Action[] {
         if (currentTurn == 0) {
             return;
         }
@@ -31,6 +35,19 @@ export class CardDrawParser implements Parser {
                         timestamp: item.timestamp,
                         index: item.index,
                         data: [item.tag.entity],
+                    },
+                    this.allCards)];
+            }
+        }
+        // ShowEntity also happens, for instance when you draw a card with Life Tap
+        if (item instanceof ShowEntityHistoryItem) {
+            console.log('considering card draw for show history', GameTag[GameTag.ZONE], item.entityDefintion.id, item, item.entityDefintion.tags.toJS(), item.entityDefintion.tags.get(GameTag[GameTag.ZONE]))
+            if (item.entityDefintion.tags.get(GameTag[GameTag.ZONE]) === Zone.HAND) {
+                return [CardDrawAction.create(
+                    {
+                        timestamp: item.timestamp,
+                        index: item.index,
+                        data: [item.entityDefintion.id],
                     },
                     this.allCards)];
             }
