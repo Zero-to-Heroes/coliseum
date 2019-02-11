@@ -20,24 +20,29 @@ export class MulliganCardParser implements Parser {
         return item instanceof ActionHistoryItem;
     }
 
-    public parse(item: ActionHistoryItem, entities: Map<number, Entity>, currentTurn: number): Action[] {
+    public parse(
+        item: ActionHistoryItem, 
+        currentTurn: number, 
+        entitiesBeforeAction: Map<number, Entity>, 
+        entitiesAfterAction: Map<number, Entity>): Action[] {
         if (currentTurn > 0) {
             return;
         }
         // Adding the cards mulliganed by the player
         if (parseInt(item.node.attributes.type) == BlockType.TRIGGER
                 && item.node.hideEntities
-                && GameHepler.isPlayerEntity(parseInt(item.node.attributes.entity), entities)) {
+                && GameHepler.isPlayerEntity(parseInt(item.node.attributes.entity), entitiesBeforeAction)) {
             return [MulliganCardAction.create(
                 {
                     timestamp: item.timestamp,
                     index: item.index,
+                    entities: entitiesAfterAction,
                     playerMulligan: item.node.hideEntities
                 },
                 this.allCards)];
         }
         if (parseInt(item.node.attributes.type) == BlockType.TRIGGER 
-                && GameHepler.isPlayerEntity(parseInt(item.node.attributes.entity), entities)
+                && GameHepler.isPlayerEntity(parseInt(item.node.attributes.entity), entitiesBeforeAction)
                 && item.node.tags) {
             return item.node.tags
                 .filter((tag) => tag.tag === GameTag.ZONE)
@@ -46,6 +51,7 @@ export class MulliganCardParser implements Parser {
                     {
                         timestamp: item.timestamp,
                         index: item.index,
+                        entities: entitiesAfterAction,
                         opponentMulligan: [tag.entity]
                     },
                     this.allCards));
@@ -76,6 +82,7 @@ export class MulliganCardParser implements Parser {
             {
                 timestamp: previousAction.timestamp,
                 index: previousAction.index,
+                entities: currentAction.entities,
                 playerMulligan: [...(previousAction.playerMulligan || []), ...(currentAction.playerMulligan || [])],
                 opponentMulligan: [...(previousAction.opponentMulligan || []), ...(currentAction.opponentMulligan || [])]
             },

@@ -18,17 +18,22 @@ export class HeroPowerUsedParser implements Parser {
         return item instanceof ActionHistoryItem;
     }
 
-    public parse(item: ActionHistoryItem, entities: Map<number, Entity>, currentTurn: number): Action[] {
+    public parse(
+            item: ActionHistoryItem, 
+            currentTurn: number, 
+            entitiesBeforeAction: Map<number, Entity>, 
+            entitiesAfterAction: Map<number, Entity>): Action[] {
         if (parseInt(item.node.attributes.type) !== BlockType.PLAY) {
             return;
         }
 
-        const entity = entities.get(parseInt(item.node.attributes.entity));
+        const entity = entitiesBeforeAction.get(parseInt(item.node.attributes.entity));
         if (entity.getTag(GameTag.CARDTYPE) === CardType.HERO_POWER) {
             return [HeroPowerUsedAction.create(
                 {
                     timestamp: item.timestamp,
                     index: item.index,
+                    entities: entitiesAfterAction,
                     entityId: entity.id,
                 },
                 this.allCards)];

@@ -14,10 +14,15 @@ export class StartTurnParser implements Parser {
         return item instanceof TagChangeHistoryItem && item.tag.tag == GameTag.TURN;
     }
 
-    public parse(item: TagChangeHistoryItem | ActionHistoryItem, entities: Map<number, Entity>, currentTurn: number): Action[] {
+    public parse(
+        item: ActionHistoryItem, 
+        currentTurn: number, 
+        entitiesBeforeAction: Map<number, Entity>, 
+        entitiesAfterAction: Map<number, Entity>): Action[] {
         return [StartTurnAction.create({
             timestamp: item.timestamp,
             turn: currentTurn,
+            entities: entitiesAfterAction,
             index: item.index
         })];
     }

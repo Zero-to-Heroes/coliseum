@@ -45,43 +45,8 @@ export class StateProcessorService {
         GameTag.OVERLOAD_LOCKED,
         GameTag.QUEST,
     ];
-    
-	public populateIntermediateStates(game: Game, history: ReadonlyArray<HistoryItem>): Game {
-        let previousStateEntities: Map<number, Entity> = game.entities;
-        let currentActionIndexInTurn = 0;
-        let currentTurnIndex = 0;
-        let turnsWithActions = game.turns;
-        let currentAction: Action = turnsWithActions.get(currentTurnIndex).actions[currentActionIndexInTurn];
-        for (const item of history) {
-            if (!item.index) {
-                this.logger.error('No index in item', item);
-            }
-            if (item.index <= currentAction.index) {
-                previousStateEntities = this.applyHistory(previousStateEntities, item);
-            }
-            else {
-                const newAction = currentAction.update(previousStateEntities);
-                const newActions = [...turnsWithActions.get(currentTurnIndex).actions];
-                newActions[currentActionIndexInTurn] = newAction;
-                const readonlyNewActions: ReadonlyArray<Action> = [...newActions];
-                const newTurn = turnsWithActions.get(currentTurnIndex).update({ actions: readonlyNewActions });
-                turnsWithActions = turnsWithActions.set(currentTurnIndex, newTurn);
 
-                currentActionIndexInTurn++;
-                if (currentActionIndexInTurn >= turnsWithActions.get(currentTurnIndex).actions.length) {
-                    currentActionIndexInTurn = 0;
-                    currentTurnIndex++;
-                    if (currentTurnIndex >= turnsWithActions.toArray().length) {
-                        break;
-                    }
-                }
-                currentAction = turnsWithActions.get(currentTurnIndex).actions[currentActionIndexInTurn];
-            }
-        }
-        return Game.createGame(game, { turns: turnsWithActions });
-	}
-
-    private applyHistory(entities: Map<number, Entity>, item: HistoryItem): Map<number, Entity> {
+    public applyHistory(entities: Map<number, Entity>, item: HistoryItem): Map<number, Entity> {
         if (item instanceof TagChangeHistoryItem) {
             return this.updateWithTagChange(item, entities)
         }

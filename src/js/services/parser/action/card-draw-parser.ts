@@ -21,8 +21,9 @@ export class CardDrawParser implements Parser {
 
     public parse(
             item: TagChangeHistoryItem | ActionHistoryItem | ShowEntityHistoryItem, 
-            entities: Map<number, Entity>, 
-            currentTurn: number): Action[] {
+            currentTurn: number, 
+            entitiesBeforeAction: Map<number, Entity>, 
+            entitiesAfterAction: Map<number, Entity>): Action[] {
         if (currentTurn == 0) {
             return;
         }
@@ -34,6 +35,7 @@ export class CardDrawParser implements Parser {
                     {
                         timestamp: item.timestamp,
                         index: item.index,
+                        entities: entitiesAfterAction,
                         data: [item.tag.entity],
                     },
                     this.allCards)];
@@ -47,6 +49,7 @@ export class CardDrawParser implements Parser {
                     {
                         timestamp: item.timestamp,
                         index: item.index,
+                        entities: entitiesAfterAction,
                         data: [item.entityDefintion.id],
                     },
                     this.allCards)];
@@ -61,6 +64,7 @@ export class CardDrawParser implements Parser {
                             {
                                 timestamp: item.timestamp,
                                 index: entity.index,
+                                entities: entitiesAfterAction,
                                 data: [entity.id],
                             },
                             this.allCards);

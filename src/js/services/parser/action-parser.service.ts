@@ -14,18 +14,21 @@ import { NGXLogger } from 'ngx-logger';
 import { StartTurnParser } from './action/start-turn-parser';
 import { AllCardsService } from '../all-cards.service';
 import { HeroPowerUsedParser } from './action/hero-power-used-parser';
+import { Entity } from '../../models/game/entity';
+import { StateProcessorService } from './state-processor.service';
 
 @Injectable()
 export class ActionParserService {
 
     private currentTurn: number = 0;
 
-    constructor(private logger: NGXLogger, private allCards: AllCardsService) {
+    constructor(private logger: NGXLogger, private allCards: AllCardsService, private stateProcessorService: StateProcessorService) {
     }
 
 	public parseActions(game: Game, history: ReadonlyArray<HistoryItem>): Game {
         this.currentTurn = 0;
         let actionsForTurn: ReadonlyArray<Action> = [];
+        let previousStateEntities: Map<number, Entity> = game.entities;
         let turns: Map<number, Turn> = Map<number, Turn>();
         // Recreating this every time lets the parsers store state and emit the action only when necessary
         const actionParsers: Parser[] = this.registerActionParsers(); 
@@ -42,19 +45,18 @@ export class ActionParserService {
                 actionsForTurn = [];
             }
 
+            let newStateEntities = this.stateProcessorService.applyHistory(previousStateEntities, item);
             actionParsers.forEach((parser) => {
                 if (parser.applies(item)) {
-                    // It feels weird to not be able to feed it the entities that were created by the previous 
-                    // action, and instead feed it the base entities. Maybe it's better to assign the entities 
-                    // right after having created the action, instead of doing it in two completely separate 
-                    // steps?
-                    const actions: Action[] = parser.parse(item, game.entities, this.currentTurn);
+                    const actions: Action[] = parser.parse(item, this.currentTurn, previousStateEntities, newStateEntities);
                     if (actions && actions.length > 0) {
                         actionsForTurn = [...actionsForTurn, ...actions];
                     }
                 }
             });
 
+            // Update the state of the game to reflect the latest action
+            previousStateEntities = newStateEntities;
             // TODO: add last actions to the final result
         }
         actionsForTurn = [];
