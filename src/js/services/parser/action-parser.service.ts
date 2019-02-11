@@ -84,7 +84,7 @@ export class ActionParserService {
     private registerActionParsers(): Parser[] {
         return [
             new StartTurnParser(),
-            new MulliganCardParser(this.allCards),
+            new MulliganCardParser(this.allCards, this.logger),
             new CardDrawParser(),
         ];
     }

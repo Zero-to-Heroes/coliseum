@@ -25,19 +25,34 @@ export class MulliganCardAction extends Action {
     }
 
     public enrichWithText(): MulliganCardAction {
-        const ownerNames: string[] = uniq(this.playerMulligan
+        let textRaw = this.buildMulliganText(this.playerMulligan) + '\n' + this.buildMulliganText(this.opponentMulligan);
+        return Object.assign(new MulliganCardAction(this.allCards), this, { textRaw: textRaw });                
+    }
+
+    private buildMulliganText(cards: ReadonlyArray<number>): string {
+        if (!cards) {
+            return '';
+        }
+        const ownerNames: string[] = uniq(cards
                 .map((entityId) => ActionHelper.getOwner(this.entities, entityId))
                 .map((playerEntity) => playerEntity.name));
         if (ownerNames.length !== 1) {
-            throw new Error('Invalid grouping of cards ' + ownerNames + ', ' + this.playerMulligan);
+            throw new Error('Invalid grouping of cards ' + ownerNames + ', ' + cards);
         }
         const ownerName = ownerNames[0];
-        const playerMulliganCardNames = this.playerMulligan
+        const mulliganedCards = cards
                 .map((cardId) => this.entities.get(cardId))
                 .map((entity) => entity.cardID)
-                .map((cardId) => this.allCards.getCard(cardId).name)
-                .join(', ');
-        const textRaw = `\t${ownerName} mulligans ${playerMulliganCardNames}`;
-        return Object.assign(new MulliganCardAction(this.allCards), this, { textRaw: textRaw });                
+                .map((cardId) => this.allCards.getCard(cardId));
+        let mulliganInfo = '';
+        // We don't have the mulligan info, so we just display the amount of cards being mulliganed
+        if (mulliganedCards.some((card) => !card)) {
+            mulliganInfo = `${mulliganedCards.length} cards`;
+        }
+        else {
+            mulliganInfo = mulliganedCards.map((card) => card.name).join(', ');
+        }
+        const textRaw = `\t${ownerName} mulligans ${mulliganInfo}`;
+        return textRaw;
     }
 }
