@@ -11,7 +11,10 @@ import { NGXLogger } from 'ngx-logger';
 		<ul class="hand">
 			<li *ngFor="let entity of _entities; let i = index; trackBy: trackByFn" 
 					[style.marginLeft.%]="i !== 0 ? marginLeft : 0">
-				<card [entity]="entity"></card>
+				<card [entity]="entity" *ngIf="entity.cardID"></card>
+				<img class="unknown-card" 
+					src="http://static.zerotoheroes.com/hearthstone/asset/manastorm/card_unknown.png" 
+					*ngIf="!entity.cardID" />
 			</li>
 		</ul>
 	`,

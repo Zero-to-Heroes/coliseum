@@ -3,9 +3,9 @@ import { Entity } from '../../../models/game/entity';
 import { GameTag } from '../../../models/enums/game-tags';
 import { CardType } from '../../../models/enums/card-type';
 import { CardClass } from '../../../models/enums/card-class';
-import { AllCardsService } from '../../../services/all-cards.service';
 import { Events } from '../../../services/events.service';
 import { NGXLogger } from 'ngx-logger';
+import { AllCardsService } from '../../../services/all-cards.service';
 
 @Component({
 	selector: 'card',
@@ -65,10 +65,6 @@ export class CardComponent implements AfterViewInit {
 		this._entity = entity;
 
 		this.cardId = entity.cardID;
-		this.originalCard = this.cards.getCard(this.cardId);
-		this.cardType = CardType[this.originalCard.type.toUpperCase() as string];
-		this.cardClass = CardClass[this.originalCard.playerClass.toUpperCase() as string];
-
 		this.premium = entity.getTag(GameTag.PREMIUM) == 1;
 		this.attack = entity.getTag(GameTag.ATK);
 		this.health = entity.getTag(GameTag.HEALTH);
@@ -76,6 +72,9 @@ export class CardComponent implements AfterViewInit {
 		this.durability = entity.getTag(GameTag.DURABILITY);
 		this.armor = entity.getTag(GameTag.ARMOR);
 		this.cost = entity.getTag(GameTag.COST);
+		this.originalCard = this.cards.getCard(this.cardId);
+		this.cardType = CardType[this.originalCard.type.toUpperCase() as string];
+		this.cardClass = CardClass[this.originalCard.playerClass.toUpperCase() as string];
 	}
 
 	@Input("hasTooltip") set hasTooltip(hasTooltip: boolean) {
