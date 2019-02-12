@@ -11,6 +11,7 @@ import { NGXLogger } from "ngx-logger";
 import { BlockType } from "../../../models/enums/block-type";
 import { Entity } from "../../../models/game/entity";
 import { Map } from "immutable";
+import { ActionHelper } from "./action-helper";
 
 export class MulliganCardParser implements Parser {
 
@@ -58,21 +59,11 @@ export class MulliganCardParser implements Parser {
     }
 
     public reduce(actions: ReadonlyArray<Action>): ReadonlyArray<Action> {
-        const result: Action[] = [];
-        let previousAction: Action;
-        for (let i = 0; i < actions.length; i++) {
-            const currentAction = actions[i];
-            if (previousAction instanceof MulliganCardAction && currentAction instanceof MulliganCardAction) {
-                const index = result.indexOf(previousAction);
-                previousAction = this.mergeActions(previousAction, currentAction);
-                result[index] = previousAction;
-            }
-            else {
-                previousAction = currentAction;
-                result.push(currentAction);
-            }
-        }
-        return result;
+        return ActionHelper.combineActions<MulliganCardAction>(
+            actions,
+            (action) => action instanceof MulliganCardAction,
+            (previous, current) => this.mergeActions(previous, current)
+        );
     }
 
     private mergeActions(previousAction: MulliganCardAction, currentAction: MulliganCardAction): MulliganCardAction {

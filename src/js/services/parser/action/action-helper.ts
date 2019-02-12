@@ -2,6 +2,7 @@ import { PlayerEntity } from "../../../models/game/player-entity";
 import { Entity } from "../../../models/game/entity";
 import { Map } from "immutable";
 import { GameTag } from "../../../models/enums/game-tags";
+import { Action } from "../../../models/action/action";
 
 export class ActionHelper {
 
@@ -16,5 +17,26 @@ export class ActionHelper {
                     .first();
         }
         return owner as PlayerEntity;
+    }
+
+    public static combineActions<T extends Action> (
+            actions: ReadonlyArray<Action>, 
+            instanceChecker: (a: Action) => boolean,
+            combiner: (a: T, b: T) => T): ReadonlyArray<Action> {
+        const result: Action[] = [];
+        let previousAction: Action;
+        for (let i = 0; i < actions.length; i++) {
+            const currentAction = actions[i];
+            if (instanceChecker(previousAction) && instanceChecker(currentAction)) {
+                const index = result.indexOf(previousAction);
+                previousAction = combiner(previousAction as T, currentAction as T);
+                result[index] = previousAction;
+            }
+            else {
+                previousAction = currentAction;
+                result.push(currentAction);
+            }
+        }
+        return result;
     }
 }

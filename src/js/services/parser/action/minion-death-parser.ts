@@ -11,6 +11,8 @@ import { GameTag } from "../../../models/enums/game-tags";
 import { Zone } from "../../../models/enums/zone";
 import { MinionDeathAction } from "../../../models/action/minion-death-action";
 import { TagChangeHistoryItem } from "../../../models/history/tag-change-history-item";
+import { ActionHelper } from "./action-helper";
+import { mergeAnalyzedFiles } from "@angular/compiler";
 
 export class MinionDeathParser implements Parser {
 
@@ -67,21 +69,11 @@ export class MinionDeathParser implements Parser {
     }
 
     public reduce(actions: ReadonlyArray<Action>): ReadonlyArray<Action> {
-        const result: Action[] = [];
-        let previousAction: Action;
-        for (let i = 0; i < actions.length; i++) {
-            const currentAction = actions[i];
-            if (previousAction instanceof MinionDeathAction && currentAction instanceof MinionDeathAction) {
-                const index = result.indexOf(previousAction);
-                previousAction = this.mergeActions(previousAction, currentAction);
-                result[index] = previousAction;
-            }
-            else {
-                previousAction = currentAction;
-                result.push(currentAction);
-            }
-        }
-        return result;
+        return ActionHelper.combineActions<MinionDeathAction>(
+            actions,
+            (action) => action instanceof MinionDeathAction,
+            (previous, current) => this.mergeActions(previous, current)
+        );
     }
 
     private mergeActions(previousAction: MinionDeathAction, currentAction: MinionDeathAction): MinionDeathAction {
