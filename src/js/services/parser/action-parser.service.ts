@@ -16,6 +16,7 @@ import { AllCardsService } from '../all-cards.service';
 import { HeroPowerUsedParser } from './action/hero-power-used-parser';
 import { Entity } from '../../models/game/entity';
 import { StateProcessorService } from './state-processor.service';
+import { CardPlayedFromHandParser } from './action/card-played-from-hand-parser';
 
 @Injectable()
 export class ActionParserService {
@@ -93,6 +94,7 @@ export class ActionParserService {
             new MulliganCardParser(this.allCards, this.logger),
             new CardDrawParser(this.allCards),
             new HeroPowerUsedParser(this.allCards),
+            new CardPlayedFromHandParser(this.allCards),
         ];
     }
 }
