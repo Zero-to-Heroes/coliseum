@@ -3,6 +3,7 @@ import { Map } from "immutable";
 import { Entity } from "../game/entity";
 import { ActionHelper } from "../../services/parser/action/action-helper";
 import { AllCardsService } from "../../services/all-cards.service";
+import { GameTag } from "../enums/game-tags";
 
 
 export class CardPlayedFromHandAction extends Action {

@@ -23,8 +23,7 @@ export class MulliganCardParser implements Parser {
     public parse(
         item: ActionHistoryItem, 
         currentTurn: number, 
-        entitiesBeforeAction: Map<number, Entity>, 
-        entitiesAfterAction: Map<number, Entity>): Action[] {
+        entitiesBeforeAction: Map<number, Entity>): Action[] {
         if (currentTurn > 0) {
             return;
         }
@@ -36,7 +35,6 @@ export class MulliganCardParser implements Parser {
                 {
                     timestamp: item.timestamp,
                     index: item.index,
-                    entities: entitiesAfterAction,
                     playerMulligan: item.node.hideEntities
                 },
                 this.allCards)];
@@ -51,7 +49,6 @@ export class MulliganCardParser implements Parser {
                     {
                         timestamp: item.timestamp,
                         index: item.index,
-                        entities: entitiesAfterAction,
                         opponentMulligan: [tag.entity]
                     },
                     this.allCards));

@@ -30,6 +30,7 @@ export class ActionParserService {
         this.currentTurn = 0;
         let actionsForTurn: ReadonlyArray<Action> = [];
         let previousStateEntities: Map<number, Entity> = game.entities;
+        let previousProcessedItem: HistoryItem = history[0];
         let turns: Map<number, Turn> = Map<number, Turn>();
         // Recreating this every time lets the parsers store state and emit the action only when necessary
         const actionParsers: Parser[] = this.registerActionParsers(); 
@@ -37,7 +38,11 @@ export class ActionParserService {
         for (const item of history) {
             const updatedTurn: Turn = this.updateCurrentTurn(item, game, actionsForTurn);
             if (updatedTurn) {
-                // Give an opportunity to each parser to "reduce" the action it produced by merging them
+                previousStateEntities = this.stateProcessorService.applyHistoryUntilNow(
+                    previousStateEntities, history, previousProcessedItem, item);
+                actionsForTurn = this.fillMissingEntities(actionsForTurn, previousStateEntities);
+                previousProcessedItem = item;
+                // Give an opportunity to each parser to combine the actions it produced by merging them
                 // For instance, if we two card draws in a row, we might want to display them as a single 
                 // action that draws two cards
                 actionsForTurn = this.reduceActions(actionParsers, actionsForTurn);
@@ -46,23 +51,39 @@ export class ActionParserService {
                 actionsForTurn = [];
             }
 
-            let newStateEntities = this.stateProcessorService.applyHistory(previousStateEntities, item);
             actionParsers.forEach((parser) => {
                 if (parser.applies(item)) {
-                    const actions: Action[] = parser.parse(item, this.currentTurn, previousStateEntities, newStateEntities);
+                    const actions: Action[] = parser.parse(item, this.currentTurn, previousStateEntities);
                     if (actions && actions.length > 0) {
+                        // When we perform an action, we want to show the result of the state updates until the next action is 
+                        // played.
+                        previousStateEntities = this.stateProcessorService.applyHistoryUntilNow(
+                            previousStateEntities, history, previousProcessedItem, item);
+                        actionsForTurn = this.fillMissingEntities(actionsForTurn, previousStateEntities);
                         actionsForTurn = [...actionsForTurn, ...actions];
+                        previousProcessedItem = item;
                     }
                 }
             });
-
-            // Update the state of the game to reflect the latest action
-            previousStateEntities = newStateEntities;
-            // TODO: add last actions to the final result
         }
         actionsForTurn = [];
 
         return Game.createGame(game, { turns: turns });
+    }
+    
+    private fillMissingEntities(
+            actionsForTurn: ReadonlyArray<Action>, 
+            previousStateEntities: Map<number, Entity>): ReadonlyArray<Action> {
+        let newActionsForTurn = [];
+        for (let i = 0; i < actionsForTurn.length; i++) {
+            if (actionsForTurn[i].entities) {
+                newActionsForTurn.push(actionsForTurn[i]);
+            }
+            else {
+                newActionsForTurn.push(actionsForTurn[i].update(previousStateEntities));
+            }
+        }
+        return newActionsForTurn;
     }
     
     private updateCurrentTurn(item: HistoryItem, game: Game, actions: ReadonlyArray<Action>): Turn {

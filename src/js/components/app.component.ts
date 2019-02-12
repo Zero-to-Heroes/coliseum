@@ -68,8 +68,9 @@ export class AppComponent {
 				break;
 		}
 		this.entities = this.computeNewEntities();
+		console.log('new entities', this.entities.toJS());
+		console.log('debug 27', this.entities.get(27).tags.toJS())
 		this.text = this.computeText();
-		this.logger.debug('set text', this.text);
         if (!(<ViewRef>this.cdr).destroyed) {
             this.cdr.detectChanges();
         }

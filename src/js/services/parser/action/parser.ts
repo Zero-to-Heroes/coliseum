@@ -5,6 +5,6 @@ import { Map } from "immutable";
 
 export interface Parser {
     applies(item: HistoryItem): boolean;
-    parse(item: HistoryItem, currentTurn: number, entitiesBeforeAction: Map<number, Entity>, entitiesAfterAction: Map<number, Entity>): Action[];
+    parse(item: HistoryItem, currentTurn: number, entitiesBeforeAction: Map<number, Entity>): Action[];
     reduce(actions: ReadonlyArray<Action>): ReadonlyArray<Action>;
 }

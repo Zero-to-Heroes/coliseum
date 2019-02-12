@@ -24,8 +24,7 @@ export class CardPlayedFromHandParser implements Parser {
     public parse(
             item: ActionHistoryItem, 
             currentTurn: number, 
-            entitiesBeforeAction: Map<number, Entity>, 
-            entitiesAfterAction: Map<number, Entity>): Action[] {
+            entitiesBeforeAction: Map<number, Entity>): Action[] {
         if (parseInt(item.node.attributes.type) !== BlockType.PLAY) {
             return;
         }
@@ -66,7 +65,6 @@ export class CardPlayedFromHandParser implements Parser {
             {
                 timestamp: item.timestamp,
                 index: item.index,
-                entities: entitiesAfterAction,
                 entityId: playedCardId,
             },
             this.allCards)];

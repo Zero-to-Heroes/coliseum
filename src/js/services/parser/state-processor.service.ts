@@ -1,10 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HistoryItem } from '../../models/history/history-item';
 import { Map } from 'immutable';
-import { Turn } from '../../models/game/turn';
-import { Game } from '../../models/game/game';
-import { EntityDefinition } from '../../models/parser/entity-definition';
-import { Action } from '../../models/action/action';
 import { TagChangeHistoryItem } from '../../models/history/tag-change-history-item';
 import { Entity } from '../../models/game/entity';
 import { GameTag } from '../../models/enums/game-tags';
@@ -12,6 +8,7 @@ import { ShowEntityHistoryItem } from '../../models/history/show-entity-history-
 import { FullEntityHistoryItem } from '../../models/history/full-entity-history-item';
 import { ChangeEntityHistoryItem } from '../../models/history/change-entity-history-item';
 import { NGXLogger } from 'ngx-logger';
+import { ActionHistoryItem } from '../../models/history/action-history-item';
 
 @Injectable()
 export class StateProcessorService {
@@ -45,6 +42,21 @@ export class StateProcessorService {
         GameTag.OVERLOAD_LOCKED,
         GameTag.QUEST,
     ];
+    
+    public applyHistoryUntilNow(
+            previousStateEntities: Map<number, Entity>, 
+            history: ReadonlyArray<HistoryItem>, 
+            previousProcessedItem: HistoryItem, 
+            item: HistoryItem): Map<number, Entity> {
+        const startIndex = history.indexOf(previousProcessedItem);
+        const stopIndex = history.indexOf(item);
+        const futureHistory = history.slice(startIndex, stopIndex);
+        let newStateEntities = previousStateEntities;
+        for (let historyItem of futureHistory) {
+            newStateEntities = this.applyHistory(newStateEntities, historyItem);
+        }
+        return newStateEntities;
+    }    
 
     public applyHistory(entities: Map<number, Entity>, item: HistoryItem): Map<number, Entity> {
         if (item instanceof TagChangeHistoryItem) {

@@ -17,12 +17,10 @@ export class StartTurnParser implements Parser {
     public parse(
         item: ActionHistoryItem, 
         currentTurn: number, 
-        entitiesBeforeAction: Map<number, Entity>, 
-        entitiesAfterAction: Map<number, Entity>): Action[] {
+        entitiesBeforeAction: Map<number, Entity>): Action[] {
         return [StartTurnAction.create({
             timestamp: item.timestamp,
             turn: currentTurn,
-            entities: entitiesAfterAction,
             index: item.index
         })];
     }
