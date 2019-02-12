@@ -19,6 +19,7 @@ import { StateProcessorService } from './state-processor.service';
 import { CardPlayedFromHandParser } from './action/card-played-from-hand-parser';
 import { AttackParser } from './action/attack-parser';
 import { MinionDeathParser } from './action/minion-death-parser';
+import { PowerTargetParser } from './action/power-target-parser';
 
 @Injectable()
 export class ActionParserService {
@@ -37,6 +38,7 @@ export class ActionParserService {
             new CardPlayedFromHandParser(this.allCards),
             new AttackParser(this.allCards),
             new MinionDeathParser(this.allCards),
+            new PowerTargetParser(this.allCards),
         ];
     }
 
