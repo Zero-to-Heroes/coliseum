@@ -21,13 +21,13 @@ export class ActionHelper {
 
     public static combineActions<T extends Action> (
             actions: ReadonlyArray<Action>, 
-            instanceChecker: (a: Action) => boolean,
+            shouldMerge: (a: Action, b: Action) => boolean,
             combiner: (a: T, b: T) => T): ReadonlyArray<Action> {
         const result: Action[] = [];
         let previousAction: Action;
         for (let i = 0; i < actions.length; i++) {
             const currentAction = actions[i];
-            if (instanceChecker(previousAction) && instanceChecker(currentAction)) {
+            if (shouldMerge(previousAction, currentAction)) {
                 const index = result.indexOf(previousAction);
                 previousAction = combiner(previousAction as T, currentAction as T);
                 result[index] = previousAction;

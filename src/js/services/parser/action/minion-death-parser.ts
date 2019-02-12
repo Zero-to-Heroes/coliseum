@@ -71,7 +71,7 @@ export class MinionDeathParser implements Parser {
     public reduce(actions: ReadonlyArray<Action>): ReadonlyArray<Action> {
         return ActionHelper.combineActions<MinionDeathAction>(
             actions,
-            (action) => action instanceof MinionDeathAction,
+            (previous, current) => previous instanceof MinionDeathAction && current instanceof MinionDeathAction,
             (previous, current) => this.mergeActions(previous, current)
         );
     }

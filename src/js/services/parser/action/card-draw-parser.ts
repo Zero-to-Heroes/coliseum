@@ -84,7 +84,7 @@ export class CardDrawParser implements Parser {
     public reduce(actions: ReadonlyArray<Action>): ReadonlyArray<Action> {
         return ActionHelper.combineActions<CardDrawAction>(
             actions,
-            (action) => action instanceof CardDrawAction,
+            (previous, current) => previous instanceof CardDrawAction && current instanceof CardDrawAction,
             (previous, current) => this.mergeActions(previous, current)
         );
     }

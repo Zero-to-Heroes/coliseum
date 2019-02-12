@@ -61,7 +61,7 @@ export class MulliganCardParser implements Parser {
     public reduce(actions: ReadonlyArray<Action>): ReadonlyArray<Action> {
         return ActionHelper.combineActions<MulliganCardAction>(
             actions,
-            (action) => action instanceof MulliganCardAction,
+            (previous, current) => previous instanceof MulliganCardAction && current instanceof MulliganCardAction,
             (previous, current) => this.mergeActions(previous, current)
         );
     }
