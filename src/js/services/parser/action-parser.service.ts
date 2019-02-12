@@ -17,6 +17,8 @@ import { HeroPowerUsedParser } from './action/hero-power-used-parser';
 import { Entity } from '../../models/game/entity';
 import { StateProcessorService } from './state-processor.service';
 import { CardPlayedFromHandParser } from './action/card-played-from-hand-parser';
+import { AttackParser } from './action/attack-parser';
+import { MinionDeathParser } from './action/minion-death-parser';
 
 @Injectable()
 export class ActionParserService {
@@ -33,6 +35,8 @@ export class ActionParserService {
             new CardDrawParser(this.allCards),
             new HeroPowerUsedParser(this.allCards),
             new CardPlayedFromHandParser(this.allCards),
+            new AttackParser(this.allCards),
+            new MinionDeathParser(this.allCards),
         ];
     }
 
@@ -63,7 +67,7 @@ export class ActionParserService {
 
             actionParsers.forEach((parser) => {
                 if (parser.applies(item)) {
-                    const actions: Action[] = parser.parse(item, this.currentTurn, previousStateEntities);
+                    const actions: Action[] = parser.parse(item, this.currentTurn, previousStateEntities, history);
                     if (actions && actions.length > 0) {
                         // When we perform an action, we want to show the result of the state updates until the next action is 
                         // played.
