@@ -8,7 +8,6 @@ import { ShowEntityHistoryItem } from '../../models/history/show-entity-history-
 import { FullEntityHistoryItem } from '../../models/history/full-entity-history-item';
 import { ChangeEntityHistoryItem } from '../../models/history/change-entity-history-item';
 import { NGXLogger } from 'ngx-logger';
-import { ActionHistoryItem } from '../../models/history/action-history-item';
 
 @Injectable()
 export class StateProcessorService {

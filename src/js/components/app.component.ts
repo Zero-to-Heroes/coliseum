@@ -49,7 +49,7 @@ export class AppComponent {
 
 	public loadReplay(replayXml: Node) {
 		this.game = this.gameParser.parse(replayXml);
-		this.logger.info('[app] Converted game', this.game);
+		this.logger.info('[app] Converted game');
 		this.entities = this.computeNewEntities();
 		this.text = this.computeText();
         if (!(<ViewRef>this.cdr).destroyed) {
@@ -68,8 +68,6 @@ export class AppComponent {
 				break;
 		}
 		this.entities = this.computeNewEntities();
-		console.log('new entities', this.entities.toJS());
-		console.log('debug 27', this.entities.get(27).tags.toJS())
 		this.text = this.computeText();
         if (!(<ViewRef>this.cdr).destroyed) {
             this.cdr.detectChanges();

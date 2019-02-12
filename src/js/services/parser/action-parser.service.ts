@@ -26,6 +26,16 @@ export class ActionParserService {
     constructor(private logger: NGXLogger, private allCards: AllCardsService, private stateProcessorService: StateProcessorService) {
     }
 
+    private registerActionParsers(): Parser[] {
+        return [
+            new StartTurnParser(),
+            new MulliganCardParser(this.allCards, this.logger),
+            new CardDrawParser(this.allCards),
+            new HeroPowerUsedParser(this.allCards),
+            new CardPlayedFromHandParser(this.allCards),
+        ];
+    }
+
 	public parseActions(game: Game, history: ReadonlyArray<HistoryItem>): Game {
         this.currentTurn = 0;
         let actionsForTurn: ReadonlyArray<Action> = [];
@@ -107,15 +117,5 @@ export class ActionParserService {
             reducedActions = parser.reduce(reducedActions);
         }
         return reducedActions;
-    }
-
-    private registerActionParsers(): Parser[] {
-        return [
-            new StartTurnParser(),
-            new MulliganCardParser(this.allCards, this.logger),
-            new CardDrawParser(this.allCards),
-            new HeroPowerUsedParser(this.allCards),
-            new CardPlayedFromHandParser(this.allCards),
-        ];
     }
 }
