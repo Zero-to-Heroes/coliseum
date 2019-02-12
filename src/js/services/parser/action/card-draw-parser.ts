@@ -35,7 +35,8 @@ export class CardDrawParser implements Parser {
             const previousZone = entitiesBeforeAction.get(item.tag.entity).getTag(GameTag.ZONE);
             if (item.tag.tag == GameTag.ZONE 
                     && item.tag.value == Zone.HAND 
-                    && (previousZone === Zone.DECK || !previousZone)) {
+                    // SETASIDE is for discovery actions
+                    && (previousZone === Zone.DECK || previousZone === Zone.SETASIDE || !previousZone)) {
                 return [CardDrawAction.create(
                     {
                         timestamp: item.timestamp,

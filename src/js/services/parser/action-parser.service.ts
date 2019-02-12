@@ -21,6 +21,8 @@ import { AttackParser } from './action/attack-parser';
 import { MinionDeathParser } from './action/minion-death-parser';
 import { PowerTargetParser } from './action/power-target-parser';
 import { CardTargetParser } from './action/card-target-parser';
+import { DiscoverParser } from './action/discover-parser';
+import { DiscoverAction } from '../../models/action/discover-action';
 
 @Injectable()
 export class ActionParserService {
@@ -41,6 +43,7 @@ export class ActionParserService {
             new MinionDeathParser(this.allCards),
             new PowerTargetParser(this.allCards),
             new CardTargetParser(this.allCards),
+            new DiscoverParser(this.allCards),
         ];
     }
 
