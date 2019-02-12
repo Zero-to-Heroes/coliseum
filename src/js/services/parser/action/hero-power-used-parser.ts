@@ -21,7 +21,8 @@ export class HeroPowerUsedParser implements Parser {
     public parse(
             item: ActionHistoryItem, 
             currentTurn: number, 
-            entitiesBeforeAction: Map<number, Entity>): Action[] {
+            entitiesBeforeAction: Map<number, Entity>,
+            history: ReadonlyArray<HistoryItem>): Action[] {
         if (parseInt(item.node.attributes.type) !== BlockType.PLAY) {
             return;
         }

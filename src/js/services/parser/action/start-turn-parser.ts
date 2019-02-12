@@ -17,7 +17,8 @@ export class StartTurnParser implements Parser {
     public parse(
         item: ActionHistoryItem, 
         currentTurn: number, 
-        entitiesBeforeAction: Map<number, Entity>): Action[] {
+        entitiesBeforeAction: Map<number, Entity>,
+        history: ReadonlyArray<HistoryItem>): Action[] {
         return [StartTurnAction.create({
             timestamp: item.timestamp,
             turn: currentTurn,
