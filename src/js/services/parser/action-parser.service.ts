@@ -88,6 +88,16 @@ export class ActionParserService {
                 }
             });
         }
+
+        previousStateEntities = this.stateProcessorService.applyHistoryUntilNow(
+            previousStateEntities, history, previousProcessedItem, history[history.length - 1]);
+        actionsForTurn = this.fillMissingEntities(actionsForTurn, previousStateEntities);
+        // Give an opportunity to each parser to combine the actions it produced by merging them
+        // For instance, if we two card draws in a row, we might want to display them as a single 
+        // action that draws two cards
+        actionsForTurn = this.reduceActions(actionParsers, actionsForTurn);
+        const turnWithNewActions = game.turns.get(this.currentTurn).update({actions: actionsForTurn});
+        turns = turns.set(turnWithNewActions.turn == 'mulligan' ? 0 : parseInt(turnWithNewActions.turn), turnWithNewActions);
         actionsForTurn = [];
 
         return Game.createGame(game, { turns: turns });
