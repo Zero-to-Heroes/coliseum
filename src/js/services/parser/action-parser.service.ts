@@ -23,6 +23,9 @@ import { PowerTargetParser } from './action/power-target-parser';
 import { CardTargetParser } from './action/card-target-parser';
 import { DiscoverParser } from './action/discover-parser';
 import { SummonsParser } from './action/summons-parser';
+import { EndOfMulliganParser } from './action/end-of-mulligan-parser';
+import { StartTurnAction } from '../../models/action/start-turn-action';
+import { StartOfMulliganParser } from './action/start-of-mulligan-parser';
 
 @Injectable()
 export class ActionParserService {
@@ -36,6 +39,8 @@ export class ActionParserService {
         return [
             new StartTurnParser(),
             new MulliganCardParser(this.allCards, this.logger),
+            // new EndOfMulliganParser(),
+            new StartOfMulliganParser(),
             new CardDrawParser(this.allCards),
             new HeroPowerUsedParser(this.allCards),
             new CardPlayedFromHandParser(this.allCards),
@@ -58,21 +63,6 @@ export class ActionParserService {
         const actionParsers: Parser[] = this.registerActionParsers(); 
 
         for (const item of history) {
-            const updatedTurn: Turn = this.updateCurrentTurn(item, game, actionsForTurn);
-            if (updatedTurn) {
-                previousStateEntities = this.stateProcessorService.applyHistoryUntilNow(
-                    previousStateEntities, history, previousProcessedItem, item);
-                actionsForTurn = this.fillMissingEntities(actionsForTurn, previousStateEntities);
-                previousProcessedItem = item;
-                // Give an opportunity to each parser to combine the actions it produced by merging them
-                // For instance, if we two card draws in a row, we might want to display them as a single 
-                // action that draws two cards
-                actionsForTurn = this.reduceActions(actionParsers, actionsForTurn);
-                const turnWithNewActions = updatedTurn.update({actions: actionsForTurn});
-                turns = turns.set(turnWithNewActions.turn == 'mulligan' ? 0 : parseInt(turnWithNewActions.turn), turnWithNewActions);
-                actionsForTurn = [];
-            }
-
             actionParsers.forEach((parser) => {
                 if (parser.applies(item)) {
                     const actions: Action[] = parser.parse(item, this.currentTurn, previousStateEntities, history);
@@ -87,6 +77,25 @@ export class ActionParserService {
                     }
                 }
             });
+
+            const updatedTurn: Turn = this.updateCurrentTurn(item, game, actionsForTurn);
+            if (updatedTurn) {
+                // The last action is a start turn action, which we want to keep for the start 
+                // of the next turn instead
+                const lastAction = actionsForTurn[actionsForTurn.length - 1];
+                actionsForTurn = actionsForTurn.slice(0, actionsForTurn.length - 1);
+                previousStateEntities = this.stateProcessorService.applyHistoryUntilNow(
+                    previousStateEntities, history, previousProcessedItem, item);
+                actionsForTurn = this.fillMissingEntities(actionsForTurn, previousStateEntities);
+                previousProcessedItem = item;
+                // Give an opportunity to each parser to combine the actions it produced by merging them
+                // For instance, if we two card draws in a row, we might want to display them as a single 
+                // action that draws two cards
+                actionsForTurn = this.reduceActions(actionParsers, actionsForTurn);
+                const turnWithNewActions = updatedTurn.update({actions: actionsForTurn});
+                turns = turns.set(turnWithNewActions.turn == 'mulligan' ? 0 : parseInt(turnWithNewActions.turn), turnWithNewActions);
+                actionsForTurn = [lastAction];
+            }
         }
 
         previousStateEntities = this.stateProcessorService.applyHistoryUntilNow(
@@ -119,15 +128,12 @@ export class ActionParserService {
     }
     
     private updateCurrentTurn(item: HistoryItem, game: Game, actions: ReadonlyArray<Action>): Turn {
-        if (item instanceof TagChangeHistoryItem 
-                && GameHepler.isGameEntity(item.tag.entity, game.entities)
-                && item.tag.tag == GameTag.TURN) {
+        if (actions.length > 1 && actions[actions.length - 1] instanceof StartTurnAction) {
             let turnToUpdate: Turn = game.turns.get(this.currentTurn);
             if (!turnToUpdate) {
                 this.logger.warn('could not find turn to update', item, this.currentTurn, game.turns.toJS());
             }
-            turnToUpdate = turnToUpdate.update({ actions: actions });
-            this.currentTurn = item.tag.value - 1;
+            this.currentTurn++;
             return turnToUpdate;
         }
         return null;

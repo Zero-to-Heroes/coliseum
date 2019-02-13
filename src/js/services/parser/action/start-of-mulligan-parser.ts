@@ -7,24 +7,31 @@ import { GameTag } from "../../../models/enums/game-tags";
 import { StartTurnAction } from "../../../models/action/start-turn-action";
 import { Map } from "immutable";
 import { Entity } from "../../../models/game/entity";
+import { Mulligan } from "../../../models/enums/mulligan";
 import { Step } from "../../../models/enums/step";
 
-export class StartTurnParser implements Parser {
+export class StartOfMulliganParser implements Parser {
+
+    private numberOfMulligansDone = 0;
 
     public applies(item: HistoryItem): boolean {
         return item instanceof TagChangeHistoryItem 
-                && item.tag.tag === GameTag.STEP 
-                && item.tag.value === Step.MAIN_READY;
+                && item.tag.tag === GameTag.STEP
+                && item.tag.value === Step.BEGIN_MULLIGAN;
     }
 
     public parse(
-        item: ActionHistoryItem, 
-        currentTurn: number, 
-        entitiesBeforeAction: Map<number, Entity>,
-        history: ReadonlyArray<HistoryItem>): Action[] {
+            item: ActionHistoryItem, 
+            currentTurn: number, 
+            entitiesBeforeAction: Map<number, Entity>,
+            history: ReadonlyArray<HistoryItem>): Action[] {
+        if (this.numberOfMulligansDone > 0) {
+            return [];
+        }
+        this.numberOfMulligansDone++;
         return [StartTurnAction.create({
             timestamp: item.timestamp,
-            turn: currentTurn + 1,
+            turn: currentTurn,
             index: item.index
         })];
     }

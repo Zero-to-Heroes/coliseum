@@ -9,6 +9,7 @@ import { PlayerEntity } from '../../models/game/player-entity';
 import { MulliganTurn } from '../../models/game/mulligan-turn';
 import { ActionTurn } from '../../models/game/action-turn';
 import { NGXLogger } from 'ngx-logger';
+import { Step } from '../../models/enums/step';
 
 @Injectable()
 export class TurnParserService {
@@ -17,27 +18,29 @@ export class TurnParserService {
 
     public createTurns(game: Game, history: ReadonlyArray<HistoryItem>): Game {
         let turns: Map<number, Turn> = Map<number, Turn>();
+        let turnNumber = 0;
         for (const item of history) {
-            if (this.isMulligan(item, game)) {
+            if (turnNumber === 0 && this.isMulligan(item, game)) {
                 const mulliganTurn: MulliganTurn = this.parseMulliganTurn(item as TagChangeHistoryItem, turns);
-                turns = turns.set(0, mulliganTurn);
+                turns = turns.set(turnNumber++, mulliganTurn);
             }
             else if (this.isStartOfTurn(item, game)) {
-                const turn: ActionTurn = this.parseTurn(item as TagChangeHistoryItem, turns);
-                turns = turns.set(parseInt(turn.turn), turn);
+                const currentTurnNumber = turnNumber++;
+                const turn: ActionTurn = this.parseTurn(currentTurnNumber, item as TagChangeHistoryItem, turns);
+                turns = turns.set(currentTurnNumber, turn);
             }
         }
         this.logger.info('created turns', turns.toJS());
         return Game.createGame(game, { turns: turns });
     }
 
-    private parseTurn(item: TagChangeHistoryItem, turns: Map<number, Turn>): ActionTurn {
+    private parseTurn(currentTurnNumber: number, item: TagChangeHistoryItem, turns: Map<number, Turn>): ActionTurn {
         const itemIndex = (item as TagChangeHistoryItem).tag.index;
         // Turn 1 is mulligan in the log, while for us mulligan is turn 0
         let turn: ActionTurn = turns.get(
-            item.tag.value - 1, 
+            currentTurnNumber, 
             Object.assign(new ActionTurn(), {
-                turn: `${item.tag.value - 1}`,
+                turn: `${currentTurnNumber}`,
                 timestamp: item.timestamp,
                 index: itemIndex,
                 activePlayer: undefined,
@@ -71,8 +74,8 @@ export class TurnParserService {
     private isStartOfTurn(item: HistoryItem, game: Game) {
         return item instanceof TagChangeHistoryItem 
                 && this.isGameEntity(item.tag.entity, game)
-                && item.tag.tag == GameTag.TURN
-                && item.tag.value > 1;
+                && item.tag.tag === GameTag.STEP
+                && item.tag.value === Step.MAIN_READY;
 
     }
 
