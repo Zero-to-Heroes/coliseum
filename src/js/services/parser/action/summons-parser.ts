@@ -27,7 +27,8 @@ export class SummonsParser implements Parser {
             currentTurn: number, 
             entitiesBeforeAction: Map<number, Entity>,
             history: ReadonlyArray<HistoryItem>): Action[] {
-        if (parseInt(item.node.attributes.type) !== BlockType.TRIGGER) {
+        if (parseInt(item.node.attributes.type) !== BlockType.TRIGGER 
+                && parseInt(item.node.attributes.type) !== BlockType.POWER) {
             return;
         }
 
