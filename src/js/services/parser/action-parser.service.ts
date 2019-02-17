@@ -1,14 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Map } from "immutable";
 import { HistoryItem } from '../../models/history/history-item';
-import { TagChangeHistoryItem } from '../../models/history/tag-change-history-item';
-import { GameTag } from '../../models/enums/game-tags';
 import { Game } from '../../models/game/game';
 import { Turn } from '../../models/game/turn';
 import { Action } from '../../models/action/action';
 import { Parser } from './action/parser';
 import { MulliganCardParser } from './action/mulligan-card-parser';
-import { GameHepler } from '../../models/game/game-helper';
 import { CardDrawParser } from './action/card-draw-parser';
 import { NGXLogger } from 'ngx-logger';
 import { StartTurnParser } from './action/start-turn-parser';
@@ -23,7 +20,6 @@ import { PowerTargetParser } from './action/power-target-parser';
 import { CardTargetParser } from './action/card-target-parser';
 import { DiscoverParser } from './action/discover-parser';
 import { SummonsParser } from './action/summons-parser';
-import { EndOfMulliganParser } from './action/end-of-mulligan-parser';
 import { StartTurnAction } from '../../models/action/start-turn-action';
 import { StartOfMulliganParser } from './action/start-of-mulligan-parser';
 
@@ -39,7 +35,6 @@ export class ActionParserService {
         return [
             new StartTurnParser(),
             new MulliganCardParser(this.allCards, this.logger),
-            // new EndOfMulliganParser(),
             new StartOfMulliganParser(),
             new CardDrawParser(this.allCards),
             new HeroPowerUsedParser(this.allCards),
