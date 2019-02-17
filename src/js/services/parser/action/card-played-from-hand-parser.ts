@@ -8,8 +8,6 @@ import { Entity } from "../../../models/game/entity";
 import { Map } from "immutable";
 import { GameTag } from "../../../models/enums/game-tags";
 import { CardType } from "../../../models/enums/card-type";
-import { HeroPowerUsedAction } from "../../../models/action/hero-power-used-action";
-import { from } from "rxjs";
 import { Zone } from "../../../models/enums/zone";
 import { CardPlayedFromHandAction } from "../../../models/action/card-played-from-hand-action";
 
