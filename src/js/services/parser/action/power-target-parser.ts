@@ -102,7 +102,7 @@ export class PowerTargetParser implements Parser {
         return [PowerTargetAction.create(
             {
                 timestamp: item.timestamp,
-                index: item.index,
+                index: meta.index,
                 origin: entityId,
                 targets: [target]
             },
