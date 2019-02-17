@@ -214,9 +214,9 @@ export class XmlParserService {
                 break;
             case 'Action':
             case 'Block':
-                const newNode = Object.assign({}, node, {parentIndex: this.stack[this.stack.length - 2].index });
+                node.parentIndex = this.stack[this.stack.length - 2].index;
 				this.state.push('action');
-                const item: ActionHistoryItem = new ActionHistoryItem(newNode, this.buildTimestamp(ts), node.index);
+                const item: ActionHistoryItem = new ActionHistoryItem(node, this.buildTimestamp(ts), node.index);
                 this.enqueueHistoryItem(item);
                 break;
 			case 'Choices':

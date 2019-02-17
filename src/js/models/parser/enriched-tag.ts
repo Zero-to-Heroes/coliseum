@@ -12,5 +12,5 @@ export interface EnrichedTag extends Tag {
     tags?: ReadonlyArray<EntityTag>;
     options?: ReadonlyArray<Option>;
     meta?: ReadonlyArray<MetaData>;
-    readonly parentIndex?: number;
+    parentIndex?: number;
 }
