@@ -23,6 +23,7 @@ import { SummonsParser } from './action/summons-parser';
 import { StartTurnAction } from '../../models/action/start-turn-action';
 import { StartOfMulliganParser } from './action/start-of-mulligan-parser';
 import { SecretPlayedFromHandParser } from './action/secret-played-from-hand-parser';
+import { SecretRevealedParser } from './action/secret-revealed-parser';
 
 @Injectable()
 export class ActionParserService {
@@ -47,6 +48,7 @@ export class ActionParserService {
             new CardTargetParser(this.allCards),
             new DiscoverParser(this.allCards),
             new SummonsParser(this.allCards),
+            new SecretRevealedParser(this.allCards),
         ];
     }
 
