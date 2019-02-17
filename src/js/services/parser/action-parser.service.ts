@@ -86,7 +86,9 @@ export class ActionParserService {
                 previousStateEntities = this.stateProcessorService.applyHistoryUntilNow(
                     previousStateEntities, history, previousProcessedItem, item);
                 actionsForTurn = this.fillMissingEntities(actionsForTurn, previousStateEntities);
-                previousProcessedItem = item;
+                // Sort actions based on their index (so that actions that were created from the same 
+                // parent action can have a custom order)
+                actionsForTurn = this.sortActions(actionsForTurn, (a: Action, b: Action) => a.index - b.index);
                 // Give an opportunity to each parser to combine the actions it produced by merging them
                 // For instance, if we two card draws in a row, we might want to display them as a single 
                 // action that draws two cards
@@ -94,12 +96,16 @@ export class ActionParserService {
                 const turnWithNewActions = updatedTurn.update({actions: actionsForTurn});
                 turns = turns.set(turnWithNewActions.turn == 'mulligan' ? 0 : parseInt(turnWithNewActions.turn), turnWithNewActions);
                 actionsForTurn = [lastAction];
+                previousProcessedItem = item;
             }
         }
 
         previousStateEntities = this.stateProcessorService.applyHistoryUntilNow(
             previousStateEntities, history, previousProcessedItem, history[history.length - 1]);
         actionsForTurn = this.fillMissingEntities(actionsForTurn, previousStateEntities);
+        // Sort actions based on their index (so that actions that were created from the same 
+        // parent action can have a custom order)
+        actionsForTurn = this.sortActions(actionsForTurn, (a: Action, b: Action) => a.index - b.index);
         // Give an opportunity to each parser to combine the actions it produced by merging them
         // For instance, if we two card draws in a row, we might want to display them as a single 
         // action that draws two cards
@@ -144,5 +150,11 @@ export class ActionParserService {
             reducedActions = parser.reduce(reducedActions);
         }
         return reducedActions;
+    }
+
+    private sortActions<T>(array: ReadonlyArray<T>, sortingFunction: (a: T, b: T) => number): ReadonlyArray<T> {
+        let intermediate: T[] = [...array];
+        intermediate.sort(sortingFunction);
+        return intermediate as ReadonlyArray<T>;
     }
 }

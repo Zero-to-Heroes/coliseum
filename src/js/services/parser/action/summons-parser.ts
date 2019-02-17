@@ -46,14 +46,17 @@ export class SummonsParser implements Parser {
         return entities
                 .filter((entity) => entity.tags.get(GameTag[GameTag.ZONE]) === Zone.PLAY)
                 .filter((entity) => entity.tags.get(GameTag[GameTag.CARDTYPE]) === CardType.MINION)
-                .map((entity) => SummonAction.create(
-                    {
-                        timestamp: item.timestamp,
-                        index: item.index,
-                        entityIds: [entity.id],
-                        origin: parseInt(item.node.attributes.entity)
-                    },
-                    this.allCards));
+                .map((entity) => {
+                    console.log('mapping summon to', entity.index, 'instead of', item.index);
+                    return SummonAction.create(
+                        {
+                            timestamp: item.timestamp,
+                            index: entity.index,
+                            entityIds: [entity.id],
+                            origin: parseInt(item.node.attributes.entity)
+                        },
+                        this.allCards);
+                }) 
     }
 
     public reduce(actions: ReadonlyArray<Action>): ReadonlyArray<Action> {
