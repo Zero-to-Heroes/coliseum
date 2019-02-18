@@ -6,19 +6,16 @@ import { AllCardsService } from "../../all-cards.service";
 import { BlockType } from "../../../models/enums/block-type";
 import { Entity } from "../../../models/game/entity";
 import { Map } from "immutable";
-import { uniq } from "lodash";
-import { MetaData } from "../../../models/parser/metadata";
-import { MetaTags } from "../../../models/enums/meta-tags";
-import { Info } from "../../../models/parser/info";
-import { GameTag } from "../../../models/enums/game-tags";
-import { CardType } from "../../../models/enums/card-type";
+import { uniq, isEqual } from "lodash";
 import { PowerTargetAction } from "../../../models/action/power-target-action";
 import { ActionHelper } from "./action-helper";
 import { CardTargetAction } from "../../../models/action/card-target-action";
+import { AttachingEnchantmentAction } from "../../../models/action/attaching-enchantment-action";
+import { NGXLogger } from "ngx-logger";
 
 export class CardTargetParser implements Parser {
 
-    constructor(private allCards: AllCardsService) {}
+    constructor(private allCards: AllCardsService, private logger: NGXLogger) {}
 
     public applies(item: HistoryItem): boolean {
         return item instanceof ActionHistoryItem;
@@ -48,7 +45,7 @@ export class CardTargetParser implements Parser {
     }
 
     public reduce(actions: ReadonlyArray<Action>): ReadonlyArray<Action> {
-        return ActionHelper.combineActions<PowerTargetAction>(
+        return ActionHelper.combineActions<CardTargetAction | AttachingEnchantmentAction>(
             actions,
             (previous, current) => this.shouldMergeActions(previous, current),
             (previous, current) => this.mergeActions(previous, current)
@@ -56,51 +53,40 @@ export class CardTargetParser implements Parser {
     }
 
     private shouldMergeActions(previousAction: Action, currentAction: Action): boolean {
-        if (!(previousAction instanceof PowerTargetAction) || !(currentAction instanceof PowerTargetAction)) {
-            return false;
+        if (previousAction instanceof CardTargetAction && currentAction instanceof CardTargetAction) {
+            if ((previousAction as CardTargetAction).origin === (currentAction as CardTargetAction).origin) {
+                return true;
+            }
         }
-        if ((previousAction as PowerTargetAction).origin !== (currentAction as PowerTargetAction).origin) {
-            return false;
+        if (previousAction instanceof AttachingEnchantmentAction && currentAction instanceof CardTargetAction) {
+            if (previousAction.creatorId === currentAction.origin 
+                        && isEqual(previousAction.targetIds, currentAction.targets)) {
+                return true;
+            }
         }
-        return true;
+        return false;
     }
 
-    private mergeActions(previousAction: PowerTargetAction, currentAction: PowerTargetAction): PowerTargetAction {
-        return PowerTargetAction.create(
-            {
-                timestamp: previousAction.timestamp,
-                index: previousAction.index,
-                entities: currentAction.entities,
-                origin: currentAction.origin,
-                targets: uniq([...uniq(previousAction.targets || []), ...uniq(currentAction.targets || [])])
-            },
-            this.allCards)
-    }
-
-    private buildPowerActions(
-            entities: Map<number, Entity>,
-            item: ActionHistoryItem, 
-            meta: MetaData, 
-            info: Info): Action[] {
-        const entityId = parseInt(item.node.attributes.entity);
-        // Prevent a spell from targeting itself
-        if (entityId === info.entity && entities.get(entityId).getTag(GameTag.CARDTYPE) === CardType.SPELL) {
-            return [];
+    private mergeActions(
+            previousAction: CardTargetAction | AttachingEnchantmentAction, 
+            currentAction: CardTargetAction | AttachingEnchantmentAction): CardTargetAction | AttachingEnchantmentAction {
+        if (currentAction instanceof AttachingEnchantmentAction) {
+            this.logger.error('incorrect AttachingEnchantmentAction as current action for card-target-parser', currentAction);
+            return;
         }
-        let target = info.entity;
-        if (!target && parseInt(item.node.attributes.target)) {
-            target = parseInt(item.node.attributes.target);
+        if (previousAction instanceof CardTargetAction) {
+            return CardTargetAction.create(
+                {
+                    timestamp: previousAction.timestamp,
+                    index: previousAction.index,
+                    entities: currentAction.entities,
+                    origin: currentAction.origin,
+                    targets: uniq([...uniq(previousAction.targets || []), ...uniq(currentAction.targets || [])])
+                },
+                this.allCards)
         }
-        if (!target) {
-            return [];
+        else if (previousAction instanceof AttachingEnchantmentAction) {
+            return previousAction;
         }
-        return [PowerTargetAction.create(
-            {
-                timestamp: item.timestamp,
-                index: item.index,
-                origin: entityId,
-                targets: [target]
-            },
-            this.allCards)];
     }
 }

@@ -7,9 +7,11 @@ import { Map } from "immutable";
 import { GameTag } from "../../../models/enums/game-tags";
 import { Zone } from "../../../models/enums/zone";
 import { ActionHelper } from "./action-helper";
-import { uniq } from "lodash";
+import { uniq, isEqual } from "lodash";
 import { TagChangeHistoryItem } from "../../../models/history/tag-change-history-item";
 import { AttachingEnchantmentAction } from "../../../models/action/attaching-enchantment-action";
+import { CardTargetAction } from "../../../models/action/card-target-action";
+import { PowerTargetAction } from "../../../models/action/power-target-action";
 
 export class AttachingEnchantmentParser implements Parser {
 
@@ -31,9 +33,6 @@ export class AttachingEnchantmentParser implements Parser {
         const attachedToEntityId = entity.getTag(GameTag.ATTACHED);
         if (!attachedToEntityId) {
             return;
-        }
-        if (attachedToEntityId === 2) {
-            console.log('enchanting a player', item);
         }
         const creatorId = entity.getTag(GameTag.CREATOR);
         
@@ -59,19 +58,31 @@ export class AttachingEnchantmentParser implements Parser {
     }
 
     private shouldMergeActions(previousAction: Action, currentAction: Action): boolean {
-        if (!(previousAction instanceof AttachingEnchantmentAction) || !(currentAction instanceof AttachingEnchantmentAction)) {
-            return false;
+        if (previousAction instanceof AttachingEnchantmentAction && currentAction instanceof AttachingEnchantmentAction) {
+            const prev = previousAction as AttachingEnchantmentAction;
+            const curr = currentAction as AttachingEnchantmentAction
+            if (prev.creatorId === curr.creatorId && prev.enchantmentCardId === curr.enchantmentCardId) {
+                return true;
+            }
         }
-        if ((previousAction as AttachingEnchantmentAction).creatorId !== (currentAction as AttachingEnchantmentAction).creatorId) {
-            return false;
+        if ((previousAction instanceof CardTargetAction || previousAction instanceof PowerTargetAction) 
+                && currentAction instanceof AttachingEnchantmentAction) {
+            // console.log('merging enchantment into target?', previousAction, currentAction);
+            if (previousAction.origin === currentAction.creatorId 
+                        && isEqual(previousAction.targets, currentAction.targetIds)) {
+                // console.log('merging enchantment into target', previousAction, currentAction);
+                return true;
+            }
         }
-        if ((previousAction as AttachingEnchantmentAction).enchantmentCardId !== (currentAction as AttachingEnchantmentAction).enchantmentCardId) {
-            return false;
-        }
-        return true;
+        return false;
     }
 
-    private mergeActions(previousAction: AttachingEnchantmentAction, currentAction: AttachingEnchantmentAction): AttachingEnchantmentAction {
+    private mergeActions(
+            previousAction: AttachingEnchantmentAction | CardTargetAction | PowerTargetAction, 
+            currentAction: AttachingEnchantmentAction): AttachingEnchantmentAction {
+        const targetIds = previousAction instanceof AttachingEnchantmentAction
+                ? uniq([...uniq(previousAction.targetIds || []), ...uniq(currentAction.targetIds || [])])
+                : uniq(currentAction.targetIds || []);
         return AttachingEnchantmentAction.create(
             {
                 timestamp: previousAction.timestamp,
@@ -79,7 +90,7 @@ export class AttachingEnchantmentParser implements Parser {
                 entities: currentAction.entities,
                 creatorId: currentAction.creatorId,
                 enchantmentCardId: currentAction.enchantmentCardId,
-                targetIds: uniq([...uniq(previousAction.targetIds || []), ...uniq(currentAction.targetIds || [])]),
+                targetIds: targetIds,
             },
             this.allCards)
     }

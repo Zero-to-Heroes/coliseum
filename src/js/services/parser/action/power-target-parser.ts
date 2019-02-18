@@ -6,7 +6,7 @@ import { AllCardsService } from "../../all-cards.service";
 import { BlockType } from "../../../models/enums/block-type";
 import { Entity } from "../../../models/game/entity";
 import { Map } from "immutable";
-import { uniq } from "lodash";
+import { uniq, isEqual } from "lodash";
 import { MetaData } from "../../../models/parser/metadata";
 import { MetaTags } from "../../../models/enums/meta-tags";
 import { Info } from "../../../models/parser/info";
@@ -15,10 +15,12 @@ import { CardType } from "../../../models/enums/card-type";
 import { PowerTargetAction } from "../../../models/action/power-target-action";
 import { ActionHelper } from "./action-helper";
 import { CardTargetAction } from "../../../models/action/card-target-action";
+import { AttachingEnchantmentAction } from "../../../models/action/attaching-enchantment-action";
+import { NGXLogger } from "ngx-logger";
 
 export class PowerTargetParser implements Parser {
 
-    constructor(private allCards: AllCardsService) {}
+    constructor(private allCards: AllCardsService, private logger: NGXLogger) {}
 
     public applies(item: HistoryItem): boolean {
         return item instanceof ActionHistoryItem;
@@ -53,43 +55,6 @@ export class PowerTargetParser implements Parser {
         return [];
     }
 
-    public reduce(actions: ReadonlyArray<Action>): ReadonlyArray<Action> {
-        return ActionHelper.combineActions<PowerTargetAction>(
-            actions,
-            (previous, current) => this.shouldMergeActions(previous, current),
-            (previous, current) => this.mergeActions(previous, current)
-        );
-    }
-
-    private shouldMergeActions(previousAction: Action, currentAction: Action): boolean {
-        if ((previousAction instanceof PowerTargetAction) && (currentAction instanceof PowerTargetAction)) {
-            if ((previousAction as PowerTargetAction).origin !== (currentAction as PowerTargetAction).origin) {
-                return false;
-            }
-            return true;
-        }
-        // Spells that target would trigger twice otherwise
-        if ((previousAction instanceof CardTargetAction) && (currentAction instanceof PowerTargetAction)) {
-            if ((previousAction as CardTargetAction).origin !== (currentAction as PowerTargetAction).origin) {
-                return false;
-            }
-            return true;
-        }
-        return false;
-    }
-
-    private mergeActions(previousAction: PowerTargetAction, currentAction: PowerTargetAction): PowerTargetAction {
-        return PowerTargetAction.create(
-            {
-                timestamp: previousAction.timestamp,
-                index: previousAction.index,
-                entities: currentAction.entities,
-                origin: currentAction.origin,
-                targets: uniq([...uniq(previousAction.targets || []), ...uniq(currentAction.targets || [])])
-            },
-            this.allCards)
-    }
-
     private buildPowerActions(
             entities: Map<number, Entity>,
             item: ActionHistoryItem, 
@@ -115,5 +80,53 @@ export class PowerTargetParser implements Parser {
                 targets: [target]
             },
             this.allCards)];
+    }
+
+    public reduce(actions: ReadonlyArray<Action>): ReadonlyArray<Action> {
+        return ActionHelper.combineActions<PowerTargetAction | AttachingEnchantmentAction>(
+            actions,
+            (previous, current) => this.shouldMergeActions(previous, current),
+            (previous, current) => this.mergeActions(previous, current)
+        );
+    }
+
+    private shouldMergeActions(previousAction: Action, currentAction: Action): boolean {
+        if (previousAction instanceof PowerTargetAction && currentAction instanceof PowerTargetAction) {
+            return ((previousAction as PowerTargetAction).origin === (currentAction as PowerTargetAction).origin);
+        }
+        // Spells that target would trigger twice otherwise
+        if ((previousAction instanceof CardTargetAction) && (currentAction instanceof PowerTargetAction)) {
+            return ((previousAction as CardTargetAction).origin === (currentAction as PowerTargetAction).origin);
+        }
+        if (previousAction instanceof AttachingEnchantmentAction && currentAction instanceof PowerTargetAction) {
+            if (previousAction.creatorId === currentAction.origin 
+                        && isEqual(previousAction.targetIds, currentAction.targets)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private mergeActions(
+            previousAction: PowerTargetAction | CardTargetAction | AttachingEnchantmentAction, 
+            currentAction: PowerTargetAction | AttachingEnchantmentAction): PowerTargetAction | AttachingEnchantmentAction {
+        if (currentAction instanceof AttachingEnchantmentAction) {
+            this.logger.error('incorrect AttachingEnchantmentAction as current action for power-target-parser', currentAction);
+            return;
+        }
+        if (previousAction instanceof PowerTargetAction || previousAction instanceof CardTargetAction) {
+            return PowerTargetAction.create(
+                {
+                    timestamp: previousAction.timestamp,
+                    index: previousAction.index,
+                    entities: currentAction.entities,
+                    origin: currentAction.origin,
+                    targets: uniq([...uniq(previousAction.targets || []), ...uniq(currentAction.targets || [])])
+                },
+                this.allCards);
+        }
+        else if (previousAction instanceof AttachingEnchantmentAction) {
+            return previousAction;
+        }
     }
 }

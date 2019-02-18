@@ -3,6 +3,7 @@ import { Entity } from "../../../models/game/entity";
 import { Map } from "immutable";
 import { GameTag } from "../../../models/enums/game-tags";
 import { Action } from "../../../models/action/action";
+import { isEqual } from "lodash";
 
 export class ActionHelper {
 
@@ -20,6 +21,19 @@ export class ActionHelper {
     }
 
     public static combineActions<T extends Action> (
+            actions: ReadonlyArray<Action>, 
+            shouldMerge: (a: Action, b: Action) => boolean,
+            combiner: (a: T, b: T) => T): ReadonlyArray<Action> {
+        let previousResult = actions;
+        let result: ReadonlyArray<Action> = ActionHelper.doCombine(previousResult, shouldMerge, combiner);
+        while (!isEqual(result, previousResult)) {
+            previousResult = result;
+            result = ActionHelper.doCombine(previousResult, shouldMerge, combiner);
+        }
+        return result;
+    }
+
+    private static doCombine<T extends Action>(
             actions: ReadonlyArray<Action>, 
             shouldMerge: (a: Action, b: Action) => boolean,
             combiner: (a: T, b: T) => T): ReadonlyArray<Action> {
