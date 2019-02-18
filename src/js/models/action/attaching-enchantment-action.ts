@@ -2,11 +2,12 @@ import { Action } from "./action";
 import { Map } from "immutable";
 import { Entity } from "../game/entity";
 import { AllCardsService } from "../../services/all-cards.service";
+import { PlayerEntity } from "../game/player-entity";
 
 export class AttachingEnchantmentAction extends Action {
     readonly creatorId: number;
-    readonly enchantmentId: number;
-    readonly targetId: number;
+    readonly enchantmentCardId: string;
+    readonly targetIds: ReadonlyArray<number>;
 
     readonly allCards: AllCardsService;
 
@@ -26,11 +27,15 @@ export class AttachingEnchantmentAction extends Action {
     public enrichWithText(): AttachingEnchantmentAction {
         const creatorCardId = this.entities.get(this.creatorId).cardID;
         const creatorCard = this.allCards.getCard(creatorCardId);
-        const enchantmentCardId = this.entities.get(this.enchantmentId).cardID;
-        const enchantmentCard = this.allCards.getCard(enchantmentCardId);
-        const targetCardId = this.entities.get(this.targetId).cardID;
-        const targetCard = this.allCards.getCard(targetCardId);
-        const textRaw = `\t${creatorCard.name} enchants ${targetCard.name} with ${enchantmentCard.name}`;
+        const enchantmentCard = this.allCards.getCard(this.enchantmentCardId);
+        const targetCardNames = this.targetIds
+                .map((targetId) => this.entities.get(targetId))
+                .map((targetEntity) => targetEntity.cardID 
+                        ? this.allCards.getCard(targetEntity.cardID ).name
+                        // Enchantments sometimes target the player itself, not the hero
+                        : (targetEntity as PlayerEntity).name)
+                .join(', ');
+        const textRaw = `\t${creatorCard.name} enchants ${targetCardNames} with ${enchantmentCard.name}`;
         return Object.assign(new AttachingEnchantmentAction(this.allCards), this, { textRaw: textRaw });                
     }
 }
