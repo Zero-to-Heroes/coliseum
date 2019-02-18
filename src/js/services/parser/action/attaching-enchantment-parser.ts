@@ -1,61 +1,49 @@
 import { Parser } from "./parser";
 import { HistoryItem } from "../../../models/history/history-item";
-import { ActionHistoryItem } from "../../../models/history/action-history-item";
 import { Action } from "../../../models/action/action";
 import { AllCardsService } from "../../all-cards.service";
-import { BlockType } from "../../../models/enums/block-type";
 import { Entity } from "../../../models/game/entity";
 import { Map } from "immutable";
 import { GameTag } from "../../../models/enums/game-tags";
-import { CardType } from "../../../models/enums/card-type";
 import { Zone } from "../../../models/enums/zone";
-import { EntityDefinition } from "../../../models/parser/entity-definition";
 import { SummonAction } from "../../../models/action/summon-action";
 import { ActionHelper } from "./action-helper";
 import { uniq } from "lodash";
+import { TagChangeHistoryItem } from "../../../models/history/tag-change-history-item";
+import { AttachingEnchantmentAction } from "../../../models/action/attaching-enchantment-action";
 
-export class SummonsParser implements Parser {
+export class AttachingEnchantmentParser implements Parser {
 
     constructor(private allCards: AllCardsService) {}
 
     public applies(item: HistoryItem): boolean {
-        return item instanceof ActionHistoryItem;
+        return item instanceof TagChangeHistoryItem
+                && item.tag.tag === GameTag.ZONE
+                && item.tag.value === Zone.PLAY;
     }
 
     public parse(
-            item: ActionHistoryItem, 
+            item: TagChangeHistoryItem, 
             currentTurn: number, 
             entitiesBeforeAction: Map<number, Entity>,
             history: ReadonlyArray<HistoryItem>): Action[] {
-        if (parseInt(item.node.attributes.type) !== BlockType.TRIGGER 
-                && parseInt(item.node.attributes.type) !== BlockType.POWER) {
+        const entityId = item.tag.entity;
+        const entity = entitiesBeforeAction.get(entityId);
+        const attachedToEntityId = entity.getTag(GameTag.ATTACHED);
+        if (!attachedToEntityId) {
             return;
         }
-
-        let entities: ReadonlyArray<EntityDefinition>;
-        if (item.node.fullEntities && item.node.fullEntities.length > 0) {
-            entities = item.node.fullEntities;
-        }
-        else if (item.node.showEntities && item.node.showEntities.length > 0) {
-            entities = item.node.showEntities;
-        }
-        if (!entities) {
-            return;
-        }
-
-        return entities
-                .filter((entity) => entity.tags.get(GameTag[GameTag.ZONE]) === Zone.PLAY)
-                .filter((entity) => entity.tags.get(GameTag[GameTag.CARDTYPE]) === CardType.MINION)
-                .map((entity) => {
-                    return SummonAction.create(
-                        {
-                            timestamp: item.timestamp,
-                            index: entity.index,
-                            entityIds: [entity.id],
-                            origin: parseInt(item.node.attributes.entity)
-                        },
-                        this.allCards);
-                }) 
+        const creatorId = entity.getTag(GameTag.CREATOR);
+        
+        return [AttachingEnchantmentAction.create(
+            {
+                timestamp: item.timestamp,
+                index: item.index,
+                creatorId: creatorId,
+                enchantmentId: entityId,
+                targetId: attachedToEntityId,
+            },
+            this.allCards)];
     }
 
     public reduce(actions: ReadonlyArray<Action>): ReadonlyArray<Action> {

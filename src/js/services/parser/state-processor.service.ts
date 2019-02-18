@@ -40,6 +40,7 @@ export class StateProcessorService {
         GameTag.PARENT_CARD,
         GameTag.OVERLOAD_LOCKED,
         GameTag.QUEST,
+        GameTag.ATTACHED,
     ];
     
     public applyHistoryUntilNow(

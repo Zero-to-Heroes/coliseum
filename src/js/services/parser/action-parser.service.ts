@@ -24,6 +24,7 @@ import { StartTurnAction } from '../../models/action/start-turn-action';
 import { StartOfMulliganParser } from './action/start-of-mulligan-parser';
 import { SecretPlayedFromHandParser } from './action/secret-played-from-hand-parser';
 import { SecretRevealedParser } from './action/secret-revealed-parser';
+import { AttachingEnchantmentParser } from './action/attaching-enchantment-parser';
 
 @Injectable()
 export class ActionParserService {
@@ -49,6 +50,7 @@ export class ActionParserService {
             new DiscoverParser(this.allCards),
             new SummonsParser(this.allCards),
             new SecretRevealedParser(this.allCards),
+            new AttachingEnchantmentParser(this.allCards),
         ];
     }
 
@@ -64,12 +66,12 @@ export class ActionParserService {
         for (const item of history) {
             actionParsers.forEach((parser) => {
                 if (parser.applies(item)) {
+                    // When we perform an action, we want to show the result of the state updates until the next action is 
+                    // played.
+                    previousStateEntities = this.stateProcessorService.applyHistoryUntilNow(
+                        previousStateEntities, history, previousProcessedItem, item);
                     const actions: Action[] = parser.parse(item, this.currentTurn, previousStateEntities, history);
                     if (actions && actions.length > 0) {
-                        // When we perform an action, we want to show the result of the state updates until the next action is 
-                        // played.
-                        previousStateEntities = this.stateProcessorService.applyHistoryUntilNow(
-                            previousStateEntities, history, previousProcessedItem, item);
                         actionsForTurn = this.fillMissingEntities(actionsForTurn, previousStateEntities);
                         actionsForTurn = [...actionsForTurn, ...actions];
                         previousProcessedItem = item;
