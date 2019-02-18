@@ -14,6 +14,7 @@ import { GameTag } from "../../../models/enums/game-tags";
 import { CardType } from "../../../models/enums/card-type";
 import { PowerTargetAction } from "../../../models/action/power-target-action";
 import { ActionHelper } from "./action-helper";
+import { CardTargetAction } from "../../../models/action/card-target-action";
 
 export class PowerTargetParser implements Parser {
 
@@ -28,8 +29,8 @@ export class PowerTargetParser implements Parser {
             currentTurn: number, 
             entitiesBeforeAction: Map<number, Entity>,
             history: ReadonlyArray<HistoryItem>): Action[] {
-
-        if (parseInt(item.node.attributes.type) !== BlockType.POWER && parseInt(item.node.attributes.type) !== BlockType.TRIGGER) {
+        if (parseInt(item.node.attributes.type) !== BlockType.POWER 
+                && parseInt(item.node.attributes.type) !== BlockType.TRIGGER) {
             return;
         }
         // TODO: hard-code Malchezaar?
@@ -61,13 +62,20 @@ export class PowerTargetParser implements Parser {
     }
 
     private shouldMergeActions(previousAction: Action, currentAction: Action): boolean {
-        if (!(previousAction instanceof PowerTargetAction) || !(currentAction instanceof PowerTargetAction)) {
-            return false;
+        if ((previousAction instanceof PowerTargetAction) && (currentAction instanceof PowerTargetAction)) {
+            if ((previousAction as PowerTargetAction).origin !== (currentAction as PowerTargetAction).origin) {
+                return false;
+            }
+            return true;
         }
-        if ((previousAction as PowerTargetAction).origin !== (currentAction as PowerTargetAction).origin) {
-            return false;
+        // Spells that target would trigger twice otherwise
+        if ((previousAction instanceof CardTargetAction) && (currentAction instanceof PowerTargetAction)) {
+            if ((previousAction as CardTargetAction).origin !== (currentAction as PowerTargetAction).origin) {
+                return false;
+            }
+            return true;
         }
-        return true;
+        return false;
     }
 
     private mergeActions(previousAction: PowerTargetAction, currentAction: PowerTargetAction): PowerTargetAction {
