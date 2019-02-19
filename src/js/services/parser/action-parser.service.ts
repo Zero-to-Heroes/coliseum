@@ -27,6 +27,8 @@ import { SecretRevealedParser } from './action/secret-revealed-parser';
 import { AttachingEnchantmentParser } from './action/attaching-enchantment-parser';
 import { DamageParser } from './action/damage-parser';
 import { Damage } from '../../models/action/damage';
+import { HealingParser } from './action/healing-parser';
+import { CardDrawAction } from '../../models/action/card-draw-action';
 
 @Injectable()
 export class ActionParserService {
@@ -41,7 +43,7 @@ export class ActionParserService {
             new StartTurnParser(),
             new MulliganCardParser(this.allCards, this.logger),
             new StartOfMulliganParser(),
-            new CardDrawParser(this.allCards),
+            new CardDrawParser(this.allCards, this.logger),
             new HeroPowerUsedParser(this.allCards),
             new CardPlayedFromHandParser(this.allCards),
             new SecretPlayedFromHandParser(this.allCards),
@@ -54,6 +56,7 @@ export class ActionParserService {
             new SecretRevealedParser(this.allCards),
             new AttachingEnchantmentParser(this.allCards),
             new DamageParser(this.allCards, this.logger),
+            new HealingParser(this.allCards, this.logger),
         ];
     }
 
@@ -120,6 +123,7 @@ export class ActionParserService {
         const turnWithNewActions = game.turns.get(this.currentTurn).update({actions: actionsForTurn});
         turns = turns.set(turnWithNewActions.turn == 'mulligan' ? 0 : parseInt(turnWithNewActions.turn), turnWithNewActions);
         actionsForTurn = [];
+
 
         return Game.createGame(game, { turns: turns });
     }

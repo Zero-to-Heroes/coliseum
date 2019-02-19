@@ -4,10 +4,12 @@ import { Entity } from "../game/entity";
 import { ActionHelper } from "../../services/parser/action/action-helper";
 import { uniq } from 'lodash';
 import { AllCardsService } from "../../services/all-cards.service";
+import { MetaTags } from "../enums/meta-tags";
 
 
 export class CardDrawAction extends Action {
     readonly data: ReadonlyArray<number>;
+    readonly controller: number;
 
     readonly allCards: AllCardsService;
 
@@ -25,9 +27,18 @@ export class CardDrawAction extends Action {
     }
 
     public enrichWithText(): CardDrawAction {
+        const playerEntity = this.data.map((entityId) => ActionHelper.getOwner(this.entities, entityId));
+        if (!playerEntity || playerEntity.length === 0) {
+            console.error('could not find player owner', this.data);
+        }
         const ownerNames: string[] = uniq(this.data
                 .map((entityId) => ActionHelper.getOwner(this.entities, entityId))
-                .map((playerEntity) => playerEntity.name));
+                .map((playerEntity) => {
+                    if (!playerEntity) {
+                        console.error('no player entity', playerEntity, this.data, this.entities.get(this.data[0]).tags.toJS());
+                    }
+                    return playerEntity.name
+                }));
         if (ownerNames.length !== 1) {
             throw new Error('Invalid grouping of cards ' + ownerNames + ', ' + this.data);
         }
