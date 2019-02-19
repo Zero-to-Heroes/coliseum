@@ -8,7 +8,7 @@ import { HasDamage } from "./has-damage";
 export class AttackAction extends Action implements HasDamage {
     readonly origin: number;
     readonly target: number;
-    readonly damages: ReadonlyArray<Damage>;
+    readonly damages: ReadonlyArray<Damage> = [];
 
     readonly allCards: AllCardsService;
 
