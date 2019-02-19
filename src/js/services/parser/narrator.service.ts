@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Game } from '../../models/game/game';
 import { NGXLogger } from 'ngx-logger';
+import { Turn } from '../../models/game/turn';
 
 @Injectable()
 export class NarratorService {
@@ -23,6 +24,7 @@ export class NarratorService {
     
 	public createGameStory(game: Game): Game {
         const allActions = game.turns.toArray()
+            .sort((a: Turn, b: Turn) => a.index - b.index)
             .map((turn) => turn.actions)
             .reduce((a, b) => a.concat(b), []);
         const fullStoryRaw: string = allActions
