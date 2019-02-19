@@ -66,14 +66,20 @@ export class StateProcessorService {
             return this.updateWithEntity(item, entities);
         }
         else if (item instanceof ChangeEntityHistoryItem) {
-            this.logger.error('Change entity update not implemented yet', item);
-            // return this.updateWithChangeEntity(item, entities);
+            return this.updateWithChangeEntity(item, entities);
         }
         return entities;
         // TODO: options, choices, chosen entities
     }
 
     private updateWithEntity(historyItem: ShowEntityHistoryItem | FullEntityHistoryItem, entities: Map<number, Entity>): Map<number, Entity> {
+        const entity: Entity = entities
+                .get(historyItem.entityDefintion.id)
+                .update(historyItem.entityDefintion);
+        return entities.set(entity.id, entity);
+    }
+
+    private updateWithChangeEntity(historyItem: ChangeEntityHistoryItem, entities: Map<number, Entity>): Map<number, Entity> {
         const entity: Entity = entities
                 .get(historyItem.entityDefintion.id)
                 .update(historyItem.entityDefintion);
