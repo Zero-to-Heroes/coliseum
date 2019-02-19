@@ -26,6 +26,7 @@ import { SecretPlayedFromHandParser } from './action/secret-played-from-hand-par
 import { SecretRevealedParser } from './action/secret-revealed-parser';
 import { AttachingEnchantmentParser } from './action/attaching-enchantment-parser';
 import { DamageParser } from './action/damage-parser';
+import { Damage } from '../../models/action/damage';
 
 @Injectable()
 export class ActionParserService {
@@ -52,7 +53,7 @@ export class ActionParserService {
             new SummonsParser(this.allCards),
             new SecretRevealedParser(this.allCards),
             new AttachingEnchantmentParser(this.allCards),
-            new DamageParser(this.allCards),
+            new DamageParser(this.allCards, this.logger),
         ];
     }
 
@@ -97,6 +98,7 @@ export class ActionParserService {
                 // For instance, if we two card draws in a row, we might want to display them as a single 
                 // action that draws two cards
                 actionsForTurn = this.reduceActions(actionParsers, actionsForTurn);
+                actionsForTurn = this.addDamageToEntities(actionsForTurn, previousStateEntities);
                 const turnWithNewActions = updatedTurn.update({actions: actionsForTurn});
                 turns = turns.set(turnWithNewActions.turn == 'mulligan' ? 0 : parseInt(turnWithNewActions.turn), turnWithNewActions);
                 actionsForTurn = [lastAction];
@@ -114,6 +116,7 @@ export class ActionParserService {
         // For instance, if we two card draws in a row, we might want to display them as a single 
         // action that draws two cards
         actionsForTurn = this.reduceActions(actionParsers, actionsForTurn);
+        actionsForTurn = this.addDamageToEntities(actionsForTurn, previousStateEntities);
         const turnWithNewActions = game.turns.get(this.currentTurn).update({actions: actionsForTurn});
         turns = turns.set(turnWithNewActions.turn == 'mulligan' ? 0 : parseInt(turnWithNewActions.turn), turnWithNewActions);
         actionsForTurn = [];
@@ -134,6 +137,32 @@ export class ActionParserService {
             }
         }
         return newActionsForTurn;
+    }
+
+    private addDamageToEntities(
+        actionsForTurn: ReadonlyArray<Action>, 
+        previousStateEntities: Map<number, Entity>): ReadonlyArray<Action> {
+            let newActionsForTurn = [];
+            for (let i = 0; i < actionsForTurn.length; i++) {
+                let newEntities = actionsForTurn[i].entities
+                        ? actionsForTurn[i].entities
+                        : previousStateEntities;
+                let entitiesAfterDamageUpdate: Map<number, Entity> = this.isDamageAction(actionsForTurn[i])
+                        ? newEntities.map((entity) => this.updateDamageForEntity(actionsForTurn[i], entity)).toMap()
+                        : newEntities;
+                newActionsForTurn.push(actionsForTurn[i].update(entitiesAfterDamageUpdate));
+            }
+            return newActionsForTurn;
+    }
+
+    private isDamageAction(action: Action): boolean {
+        return 'damages' in action;
+    }
+
+    private updateDamageForEntity(damageAction: Action, entity: Entity): Entity {
+        const damages: ReadonlyArray<Damage> = damageAction['damages'];
+        const damage = damages.find((damage) => damage.entity === entity.id);
+        return damage ? entity.updateDamage(damage.amount) : entity;
     }
     
     private updateCurrentTurn(item: HistoryItem, game: Game, actions: ReadonlyArray<Action>): Turn {

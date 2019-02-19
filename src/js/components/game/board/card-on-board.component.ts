@@ -42,6 +42,7 @@ export class CardOnBoardComponent implements AfterViewInit {
 	armor: number;
 	cost: number;
 	taunt: boolean;
+	shownDamage: number;
 
 	constructor(
 		private cards: AllCardsService, 
@@ -69,6 +70,8 @@ export class CardOnBoardComponent implements AfterViewInit {
 		this.cost = entity.getTag(GameTag.COST);
 
 		this.taunt = entity.getTag(GameTag.TAUNT) == 1;
+
+		this.shownDamage = entity.damageForThisAction;
     }
 
 	@HostListener('mouseenter') onMouseEnter() {

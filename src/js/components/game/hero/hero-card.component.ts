@@ -32,6 +32,7 @@ export class HeroCardComponent {
 	health: number;
 	damage: number;
 	armor: number;
+	shownDamage: number;
 
 	constructor(private logger: NGXLogger) { }
 
@@ -44,5 +45,7 @@ export class HeroCardComponent {
 		this.health = hero.getTag(GameTag.HEALTH);
 		this.damage = hero.getTag(GameTag.DAMAGE);
 		this.armor = hero.getTag(GameTag.ARMOR);
+
+		this.shownDamage = hero.damageForThisAction;
     }
 }

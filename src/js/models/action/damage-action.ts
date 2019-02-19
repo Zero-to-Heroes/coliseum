@@ -2,8 +2,10 @@ import { Action } from "./action";
 import { Map } from "immutable";
 import { Entity } from "../game/entity";
 import { AllCardsService } from "../../services/all-cards.service";
+import { Damage } from "./damage";
+import { HasDamage } from "./has-damage";
 
-export class DamageAction extends Action {
+export class DamageAction extends Action implements HasDamage {
     readonly damages: ReadonlyArray<Damage>;
 
     readonly allCards: AllCardsService;
@@ -31,9 +33,4 @@ export class DamageAction extends Action {
                 .join(', ');
         return Object.assign(new DamageAction(this.allCards), this, { textRaw: textRaw });                
     }
-}
-
-export class Damage {
-    readonly entity: number;
-    readonly amount: number;
 }

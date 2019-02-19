@@ -25,6 +25,11 @@ export class PlayerEntity extends Entity {
         return PlayerEntity.create(this, newAttributes);
     }
 
+    public updateDamage(damage: number): PlayerEntity {
+        const base: PlayerEntity = this;
+        return Object.assign(new PlayerEntity(), {...base, damageForThisAction: damage});
+    }
+
     public updateTag(tag: GameTag, value: number): PlayerEntity {
         const newTags: Map<string, number> = this.tags
                 .set(GameTag[tag], value);

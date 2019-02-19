@@ -1,11 +1,13 @@
 import { EntityDefinition } from "../parser/entity-definition";
 import { Map, fromJS } from "immutable";
 import { GameTag } from "../enums/game-tags";
+import { Damage } from "../action/damage";
 
 export class Entity {
 
     readonly id: number;
     readonly cardID: string;
+    readonly damageForThisAction: number;
     readonly tags: Map<string, number> = Map();
 
     constructor() { }
@@ -20,6 +22,11 @@ export class Entity {
 
     public isRevealed(): boolean {
         return !!this.cardID;
+    }
+
+    public updateDamage(damage: number): Entity {
+        const base: Entity = this;
+        return Object.assign(new Entity(), {...base, damageForThisAction: damage});
     }
 
     public update(definition: EntityDefinition): Entity {
