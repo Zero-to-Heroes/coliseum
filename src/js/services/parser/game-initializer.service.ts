@@ -19,7 +19,10 @@ export class GameInitializerService {
         let player1 = players[0];
         let player2 = players[1];
         // All game modes known today have the main player have at least 3 cards in hand
-        if (firstPlayerHand.length < 3 || !firstPlayerHand[0].isRevealed() || !firstPlayerHand[1].isRevealed() || !firstPlayerHand[2].isRevealed()) {
+        if (firstPlayerHand.length < 3 
+                || !firstPlayerHand[0].isRevealed() 
+                || !firstPlayerHand[1].isRevealed() 
+                || !firstPlayerHand[2].isRevealed()) {
             [player1, player2] = [player2, player1];
         }
         const game = Game.createGame({} as Game, { 

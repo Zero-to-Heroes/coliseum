@@ -21,7 +21,9 @@ export class Entity {
     }
 
     public isRevealed(): boolean {
-        return !!this.cardID;
+        // There are many tags that are set only when ShowEntity triggers. This is only 
+        // one of the possible choices
+        return this.getTag(GameTag.COST) && this.getTag(GameTag.COST) !== -1;
     }
 
     public updateDamage(damage: number): Entity {
