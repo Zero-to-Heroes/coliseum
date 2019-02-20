@@ -75,7 +75,7 @@ export class CardDrawParser implements Parser {
         // Otherwise when we draw a card it's a ShowEntity or FullEntity
         if (item instanceof FullEntityHistoryItem) {
             const zone = item.entityDefintion.tags.get(GameTag[GameTag.ZONE])
-            if (zone !== Zone.PLAY) {
+            if (zone !== Zone.HAND) {
                 return [];
             }
             const previousZone = entitiesBeforeAction.get(item.entityDefintion.id).getTag(GameTag.ZONE);
