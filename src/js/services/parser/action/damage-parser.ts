@@ -11,6 +11,7 @@ import { Zone } from "../../../models/enums/zone";
 import { AttackAction } from "../../../models/action/attack-action";
 import { ActionHelper } from "./action-helper";
 import { NGXLogger } from "ngx-logger";
+import { HealingAction } from "../../../models/action/healing-action";
 
 export class DamageParser implements Parser {
 
@@ -32,14 +33,28 @@ export class DamageParser implements Parser {
         }
         const previousDamageTag = entity.getTag(GameTag.DAMAGE);
         const previousDamage = (!previousDamageTag || previousDamageTag === -1) ? 0 : previousDamageTag;
-        if (previousDamage > 0) {
+        const damageTaken = item.tag.value - previousDamage;
+        if (damageTaken > 0) {
             return [DamageAction.create(
                 {
                     timestamp: item.timestamp,
                     index: item.index,
                     damages: [{
                         entity: item.tag.entity,
-                        amount: item.tag.value - previousDamage,
+                        amount: damageTaken,
+                    }]
+                },
+                this.allCards)];            
+        }
+        else 
+        if (damageTaken < 0) {
+            return [HealingAction.create(
+                {
+                    timestamp: item.timestamp,
+                    index: item.index,
+                    damages: [{
+                        entity: item.tag.entity,
+                        amount: damageTaken,
                     }]
                 },
                 this.allCards)];            

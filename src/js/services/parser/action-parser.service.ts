@@ -27,8 +27,6 @@ import { SecretRevealedParser } from './action/secret-revealed-parser';
 import { AttachingEnchantmentParser } from './action/attaching-enchantment-parser';
 import { DamageParser } from './action/damage-parser';
 import { Damage } from '../../models/action/damage';
-import { HealingParser } from './action/healing-parser';
-import { CardDrawAction } from '../../models/action/card-draw-action';
 
 @Injectable()
 export class ActionParserService {
@@ -56,7 +54,6 @@ export class ActionParserService {
             new SecretRevealedParser(this.allCards),
             new AttachingEnchantmentParser(this.allCards),
             new DamageParser(this.allCards, this.logger),
-            new HealingParser(this.allCards, this.logger),
         ];
     }
 
