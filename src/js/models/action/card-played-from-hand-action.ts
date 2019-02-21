@@ -3,6 +3,8 @@ import { Map } from "immutable";
 import { Entity } from "../game/entity";
 import { ActionHelper } from "../../services/parser/action/action-helper";
 import { AllCardsService } from "../../services/all-cards.service";
+import { GameTag } from "../enums/game-tags";
+import { CardType } from "../enums/card-type";
 
 export class CardPlayedFromHandAction extends Action {
     readonly entityId: number;
@@ -24,9 +26,14 @@ export class CardPlayedFromHandAction extends Action {
 
     public enrichWithText(): CardPlayedFromHandAction {
         const ownerName: string = ActionHelper.getOwner(this.entities, this.entityId).name;
-        const cardId: string = this.entities.get(this.entityId).cardID;
+        const cardEntity = this.entities.get(this.entityId);
+        const cardId: string = cardEntity.cardID;
         const card = this.allCards.getCard(cardId);
-        const textRaw = `\t${ownerName} plays ${card.name}`;
+        let playVerb = 'plays';
+        if (cardEntity.getTag(GameTag.CARDTYPE) === CardType.WEAPON) {
+            playVerb = 'equips'
+        }
+        const textRaw = `\t${ownerName} ${playVerb} ${card.name}`;
         return Object.assign(new CardPlayedFromHandAction(this.allCards), this, { textRaw: textRaw });                
     }
 }
