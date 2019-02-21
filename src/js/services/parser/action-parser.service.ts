@@ -27,6 +27,7 @@ import { SecretRevealedParser } from './action/secret-revealed-parser';
 import { AttachingEnchantmentParser } from './action/attaching-enchantment-parser';
 import { DamageParser } from './action/damage-parser';
 import { Damage } from '../../models/action/damage';
+import { DiscoveryPickParser } from './action/discovery-pick-parser';
 
 @Injectable()
 export class ActionParserService {
@@ -50,6 +51,7 @@ export class ActionParserService {
             new PowerTargetParser(this.allCards, this.logger),
             new CardTargetParser(this.allCards, this.logger),
             new DiscoverParser(this.allCards),
+            new DiscoveryPickParser(this.allCards),
             new SummonsParser(this.allCards),
             new SecretRevealedParser(this.allCards),
             new AttachingEnchantmentParser(this.allCards),

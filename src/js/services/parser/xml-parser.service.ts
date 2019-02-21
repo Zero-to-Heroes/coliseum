@@ -299,7 +299,10 @@ export class XmlParserService {
 		switch (node.name) {
 			case 'ChosenEntities':
                 this.state.pop();
-                const item: ChosenEntityHistoryItem = new ChosenEntityHistoryItem(this.chosen, this.buildTimestamp(this.chosen.ts), node.index);
+                const item: ChosenEntityHistoryItem = new ChosenEntityHistoryItem(
+                    this.chosen, 
+                    this.buildTimestamp(this.chosen.ts), 
+                    node.index);
                 this.enqueueHistoryItem(item);
         }
     }
