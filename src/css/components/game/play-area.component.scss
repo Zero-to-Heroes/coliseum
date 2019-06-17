@@ -41,11 +41,21 @@
 :host.bottom {
     board {
         order: 1;
+        height: 34%;
+        max-height: 34%;
+        flex-basis: 34%;
     }
     hero {
         order: 2;
+        height: 39%;
+        max-height: 39%;
+        flex-basis: 39%;
         ::ng-deep hero-frame {
             top: 0;
+            bottom: auto;
+        }
+        ::ng-deep hero-card {
+            top: 11%;
             bottom: auto;
         }
         ::ng-deep hero-art {
@@ -55,10 +65,16 @@
         ::ng-deep hero-stats {    
             top: auto;
             bottom: 12%;
+            .health {
+                top: -15%;
+            }
         }
     }
     hand {
         order: 3;
+        height: 27%;
+        max-height: 27%;
+        flex-basis: 27%;
     }
 }
 
