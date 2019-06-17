@@ -102,11 +102,15 @@ export class PlayAreaComponent {
     }
 
     private getHeroPowerEntity(playerId: number): Entity {
-        return this._entities.toArray()
+        const heroPower = this._entities.toArray()
                 .filter((entity) => entity.getTag(GameTag.CARDTYPE) === CardType.HERO_POWER)
                 .filter((entity) => entity.getTag(GameTag.ZONE) === Zone.PLAY)
                 .filter((entity) => entity.getTag(GameTag.CONTROLLER) === playerId)
                 [0];
+        console.log('hero power', heroPower, this._entities.toArray()
+        .filter((entity) => entity.getTag(GameTag.CARDTYPE) === CardType.HERO_POWER)
+        .filter((entity) => entity.getTag(GameTag.ZONE) === Zone.PLAY))
+        return heroPower;
     }
 
     private getWeaponEntity(playerId: number): Entity {

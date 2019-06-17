@@ -4,6 +4,8 @@ import { Map } from "immutable";
 import { GameTag } from "../../../models/enums/game-tags";
 import { Action } from "../../../models/action/action";
 import { isEqual } from "lodash";
+import { EnrichedTag } from "../../../models/parser/enriched-tag";
+import { EntityTag } from "../../../models/parser/entity-tag";
 
 export class ActionHelper {
 
@@ -31,6 +33,11 @@ export class ActionHelper {
             result = ActionHelper.doCombine(previousResult, shouldMerge, combiner);
         }
         return result;
+    }
+
+    public static getTag(tags: ReadonlyArray<EntityTag>, name: GameTag): number {
+        const defender = tags.find(tag => tag.tag === name);
+        return defender ? defender.value : 0;
     }
 
     private static doCombine<T extends Action>(

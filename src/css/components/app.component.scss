@@ -3,14 +3,17 @@
     display: flex;
     flex-direction: column;
     user-select: none;
-    // height: 100%;
     
 	&::before {
 		content: "";
 		padding-top: 120%;
 		position: relative;
 		display: block;
-	}
+    }
+    
+    &.wide::before {
+        padding-top: 56%;
+    }
 
     game {
         position: absolute;

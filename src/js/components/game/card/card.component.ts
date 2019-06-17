@@ -15,14 +15,14 @@ import { AllCardsService } from '../../../services/all-cards.service';
 	template: `
 		<div class="card">
 			<card-art [cardId]="cardId" [cardType]="cardType"></card-art>
-			<card-frame [cardId]="cardId" [premium]="premium"></card-frame>
-			<card-rarity [cardId]="cardId"></card-rarity>
-			<card-name [cardId]="cardId"></card-name>
+			<card-frame [cardId]="cardId" [premium]="premium" *ngIf="cardId"></card-frame>
+			<card-rarity [cardId]="cardId" *ngIf="cardId"></card-rarity>
+			<card-name [cardId]="cardId" *ngIf="cardId"></card-name>
 			<!-- TODO: handle all text updates -->
-			<card-text [cardId]="cardId" [cardType]="cardType"></card-text>
-			<card-race [cardId]="cardId"></card-race>
-			<card-cost [cardId]="cardId" [cost]="cost"></card-cost>
-			<card-stats 
+			<card-text [cardId]="cardId" [cardType]="cardType" *ngIf="cardId"></card-text>
+			<card-race [cardId]="cardId" *ngIf="cardId"></card-race>
+			<card-cost [cardId]="cardId" [cost]="cost" *ngIf="cardId"></card-cost>
+			<card-stats *ngIf="cardId"
 					[cardId]="cardId" 
 					[attack]="attack"
 					[health]="health"
@@ -64,17 +64,19 @@ export class CardComponent implements AfterViewInit {
 		
 		this._entity = entity;
 
-		this.cardId = entity.cardID;
-		this.premium = entity.getTag(GameTag.PREMIUM) == 1;
-		this.attack = entity.getTag(GameTag.ATK);
-		this.health = entity.getTag(GameTag.HEALTH);
-		this.damage = entity.getTag(GameTag.DAMAGE);
-		this.durability = entity.getTag(GameTag.DURABILITY);
-		this.armor = entity.getTag(GameTag.ARMOR);
-		this.cost = entity.getTag(GameTag.COST);
-		this.originalCard = this.cards.getCard(this.cardId);
-		this.cardType = CardType[this.originalCard.type.toUpperCase() as string];
-		this.cardClass = CardClass[this.originalCard.playerClass.toUpperCase() as string];
+        this.cardId = entity.cardID;
+        if (this.cardId) {
+            this.premium = entity.getTag(GameTag.PREMIUM) == 1;
+            this.attack = entity.getTag(GameTag.ATK);
+            this.health = entity.getTag(GameTag.HEALTH);
+            this.damage = entity.getTag(GameTag.DAMAGE);
+            this.durability = entity.getTag(GameTag.DURABILITY);
+            this.armor = entity.getTag(GameTag.ARMOR);
+            this.cost = entity.getTag(GameTag.COST);
+            this.originalCard = this.cards.getCard(this.cardId);
+            this.cardType = CardType[this.originalCard.type.toUpperCase() as string];
+            this.cardClass = CardClass[this.originalCard.playerClass.toUpperCase() as string];
+        }
 	}
 
 	@Input("hasTooltip") set hasTooltip(hasTooltip: boolean) {

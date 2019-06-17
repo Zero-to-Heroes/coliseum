@@ -10,8 +10,14 @@ import { NGXLogger } from 'ngx-logger';
     ],
 	template: `
         <div class="game">
-            <play-area class="top" [entities]="_entities" [playerId]="_opponentId"></play-area>
-            <play-area class="bottom" [entities]="_entities" [playerId]="_playerId"></play-area>
+            <play-area class="top" 
+                    [entities]="_entities" 
+                    [playerId]="_opponentId">
+            </play-area>
+            <play-area class="bottom" 
+                    [entities]="_entities" 
+                    [playerId]="_playerId">
+            </play-area>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,

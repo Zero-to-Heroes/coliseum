@@ -4,17 +4,26 @@
     flex-grow: 0;
     flex-shrink: 0;
     height: 100%;
-    background-image: url(https://static.zerotoheroes.com/hearthstone/asset/manastorm/game-board-bg.png), url(https://static.zerotoheroes.com/hearthstone/asset/manastorm/app-bg-wood.jpg);
+    // background-image: url(https://static.zerotoheroes.com/hearthstone/asset/manastorm/game-board-bg.png), url(https://static.zerotoheroes.com/hearthstone/asset/manastorm/app-bg-wood.jpg);
+    background-image: url(https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/boards/hall_of_explorers.png);
     background-position: 50% 50%;
-    background-size: contain;
-    background-repeat: no-repeat, repeat-y;
+    background-size: 100%;
+    background-repeat: no-repeat, no-repeat;
 
     play-area {
-        height: 50%;
-        flex-basis: 50%;
-        max-height: 50%;
         flex-grow: 0;
         flex-shrink: 0;
         display: flex;
+
+        &.top {
+            height: 46%;
+            flex-basis: 46%;
+            max-height: 46%;
+        }
+        &.bottom {
+            height: 54%;
+            flex-basis: 54%;
+            max-height: 54%;
+        }
     }
 }

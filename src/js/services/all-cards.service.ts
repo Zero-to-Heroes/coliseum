@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { default as allCards } from './cards.json';
+import allCards from './cards.json';
 
 @Injectable()
 export class AllCardsService {

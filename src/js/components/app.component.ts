@@ -13,7 +13,7 @@ import { NGXLogger } from 'ngx-logger';
 		'../../css/components/app.component.scss'
 	],
 	template: `
-		<div class="coliseum">
+		<div class="coliseum wide">
 			<game *ngIf="game"
 				[playerId]="game.players[0].playerId" 
 				[opponentId]="game.players[1].playerId"
