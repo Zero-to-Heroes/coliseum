@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Ng2FittextModule } from "ng2-fittext";
@@ -51,7 +50,6 @@ import { TurnNarratorComponent } from '../../components/turn-narrator.component'
 @NgModule({
 	imports: [
 		BrowserModule,
-		HttpModule,
 		BrowserAnimationsModule,
 		Ng2FittextModule,
 		LoggerModule.forRoot({ 
