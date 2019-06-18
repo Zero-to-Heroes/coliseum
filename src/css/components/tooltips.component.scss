@@ -17,6 +17,9 @@
 
     tooltip {
         width: 35%;
+        &:before {
+            content: "";
+        }
     }
     .tooltip {
         width: 100%;

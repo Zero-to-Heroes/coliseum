@@ -10,10 +10,6 @@
 		position: relative;
 		display: block;
     }
-    
-    &.wide::before {
-        padding-top: 56%;
-    }
 
     game {
         position: absolute;
@@ -34,5 +30,14 @@
 
     turn-narrator {
         height: 24px;
+    }
+    
+    &.wide {
+        &::before {
+            padding-top: 56%;
+        }
+        ::ng-deep tooltips tooltip {
+            width: 15%;
+        }
     }
 }
