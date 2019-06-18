@@ -50,11 +50,15 @@ export class GamePopulationService {
     }
     
     private initializePlayer(historyItem: PlayerHistoryItem) {
+        // Remove the battle tag if present
+        const playerName = historyItem.entityDefintion.name.indexOf('#') !== -1
+                ? historyItem.entityDefintion.name.split('#')[0]
+                : historyItem.entityDefintion.name;
         const entity: PlayerEntity = PlayerEntity
                 .create({ 
                     id: historyItem.entityDefintion.id, 
                     playerId: historyItem.entityDefintion.playerID,
-                    name: historyItem.entityDefintion.name 
+                    name: playerName,
                 } as PlayerEntity)
                 .update(historyItem.entityDefintion);
         this.entities = this.entities.set(entity.id, entity);

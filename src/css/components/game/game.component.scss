@@ -33,7 +33,7 @@
     }
 
     &.mulligan {
-        .play-areas {
+        .play-areas, player-name {
             filter: blur(3px);
         }
 
@@ -58,6 +58,19 @@
             max-height: 53%;
         }
     }  
+
+    player-name {
+        position: absolute;
+        left: 0;
+
+        &.top {
+            top: 28%;
+        }
+
+        &.bottom {
+            top: 60%;
+        }
+    }
 
     mulligan {
         flex-grow: 0;

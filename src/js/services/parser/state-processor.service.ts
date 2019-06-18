@@ -41,6 +41,7 @@ export class StateProcessorService {
         GameTag.OVERLOAD_LOCKED,
         GameTag.QUEST,
         GameTag.ATTACHED,
+        GameTag.CURRENT_PLAYER,
     ];
     
     public applyHistoryUntilNow(

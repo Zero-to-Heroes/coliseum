@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 import { Ng2FittextModule } from "ng2-fittext";
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
+import { InlineSVGModule } from 'ng-inline-svg';
 
 import { AppComponent } from '../../components/app.component';
 import { BoardComponent } from '../../components/game/board/board.component';
@@ -47,6 +49,7 @@ import { NarratorService } from '../../services/parser/narrator.service';
 import { TurnNarratorComponent } from '../../components/turn-narrator.component';
 import { MulliganComponent } from '../../components/game/overlay/mulligan.component';
 import { OverlayCrossedComponent } from '../../components/game/card/overlay-crossed.component';
+import { PlayerNameComponent } from '../../components/game/overlay/player-name.component';
 
 
 @NgModule({
@@ -98,6 +101,7 @@ import { OverlayCrossedComponent } from '../../components/game/card/overlay-cros
         OverlayCrossedComponent,
         
         MulliganComponent,
+        PlayerNameComponent,
 	],
 	providers: [
 		ActionParserService,

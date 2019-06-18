@@ -22,6 +22,14 @@ import { NGXLogger } from 'ngx-logger';
                         [playerId]="_playerId">
                 </play-area>
             </div>
+            <player-name class="player-name top" 
+                    [name]="_opponentName"
+                    [active]="_opponentId === _activePlayer">
+            </player-name>
+            <player-name class="player-name bottom" 
+                    [name]="_playerName"
+                    [active]="_playerId === _activePlayer">
+            </player-name>
             <div class="overlays" *ngIf="isMulligan">
                 <mulligan class="top"
                         [entities]="_entities" 
@@ -45,6 +53,9 @@ export class GameComponent {
     _crossed: ReadonlyArray<number> = [];
     _playerId: number;
     _opponentId: number;
+    _playerName: string;
+    _opponentName: string;
+    _activePlayer: number;
 
     isMulligan: boolean;
 
@@ -73,6 +84,21 @@ export class GameComponent {
     @Input('opponentId') set opponentId(opponentId: number) {
         this.logger.debug('[game] setting opponentId', opponentId);
         this._opponentId = opponentId;
+    }
+
+    @Input('playerName') set playerName(value: string) {
+        this.logger.debug('[game] setting playerName', value);
+        this._playerName = value;
+    }
+
+    @Input('opponentName') set opponentName(value: string) {
+        this.logger.debug('[game] setting opponentName', value);
+        this._opponentName = value;
+    }
+
+    @Input('activePlayer') set activePlayer(value: number) {
+        this.logger.debug('[game] setting activePlayer', value);
+        this._activePlayer = value;
     }
 
 }

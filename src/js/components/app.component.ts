@@ -6,6 +6,8 @@ import { Game } from '../models/game/game';
 import { GameParserService } from '../services/parser/game-parser.service';
 import { Events } from '../services/events.service';
 import { NGXLogger } from 'ngx-logger';
+import { GameTag } from '../models/enums/game-tags';
+import { PlayerEntity } from '../models/game/player-entity';
 
 @Component({
 	selector: 'app-root',
@@ -18,6 +20,9 @@ import { NGXLogger } from 'ngx-logger';
                     [turn]="turnString"
                     [playerId]="game.players[0].playerId" 
                     [opponentId]="game.players[1].playerId"
+                    [playerName]="game.players[0].name"
+                    [opponentName]="game.players[1].name"
+                    [activePlayer]="activePlayer"
                     [entities]="entities"
                     [crossed]="crossed">
             </game>
@@ -34,6 +39,7 @@ export class AppComponent {
     crossed: ReadonlyArray<number>;
     text: string;
     turnString: string;
+    activePlayer: number;
 
 	private currentActionInTurn: number = 0;
 	private currentTurn: number = 0;
@@ -75,12 +81,22 @@ export class AppComponent {
         this.crossed = this.computeCrossed();
 		this.text = this.computeText();
         this.turnString = this.computeTurnString();
+        this.activePlayer = this.computeActivePlayer();
         this.logger.debug('[app] setting turn', this.turnString);
         this.logger.debug('[app] Considering action', this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn]);
         if (!(<ViewRef>this.cdr).destroyed) {
             this.cdr.detectChanges();
         }
 
+    }
+
+    private computeActivePlayer(): number {
+        const activePlayer = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].entities
+                .filter(entity => entity.getTag(GameTag.CURRENT_PLAYER) === 1)
+                .map(entity => entity as PlayerEntity)
+                .first()
+                .playerId;
+        return activePlayer;
     }
 
 	private computeNewEntities(): Map<number, Entity> {
