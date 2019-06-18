@@ -45,6 +45,7 @@ import { BoardCardFrameComponent } from '../../components/game/board/board-card-
 import { BoardCardStatsComponent } from '../../components/game/board/board-card-stats.component';
 import { NarratorService } from '../../services/parser/narrator.service';
 import { TurnNarratorComponent } from '../../components/turn-narrator.component';
+import { MulliganComponent } from '../../components/game/overlay/mulligan.component';
 
 
 @NgModule({
@@ -92,7 +93,9 @@ import { TurnNarratorComponent } from '../../components/turn-narrator.component'
 		CardTextComponent,
 		CardRaceComponent,
 		CardStatsComponent,
-		CardCostComponent,
+        CardCostComponent,
+        
+        MulliganComponent,
 	],
 	providers: [
 		ActionParserService,

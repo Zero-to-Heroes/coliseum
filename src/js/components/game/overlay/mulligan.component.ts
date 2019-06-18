@@ -1,0 +1,62 @@
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Entity } from '../../../models/game/entity';
+import { NGXLogger } from 'ngx-logger';
+import { Map } from 'immutable';
+import { GameTag } from '../../../models/enums/game-tags';
+import { Zone } from '../../../models/enums/zone';
+
+@Component({
+	selector: 'mulligan',
+	styleUrls: [
+        '../../../../css/components/game/overlay/mulligan.component.scss'
+    ],
+	template: `
+        <div class="mulligan">
+            <li *ngFor="let entity of mulliganCards; let i = index; trackBy: trackByFn">
+                <card [entity]="entity" [hasTooltip]="false"></card>
+            </li>
+		</div>
+	`,
+	changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class MulliganComponent {
+
+    _entities: Map<number, Entity>;
+    _playerId: number;
+
+    mulliganCards: ReadonlyArray<Entity>
+    
+    constructor(private logger: NGXLogger) {}
+
+    @Input('entities') set entities(entities: Map<number, Entity>) {
+        this.logger.debug('[play-area] setting new entities', entities.toJS());
+        this._entities = entities;
+        this.updateEntityGroups();
+    }
+
+    @Input('playerId') set playerId(playerId: number) {
+        this.logger.debug('[play-area] setting playerId', playerId);
+        this._playerId = playerId;
+        this.updateEntityGroups();
+    }
+	
+	trackByFn(index, item: Entity) {
+		return item.id;
+	}
+
+    private updateEntityGroups() {
+        if (!this._entities || ! this._playerId) {
+            this.logger.debug('[play-area] entities not initialized yet');
+            return;
+        }
+        
+        this.mulliganCards = this.getMulliganEntities(this._playerId);
+    }
+
+    private getMulliganEntities(playerId: number): ReadonlyArray<Entity> {
+        return this._entities.toArray()
+                .filter((entity) => entity.getTag(GameTag.CONTROLLER) === playerId)
+                .filter((entity) => entity.getTag(GameTag.ZONE) === Zone.HAND)
+                .sort((a, b) => a.getTag(GameTag.ZONE_POSITION) - b.getTag(GameTag.ZONE_POSITION));
+    }
+}

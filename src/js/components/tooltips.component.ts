@@ -49,7 +49,6 @@ export class TooltipsComponent implements AfterViewInit {
 
 		this.events.on(Events.SHOW_TOOLTIP).subscribe(
 			(data) => {
-                console.log('showing tooltip', data);
 				// let start = Date.now();
 				this.destroy();
                 const entity: Entity = data.data[0];
@@ -67,7 +66,6 @@ export class TooltipsComponent implements AfterViewInit {
                         : (topInput + this.tooltipHeight > this.rect.bottom
                                 ? this.rect.bottom - this.tooltipHeight
                                 : topInput);
-                console.log('positioning tooltip', left, top, this.rect, this.tooltipWidth, this.tooltipHeight);
 
 			    // this.tooltip.instance.display = 'block';
 			    this.tooltip.instance.entity = entity;
@@ -118,8 +116,6 @@ export class TooltipsComponent implements AfterViewInit {
         const tooltipSize = parseInt(styles.width.split('%')[0]) * 0.01;
         this.tooltipWidth = this.rect.width * tooltipSize;
         this.tooltipHeight = this.tooltipWidth * CARD_ASPECT_RATIO;
-        console.log('tooltip size', this.tooltipWidth, this.tooltipHeight);
-
     }
 
 

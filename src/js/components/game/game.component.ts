@@ -9,26 +9,49 @@ import { NGXLogger } from 'ngx-logger';
         '../../../css/components/game/game.component.scss'
     ],
 	template: `
-        <div class="game">
-            <play-area class="top" 
-                    [entities]="_entities" 
-                    [playerId]="_opponentId">
-            </play-area>
-            <play-area class="bottom" 
-                    [entities]="_entities" 
-                    [playerId]="_playerId">
-            </play-area>
+        <div class="game" [ngClass]="{'mulligan': isMulligan}">
+            <div class="play-areas">
+                <play-area class="top"
+                        [mulligan]="isMulligan"
+                        [entities]="_entities" 
+                        [playerId]="_opponentId">
+                </play-area>
+                <play-area class="bottom" 
+                        [mulligan]="isMulligan"
+                        [entities]="_entities" 
+                        [playerId]="_playerId">
+                </play-area>
+            </div>
+            <div class="overlays" *ngIf="isMulligan">
+                <mulligan class="top"
+                        [entities]="_entities" 
+                        [playerId]="_opponentId">
+                </mulligan>
+                <mulligan class="bottom"
+                        [entities]="_entities" 
+                        [playerId]="_playerId">
+                </mulligan>
+            </div>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GameComponent {
 
+    _turn: string;
     _entities: Map<number, Entity>;
     _playerId: number;
     _opponentId: number;
 
+    isMulligan: boolean;
+
     constructor(private logger: NGXLogger) { } 
+
+    @Input('turn') set turn(value: string) {
+        this._turn = value;
+        this.isMulligan = this._turn === 'Mulligan';
+        this.logger.debug('[game] setting turn', value, this.isMulligan);
+    }
 
     @Input('entities') set entities(entities: Map<number, Entity>) {
         this.logger.debug('[game] setting new entities', entities.toJS());

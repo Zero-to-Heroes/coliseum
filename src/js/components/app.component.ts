@@ -14,11 +14,12 @@ import { NGXLogger } from 'ngx-logger';
 	],
 	template: `
 		<div class="coliseum wide">
-			<game *ngIf="game"
-				[playerId]="game.players[0].playerId" 
-				[opponentId]="game.players[1].playerId"
-				[entities]="entities">
-			</game>
+            <game *ngIf="game"
+                    [turn]="turnString"
+                    [playerId]="game.players[0].playerId" 
+                    [opponentId]="game.players[1].playerId"
+                    [entities]="entities">
+            </game>
 			<turn-narrator [text]="text"></turn-narrator>
 			<tooltips></tooltips>
 		</div>
@@ -29,7 +30,8 @@ export class AppComponent {
 
 	game: Game;
 	entities: Map<number, Entity>;
-	text: string;
+    text: string;
+    turnString: string;
 
 	private currentActionInTurn: number = 0;
 	private currentTurn: number = 0;
@@ -52,6 +54,8 @@ export class AppComponent {
 		this.logger.info('[app] Converted game');
 		this.entities = this.computeNewEntities();
 		this.text = this.computeText();
+        this.turnString = this.computeTurnString();
+        this.logger.debug('[app] setting turn', this.turnString);
         if (!(<ViewRef>this.cdr).destroyed) {
             this.cdr.detectChanges();
         }
@@ -68,7 +72,8 @@ export class AppComponent {
 				break;
 		}
 		this.entities = this.computeNewEntities();
-		this.text = this.computeText();
+        this.text = this.computeText();
+        this.turnString = this.computeTurnString();
         if (!(<ViewRef>this.cdr).destroyed) {
             this.cdr.detectChanges();
         }
@@ -80,11 +85,20 @@ export class AppComponent {
 
 	private computeText(): string {
 		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].textRaw;
+    }
+    
+	private computeTurnString(): string {
+        return this.game.turns.get(this.currentTurn).turn === 'mulligan'
+                ? 'Mulligan'
+                : `Turn${this.game.turns.get(this.currentTurn).turn}`
 	}
 
 	private moveCursorToNextAction() {
 		this.currentActionInTurn++;
 		if (this.currentActionInTurn >= this.game.turns.get(this.currentTurn).actions.length) {
+            if (this.currentTurn === this.game.turns.size) {
+                return;
+            }
 			this.currentActionInTurn = 0;
 			this.currentTurn++;
 		}
@@ -93,6 +107,9 @@ export class AppComponent {
 	private moveCursorToPreviousAction() {
 		this.currentActionInTurn--;
 		if (this.currentActionInTurn < 0) {
+            if (this.currentTurn === 0) {
+                return;
+            }
 			this.currentTurn--;
 			this.currentActionInTurn = this.game.turns.get(this.currentTurn).actions.length - 1;
 		}

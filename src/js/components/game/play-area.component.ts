@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, NgZone, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { Map } from 'immutable';
 import { Entity } from '../../models/game/entity';
 import { GameTag } from '../../models/enums/game-tags';
@@ -12,7 +12,7 @@ import { NGXLogger } from 'ngx-logger';
         '../../../css/components/game/play-area.component.scss'
     ],
 	template: `
-        <div class="play-area">
+        <div class="play-area" [ngClass]="{ 'mulligan': _isMulligan }">
             <hand [entities]="hand"></hand>
             <hero [hero]="hero" [heroPower]="heroPower" [weapon]="weapon"></hero>
             <board [entities]="board"></board>
@@ -29,6 +29,7 @@ import { NGXLogger } from 'ngx-logger';
 })
 export class PlayAreaComponent {
 
+    _isMulligan: string;
     _entities: Map<number, Entity>;
     _playerId: number;
 
@@ -47,6 +48,11 @@ export class PlayAreaComponent {
     private playerEntity: Entity;
 
     constructor(private logger: NGXLogger) {}
+
+    @Input('mulligan') set mulligan(value: string) {
+        this.logger.debug('[play-area] setting mulligan', value);
+        this._isMulligan = value;
+    }
 
     @Input('entities') set entities(entities: Map<number, Entity>) {
         this.logger.debug('[play-area] setting new entities', entities.toJS());
@@ -107,9 +113,6 @@ export class PlayAreaComponent {
                 .filter((entity) => entity.getTag(GameTag.ZONE) === Zone.PLAY)
                 .filter((entity) => entity.getTag(GameTag.CONTROLLER) === playerId)
                 [0];
-        console.log('hero power', heroPower, this._entities.toArray()
-        .filter((entity) => entity.getTag(GameTag.CARDTYPE) === CardType.HERO_POWER)
-        .filter((entity) => entity.getTag(GameTag.ZONE) === Zone.PLAY))
         return heroPower;
     }
 

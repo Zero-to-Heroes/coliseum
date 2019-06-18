@@ -84,7 +84,7 @@ export class CardComponent implements AfterViewInit {
 	}
 
 	@HostListener('mouseenter') onMouseEnter() {
-		if (!this._hasTooltip) {
+		if (!this._hasTooltip || !this.cardId) {
 			return;
 		}
 		let x = 100;
