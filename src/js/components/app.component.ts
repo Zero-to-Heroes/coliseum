@@ -56,6 +56,7 @@ export class AppComponent {
 		this.text = this.computeText();
         this.turnString = this.computeTurnString();
         this.logger.debug('[app] setting turn', this.turnString);
+        this.logger.debug('[app] Considering action', this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn]);
         if (!(<ViewRef>this.cdr).destroyed) {
             this.cdr.detectChanges();
         }
@@ -74,6 +75,7 @@ export class AppComponent {
 		this.entities = this.computeNewEntities();
         this.text = this.computeText();
         this.turnString = this.computeTurnString();
+        this.logger.debug('[app] Considering action', this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn]);
         if (!(<ViewRef>this.cdr).destroyed) {
             this.cdr.detectChanges();
         }

@@ -28,6 +28,7 @@ import { AttachingEnchantmentParser } from './action/attaching-enchantment-parse
 import { DamageParser } from './action/damage-parser';
 import { Damage } from '../../models/action/damage';
 import { DiscoveryPickParser } from './action/discovery-pick-parser';
+import { MulliganCardChoiceParser } from './action/mulligan-card-choice-parser';
 
 @Injectable()
 export class ActionParserService {
@@ -41,6 +42,7 @@ export class ActionParserService {
         return [
             new StartTurnParser(),
             new MulliganCardParser(this.allCards, this.logger),
+            new MulliganCardChoiceParser(this.allCards, this.logger),
             new StartOfMulliganParser(),
             new CardDrawParser(this.allCards, this.logger),
             new HeroPowerUsedParser(this.allCards),
@@ -75,7 +77,7 @@ export class ActionParserService {
                     // played.
                     previousStateEntities = this.stateProcessorService.applyHistoryUntilNow(
                         previousStateEntities, history, previousProcessedItem, item);
-                    const actions: Action[] = parser.parse(item, this.currentTurn, previousStateEntities, history);
+                    const actions: Action[] = parser.parse(item, this.currentTurn, previousStateEntities, history, game.players);
                     if (actions && actions.length > 0) {
                         actionsForTurn = this.fillMissingEntities(actionsForTurn, previousStateEntities);
                         actionsForTurn = [...actionsForTurn, ...actions];

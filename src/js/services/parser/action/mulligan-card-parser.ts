@@ -75,6 +75,6 @@ export class MulliganCardParser implements Parser {
                 playerMulligan: [...(previousAction.playerMulligan || []), ...(currentAction.playerMulligan || [])],
                 opponentMulligan: [...(previousAction.opponentMulligan || []), ...(currentAction.opponentMulligan || [])]
             },
-            this.allCards)
+            this.allCards);
     }
 }
