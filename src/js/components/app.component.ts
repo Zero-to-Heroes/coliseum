@@ -18,7 +18,8 @@ import { NGXLogger } from 'ngx-logger';
                     [turn]="turnString"
                     [playerId]="game.players[0].playerId" 
                     [opponentId]="game.players[1].playerId"
-                    [entities]="entities">
+                    [entities]="entities"
+                    [crossed]="crossed">
             </game>
 			<turn-narrator [text]="text"></turn-narrator>
 			<tooltips></tooltips>
@@ -29,7 +30,8 @@ import { NGXLogger } from 'ngx-logger';
 export class AppComponent {
 
 	game: Game;
-	entities: Map<number, Entity>;
+    entities: Map<number, Entity>;
+    crossed: ReadonlyArray<number>;
     text: string;
     turnString: string;
 
@@ -51,15 +53,8 @@ export class AppComponent {
 
 	public loadReplay(replayXml: Node) {
 		this.game = this.gameParser.parse(replayXml);
-		this.logger.info('[app] Converted game');
-		this.entities = this.computeNewEntities();
-		this.text = this.computeText();
-        this.turnString = this.computeTurnString();
-        this.logger.debug('[app] setting turn', this.turnString);
-        this.logger.debug('[app] Considering action', this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn]);
-        if (!(<ViewRef>this.cdr).destroyed) {
-            this.cdr.detectChanges();
-        }
+        this.logger.info('[app] Converted game');
+        this.populateInfo();
 	}
 
 	@HostListener('document:keyup', ['$event'])
@@ -72,17 +67,28 @@ export class AppComponent {
 				this.moveCursorToPreviousAction();
 				break;
 		}
-		this.entities = this.computeNewEntities();
-        this.text = this.computeText();
+        this.populateInfo();
+    }
+    
+    private populateInfo() {
+        this.entities = this.computeNewEntities();
+        this.crossed = this.computeCrossed();
+		this.text = this.computeText();
         this.turnString = this.computeTurnString();
+        this.logger.debug('[app] setting turn', this.turnString);
         this.logger.debug('[app] Considering action', this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn]);
         if (!(<ViewRef>this.cdr).destroyed) {
             this.cdr.detectChanges();
         }
-	}
+
+    }
 
 	private computeNewEntities(): Map<number, Entity> {
 		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].entities;
+	}
+
+	private computeCrossed(): ReadonlyArray<number> {
+		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].crossedEntities;
 	}
 
 	private computeText(): string {

@@ -25,10 +25,12 @@ import { NGXLogger } from 'ngx-logger';
             <div class="overlays" *ngIf="isMulligan">
                 <mulligan class="top"
                         [entities]="_entities" 
+                        [crossed]="_crossed"
                         [playerId]="_opponentId">
                 </mulligan>
                 <mulligan class="bottom"
                         [entities]="_entities" 
+                        [crossed]="_crossed"
                         [playerId]="_playerId">
                 </mulligan>
             </div>
@@ -40,6 +42,7 @@ export class GameComponent {
 
     _turn: string;
     _entities: Map<number, Entity>;
+    _crossed: ReadonlyArray<number> = [];
     _playerId: number;
     _opponentId: number;
 
@@ -56,6 +59,10 @@ export class GameComponent {
     @Input('entities') set entities(entities: Map<number, Entity>) {
         this.logger.debug('[game] setting new entities', entities.toJS());
         this._entities = entities;
+    }
+
+    @Input('crossed') set crossed(value: ReadonlyArray<number>) {
+        this._crossed = value;
     }
 
     @Input('playerId') set playerId(playerId: number) {

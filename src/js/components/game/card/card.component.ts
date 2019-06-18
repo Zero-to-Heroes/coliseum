@@ -29,14 +29,16 @@ import { AllCardsService } from '../../../services/all-cards.service';
 					[damage]="damage"
 					[durability]="durability"
 					[armor]="armor">
-			</card-stats>
+            </card-stats>
+            <overlay-crossed *ngIf="_crossed"></overlay-crossed>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardComponent implements AfterViewInit {
 
-	_entity: Entity;
+    _entity: Entity;
+    _crossed: boolean;
 
 	cardId: string;
 	cardType: CardType;
@@ -81,6 +83,13 @@ export class CardComponent implements AfterViewInit {
 
 	@Input("hasTooltip") set hasTooltip(hasTooltip: boolean) {
 		this._hasTooltip = hasTooltip;
+	}
+
+	@Input("crossed") set crossed(value: boolean) {
+        this._crossed = value;
+        if (value) {
+            this.logger.debug('[card] marking card as crossed', this._entity);
+        }
 	}
 
 	@HostListener('mouseenter') onMouseEnter() {
