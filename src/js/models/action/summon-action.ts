@@ -32,4 +32,8 @@ export class SummonAction extends Action {
         const textRaw = `\t${originCardName} summons ${summonCardNames}`;
         return Object.assign(new SummonAction(this.allCards), this, { textRaw: textRaw });                
     }
+
+    protected getInstance(): Action {
+        return new SummonAction(this.allCards);
+    }
 }

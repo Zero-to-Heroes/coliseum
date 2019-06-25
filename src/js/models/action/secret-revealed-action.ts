@@ -27,4 +27,8 @@ export class SecretRevealedAction extends Action {
         const textRaw = `\t... which triggers ${cardName}!`;
         return Object.assign(new SecretRevealedAction(this.allCards), this, { textRaw: textRaw });                
     }
+
+    protected getInstance(): Action {
+        return new SecretRevealedAction(this.allCards);
+    }
 }

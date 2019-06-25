@@ -29,4 +29,8 @@ export class SecretPlayedFromHandAction extends Action {
         const textRaw = `\t${ownerName} plays a secret! ${card.name}`;
         return Object.assign(new SecretPlayedFromHandAction(this.allCards), this, { textRaw: textRaw });                
     }
+
+    protected getInstance(): Action {
+        return new SecretPlayedFromHandAction(this.allCards);
+    }
 }

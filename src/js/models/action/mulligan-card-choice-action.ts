@@ -26,4 +26,8 @@ export class MulliganCardChoiceAction extends Action {
         let textRaw = '';
         return Object.assign(new MulliganCardChoiceAction(this.allCards), this, { textRaw: textRaw });                
     }
+
+    protected getInstance(): Action {
+        return new MulliganCardChoiceAction(this.allCards);
+    }
 }

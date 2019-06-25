@@ -30,4 +30,8 @@ export class MinionDeathAction extends Action {
         const textRaw = `\t${deadMinionNames} die`;
         return Object.assign(new MinionDeathAction(this.allCards), this, { textRaw: textRaw });                
     }
+
+    protected getInstance(): Action {
+        return new MinionDeathAction(this.allCards);
+    }
 }

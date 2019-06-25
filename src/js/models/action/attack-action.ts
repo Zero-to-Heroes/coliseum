@@ -40,4 +40,8 @@ export class AttackAction extends Action implements HasDamage {
         const textRaw = `\t${originCard.name} attacks ${targetCard.name}. ${damageText}`;
         return Object.assign(new AttackAction(this.allCards), this, { textRaw: textRaw });                
     }
+
+    protected getInstance(): Action {
+        return new AttackAction(this.allCards);
+    }
 }

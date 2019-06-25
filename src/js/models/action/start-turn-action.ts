@@ -17,4 +17,8 @@ export class StartTurnAction extends Action {
         const textRaw = this.turn === 0 ? 'Start of mulligan' : 'Start of turn ' + this.turn;
         return Object.assign(new StartTurnAction(), this, { textRaw: textRaw });                
     }
+
+    protected getInstance(): Action {
+        return new StartTurnAction();
+    }
 }

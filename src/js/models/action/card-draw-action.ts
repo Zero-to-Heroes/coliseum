@@ -59,4 +59,8 @@ export class CardDrawAction extends Action {
         const textRaw = `\t${ownerName} draws ` + drawInfo;
         return Object.assign(new CardDrawAction(this.allCards), this, { textRaw: textRaw });                
     }
+
+    protected getInstance(): Action {
+        return new CardDrawAction(this.allCards);
+    }
 }

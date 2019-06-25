@@ -33,4 +33,8 @@ export class HealingAction extends Action implements HasDamage {
                 .join(', ');
         return Object.assign(new HealingAction(this.allCards), this, { textRaw: textRaw });                
     }
+
+    protected getInstance(): Action {
+        return new HealingAction(this.allCards);
+    }
 }

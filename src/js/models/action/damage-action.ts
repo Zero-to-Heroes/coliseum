@@ -33,4 +33,8 @@ export class DamageAction extends Action implements HasDamage {
                 .join(', ');
         return Object.assign(new DamageAction(this.allCards), this, { textRaw: textRaw });                
     }
+
+    protected getInstance(): Action {
+        return new DamageAction(this.allCards);
+    }
 }

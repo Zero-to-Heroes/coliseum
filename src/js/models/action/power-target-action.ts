@@ -36,4 +36,8 @@ export class PowerTargetAction extends Action {
         const textRaw = `\t${originCardName} targets ${targetCardNames}`;
         return Object.assign(new PowerTargetAction(this.allCards), this, { textRaw: textRaw });                
     }
+
+    protected getInstance(): Action {
+        return new PowerTargetAction(this.allCards);
+    }
 }

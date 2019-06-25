@@ -38,4 +38,8 @@ export class AttachingEnchantmentAction extends Action {
         const textRaw = `\t${creatorCard.name} enchants ${targetCardNames} with ${enchantmentCard.name}`;
         return Object.assign(new AttachingEnchantmentAction(this.allCards), this, { textRaw: textRaw });                
     }
+
+    protected getInstance(): Action {
+        return new AttachingEnchantmentAction(this.allCards);
+    }
 }

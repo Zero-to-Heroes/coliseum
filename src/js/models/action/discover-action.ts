@@ -42,4 +42,8 @@ export class DiscoverAction extends Action {
         const textRaw = `\t${owner.name} discovers ${offerInfo}`;
         return Object.assign(new DiscoverAction(this.allCards), this, { textRaw: textRaw });                
     }
+
+    protected getInstance(): Action {
+        return new DiscoverAction(this.allCards);
+    }
 }

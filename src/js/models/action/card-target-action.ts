@@ -36,4 +36,8 @@ export class CardTargetAction extends Action {
         const textRaw = `\t${originCardName} targets ${targetCardNames}`;
         return Object.assign(new CardTargetAction(this.allCards), this, { textRaw: textRaw });                
     }
+
+    protected getInstance(): Action {
+        return new CardTargetAction(this.allCards);
+    }
 }

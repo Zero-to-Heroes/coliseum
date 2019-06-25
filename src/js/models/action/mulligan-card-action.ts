@@ -55,4 +55,8 @@ export class MulliganCardAction extends Action {
         const textRaw = `\t${ownerName} mulligans ${mulliganInfo}`;
         return textRaw;
     }
+
+    protected getInstance(): Action {
+        return new MulliganCardAction(this.allCards);
+    }
 }

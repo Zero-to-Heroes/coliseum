@@ -36,4 +36,8 @@ export class CardPlayedFromHandAction extends Action {
         const textRaw = `\t${ownerName} ${playVerb} ${card.name}`;
         return Object.assign(new CardPlayedFromHandAction(this.allCards), this, { textRaw: textRaw });                
     }
+
+    protected getInstance(): Action {
+        return new CardPlayedFromHandAction(this.allCards);
+    }
 }

@@ -29,4 +29,8 @@ export class DiscoveryPickAction extends Action {
         const textRaw = `\t${ownerEntity.name} picks ${chosenCardText}`;
         return Object.assign(new DiscoveryPickAction(this.allCards), this, { textRaw: textRaw });                
     }
+
+    protected getInstance(): Action {
+        return new DiscoveryPickAction(this.allCards);
+    }
 }

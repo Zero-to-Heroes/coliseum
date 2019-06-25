@@ -30,4 +30,8 @@ export class HeroPowerUsedAction extends Action {
         const textRaw = `\t${ownerName} uses ${card.name}`;
         return Object.assign(new HeroPowerUsedAction(this.allCards), this, { textRaw: textRaw });                
     }
+
+    protected getInstance(): Action {
+        return new HeroPowerUsedAction(this.allCards);
+    }
 }
