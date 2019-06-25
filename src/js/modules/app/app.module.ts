@@ -51,6 +51,7 @@ import { MulliganComponent } from '../../components/game/overlay/mulligan.compon
 import { OverlayCrossedComponent } from '../../components/game/card/overlay-crossed.component';
 import { PlayerNameComponent } from '../../components/game/overlay/player-name.component';
 import { ActiveSpellParserService } from '../../services/parser/active-spell-parser.service';
+import { ActiveSpellComponent } from '../../components/game/active-spell.component';
 
 
 @NgModule({
@@ -103,6 +104,7 @@ import { ActiveSpellParserService } from '../../services/parser/active-spell-par
         
         MulliganComponent,
         PlayerNameComponent,
+        ActiveSpellComponent,
 	],
 	providers: [
         ActionParserService,

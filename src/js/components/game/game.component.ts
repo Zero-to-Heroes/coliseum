@@ -30,6 +30,10 @@ import { NGXLogger } from 'ngx-logger';
                     [name]="_playerName"
                     [active]="_playerId === _activePlayer">
             </player-name>
+            <active-spell class="active-spell"
+                    *ngIf="_activeSpell"
+                    [entity]="_activeSpell">
+            </active-spell>
             <div class="overlays" *ngIf="isMulligan">
                 <mulligan class="top"
                         [entities]="_entities" 
@@ -56,22 +60,24 @@ export class GameComponent {
     _playerName: string;
     _opponentName: string;
     _activePlayer: number;
-    _activeSpell: number;
-
+    _activeSpell: Entity;
+    
     isMulligan: boolean;
+
+    private activeSpellId: number;
 
     constructor(private logger: NGXLogger) { } 
 
     @Input('turn') set turn(value: string) {
         this._turn = value;
-        // TODO: move this piece of logic out of the view
-        this.isMulligan = this._turn === 'Mulligan' && !this._activeSpell;
+        this.updateActiveSpell();
         this.logger.debug('[game] setting turn', value, this.isMulligan);
     }
 
     @Input('entities') set entities(entities: Map<number, Entity>) {
         this.logger.debug('[game] setting new entities', entities.toJS());
         this._entities = entities;
+        this.updateActiveSpell();
     }
 
     @Input('crossed') set crossed(value: ReadonlyArray<number>) {
@@ -105,7 +111,12 @@ export class GameComponent {
 
     @Input('activeSpell') set activeSpell(value: number) {
         this.logger.debug('[game] setting activeSpell', value);
-        this._activeSpell = value;
+        this.activeSpellId = value;
+        this.updateActiveSpell();
+    }
+
+    private updateActiveSpell() {
+        this._activeSpell = this._entities && this._entities.get(this.activeSpellId);
         // TODO: move this piece of logic out of the view
         this.isMulligan = this._turn === 'Mulligan' && !this._activeSpell;
     }
