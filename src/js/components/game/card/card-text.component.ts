@@ -3,6 +3,8 @@ import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 import { AllCardsService } from '../../../services/all-cards.service';
 import { CardType } from '../../../models/enums/card-type';
 import { NGXLogger } from 'ngx-logger';
+import { Entity } from '../../../models/game/entity';
+import { GameTag } from '../../../models/enums/game-tags';
 
 @Component({
 	selector: 'card-text',
@@ -25,6 +27,19 @@ import { NGXLogger } from 'ngx-logger';
 })
 export class CardTextComponent {
 
+    private readonly CARD_IDS_TO_FIX = [
+        'DAL_357t', // Spirit of Lucentbark
+        'DALA_BOSS_07p', // Take Flight!
+        'DALA_BOSS_07p2', // Flying!
+        'DALA_BOSS_45p', // Ray of Suffering
+        'DALA_BOSS_45px', // Ray of Suffering
+        'DALA_BOSS_69p', // Dragonwrath 
+        'DALA_BOSS_69px', // Dragonwrath 
+        'FB_LK005', // Remorseless Winter
+        'GILA_601', // Cannon
+        'ICCA08_030p', // Remorseless Winter
+    ]
+
 	_cardType: string;
     text: SafeHtml;
     maxFontSize: number;
@@ -41,7 +56,8 @@ export class CardTextComponent {
             true);
         }
     
-    @Input('cardId') set cardId(cardId: string) {
+    @Input('entity') set entity(value: Entity) {
+        const cardId = value.cardID;
         this.logger.debug('[card-text] setting cardId', cardId);
         this.text = undefined;
         const originalCard = this.cards.getCard(cardId);
@@ -51,10 +67,23 @@ export class CardTextComponent {
             }
             return;
         }
-        const description = originalCard.text
+        // There are a few cards whose text is truncated in the json cards export
+        const originalText = this.CARD_IDS_TO_FIX.indexOf(cardId) !== -1
+                ? originalCard.text + ' @' + originalCard.collectionText
+                : originalCard.text;
+        let description: string = originalText
                 .replace('\n', '<br/>')
                 .replace(/\u00a0/g, " ")
                 .replace(/^\[x\]/, "");
+        // E.g. Fatespinner
+        if (value.getTag(GameTag.HIDDEN_CHOICE) && description.indexOf('@') !== -1) {
+            console.log('hidden choice', value.tags.toJS(), description);
+            description = description.split('@')[value.getTag(GameTag.HIDDEN_CHOICE)];
+        }
+
+        description = description
+                // Now replace the value, if relevant
+                .replace('@', `${value.getTag(GameTag.TAG_SCRIPT_DATA_NUM_1)}`);
         this.text = this.domSanitizer.bypassSecurityTrustHtml(description);
         if (!(<ViewRef>this.cdr).destroyed) {
             this.cdr.detectChanges();

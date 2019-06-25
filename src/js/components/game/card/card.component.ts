@@ -6,6 +6,7 @@ import { CardClass } from '../../../models/enums/card-class';
 import { Events } from '../../../services/events.service';
 import { NGXLogger } from 'ngx-logger';
 import { AllCardsService } from '../../../services/all-cards.service';
+import { Map } from 'immutable';
 
 @Component({
 	selector: 'card',
@@ -18,8 +19,10 @@ import { AllCardsService } from '../../../services/all-cards.service';
 			<card-frame [cardId]="cardId" [premium]="premium" *ngIf="cardId"></card-frame>
 			<card-rarity [cardId]="cardId" *ngIf="cardId"></card-rarity>
 			<card-name [cardId]="cardId" *ngIf="cardId"></card-name>
-			<!-- TODO: handle all text updates -->
-			<card-text [cardId]="cardId" [cardType]="cardType" *ngIf="cardId"></card-text>
+            <card-text *ngIf="cardId"
+                    [entity]="_entity"
+                    [cardType]="cardType">
+            </card-text>
 			<card-race [cardId]="cardId" *ngIf="cardId"></card-race>
 			<card-cost [cardId]="cardId" [cost]="cost" *ngIf="cardId"></card-cost>
 			<card-stats *ngIf="cardId"
@@ -50,7 +53,7 @@ export class CardComponent implements AfterViewInit {
 	damage: number;
 	durability: number;
 	armor: number;
-	cost: number;
+    cost: number;
 
 	private _hasTooltip: boolean = true;
 
