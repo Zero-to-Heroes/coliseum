@@ -20,7 +20,8 @@ export class GameStateParserService {
                     break;
                 }
                 // For some solo modes (like puzzles) there is no mulligan, so we based ourselves on the STEP = READY tag
-                if (tagChange.tag.tag === GameTag.STEP && tagChange.tag.value == Step.MAIN_READY) {
+                if (tagChange.tag.tag === GameTag.STEP 
+                        && (tagChange.tag.value === Step.MAIN_READY || tagChange.tag.value === Step.BEGIN_MULLIGAN)) {
                     break;
                 }
                 entities = this.updateWithTagChange(tagChange, entities);

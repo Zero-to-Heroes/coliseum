@@ -7,7 +7,6 @@ import { GameTag } from "../../../models/enums/game-tags";
 import { StartTurnAction } from "../../../models/action/start-turn-action";
 import { Map } from "immutable";
 import { Entity } from "../../../models/game/entity";
-import { Mulligan } from "../../../models/enums/mulligan";
 import { Step } from "../../../models/enums/step";
 
 export class StartOfMulliganParser implements Parser {
