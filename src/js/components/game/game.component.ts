@@ -56,6 +56,7 @@ export class GameComponent {
     _playerName: string;
     _opponentName: string;
     _activePlayer: number;
+    _activeSpell: number;
 
     isMulligan: boolean;
 
@@ -63,7 +64,8 @@ export class GameComponent {
 
     @Input('turn') set turn(value: string) {
         this._turn = value;
-        this.isMulligan = this._turn === 'Mulligan';
+        // TODO: move this piece of logic out of the view
+        this.isMulligan = this._turn === 'Mulligan' && !this._activeSpell;
         this.logger.debug('[game] setting turn', value, this.isMulligan);
     }
 
@@ -99,6 +101,13 @@ export class GameComponent {
     @Input('activePlayer') set activePlayer(value: number) {
         this.logger.debug('[game] setting activePlayer', value);
         this._activePlayer = value;
+    }
+
+    @Input('activeSpell') set activeSpell(value: number) {
+        this.logger.debug('[game] setting activeSpell', value);
+        this._activeSpell = value;
+        // TODO: move this piece of logic out of the view
+        this.isMulligan = this._turn === 'Mulligan' && !this._activeSpell;
     }
 
 }

@@ -23,6 +23,7 @@ import { PlayerEntity } from '../models/game/player-entity';
                     [playerName]="game.players[0].name"
                     [opponentName]="game.players[1].name"
                     [activePlayer]="activePlayer"
+                    [activeSpell]="activeSpell"
                     [entities]="entities"
                     [crossed]="crossed">
             </game>
@@ -40,6 +41,7 @@ export class AppComponent {
     text: string;
     turnString: string;
     activePlayer: number;
+    activeSpell: number;
 
 	private currentActionInTurn: number = 0;
 	private currentTurn: number = 0;
@@ -82,21 +84,24 @@ export class AppComponent {
 		this.text = this.computeText();
         this.turnString = this.computeTurnString();
         this.activePlayer = this.computeActivePlayer();
+        this.activeSpell = this.computeActiveSpell();
         this.logger.debug('[app] setting turn', this.turnString);
         this.logger.debug('[app] Considering action', this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn]);
         if (!(<ViewRef>this.cdr).destroyed) {
             this.cdr.detectChanges();
         }
-
     }
 
+	private computeActiveSpell(): number {
+		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].activeSpell;
+	}
+
     private computeActivePlayer(): number {
-        const activePlayer = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].entities
+        return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].entities
                 .filter(entity => entity.getTag(GameTag.CURRENT_PLAYER) === 1)
                 .map(entity => entity as PlayerEntity)
                 .first()
                 .playerId;
-        return activePlayer;
     }
 
 	private computeNewEntities(): Map<number, Entity> {

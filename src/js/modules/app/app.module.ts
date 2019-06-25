@@ -50,6 +50,7 @@ import { TurnNarratorComponent } from '../../components/turn-narrator.component'
 import { MulliganComponent } from '../../components/game/overlay/mulligan.component';
 import { OverlayCrossedComponent } from '../../components/game/card/overlay-crossed.component';
 import { PlayerNameComponent } from '../../components/game/overlay/player-name.component';
+import { ActiveSpellParserService } from '../../services/parser/active-spell-parser.service';
 
 
 @NgModule({
@@ -104,7 +105,8 @@ import { PlayerNameComponent } from '../../components/game/overlay/player-name.c
         PlayerNameComponent,
 	],
 	providers: [
-		ActionParserService,
+        ActionParserService,
+        ActiveSpellParserService,
 		AllCardsService,
 		Events,
 		GameInitializerService,

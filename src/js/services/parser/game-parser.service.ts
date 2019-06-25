@@ -14,6 +14,7 @@ import { StateProcessorService } from './state-processor.service';
 import { Entity } from '../../models/game/entity';
 import { NGXLogger } from 'ngx-logger';
 import { NarratorService } from './narrator.service';
+import { ActiveSpellParserService } from './active-spell-parser.service';
 
 @Injectable()
 export class GameParserService {
@@ -24,7 +25,8 @@ export class GameParserService {
 			private turnParser: TurnParserService,
 			private gamePopulationService: GamePopulationService, 
 			private gameStateParser: GameStateParserService,
-			private gameInitializer: GameInitializerService, 
+            private gameInitializer: GameInitializerService, 
+            private activeSpellParser: ActiveSpellParserService,
 			private narrator: NarratorService,
 			private logger: NGXLogger,
 			private stateProcessor: StateProcessorService) {
@@ -59,6 +61,8 @@ export class GameParserService {
 			(game) => this.logPerf('createTurns', start, game),
             (game) => this.actionParser.parseActions(game, history),
 			(game) => this.logPerf('parseActions', start, game),
+            (game) => this.activeSpellParser.parseActiveSpell(game),
+			(game) => this.logPerf('activeSpellSet', start, game),
             // (game) => this.stateProcessor.populateIntermediateStates(game, history),
 			// (game) => this.logPerf('populateIntermediateStates', start, game),
 			(game) => this.narrator.populateActionText(game),
