@@ -87,11 +87,16 @@ export class XmlParserService {
                 let showEntities: ReadonlyArray<EntityDefinition> = this.stack[this.stack.length - 2].showEntities || [];
                 showEntities = [...showEntities, this.entityDefinition];
                 this.stack[this.stack.length - 2].showEntities = showEntities;
-                // Fall-through
-            case 'GameEntity':
+                // ATTENTION - Fall-through
             case 'Player':
+                // Remove the battle tag, if present
+                let name = node.attributes.name && node.attributes.name.indexOf('#') !== -1 
+                        ? node.attributes.name.split('#')[0] 
+                        : node.attributes.name;
+            case 'GameEntity':
             case 'FullEntity':
             case 'ChangeEntity':
+                name = name || node.attributes.name;
                 this.state.push('entity');
                 const attributes = Object.assign({}, this.entityDefinition.attributes, { ts: this.tsToSeconds(node.attributes.ts) });
                 const newAttributes: EntityDefinition = {
@@ -99,7 +104,7 @@ export class XmlParserService {
                     attributes: attributes,
                     index: this.index++,
                     cardID: node.attributes.cardID,
-                    name: node.attributes.name,
+                    name: name,
                     tags: this.entityDefinition.tags, // Avoid the hassle of merging tags, just get the ones from source
                     playerID: parseInt(node.attributes.playerID)
                 };
