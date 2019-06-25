@@ -5483,24 +5483,9 @@
 	},
 	{
 		"playerClass": "Hunter",
-		"collectionText": {
-			"ptBR": "<b>Poder Heroico</b>\nCause $3 de dano.",
-			"zhCN": "<b>英雄技能</b>\n造成$3点伤害。",
-			"itIT": "<b>Potere Eroe</b>\nInfligge $3 danni.",
-			"enUS": "<b>Hero Power</b>\nDeal $3 damage.",
-			"frFR": "<b>Pouvoir héroïque</b>\nInflige $3 points de dégâts.",
-			"zhTW": "<b>英雄能力</b>\n造成$3點傷害",
-			"deDE": "<b>Heldenfähigkeit</b>\nVerursacht $3 Schaden.",
-			"jaJP": "<b>ヒーローパワー</b>\n$3ダメージを\n与える。",
-			"plPL": "<b>Moc specjalna</b>\nZadaj $3 pkt. obrażeń.",
-			"esES": "<b>Poder de héroe</b> Inflige $3 p. de daño.",
-			"ruRU": "<b>Сила героя</b>\nНаносит $3 ед. урона.",
-			"esMX": "<b>Poder de héroe</b>\nInflige $3 de daño.",
-			"koKR": "<b>영웅 능력</b>\n피해를 $3 줍니다.",
-			"thTH": "<b>พลังฮีโร่</b> สร้างความเสียหาย $3 แต้ม"
-		},
 		"cost": 2,
 		"set": "Tgt",
+		"collectionText": "<b>Hero Power</b>\nDeal $3 damage.",
 		"name": "Ballista Shot",
 		"id": "AT_132_HUNTER",
 		"audio": {
@@ -6434,7 +6419,7 @@
 	},
 	{
 		"collectible": true,
-		"cost": 5,
+		"cost": 4,
 		"set": "Boomsday",
 		"artist": "Dany Orizio",
 		"health": 6,
@@ -6897,7 +6882,7 @@
 	},
 	{
 		"collectible": true,
-		"cost": 3,
+		"cost": 2,
 		"set": "Boomsday",
 		"artist": "Alex Horley Orlandelli",
 		"referencedTags": [
@@ -7317,7 +7302,7 @@
 		"set": "Boomsday",
 		"race": "MECHANICAL",
 		"artist": "Adam Byrne",
-		"health": 5,
+		"health": 6,
 		"mechanics": [
 			"TRIGGER_VISUAL"
 		],
@@ -7384,7 +7369,7 @@
 	},
 	{
 		"collectible": true,
-		"cost": 3,
+		"cost": 2,
 		"set": "Boomsday",
 		"artist": "Nicola Saviori",
 		"dbfId": 48101,
@@ -7422,7 +7407,7 @@
 	},
 	{
 		"playerClass": "Priest",
-		"cost": 3,
+		"cost": 2,
 		"set": "Boomsday",
 		"artist": "Nicola Saviori",
 		"name": "More Arms!",
@@ -7457,7 +7442,7 @@
 	},
 	{
 		"collectible": true,
-		"cost": 2,
+		"cost": 1,
 		"set": "Boomsday",
 		"artist": "Zoltan Boros",
 		"dbfId": 48113,
@@ -7675,7 +7660,7 @@
 		"type": "Minion",
 		"flavor": "Why Beryllium? Because it's hard to spell.",
 		"playerClass": "Warrior",
-		"attack": 3,
+		"attack": 4,
 		"name": "Beryllium Nullifier",
 		"id": "BOT_237",
 		"audio": {
@@ -8017,7 +8002,7 @@
 	},
 	{
 		"collectible": true,
-		"cost": 7,
+		"cost": 6,
 		"set": "Boomsday",
 		"artist": "J. Paick & K. Turovec",
 		"dbfId": 48161,
@@ -8143,7 +8128,7 @@
 	},
 	{
 		"collectible": true,
-		"cost": 4,
+		"cost": 3,
 		"set": "Boomsday",
 		"artist": "Jakub Kasper",
 		"dbfId": 48803,
@@ -8200,7 +8185,7 @@
 	},
 	{
 		"collectible": true,
-		"cost": 7,
+		"cost": 5,
 		"set": "Boomsday",
 		"artist": "Jakub Kasper",
 		"dbfId": 48198,
@@ -8474,7 +8459,7 @@
 	},
 	{
 		"collectible": true,
-		"cost": 2,
+		"cost": 1,
 		"set": "Boomsday",
 		"race": "MECHANICAL",
 		"artist": "Matt Dixon",
@@ -8981,7 +8966,7 @@
 		"set": "Boomsday",
 		"race": "ELEMENTAL",
 		"artist": "Mike Sass",
-		"health": 5,
+		"health": 6,
 		"mechanics": [
 			"TRIGGER_VISUAL"
 		],
@@ -9383,7 +9368,7 @@
 	},
 	{
 		"collectible": true,
-		"cost": 8,
+		"cost": 7,
 		"set": "Boomsday",
 		"artist": "Jim Nelson",
 		"dbfId": 48670,
@@ -9444,7 +9429,7 @@
 	},
 	{
 		"collectible": true,
-		"cost": 8,
+		"cost": 6,
 		"set": "Boomsday",
 		"artist": "Slawomir Maniak",
 		"health": 5,
@@ -9537,7 +9522,7 @@
 	},
 	{
 		"collectible": true,
-		"cost": 2,
+		"cost": 1,
 		"set": "Boomsday",
 		"artist": "Anton Zemskov",
 		"referencedTags": [
@@ -9994,7 +9979,7 @@
 	},
 	{
 		"collectible": true,
-		"cost": 8,
+		"cost": 7,
 		"set": "Boomsday",
 		"artist": "Arthur Bozonnet",
 		"health": 4,
@@ -10232,7 +10217,7 @@
 	},
 	{
 		"collectible": true,
-		"cost": 10,
+		"cost": 9,
 		"set": "Boomsday",
 		"race": "MECHANICAL",
 		"artist": "Mike Sass",
@@ -11324,7 +11309,7 @@
 				"VO_BOT_566_Female_Undead_Attack_01.ogg"
 			]
 		},
-		"text": "[x]<b>Deathrattle</b> minions you\nplay cost (3) less, but die\nat the end of the turn.",
+		"text": "[x]<b>Deathrattle</b> minions you\nplay cost (3) less, but die at\nend of turn. <i>(Cost can't be\nreduced below 1.)</i>",
 		"cardClass": "PRIEST",
 		"rarity": "Epic"
 	},
@@ -11733,6 +11718,58 @@
 	},
 	{
 		"collectible": true,
+		"cost": 3,
+		"set": "Boomsday",
+		"race": "MECHANICAL",
+		"artist": "Nicola Saviori",
+		"health": 3,
+		"mechanics": [
+			"DEATHRATTLE",
+			"ECHO",
+			"MODULAR"
+		],
+		"dbfId": 56223,
+		"type": "Minion",
+		"flavor": "\"It's gonna be snip this, snap that. Bada-snip, bada-snap!\"",
+		"playerClass": "Neutral",
+		"elite": true,
+		"attack": 2,
+		"name": "SN1P-SN4P",
+		"id": "BOT_700",
+		"audio": {
+			"play": [
+				"BOT_700_SN1P-SN4P_Play.ogg",
+				"SN1P-SN4P_Play_Stinger.ogg"
+			],
+			"death": [
+				"BOT_700_SN1P-SN4P_Death.ogg"
+			],
+			"attack": [
+				"BOT_700_SN1P-SN4P_Attack.ogg"
+			],
+			"magnetic_play": [
+				"magnetic_play.ogg"
+			]
+		},
+		"text": "<b>Magnetic</b>, <b>Echo</b>\n<b>Deathrattle:</b> Summon two 1/1 Microbots.",
+		"cardClass": "NEUTRAL",
+		"rarity": "Legendary"
+	},
+	{
+		"playerClass": "Neutral",
+		"set": "Boomsday",
+		"name": "SN1P-SN4P",
+		"mechanics": [
+			"MODULAR"
+		],
+		"id": "BOT_700e",
+		"text": "<b>Deathrattle:</b> Summon two 1/1 Microbots.",
+		"dbfId": 56225,
+		"type": "Enchantment",
+		"cardClass": "NEUTRAL"
+	},
+	{
+		"collectible": true,
 		"cost": 1,
 		"set": "Boomsday",
 		"race": "MECHANICAL",
@@ -11865,7 +11902,7 @@
 	},
 	{
 		"collectible": true,
-		"cost": 2,
+		"cost": 1,
 		"set": "Boomsday",
 		"artist": "Tyler West Studio",
 		"dbfId": 48985,
@@ -11885,7 +11922,7 @@
 	},
 	{
 		"collectible": true,
-		"cost": 6,
+		"cost": 5,
 		"set": "Boomsday",
 		"artist": "Anton Zemskov",
 		"health": 4,
@@ -23340,24 +23377,9 @@
 	},
 	{
 		"collectible": true,
-		"collectionText": {
-			"ptBR": "<b>Grito de Guerra:</b> Evoque um <b>Golem de Jade</b>. Conceda <b>Provocar</b> a ele.",
-			"zhCN": "<b>战吼：</b>召唤一个<b>青玉魔像</b>，使其获得\n<b>嘲讽</b>。",
-			"itIT": "<b>Grido di Battaglia:</b> evoca un <b>Golem di Giada</b> e gli fornisce <b>Provocazione</b>.",
-			"enUS": "<b>Battlecry:</b> Summon a <b>Jade Golem</b>. Give it <b>Taunt</b>.",
-			"frFR": "<b>Cri de guerre :</b> invoque un <b>golem de jade</b>. Lui confère <b>Provocation</b>.",
-			"zhTW": "<b>戰吼：</b>召喚一個<b>翠玉魔像</b>並賦予<b>嘲諷</b>",
-			"deDE": "<b>Kampfschrei:</b> Ruft einen <b>Jadegolem</b> herbei. Verleiht ihm <b>Spott</b>.",
-			"jaJP": "<b>雄叫び:</b>  \n<b>翡翠のゴーレム</b>を\n1体召喚し\n<b>挑発</b>を付与する。",
-			"plPL": "<b>Okrzyk bojowy:</b> Przyzwij <b>Nefrytowego golema</b>. Daj mu <b>Prowokację</b>.",
-			"esES": "<b>Grito de batalla:</b> Invoca un <b>gólem de jade</b> y le otorga <b>Provocar</b>.",
-			"ruRU": "<b>Боевой клич:</b> призывает <b>нефритового голема</b> с <b>«Провокацией»</b>.",
-			"esMX": "<b>Grito de batalla:</b> invoca un <b>Gólem de jade</b> y le otorgas <b>Provocación</b>.",
-			"koKR": "<b>전투의 함성:</b> <b>비취 골렘</b>을 소환하고 <b>도발</b>을 부여합니다.",
-			"thTH": "<b>คำรามสู้ศึก:</b> เรียก<b>เจดโกเล็ม</b> และมอบ[b]<b>ยั่วยุ</b> ให้มัน"
-		},
 		"cost": 7,
 		"set": "Gangs",
+		"collectionText": "<b>Battlecry:</b> Summon a <b>Jade Golem</b>. Give it <b>Taunt</b>.",
 		"artist": "A. J. Nazzaro",
 		"health": 5,
 		"mechanics": [
@@ -24103,24 +24125,9 @@
 	},
 	{
 		"collectible": true,
-		"collectionText": {
-			"ptBR": "[x]<b>Provocar</b>\n<b>Grito de Guerra:</b> Evoque um \n<b>Golem de Jade</b>.",
-			"zhCN": "<b>嘲讽，战吼：</b>召唤一个<b>青玉魔像</b>。",
-			"itIT": "<b>Provocazione</b>. <b>Grido di Battaglia:</b> evoca un <b>Golem di Giada</b>.",
-			"enUS": "[x]<b>Taunt</b>\n<b>Battlecry:</b> Summon a\n<b>Jade Golem</b>.",
-			"frFR": "<b>Provocation</b>\n<b>Cri de guerre :</b> invoque un <b>golem de jade</b>.",
-			"zhTW": "<b>嘲諷</b>\n<b>戰吼：</b>召喚一個\n<b>翠玉魔像</b>",
-			"deDE": "<b>Spott</b>. <b>Kampfschrei:</b> Ruft einen <b>Jadegolem</b> herbei.",
-			"jaJP": "<b>挑発</b>、<b>雄叫び:</b>\n <b>翡翠のゴーレム</b>を\n1体召喚する。     ",
-			"plPL": "<b>Prowokacja</b>\n<b>Okrzyk bojowy:</b> Przyzwij <b>Nefrytowego golema</b>.",
-			"esES": "[x]<b>Provocar</b>. <b>Grito de batalla:</b>\nInvoca un <b>gólem de jade</b>.",
-			"ruRU": "<b>Провокация</b>\n<b>Боевой клич:</b> призывает <b>нефритового голема</b>.",
-			"esMX": "<b>Provocación</b>\n<b>Grito de batalla:</b> Invoca un <b>Gólem de jade</b>.",
-			"koKR": "<b>도발</b>, <b>전투의 함성:</b>\n<b>비취 골렘</b>을 소환합니다.",
-			"thTH": "[x]<b>ยั่วยุ</b>\n<b>คำรามสู้ศึก:</b> \nเรียก <b>เจดโกเล็ม</b>"
-		},
 		"cost": 6,
 		"set": "Gangs",
+		"collectionText": "[x]<b>Taunt</b>\n<b>Battlecry:</b> Summon a\n<b>Jade Golem</b>.",
 		"artist": "Zoltan Boros",
 		"health": 6,
 		"mechanics": [
@@ -24192,24 +24199,9 @@
 	},
 	{
 		"collectible": true,
-		"collectionText": {
-			"ptBR": "<b>Escolha Um -</b> Evoque um <b>Golem de Jade</b>; ou Coloque 3 cópias deste card no seu deck.",
-			"zhCN": "<b>抉择：</b>召唤一个<b>青玉魔像</b>；或者将该牌的三张复制洗入你的\n牌库。",
-			"itIT": "<b>Scegli:</b> evoca un <b>Golem di Giada</b> <b>o</b> mette tre copie di questa carta nel tuo mazzo.",
-			"enUS": "<b>Choose One -</b> Summon a <b>Jade Golem</b>; or Shuffle 3 copies of this card into your deck.",
-			"frFR": "<b>Choix des armes :</b> invoque un <b>golem de jade</b> ou place 3 copies de cette carte dans votre deck.",
-			"zhTW": "<b>二選一：</b>召喚\n一個<b>翠玉魔像</b>，或將三張<b>翠玉塑像</b>洗入你的牌堆",
-			"deDE": "<b>Wählt aus:</b> Ruft einen <b>Jadegolem</b> herbei; oder mischt 3 Kopien dieser Karte in Euer Deck.",
-			"jaJP": "[x]<b>選択:</b>\n<b>翡翠のゴーレム</b>\nを1体召喚する。\nまたは、このカードのコピー\n3枚を自分のデッキに混ぜる。",
-			"plPL": "<b>Wybierz jedno:</b> Przyzwij <b>Nefrytowego golema</b>; lub wtasuj 3 kopie tej karty do twojej talii.",
-			"esES": "<b>Elige una:</b> Invoca un <b>gólem de jade</b>,\no bien mete 3 copias de esta carta en tu mazo.",
-			"ruRU": "<b>Выберите эффект:</b> призывает <b>нефритового голема</b>; или замешивает 3 копии этой карты в колоду.",
-			"esMX": "<b>Elige una opción:</b> invoca un <b>Gólem de jade</b> o coloca 3 copias de esta carta en tu mazo.",
-			"koKR": "<b>선택 -</b> <b>비취 골렘</b>을 소환합니다. 또는\n이 카드를 3장 복사하여 내 덱에 섞어 넣습니다.",
-			"thTH": "<b>เลือกหนึ่งอย่าง -</b> เรียก <b>เจดโกเล็ม</b> หรือสับการ์ดนี้ 3 ใบ เข้าไปในเด็คของคุณ"
-		},
 		"cost": 1,
 		"set": "Gangs",
+		"collectionText": "<b>Choose One -</b> Summon a <b>Jade Golem</b>; or Shuffle 3 copies of this card into your deck.",
 		"artist": "Matthew O'Connor",
 		"mechanics": [
 			"CHOOSE_ONE"
@@ -25286,24 +25278,9 @@
 	},
 	{
 		"playerClass": "Neutral",
-		"collectionText": {
-			"ptBR": "Transforma um lacaio inimigo aleatório.",
-			"zhCN": "随机使一个敌方随从变形。",
-			"itIT": "Trasforma un servitore nemico casuale in una pecora.",
-			"enUS": "Polymorph a random enemy minion.",
-			"frFR": "Métamorphose un serviteur adverse aléatoire.",
-			"zhTW": "將一個隨機敵方手下變成羊",
-			"deDE": "Verwandelt einen zufälligen feindlichen Diener.",
-			"jaJP": "ランダムな[b]敵の[b]ミニオン1体を[b]変身させる。",
-			"plPL": "Przemień losowego wrogiego stronnika w Owcę.",
-			"esES": "Transforma\na un esbirro enemigo aleatorio.",
-			"ruRU": "Превращает случайное существо противника.",
-			"esMX": "Lanza Polimorfia sobre un esbirro enemigo aleatorio.",
-			"koKR": "무작위 적 하수인을 변이시킵니다.",
-			"thTH": "สุ่มเปลี่ยนร่าง[b]มินเนี่ยนศัตรูหนึ่งตัว"
-		},
 		"cost": 5,
 		"set": "Gangs",
+		"collectionText": "Polymorph a random enemy minion.",
 		"artist": "Konstantin Turovec",
 		"name": "Mystic Wool",
 		"id": "CFM_621t21",
@@ -27519,24 +27496,9 @@
 	},
 	{
 		"collectible": true,
-		"collectionText": {
-			"ptBR": "Cause $2 de dano.\n<b>Combo:</b> Evoque um <b>Golem de Jade</b>.",
-			"zhCN": "造成$2点伤害。\n<b>连击：</b>召唤一个<b>青玉魔像</b>。",
-			"itIT": "Infligge $2 danni. <b>Combo:</b> evoca un <b>Golem di Giada</b>.",
-			"enUS": "Deal $2 damage.\n<b>Combo:</b> Summon a <b>Jade Golem</b>.",
-			"frFR": "Inflige $2 |4(point,points) de dégâts. <b>Combo :</b> invoque un <b>golem de jade</b>.",
-			"zhTW": "造成$2點傷害。<b>連擊：</b>召喚一個\n<b>翠玉魔像</b>",
-			"deDE": "Verursacht $2 Schaden. <b>Combo:</b> Ruft einen <b>Jadegolem</b> herbei.",
-			"jaJP": "[x]  $2ダメージを与える。\n<b>コンボ:</b>\n<b>翡翠のゴーレム</b>を\n1体召喚する。",
-			"plPL": "Zadaj $2 pkt. obrażeń.\n<b>Kombinacja:</b> Przyzwij <b>Nefrytowego golema</b>.",
-			"esES": "Inflige $2 p. de daño.\n<b>Combo:</b> Invoca un <b>gólem de jade</b>.",
-			"ruRU": "Наносит $2 ед. урона. <b>Серия приемов:</b> призывает\n<b>нефритового голема</b>.",
-			"esMX": "Inflige $2 de daño.\n<b>Combo:</b> invoca un <b>Gólem de jade</b>.",
-			"koKR": "[x]피해를 $2 줍니다.\n<b>연계:</b> <b>비취 골렘</b>을\n소환합니다.",
-			"thTH": "สร้างความเสียหาย $2 แต้ม\n<b>คอมโบ:</b> เรียก <b>เจดโกเล็ม</b>"
-		},
 		"cost": 2,
 		"set": "Gangs",
+		"collectionText": "Deal $2 damage.\n<b>Combo:</b> Summon a <b>Jade Golem</b>.",
 		"artist": "Izzy Hoover",
 		"mechanics": [
 			"COMBO"
@@ -27562,24 +27524,9 @@
 	},
 	{
 		"collectible": true,
-		"collectionText": {
-			"ptBR": "<b>Furtividade</b>.\n<b>Último Suspiro:</b> Evoque um <b>Golem de Jade</b>.",
-			"zhCN": "<b>潜行，亡语：</b>召唤一个<b>青玉魔像</b>。",
-			"itIT": "<b>Furtività</b>. <b>Rantolo di Morte:</b> evoca un <b>Golem di Giada</b>.",
-			"enUS": "<b>Stealth</b>\n<b>Deathrattle:</b> Summon a <b>Jade Golem</b>.",
-			"frFR": "<b>Camouflage</b>. <b>Râle d’agonie :</b> invoque un <b>golem de jade</b>.",
-			"zhTW": "<b>潛行</b>\n<b>死亡之聲：</b>召喚一個<b>翠玉魔像</b>",
-			"deDE": "<b>Verstohlenheit</b>. <b>Todesröcheln:</b> Ruft einen <b>Jadegolem</b> herbei.",
-			"jaJP": "[x]<b>隠れ身</b>、 <b>断末魔:</b>\n<b>翡翠のゴーレム</b>を\n1体召喚する。",
-			"plPL": "<b>Ukrycie</b>\n<b>Agonia:</b> Przyzwij <b>Nefrytowego golema</b>.",
-			"esES": "<b>Sigilo</b>.\n<b>Último aliento:</b> Invoca un <b>gólem de jade</b>.",
-			"ruRU": "<b>Маскировка</b>. <b>Предсмертный хрип:</b> призывает   <b>нефритового голема</b>.",
-			"esMX": "<b>Sigilo</b>\n<b>Estertor:</b> invoca un <b>Gólem de jade</b>.",
-			"koKR": "<b>은신</b>, <b>죽음의 메아리:</b>\n<b>비취 골렘</b>을 소환합니다.",
-			"thTH": "<b>ซ่อนตัว</b>\n<b>เสียงสุดท้าย:</b> เรียก <b>เจดโกเล็ม</b>"
-		},
 		"cost": 2,
 		"set": "Gangs",
+		"collectionText": "<b>Stealth</b>\n<b>Deathrattle:</b> Summon a <b>Jade Golem</b>.",
 		"artist": "Slawomir Maniak",
 		"health": 1,
 		"mechanics": [
@@ -27850,24 +27797,9 @@
 	},
 	{
 		"collectible": true,
-		"collectionText": {
-			"ptBR": "Cause $4 de dano. Evoque um <b>Golem de Jade</b>.",
-			"zhCN": "造成$4点伤害，召唤一个<b>青玉魔像</b>。",
-			"itIT": "Infligge $4 danni. Evoca un <b>Golem di Giada</b>.",
-			"enUS": "Deal $4 damage. Summon a <b>Jade Golem</b>.",
-			"frFR": "Inflige $4 |4(point,points) de dégâts. Invoque un <b>golem de jade</b>.",
-			"zhTW": "造成$4點傷害。召喚一個\n<b>翠玉魔像</b>",
-			"deDE": "Verursacht $4 Schaden. Ruft einen <b>Jadegolem</b> herbei.",
-			"jaJP": "[x]$4ダメージを与える。\n<b>翡翠のゴーレム</b>を\n1体召喚する。",
-			"plPL": "Zadaj $4 pkt. obrażeń. Przyzwij <b>Nefrytowego golema</b>.",
-			"esES": "Inflige $4 p. de daño. Invoca un <b>gólem de jade</b>.",
-			"ruRU": "Наносит $4 ед. урона. Призывает <b>нефритового голема</b>.",
-			"esMX": "Inflige $4 de daño. Invoca un <b>Gólem de jade</b>.",
-			"koKR": "[x]피해를 $4 줍니다.\n<b>비취 골렘</b>을 소환합니다.",
-			"thTH": "สร้างความเสียหาย $4 แต้ม\nเรียก <b>เจดโกเล็ม</b>"
-		},
 		"cost": 4,
 		"set": "Gangs",
+		"collectionText": "Deal $4 damage. Summon a <b>Jade Golem</b>.",
 		"artist": "Phil Saunders",
 		"referencedTags": [
 			"JADE_GOLEM"
@@ -28720,24 +28652,9 @@
 	},
 	{
 		"collectible": true,
-		"collectionText": {
-			"ptBR": "Evoque um <b>Golem de Jade</b>. Receba um Cristal de Mana vazio.",
-			"zhCN": "召唤一个<b>青玉魔像</b>，获得一个空的法力水晶。",
-			"itIT": "Evoca un <b>Golem di Giada</b>. Fornisce 1 Cristallo di Mana vuoto",
-			"enUS": "Summon a <b>Jade Golem</b>. Gain an empty Mana Crystal.",
-			"frFR": "Invoque un <b>golem de jade</b>. Gagne un cristal de mana vide.",
-			"zhTW": "召喚一個\n<b>翠玉魔像</b>。獲得\n1顆空的法力水晶",
-			"deDE": "Ruft einen <b>Jadegolem</b> herbei. Erhaltet einen leeren Manakristall.",
-			"jaJP": "[x]<b>翡翠のゴーレム</b>\nを1体召喚する。\n空のマナクリスタル\nを1つ獲得する。",
-			"plPL": "Przyzwij <b>Nefrytowego golema</b>. Otrzymujesz pusty kryształ many.",
-			"esES": "Invoca un\n<b>gólem de jade</b>. Obtienes un cristal de maná vacío.",
-			"ruRU": "Призывает <b>нефритового голема</b>. Вы получаете\n[x]пустой кристалл маны.",
-			"esMX": "Invoca un <b>Gólem de jade</b>. Obtienes un Cristal de maná vacío.",
-			"koKR": "<b>비취 골렘</b>을 소환합니다. 빈 마나 수정을 얻습니다.",
-			"thTH": "เรียก <b>เจดโกเล็ม</b> ได้รับคริสตัลมานาเปล่า[b]หนึ่งอัน"
-		},
 		"cost": 3,
 		"set": "Gangs",
+		"collectionText": "Summon a <b>Jade Golem</b>. Gain an empty Mana Crystal.",
 		"artist": "Zoltan Boros",
 		"referencedTags": [
 			"JADE_GOLEM"
@@ -28765,24 +28682,9 @@
 	},
 	{
 		"collectible": true,
-		"collectionText": {
-			"ptBR": "<b>Grito de Guerra:</b> Evoque um <b>Golem de Jade</b>.",
-			"zhCN": "<b>战吼：</b>召唤一个\n<b>青玉魔像</b>。",
-			"itIT": "<b>Grido di Battaglia:</b> evoca un <b>Golem di Giada</b>.",
-			"enUS": "<b>Battlecry:</b> Summon a <b>Jade Golem</b>.",
-			"frFR": "<b>Cri de guerre :</b> invoque un <b>golem de jade</b>.",
-			"zhTW": "<b>戰吼：</b>召喚一個\n<b>翠玉魔像</b>",
-			"deDE": "<b>Kampfschrei:</b> Ruft einen <b>Jadegolem</b> herbei.",
-			"jaJP": "[x]<b>雄叫び:</b>\n<b>翡翠のゴーレム</b>を\n1体召喚する。",
-			"plPL": "<b>Okrzyk bojowy:</b> Przyzwij <b>Nefrytowego golema</b>.",
-			"esES": "[x]<b>Grito de batalla:</b>\nInvoca un\n<b>gólem de jade</b>.",
-			"ruRU": "<b>Боевой клич:</b> призывает <b>нефритового голема</b>.",
-			"esMX": "<b>Grito de batalla:</b> invoca un <b>Gólem de jade</b>.",
-			"koKR": "<b>전투의 함성:</b>\n<b>비취 골렘</b>을 소환합니다.",
-			"thTH": "<b>คำรามสู้ศึก:</b> \nเรียก <b>เจดโกเล็ม</b>"
-		},
 		"cost": 4,
 		"set": "Gangs",
+		"collectionText": "<b>Battlecry:</b> Summon a <b>Jade Golem</b>.",
 		"race": "ELEMENTAL",
 		"artist": "Peter Stapleton",
 		"classes": [
@@ -28844,24 +28746,9 @@
 	},
 	{
 		"collectible": true,
-		"collectionText": {
-			"ptBR": "<b>Grito de Guerra:</b> Evoque um <b>Golem de Jade</b>.\n<b><b>Sobrecarga</b>:</b> (1)",
-			"zhCN": "<b>战吼：</b>召唤一个<b>青玉魔像</b>。\n<b>过载：</b>（1）",
-			"itIT": "<b>Grido di Battaglia:</b> evoca un <b>Golem di Giada</b>. <b>Sovraccarico:</b> (1)",
-			"enUS": "<b>Battlecry:</b> Summon a <b>Jade Golem</b>.\n<b><b>Overload</b>:</b> (1)",
-			"frFR": "<b>Cri de guerre :</b> invoque un <b>golem de jade</b>.\n<b><b>Surcharge :</b></b> (1)",
-			"zhTW": "[x]<b>戰吼：</b>召喚一個\n<b>翠玉魔像</b>\n<b><b>超載</b>：</b>(1)",
-			"deDE": "<b>Kampfschrei:</b> Ruft einen <b>Jadegolem</b> herbei. <b>Überladung:</b> (1)",
-			"jaJP": "[x]<b>雄叫び:</b> \n<b>翡翠のゴーレム</b>を\n1体召喚する。\n     <b>オーバーロード</b>:（1）",
-			"plPL": "<b>Okrzyk bojowy:</b> Przyzwij <b>Nefrytowego golema</b>.\n<b>Przeciążenie:</b> (1)",
-			"esES": "[x]<b>Grito de batalla:</b> Invoca un\n<b>gólem de jade</b>.\n<b><b>Sobrecarga</b>:</b> (1)",
-			"ruRU": "<b>Боевой клич:</b> призывает <b>нефритового голема</b>.\n<b>Перегрузка:</b> (1)",
-			"esMX": "<b>Grito de batalla:</b> invoca un <b>Gólem de jade</b>.\n<b><b>Sobrecarga</b>:</b> (1)",
-			"koKR": "[x]<b>전투의 함성:</b>\n<b>비취 골렘</b>을 소환합니다.\n<b>과부하:</b> (1)",
-			"thTH": "<b>คำรามสู้ศึก:</b>\nเรียก <b>เจดโกเล็ม</b> \n<b><b>โอเวอร์โหลด</b>:</b> (1)"
-		},
 		"cost": 2,
 		"set": "Gangs",
+		"collectionText": "<b>Battlecry:</b> Summon a <b>Jade Golem</b>.\n<b><b>Overload</b>:</b> (1)",
 		"artist": "A. J. Nazzaro",
 		"durability": 2,
 		"mechanics": [
@@ -29966,24 +29853,9 @@
 	},
 	{
 		"collectible": true,
-		"collectionText": {
-			"ptBR": " <b>Grito de Guerra e Último Suspiro:</b> Evoque um <b>Golem de Jade</b>.",
-			"zhCN": "<b>战吼，亡语：</b>召唤一个<b>青玉魔像</b>。",
-			"itIT": "<b>Grido di Battaglia</b> e <b>Rantolo di Morte:</b> evoca un <b>Golem di Giada</b>.",
-			"enUS": " <b>Battlecry and Deathrattle:</b> Summon a <b>Jade Golem</b>.",
-			"frFR": "<b>Cri de guerre et Râle d’agonie :</b> invoque un <b>golem de jade</b>.",
-			"zhTW": "<b>戰吼及死亡之聲：</b>召喚一個<b>翠玉魔像</b>",
-			"deDE": "<b>Kampfschrei und Todesröcheln:</b> Ruft einen <b>Jadegolem</b> herbei.",
-			"jaJP": "[x]<b>雄叫び＆断末魔:</b>\n<b>翡翠のゴーレム</b>を\n1体召喚する。",
-			"plPL": "<b>Okrzyk bojowy i Agonia:</b> Przyzwij <b>Nefrytowego golema</b>.",
-			"esES": "<b>Grito de batalla y\nÚltimo aliento:</b>\nInvoca un\n<b>gólem de jade</b>.",
-			"ruRU": "<b>Боевой клич и предсмертный хрип:</b> призывает   <b>нефритового голема</b>.",
-			"esMX": "<b>Grito de batalla y Estertor:</b> invoca un <b>Gólem de jade</b>.",
-			"koKR": "[x]<b>전투의 함성과\n죽음의 메아리:</b>\n<b>비취 골렘</b>을 소환합니다.",
-			"thTH": "<b>คำรามสู้ศึกและเสียงสุดท้าย:</b> เรียก <b>เจดโกเล็ม</b>"
-		},
 		"cost": 6,
 		"set": "Gangs",
+		"collectionText": " <b>Battlecry and Deathrattle:</b> Summon a <b>Jade Golem</b>.",
 		"artist": "Glenn Rane",
 		"classes": [
 			"DRUID",
@@ -34887,6 +34759,51 @@
 		"cardClass": "SHAMAN"
 	},
 	{
+		"playerClass": "Shaman",
+		"cost": 2,
+		"set": "Hero_skins",
+		"name": "Totemic Call",
+		"id": "CS2_049_H3",
+		"audio": {
+			"play": [],
+			"ThunderKing_HeroPower_Impact": [
+				"ThunderKing_HeroPower_Impact.ogg"
+			],
+			"death": [],
+			"attack": []
+		},
+		"text": "<b>Hero Power</b>\nSummon a random Totem.",
+		"dbfId": 55964,
+		"type": "Hero_power",
+		"entourage": [
+			"CS2_050",
+			"CS2_051",
+			"CS2_052",
+			"NEW1_009"
+		],
+		"cardClass": "SHAMAN",
+		"rarity": "Free"
+	},
+	{
+		"playerClass": "Shaman",
+		"cost": 2,
+		"set": "Hero_skins",
+		"name": "Totemic Slam",
+		"id": "CS2_049_H3_AT_132",
+		"audio": {
+			"play": [],
+			"ThunderKing_HeroPower_Impact": [
+				"ThunderKing_HeroPower_Impact.ogg"
+			],
+			"death": [],
+			"attack": []
+		},
+		"text": "<b>Hero Power</b>\nSummon a Totem of your choice.",
+		"dbfId": 55965,
+		"type": "Hero_power",
+		"cardClass": "SHAMAN"
+	},
+	{
 		"cost": 1,
 		"set": "Core",
 		"race": "TOTEM",
@@ -39568,24 +39485,9 @@
 	},
 	{
 		"collectible": true,
-		"collectionText": {
-			"ptBR": " |4(Diabrete, Diabretes) 1/1. <i>(Aprimora a cada turno!)</i>",
-			"zhCN": "个1/1的小鬼。<i>（每回合都会升级！）</i>",
-			"itIT": " Imp 1/1.\n<i>(Si potenzia ogni turno!)</i>",
-			"enUS": " 1/1 |4(Imp, Imps). <i>(Upgrades each turn!)</i>",
-			"frFR": " |4(diablotin,diablotins) 1/1. <i>(S’améliore à chaque tour !)</i>",
-			"zhTW": "個1/1小鬼\n<i>(每回合升級)</i>",
-			"deDE": " Wichtel (1/1). <i>(Wird in jedem Zug aufgewertet!)</i>",
-			"jaJP": "体召喚する。\n<i>（毎ターン   \nアップグレード！）</i>",
-			"plPL": " |4(Chochlika,Chochliki,Chochlików) 1/1. <i>(Ulepsza się w każdej turze!)</i>",
-			"esES": " |4(diablillo,diablillos) 1/1.\n<i>(Mejora cada turno).</i>",
-			"ruRU": " |4(беса,бесов,бесов) 1/1\n<i>(улучшается каждый ход)</i>.",
-			"esMX": " |4(Diablillo, Diablillos) 1/1. <i>(¡Mejora con cada turno!)</i>",
-			"koKR": "마리 소환합니다.\n<i>(내 턴마다 강화됩니다!)</i>",
-			"thTH": " ตัว <i>(อัพเกรดทุกเทิร์น!)</i>"
-		},
 		"cost": 3,
 		"set": "Dalaran",
+		"collectionText": " 1/1 |4(Imp, Imps). <i>(Upgrades each turn!)</i>",
 		"artist": "Jim Nelson",
 		"dbfId": 51371,
 		"type": "Spell",
@@ -39604,24 +39506,9 @@
 	},
 	{
 		"collectible": true,
-		"collectionText": {
-			"ptBR": " de Armadura. <i>(Aprimora a cada turno!)</i>",
-			"zhCN": "点护甲值。<i>（每回合都会升级！）</i>",
-			"itIT": " Armatura.\n<i>(Si potenzia ogni turno!)</i>",
-			"enUS": " Armor.\n<i>(Upgrades each turn!)</i>",
-			"frFR": " |4(point,points) d’armure. <i>(S’améliore à chaque tour !</i>",
-			"zhTW": "點護甲值\n<i>(每回合升級)</i>",
-			"deDE": " Rüstung.\n<i>(Wird in jedem Zug aufgewertet!)</i>",
-			"jaJP": "獲得する。\n<i>（毎ターン   \nアップグレード！）</i>",
-			"plPL": " pkt. pancerza. <i>(Ulepsza się w każdej turze!)</i>",
-			"esES": " p. de armadura.\n<i>(Mejora cada turno).</i>",
-			"ruRU": " к броне \n[x]<i>(улучшается каждый ход)</i>.",
-			"esMX": " de Armadura. <i>(¡Mejora con cada turno!)</i>",
-			"koKR": " 얻습니다. <i>(내 턴마다 강화됩니다!)</i>",
-			"thTH": " แต้ม <i>(อัพเกรดทุกเทิร์น!)</i>"
-		},
 		"cost": 4,
 		"set": "Dalaran",
+		"collectionText": " Armor.\n<i>(Upgrades each turn!)</i>",
 		"artist": "Konstantin Turovec",
 		"dbfId": 51372,
 		"type": "Spell",
@@ -39640,24 +39527,9 @@
 	},
 	{
 		"collectible": true,
-		"collectionText": {
-			"ptBR": " de dano a todos os lacaios. <i>(Aprimora a cada turno!)</i>",
-			"zhCN": "点伤害。<i>（每回合都会升级！）</i>",
-			"itIT": " |4(danno,danni)\na TUTTI i servitori.\n<i>(Si potenzia ogni turno!)</i>",
-			"enUS": " damage\nto all minions.\n<i>(Upgrades each turn!)</i>",
-			"frFR": " |4(point,points) de dégâts à tous les serviteurs. <i>(S’améliore à chaque tour !)</i>",
-			"zhTW": "點傷害\n<i>(每回合升級)</i>",
-			"deDE": " Schaden zu. <i>(Wird in jedem Zug aufgewertet!)</i>",
-			"jaJP": "ダメージを与える。\n<i>（毎ターン   \nアップグレード！）</i>",
-			"plPL": " pkt. obrażeń wszystkim stronnikom.\n<i>(Ulepsza się w każdej turze!)</i>",
-			"esES": " p. de daño\na todos los esbirros. <i>(Mejora cada turno).</i>",
-			"ruRU": " ед. урона всем существам [x]<i>(улучшается каждый ход)</i>.",
-			"esMX": " de daño a todos los esbirros. <i>(¡Mejora con cada turno!)</i>",
-			"koKR": " 줍니다.\n<i>(내 턴마다 강화됩니다!)</i>",
-			"thTH": " แต้มให้มินเนี่ยนทั้งหมด <i>(อัพเกรดทุกเทิร์น!)</i>"
-		},
 		"cost": 5,
 		"set": "Dalaran",
+		"collectionText": " damage\nto all minions.\n<i>(Upgrades each turn!)</i>",
 		"artist": "Arthur Gimaldinov",
 		"dbfId": 51373,
 		"type": "Spell",
@@ -39679,24 +39551,9 @@
 	},
 	{
 		"collectible": true,
-		"collectionText": {
-			"ptBR": " |4(cópia, cópias) dele no seu deck. <i>(Aprimora a cada turno!)</i>",
-			"zhCN": "张复制洗入你的牌库。<i>（每回合都会升级！）</i>",
-			"itIT": " |4(copia,copie)\nnel tuo mazzo.\n<i>(Si potenzia ogni turno!)</i>",
-			"enUS": " |4(copy, copies) of it into your deck.\n<i>(Upgrades each turn!)</i>",
-			"frFR": " |4(copie,copies) dans votre deck. <i>(S’améliore à chaque tour !)</i>",
-			"zhTW": "張它的分身洗入你的牌堆<i>(每回合升級)</i>",
-			"deDE": " |4(Kopie, Kopien) davon in\nEuer Deck. <i>(Wird in jedem\nZug aufgewertet!)</i>",
-			"jaJP": "体を\n自分のデッキに混ぜる。\n<i>（毎ターン   \nアップグレード！）</i>",
-			"plPL": " |4(kopię,kopie,kopii) do twojej talii. <i>(Ulepsza się w każdej turze!)</i>",
-			"esES": " |4(copia,copias)\ndel mismo en tu mazo.\n<i>(Mejora cada turno).</i>",
-			"ruRU": " |4(его копию,его копии,его копий) <i>(улучшается каждый ход)</i>.",
-			"esMX": " |4(copia, copias) de él en tu mazo.\n<i>(¡Mejora con cada turno!)</i>",
-			"koKR": "장 복사하여\n내 덱에 섞어 넣습니다.\n<i>(내 턴마다 강화됩니다!)</i>",
-			"thTH": " ใบเข้า[b]เด็คคุณ <i>(อัพเกรดทุกเทิร์น!)</i>"
-		},
 		"cost": 1,
 		"set": "Dalaran",
+		"collectionText": " |4(copy, copies) of it into your deck.\n<i>(Upgrades each turn!)</i>",
 		"artist": "Konstantin Turovec",
 		"dbfId": 51375,
 		"type": "Spell",
@@ -39715,24 +39572,9 @@
 	},
 	{
 		"collectible": true,
-		"collectionText": {
-			"ptBR": " até seu próximo turno. <i>(Aprimora a cada turno!)</i>",
-			"zhCN": "点。<i>（每回合都会升级！）</i>",
-			"itIT": " fino\nal tuo turno successivo.\n<i>(Si potenzia ogni turno!)</i>",
-			"enUS": " until your next turn. <i>(Upgrades each turn!)</i>",
-			"frFR": " |4(point,points) jusqu’à votre prochain tour. <i>(S’améliore à chaque tour !)</i>",
-			"zhTW": "點，直到你的下一回合\n<i>(每回合升級)</i>",
-			"deDE": ". <i>(Wird in jedem Zug aufgewertet!)</i>",
-			"jaJP": "減らす。\n<i>（毎ターン   \nアップグレード！）</i>",
-			"plPL": " do twojej następnej tury. <i>(Ulepsza się w każdej turze!)</i>",
-			"esES": " p. el ataque\nde un esbirro enemigo\nhasta tu siguiente turno.\n<i>(Mejora cada turno).</i>",
-			"ruRU": " к атаке до вашего следующего хода <i>(улучшается каждый ход)</i>.",
-			"esMX": " hasta tu próximo turno. <i>(¡Mejora con cada turno!)</i>",
-			"koKR": " 감소시킵니다.\n<i>(내 턴마다 강화됩니다!)</i>",
-			"thTH": " แต้ม\nจนถึงเทิร์นถัดไปของคุณ <i>(อัพเกรดทุกเทิร์น!)</i>"
-		},
 		"cost": 0,
 		"set": "Dalaran",
+		"collectionText": " until your next turn. <i>(Upgrades each turn!)</i>",
 		"artist": "J. Axer",
 		"dbfId": 51376,
 		"type": "Spell",
@@ -41572,24 +41414,9 @@
 		"rarity": "Legendary"
 	},
 	{
-		"collectionText": {
-			"ptBR": ")</i>",
-			"zhCN": "点！）</i>",
-			"itIT": "!)</i>",
-			"enUS": " left!)</i>",
-			"frFR": " !)</i>",
-			"zhTW": "點)</i>",
-			"deDE": "!)</i>",
-			"jaJP": "！）</i>",
-			"plPL": ")</i>",
-			"esES": ")</i>.",
-			"ruRU": ")</i>.",
-			"esMX": " más!)</i>",
-			"koKR": " 남음!)</i>",
-			"thTH": "!)</i>"
-		},
 		"cost": 11,
 		"set": "Dalaran",
+		"collectionText": " left!)</i>",
 		"hideStats": true,
 		"health": 1,
 		"mechanics": [
@@ -42183,7 +42010,7 @@
 		"cost": 3,
 		"set": "Dalaran",
 		"artist": "Mike Sass",
-		"health": 5,
+		"health": 4,
 		"mechanics": [
 			"COMBO"
 		],
@@ -42383,7 +42210,7 @@
 			"jaJP": "{0}を使用する。",
 			"plPL": "Rzuć zaklęcie {0}.",
 			"esES": "Lanza {0}.",
-			"ruRU": "Разыграть «{0}».",
+			"ruRU": "Применить «{0}».",
 			"esMX": "Lanza {0}.",
 			"koKR": "{0} 시전",
 			"thTH": "ร่าย '{0}'"
@@ -44023,6 +43850,16 @@
 		"rarity": "Legendary"
 	},
 	{
+		"playerClass": "Neutral",
+		"set": "Dalaran",
+		"name": "Aspect's Magic",
+		"id": "DAL_609e",
+		"text": "Costs (0).",
+		"dbfId": 57805,
+		"type": "Enchantment",
+		"cardClass": "NEUTRAL"
+	},
+	{
 		"cost": 1,
 		"set": "Dalaran",
 		"artist": "Slawomir Maniak",
@@ -44722,7 +44559,7 @@
 	},
 	{
 		"collectible": true,
-		"cost": 8,
+		"cost": 9,
 		"set": "Dalaran",
 		"artist": "James Ryman",
 		"health": 7,
@@ -45593,24 +45430,9 @@
 	},
 	{
 		"collectible": true,
-		"collectionText": {
-			"ptBR": "<b>Rapidez</b>. <b>Grito de Guerra:</b>\nSe você tiver restaurado \n5 de Vida nesta partida, evoque uma cópia deste lacaio.",
-			"zhCN": "<b>突袭，战吼：</b>在本局对战中，如果你累计恢复了5点生命值，则召唤一个该随从的复制。",
-			"itIT": "[x]<b>Assalto</b>. <b>Grido di Battaglia:</b>\nse hai rigenerato 5 Salute in\nquesta partita, evoca una copia\ndi se stesso.",
-			"enUS": "<b>Rush</b>. <b>Battlecry:</b> If you've restored 5 Health this game, summon a copy of this.",
-			"frFR": "<b>Ruée</b>\n<b>Cri de guerre :</b> si vous avez rendu 5 PV pendant cette partie, invoque une copie de ce serviteur. ",
-			"zhTW": "<b>衝刺</b>。<b>戰吼：</b>若你在本賽局已恢復5點生命值，召喚一個此手下的分身",
-			"deDE": "<b>Eifer</b>. <b>Kampfschrei:</b> Ruft eine Kopie dieses Dieners herbei, wenn Ihr in diesem Spiel 5 Leben wiederher[d]gestellt habt.",
-			"jaJP": "[x]<b>急襲</b>、<b>雄叫び:</b>\nこの対戦で自分が体力を\n5以上回復していた場合\nこのミニオンのコピーを1体\n     召喚する。",
-			"plPL": "<b>Zryw</b>\n<b>Okrzyk bojowy:</b> Jeśli udało ci się przywrócić 5 pkt. zdrowia w tej grze, przyzwij kopię tego stronnika.",
-			"esES": "<b>Embestir</b>\n<b>Grito de batalla:</b> Si has restaurado 5 p. de salud en esta partida, invoca una copia de este esbirro.",
-			"ruRU": "<b>Натиск</b>. <b>Боевой клич:</b> если вы восстановили 5 ед. здоровья в этом матче, призывает копию [x]этого существа.",
-			"esMX": "<b>Acometida</b>\n<b>Grito de batalla:</b> si has restaurado 5 de Salud en esta partida, invoca una copia de esta carta.\n",
-			"koKR": "<b>속공</b>, <b>전투의 함성:</b> 이번 게임에서 생명력을 5 이상 회복했으면, 이 하수인을 복사하여 소환합니다.",
-			"thTH": "<b>จู่โจม</b> <b>คำรามสู้ศึก:</b> ถ้าเกมนี้[b]คุณฟื้นฟูพลังชีวิตไปแล้ว 5 แต้ม เรียกร่างก๊อปปี้ของมัน "
-		},
 		"cost": 5,
 		"set": "Dalaran",
+		"collectionText": "<b>Rush</b>. <b>Battlecry:</b> If you've restored 5 Health this game, summon a copy of this.",
 		"race": "BEAST",
 		"artist": "Patrik Bjorkstrom",
 		"health": 4,
@@ -46727,24 +46549,9 @@
 	},
 	{
 		"playerClass": "Neutral",
-		"collectionText": {
-			"ptBR": "Cause $",
-			"zhCN": "造成$",
-			"itIT": "[x]Infligge $",
-			"enUS": "[x]Deal $",
-			"frFR": "Inflige $",
-			"zhTW": "造成$",
-			"deDE": "Verursacht $",
-			"jaJP": "[x]$",
-			"plPL": "Zadaj $",
-			"esES": "Inflige $",
-			"ruRU": "Наносит $",
-			"esMX": "Inflige $",
-			"koKR": "피해를 $",
-			"thTH": "สร้างความเสียหาย $"
-		},
 		"cost": 3,
 		"set": "Dalaran",
+		"collectionText": "[x]Deal $",
 		"name": "Master Scheme",
 		"id": "DALA_726",
 		"audio": {
@@ -46880,7 +46687,7 @@
 				"VO_DALA_729_Male_Kobold_Attack_01.ogg"
 			]
 		},
-		"text": "[x]<b>Stealth</b>\nAfter this minion attacks\na hero, steal a card\nfrom their hand.",
+		"text": "[x]<b>Stealth</b>\nAfter this minion attacks\na hero, steal a card from\nyour opponent's hand.",
 		"cardClass": "NEUTRAL"
 	},
 	{
@@ -49557,24 +49364,9 @@
 	},
 	{
 		"playerClass": "Neutral",
-		"collectionText": {
-			"ptBR": " de dano)</i>",
-			"zhCN": "点伤害）</i>。",
-			"itIT": " |4(restante,restanti))</i>",
-			"enUS": " damage remaining)</i>",
-			"frFR": " |4(point,points) de dégâts.)</i>",
-			"zhTW": "點傷害)</i>",
-			"deDE": " Schaden)</i>",
-			"jaJP": "ダメージ）</i>",
-			"plPL": " pkt. obrażeń)</i>",
-			"esES": " p.)</i>.",
-			"ruRU": " ед.)</i>.",
-			"esMX": " de daño)</i>",
-			"koKR": " 남음)</i>",
-			"thTH": " แต้ม)</i>"
-		},
 		"cost": 0,
 		"set": "Dalaran",
+		"collectionText": " damage remaining)</i>",
 		"hideStats": true,
 		"name": "Take Flight!",
 		"id": "DALA_BOSS_07p",
@@ -49590,24 +49382,9 @@
 	},
 	{
 		"playerClass": "Neutral",
-		"collectionText": {
-			"ptBR": ")</i>",
-			"zhCN": "回合）</i>。",
-			"itIT": " |4(restante,restanti))</i>",
-			"enUS": " turns remaining)</i>",
-			"frFR": " |4(tour,tours).)</i>",
-			"zhTW": "回合)</i>",
-			"deDE": " |4(Zug,Züge))</i>",
-			"jaJP": "ターン）</i>",
-			"plPL": ")</i>",
-			"esES": ")</i>.",
-			"ruRU": " |4(ход,хода,ходов)</i>.",
-			"esMX": ")</i>",
-			"koKR": "턴 남음)</i>",
-			"thTH": " เทิร์น)</i>"
-		},
 		"cost": 0,
 		"set": "Dalaran",
+		"collectionText": " turns remaining)</i>",
 		"hideStats": true,
 		"name": "Flying!",
 		"id": "DALA_BOSS_07p2",
@@ -51807,24 +51584,9 @@
 	},
 	{
 		"playerClass": "Neutral",
-		"collectionText": {
-			"ptBR": " de dano ao herói inimigo. <i>(aumenta a cada uso)</i>",
-			"zhCN": "点伤害<i>（每次使用伤害都会增加）</i>。",
-			"itIT": " |4(danno,danni)\nall'eroe nemico.\n  <i>(Si potenzia a ogni uso)</i>",
-			"enUS": " damage to\nthe enemy hero.\n<i>(increases each use)</i>",
-			"frFR": " |4(point,points) de dégâts au héros adverse. <i>(Augmente à chaque utilisation.)</i>",
-			"zhTW": "點傷害\n<i>(每次使用提高)</i>",
-			"deDE": " Schaden zu. <i>(Wird mit jedem\nEinsatz stärker)</i>",
-			"jaJP": "ダメージを与える。\n<i>（使用する度に増加）</i>",
-			"plPL": " pkt. obrażeń wrogiemu bohaterowi (<i>(więcej z każdym użyciem)</i>.",
-			"esES": " p. de daño\nal héroe enemigo.\n<i>(Aumenta con cada uso).</i>",
-			"ruRU": " ед. урона герою противника <i>(увеличивается\n[x]с каждым использованием)</i>.",
-			"esMX": " de daño al héroe enemigo <i>(aumenta con cada uso)</i>.",
-			"koKR": " 줍니다. <i>(사용할 때마다 피해 증가)</i>",
-			"thTH": " แต้ม[b]  ให้ฮีโร่ศัตรู <i>(เพิ่มขึ้นทุกครั้งที่ใช้)</i>"
-		},
 		"cost": 3,
 		"set": "Dalaran",
+		"collectionText": " damage to\nthe enemy hero.\n<i>(increases each use)</i>",
 		"name": "Ray of Suffering",
 		"id": "DALA_BOSS_45p",
 		"audio": {
@@ -51848,24 +51610,9 @@
 	},
 	{
 		"playerClass": "Neutral",
-		"collectionText": {
-			"ptBR": " de dano ao herói inimigo. <i>(aumenta a cada uso)</i>",
-			"zhCN": "点伤害<i>（每次使用伤害都会增加）</i>。",
-			"itIT": " |4(danno,danni)\nall'eroe nemico.\n  <i>(Si potenzia a ogni uso)</i>",
-			"enUS": " damage to\nthe enemy hero.\n<i>(increases each use)</i>",
-			"frFR": " |4(point,points) de dégâts au héros adverse. <i>(Augmente à chaque utilisation.)</i>",
-			"zhTW": "點傷害\n<i>(每次使用提高)</i>",
-			"deDE": " Schaden zu. <i>(Wird mit jedem\nEinsatz stärker)</i>",
-			"jaJP": "ダメージを与える。\n<i>（使用する度に増加）</i>",
-			"plPL": " pkt. obrażeń wrogiemu bohaterowi (<i>(więcej z każdym użyciem)</i>.",
-			"esES": " p. de daño\nal héroe enemigo.\n<i>(Aumenta con cada uso).</i>",
-			"ruRU": " ед. урона герою противника <i>(увеличивается\n[x]с каждым использованием)</i>.",
-			"esMX": " de daño al héroe enemigo <i>(aumenta con cada uso)</i>.",
-			"koKR": " 줍니다. <i>(사용할 때마다 피해 증가)</i>",
-			"thTH": " แต้ม[b]  ให้ฮีโร่ศัตรู <i>(เพิ่มขึ้นทุกครั้งที่ใช้)</i>"
-		},
 		"cost": 2,
 		"set": "Dalaran",
+		"collectionText": " damage to\nthe enemy hero.\n<i>(increases each use)</i>",
 		"name": "Ray of Suffering",
 		"id": "DALA_BOSS_45px",
 		"audio": {
@@ -52231,7 +51978,7 @@
 	{
 		"playerClass": "Warrior",
 		"set": "Dalaran",
-		"name": "Mallificent Manastorm",
+		"name": "Millificent Manastorm",
 		"health": 30,
 		"mechanics": [
 			"TRIGGER_VISUAL"
@@ -53523,24 +53270,9 @@
 	},
 	{
 		"playerClass": "Neutral",
-		"collectionText": {
-			"ptBR": ")</i>",
-			"zhCN": "点）</i>。",
-			"itIT": " attualmente)</i>",
-			"enUS": " currently)</i>",
-			"frFR": " actuellement)</i>.",
-			"zhTW": ")</i>",
-			"deDE": ")</i>",
-			"jaJP": "）</i>",
-			"plPL": ")</i>.",
-			"esES": " p.).</i>",
-			"ruRU": ")</i>.",
-			"esMX": ")</i>.",
-			"koKR": ")</i>",
-			"thTH": ")</i>"
-		},
 		"cost": 2,
 		"set": "Dalaran",
+		"collectionText": " currently)</i>",
 		"name": "Dragonwrath",
 		"referencedTags": [
 			"SPELLPOWER"
@@ -53561,24 +53293,9 @@
 	},
 	{
 		"playerClass": "Neutral",
-		"collectionText": {
-			"ptBR": ")</i>",
-			"zhCN": "点）</i>。",
-			"itIT": " attualmente)</i>",
-			"enUS": " currently)</i>",
-			"frFR": " actuellement)</i>.",
-			"zhTW": ")</i>",
-			"deDE": ")</i>",
-			"jaJP": "）</i>",
-			"plPL": ")</i>.",
-			"esES": " p.).</i>",
-			"ruRU": ")</i>.",
-			"esMX": ")</i>.",
-			"koKR": ")</i>",
-			"thTH": ")</i>"
-		},
 		"cost": 1,
 		"set": "Dalaran",
+		"collectionText": " currently)</i>",
 		"name": "Dragonwrath",
 		"referencedTags": [
 			"SPELLPOWER"
@@ -53716,7 +53433,7 @@
 	},
 	{
 		"playerClass": "Neutral",
-		"cost": 2,
+		"cost": 3,
 		"set": "Dalaran",
 		"name": "Summon Protectors",
 		"referencedTags": [
@@ -53997,10 +53714,10 @@
 		"cardClass": "NEUTRAL"
 	},
 	{
-		"playerClass": "Neutral",
+		"playerClass": "Paladin",
 		"set": "Dalaran",
 		"name": "Commander Bolan",
-		"health": 0,
+		"health": 30,
 		"id": "DALA_BOSS_75h",
 		"audio": {
 			"play": [],
@@ -54010,7 +53727,7 @@
 		"text": "<i>Be careful, he's got an enormous exclamation point over his head.</i>",
 		"dbfId": 54449,
 		"type": "Hero",
-		"cardClass": "NEUTRAL"
+		"cardClass": "PALADIN"
 	},
 	{
 		"playerClass": "Neutral",
@@ -58940,24 +58657,9 @@
 	},
 	{
 		"playerClass": "Hunter",
-		"collectionText": {
-			"ptBR": "<b>Poder Heroico</b>\nCause $2 de dano.",
-			"zhCN": "<b>英雄技能</b>\n造成$2点伤害。",
-			"itIT": "<b>Potere Eroe</b>\nInfligge $2 danni.",
-			"enUS": "<b>Hero Power</b>\nDeal $2 damage.",
-			"frFR": "<b>Pouvoir héroïque</b>\nInflige $2 points de dégâts.",
-			"zhTW": "<b>英雄能力</b>\n造成$2點傷害",
-			"deDE": "<b>Heldenfähigkeit</b>\nVerursacht $2 Schaden.",
-			"jaJP": "<b>ヒーローパワー</b>\n$2ダメージを\n与える。",
-			"plPL": "<b>Moc specjalna</b>\nZadaj $2 pkt. obrażeń.",
-			"esES": "<b>Poder de héroe</b>\nInflige $2 p. de daño.",
-			"ruRU": "<b>Сила героя</b>\nНаносит $2 ед. урона.",
-			"esMX": "<b>Poder de héroe</b>\nInflige $2 de daño.",
-			"koKR": "<b>영웅 능력</b>\n피해를 $2 줍니다.",
-			"thTH": "<b>พลังฮีโร่</b> สร้างความเสียหาย $2 แต้ม"
-		},
 		"cost": 2,
 		"set": "Core",
+		"collectionText": "<b>Hero Power</b>\nDeal $2 damage.",
 		"name": "Steady Shot",
 		"id": "DS1h_292",
 		"audio": {
@@ -58985,24 +58687,9 @@
 	},
 	{
 		"playerClass": "Hunter",
-		"collectionText": {
-			"ptBR": "<b>Poder Heroico</b>\nCause $2 de dano.",
-			"zhCN": "<b>英雄技能</b>\n造成$2点伤害。",
-			"itIT": "<b>Potere Eroe</b>\nInfligge $2 danni.",
-			"enUS": "<b>Hero Power</b>\nDeal $2 damage.",
-			"frFR": "<b>Pouvoir héroïque</b>\nInflige $2 points de dégâts.",
-			"zhTW": "<b>英雄能力</b>\n造成$2點傷害",
-			"deDE": "<b>Heldenfähigkeit</b>\nVerursacht $2 Schaden.",
-			"jaJP": "<b>ヒーローパワー</b>\n$2ダメージを\n与える。",
-			"plPL": "<b>Moc specjalna</b>\nZadaj $2 pkt. obrażeń.",
-			"esES": "<b>Poder de héroe</b>\nInflige $2 p. de daño.",
-			"ruRU": "<b>Сила героя</b>\nНаносит $2 ед. урона.",
-			"esMX": "<b>Poder de héroe</b>\nInflige $2 de daño.",
-			"koKR": "<b>영웅 능력</b>\n피해를 $2 줍니다.",
-			"thTH": "<b>พลังฮีโร่</b> สร้างความเสียหาย $2 แต้ม"
-		},
 		"cost": 2,
 		"set": "Hero_skins",
+		"collectionText": "<b>Hero Power</b>\nDeal $2 damage.",
 		"name": "Steady Shot",
 		"id": "DS1h_292_H1",
 		"audio": {
@@ -59021,24 +58708,9 @@
 	},
 	{
 		"playerClass": "Hunter",
-		"collectionText": {
-			"ptBR": "<b>Poder Heroico</b>\nCause $3 de dano.",
-			"zhCN": "<b>英雄技能</b>\n造成$3点伤害。",
-			"itIT": "<b>Potere Eroe</b>\nInfligge $3 danni.",
-			"enUS": "<b>Hero Power</b>\nDeal $3 damage.",
-			"frFR": "<b>Pouvoir héroïque</b>\nInflige $3 points de dégâts.",
-			"zhTW": "<b>英雄能力</b>\n造成$3點傷害",
-			"deDE": "<b>Heldenfähigkeit</b>\nVerursacht $3 Schaden.",
-			"jaJP": "<b>ヒーローパワー</b>\n$3ダメージを\n与える。",
-			"plPL": "<b>Moc specjalna</b>\nZadaj $3 pkt. obrażeń.",
-			"esES": "[x]<b>Poder de héroe</b>\nInflige $3 p. de daño.",
-			"ruRU": "<b>Сила героя</b>\nНаносит $3 ед. урона.",
-			"esMX": "<b>Poder de héroe</b>\nInflige $3 de daño.",
-			"koKR": "<b>영웅 능력</b>\n피해를 $3 줍니다.",
-			"thTH": "<b>พลังฮีโร่</b> สร้างความเสียหาย $3 แต้ม"
-		},
 		"cost": 2,
 		"set": "Hero_skins",
+		"collectionText": "<b>Hero Power</b>\nDeal $3 damage.",
 		"name": "Ballista Shot",
 		"id": "DS1h_292_H1_AT_132",
 		"audio": {
@@ -62111,7 +61783,7 @@
 				"Shared_SneakyUntargettedImpactStandard_1.ogg"
 			]
 		},
-		"text": "The next spell you cast this turn costs (3) less.",
+		"text": "The next spell you cast this turn costs (2) less.",
 		"cardClass": "ROGUE",
 		"rarity": "Epic"
 	},
@@ -62120,7 +61792,7 @@
 		"set": "Expert1",
 		"name": "Preparation",
 		"id": "EX1_145e",
-		"text": "The next spell you cast this turn costs (3) less.",
+		"text": "The next spell you cast this turn costs (2) less.",
 		"dbfId": 56309,
 		"type": "Enchantment",
 		"cardClass": "NEUTRAL"
@@ -62138,7 +61810,7 @@
 			"death": [],
 			"attack": []
 		},
-		"text": "The next spell you cast this turn costs (3) less.",
+		"text": "The next spell you cast this turn costs (2) less.",
 		"dbfId": 1760,
 		"type": "Enchantment",
 		"cardClass": "ROGUE"
@@ -71812,6 +71484,16 @@
 	{
 		"playerClass": "Neutral",
 		"set": "Tb",
+		"name": "Set Mission Event at game start",
+		"id": "FB_Champs_SetEventMulligan",
+		"text": "Increased stats.",
+		"dbfId": 57138,
+		"type": "Enchantment",
+		"cardClass": "NEUTRAL"
+	},
+	{
+		"playerClass": "Neutral",
+		"set": "Tb",
 		"name": "Champs Setup",
 		"id": "FB_Champs_SetUp_Ench",
 		"audio": {
@@ -72937,24 +72619,9 @@
 	},
 	{
 		"playerClass": "Deathknight",
-		"collectionText": {
-			"ptBR": " de dano ao herói inimigo. +1 de dano a cada vez.",
-			"zhCN": "点伤害。每次使用\n+1点伤害。",
-			"itIT": " |4(danno,danni) all'eroe nemico. +1 danno a ogni utilizzo.",
-			"enUS": " damage to the enemy hero. +1 Damage each time.",
-			"frFR": " |4(point,points) de dégâts au héros adverse. +1 point de dégâts à chaque fois.",
-			"zhTW": "點傷害。每次提高1點傷害",
-			"deDE": " Schaden zu. Verursacht jedes Mal 1 Schaden mehr.",
-			"jaJP": "ダメージを与える。\n使用する度ダメージが\n+1される。",
-			"plPL": " pkt. obrażeń wrogiemu bohaterowi. +1 pkt. obrażeń za każdym razem.",
-			"esES": " p. de daño\nal héroe enemigo.\n+1 p. de daño cada vez.",
-			"ruRU": " ед. урона герою противника.\n+1 к урону с каждым использованием.",
-			"esMX": " de daño al héroe enemigo.\n+1 de daño cada vez.",
-			"koKR": " 줍니다. 사용할 때마다 피해가 +1 증가합니다.",
-			"thTH": " แต้มให้ฮีโร่ศัตรู ความเสียหาย +1 ทุกครั้งที่ใช้"
-		},
 		"cost": 0,
 		"set": "Tb",
+		"collectionText": " damage to the enemy hero. +1 Damage each time.",
 		"name": "Remorseless Winter",
 		"mechanics": [
 			"AI_MUST_PLAY"
@@ -78453,6 +78120,9 @@
 		"playerClass": "Neutral",
 		"set": "Gilneas",
 		"name": "Rebuked",
+		"mechanics": [
+			"AURA"
+		],
 		"id": "GIL_203e",
 		"audio": {
 			"play": [],
@@ -78461,6 +78131,16 @@
 		},
 		"text": "Your spells cost (5) more this turn.",
 		"dbfId": 49205,
+		"type": "Enchantment",
+		"cardClass": "NEUTRAL"
+	},
+	{
+		"playerClass": "Neutral",
+		"set": "Gilneas",
+		"name": "Rebuking",
+		"id": "GIL_203e2",
+		"text": "Costs (5) more.",
+		"dbfId": 57807,
 		"type": "Enchantment",
 		"cardClass": "NEUTRAL"
 	},
@@ -84483,24 +84163,9 @@
 		"cardClass": "NEUTRAL"
 	},
 	{
-		"collectionText": {
-			"ptBR": " de dano aos inimigos em frente \na este lacaio.",
-			"zhCN": "点伤害。",
-			"itIT": " |4(danno,danni) ai\nnemici di fronte.",
-			"enUS": " damage to the enemies opposite of this minion.",
-			"frFR": " |4(point,points) de dégâts aux adversaires en face de ce serviteur.",
-			"zhTW": "點傷害",
-			"deDE": " Schaden zu.",
-			"jaJP": "ダメージを与える。",
-			"plPL": " pkt. obrażeń wrogom naprzeciw tego stronnika.",
-			"esES": " p. de daño a los enemigos en frente de este esbirro.",
-			"ruRU": " ед. урона противникам перед собой.",
-			"esMX": " de daño a los enemigos frente a este esbirro.",
-			"koKR": " 줍니다.",
-			"thTH": " แต้มให้ศัตรูที่อยู่[b]ตรงข้ามมินเนี่ยนตัวนี้"
-		},
 		"cost": 0,
 		"set": "Gilneas",
+		"collectionText": " damage to the enemies opposite of this minion.",
 		"artist": "Arthur Bozonnet",
 		"hideStats": true,
 		"health": 3,
@@ -94960,6 +94625,27 @@
 		"rarity": "Free"
 	},
 	{
+		"playerClass": "Shaman",
+		"collectible": true,
+		"set": "Hero_skins",
+		"name": "The Thunder King",
+		"health": 30,
+		"id": "HERO_02c",
+		"audio": {
+			"play": [],
+			"death": [
+				"VO__Male_Mogu_Death_01.ogg"
+			],
+			"attack": [
+				"VO__Male_Mogu_Attack_01.ogg"
+			]
+		},
+		"dbfId": 55963,
+		"type": "Hero",
+		"cardClass": "SHAMAN",
+		"rarity": "Free"
+	},
+	{
 		"playerClass": "Rogue",
 		"collectible": true,
 		"set": "Core",
@@ -96187,24 +95873,9 @@
 		"cardClass": "DRUID"
 	},
 	{
-		"collectionText": {
-			"ptBR": "<b>Último Suspiro Secreto:</b> Cause 3 de dano a todos os lacaios; ou Conceda +2/+2 a eles.",
-			"zhCN": "<b>秘密亡语：</b>对所有随从造成3点伤害；\n或者使所有随从获得+2/+2。",
-			"itIT": "<b>Rantolo di Morte Nascosto:</b> infligge 3 danni a TUTTI i servitori <b>o</b> +2/+2 a TUTTI i servitori.",
-			"enUS": "<b>Secret Deathrattle:</b> Deal 3 damage to all minions; or Give them +2/+2.",
-			"frFR": "<b>Râle d’agonie secret :</b> inflige 3 points de dégâts à tous les serviteurs ou leur donne +2/+2.",
-			"zhTW": "<b>隱密死聲：</b>對全部手下造成3點傷害，或賦予全部手下+2/+2",
-			"deDE": "[x]<b>Geheimes Todesröcheln:</b>\nFügt allen Dienern\n3 Schaden zu; oder\nverleiht ihnen +2/+2.",
-			"jaJP": "[x]<b>秘密の断末魔:</b>\n全てのミニオンに\n3ダメージを与える。\nまたは、全てのミニオンに\n+2/+2を付与する。",
-			"plPL": "<b>Skryta Agonia:</b> Zadaj 3 pkt. obrażeń wszystkim stronnikom; lub daj im +2/+2.",
-			"esES": "<b>Último aliento oculto:\n</b> Inflige 3 p. de daño\na todos los esbirros, o bien les otorga +2/+2.",
-			"ruRU": "<b>Тайный «Предсмертный хрип»:</b> наносит 3 ед. урона всем существам; или все существа получают +2/+2.",
-			"esMX": "<b>Estertor secreto:</b> inflige 3 de daño a todos los esbirros, o les otorga +2/+2.",
-			"koKR": "<b>죽음의 메아리 (비밀):</b>\n<b>모든</b> 하수인에게\n피해를 3 줍니다. 또는 +2/+2를 부여합니다.",
-			"thTH": "<b>เสียงสุดท้ายลับ:</b>\nสร้างความเสียหาย[b] 3 แต้มให้มินเนี่ยนทั้งหมด[b]หรือมอบ +2/+2 ให้"
-		},
 		"cost": 5,
 		"set": "Icecrown",
+		"collectionText": "<b>Secret Deathrattle:</b> Deal 3 damage to all minions; or Give them +2/+2.",
 		"health": 3,
 		"mechanics": [
 			"DEATHRATTLE"
@@ -100256,24 +99927,9 @@
 		"cardClass": "HUNTER"
 	},
 	{
-		"collectionText": {
-			"ptBR": "<b>Provocar</b>, <b>Venenoso</b>",
-			"zhCN": "<b>嘲讽，剧毒</b>",
-			"itIT": "<b>Provocazione</b>. <b>Veleno</b>",
-			"enUS": "<b>Taunt</b>, <b>Poisonous</b>",
-			"frFR": "<b>Provocation</b>, <b>Toxicité</b>",
-			"zhTW": "<b>嘲諷</b>，<b>致命劇毒</b>",
-			"deDE": "<b>Spott</b>, <b>Giftig</b>",
-			"jaJP": "<b>挑発</b>、<b>猛毒</b>",
-			"plPL": "<b>Prowokacja</b>, <b>Trucizna</b>",
-			"esES": "<b>Provocar</b>. <b>Veneno</b>.",
-			"ruRU": "<b>Яд</b>. <b>Провокация</b>.",
-			"esMX": "<b>Provocación</b>, <b>Venenoso</b>",
-			"koKR": "<b>도발</b>, <b>독성</b>",
-			"thTH": "<b>ยั่วยุ</b> <b>พิษ</b>"
-		},
 		"cost": 2,
 		"set": "Ungoro",
+		"collectionText": "<b>Taunt</b>, <b>Poisonous</b>",
 		"race": "BEAST",
 		"health": 2,
 		"mechanics": [
@@ -100302,24 +99958,9 @@
 		"rarity": "Common"
 	},
 	{
-		"collectionText": {
-			"ptBR": "<b>Furtividade</b>, <b>Venenoso</b>",
-			"zhCN": "<b>潜行，剧毒</b>",
-			"itIT": "<b>Furtività</b>. <b>Veleno</b>",
-			"enUS": "<b>Stealth</b>, <b>Poisonous</b>",
-			"frFR": "<b>Camouflage</b>, <b>Toxicité</b>",
-			"zhTW": "<b>潛行</b>，<b>致命劇毒</b>",
-			"deDE": "<b>Verstohlenheit</b>, <b>Giftig</b>",
-			"jaJP": "<b>隠れ身</b>、<b>猛毒</b>",
-			"plPL": "<b>Ukrycie</b>, <b>Trucizna</b>",
-			"esES": "<b>Sigilo</b>. <b>Veneno</b>.",
-			"ruRU": "<b>Яд</b>. <b>Маскировка</b>.",
-			"esMX": "<b>Sigilo</b>, <b>Venenoso</b>",
-			"koKR": "<b>은신</b>, <b>독성</b>",
-			"thTH": "<b>ซ่อนตัว</b> <b>พิษ</b>"
-		},
 		"cost": 3,
 		"set": "Ungoro",
+		"collectionText": "<b>Stealth</b>, <b>Poisonous</b>",
 		"race": "BEAST",
 		"health": 2,
 		"mechanics": [
@@ -100348,24 +99989,9 @@
 		"rarity": "Common"
 	},
 	{
-		"collectionText": {
-			"ptBR": "<b>Escudo Divino</b>, <b>Venenoso</b>",
-			"zhCN": "<b>圣盾，剧毒</b>",
-			"itIT": "<b>Scudo Divino</b>. <b>Veleno</b>",
-			"enUS": "<b>Divine Shield</b>, <b>Poisonous</b>",
-			"frFR": "<b>Bouclier divin</b>, <b>Toxicité</b>",
-			"zhTW": "<b>聖盾術</b>，<b>致命劇毒</b>",
-			"deDE": "<b>Gottesschild</b>, <b>Giftig</b>",
-			"jaJP": "<b>聖なる盾</b>、<b>猛毒</b>",
-			"plPL": "<b>Boska tarcza</b>, <b>Trucizna</b>",
-			"esES": "<b>Escudo divino</b>. <b>Veneno</b>.",
-			"ruRU": "<b>Яд</b>, <b>Божественный щит</b>.",
-			"esMX": "<b>Escudo divino</b>, <b>Venenoso</b>",
-			"koKR": "<b>천상의 보호막</b>, <b>독성</b>",
-			"thTH": "<b>โล่ศักดิ์สิทธิ์</b> <b>พิษ</b>"
-		},
 		"cost": 3,
 		"set": "Lootapalooza",
+		"collectionText": "<b>Divine Shield</b>, <b>Poisonous</b>",
 		"race": "BEAST",
 		"health": 1,
 		"mechanics": [
@@ -100394,24 +100020,9 @@
 		"rarity": "Common"
 	},
 	{
-		"collectionText": {
-			"ptBR": "<b>Eco</b>, <b>Rapidez</b>",
-			"zhCN": "<b>回响，突袭</b>",
-			"itIT": "<b>Eco</b>. <b>Assalto</b>",
-			"enUS": "<b>Echo</b>, <b>Rush</b>",
-			"frFR": "<b>Écho</b>, <b>Ruée</b>",
-			"zhTW": "<b>回音</b>，<b>衝刺</b>",
-			"deDE": "<b>Echo</b>, <b>Eifer</b>",
-			"jaJP": "<b>木霊</b>、<b>急襲</b>",
-			"plPL": "<b>Echo</b>, <b>Zryw</b>",
-			"esES": "<b>Eco</b>. <b>Embestir</b>.",
-			"ruRU": "<b>Эхо</b>, <b>Натиск</b>.",
-			"esMX": "<b>Eco</b>, <b>Acometida</b>",
-			"koKR": "<b>잔상</b>, <b>속공</b>",
-			"thTH": "<b>เสียงสะท้อน</b> <b>จู่โจม</b>"
-		},
 		"cost": 2,
 		"set": "Gilneas",
+		"collectionText": "<b>Echo</b>, <b>Rush</b>",
 		"race": "BEAST",
 		"health": 1,
 		"mechanics": [
@@ -100440,24 +100051,9 @@
 		"rarity": "Common"
 	},
 	{
-		"collectionText": {
-			"ptBR": "<b>Venenoso</b>, <b>Rapidez</b>",
-			"zhCN": "<b>剧毒，突袭</b>",
-			"itIT": "<b>Veleno</b>. <b>Assalto</b>",
-			"enUS": "<b>Poisonous</b>, <b>Rush</b>",
-			"frFR": "<b>Toxicité</b>, <b>Ruée</b>",
-			"zhTW": "<b>致命劇毒</b>，<b>衝刺</b>",
-			"deDE": "<b>Giftig</b>, <b>Eifer</b>",
-			"jaJP": "<b>猛毒</b>、<b>急襲</b>",
-			"plPL": "<b>Trucizna</b>, <b>Zryw</b>",
-			"esES": "<b>Veneno</b>. <b>Embestir</b>.",
-			"ruRU": "<b>Яд</b>, <b>Натиск</b>.",
-			"esMX": "<b>Venenoso</b>, <b>Acometida</b>",
-			"koKR": "<b>독성</b>, <b>속공</b>",
-			"thTH": "<b>พิษ</b> <b>จู่โจม</b>"
-		},
 		"cost": 5,
 		"set": "Gilneas",
+		"collectionText": "<b>Poisonous</b>, <b>Rush</b>",
 		"race": "BEAST",
 		"health": 3,
 		"mechanics": [
@@ -100486,24 +100082,9 @@
 		"rarity": "Common"
 	},
 	{
-		"collectionText": {
-			"ptBR": "<b>Roubar Vida</b>, <b>Rapidez</b>",
-			"zhCN": "<b>吸血，突袭</b>",
-			"itIT": "<b>Furto Vitale</b>. <b>Assalto</b>",
-			"enUS": "<b>Lifesteal</b>, <b>Rush</b>",
-			"frFR": "<b>Vol de vie</b>, <b>Ruée</b>",
-			"zhTW": "<b>生命竊取</b>，<b>衝刺</b>",
-			"deDE": "<b>Lebensentzug</b>, <b>Eifer</b>",
-			"jaJP": "<b>生命奪取</b>、<b>急襲</b>",
-			"plPL": "<b>Kradzież życia</b>, <b>Zryw</b>",
-			"esES": "<b>Robo de vida</b>. <b>Embestir</b>.",
-			"ruRU": "<b>Похищение жизни</b>, <b>Натиск</b>",
-			"esMX": "<b>Robavida</b>, <b>Acometida</b>",
-			"koKR": "<b>생명력 흡수</b>, <b>속공</b>",
-			"thTH": "<b>สูบชีวิต</b> <b>จู่โจม</b>"
-		},
 		"cost": 2,
 		"set": "Gilneas",
+		"collectionText": "<b>Lifesteal</b>, <b>Rush</b>",
 		"race": "BEAST",
 		"health": 3,
 		"mechanics": [
@@ -103685,24 +103266,9 @@
 	},
 	{
 		"playerClass": "Deathknight",
-		"collectionText": {
-			"ptBR": " de dano ao herói inimigo. +1 de dano a cada vez.",
-			"zhCN": "点伤害。每次使用\n+1点伤害。",
-			"itIT": " |4(danno,danni) all'eroe nemico. +1 danno a ogni utilizzo.",
-			"enUS": " damage to the enemy hero. +1 Damage each time.",
-			"frFR": " |4(point,points) de dégâts au héros adverse. +1 point de dégâts à chaque fois.",
-			"zhTW": "點傷害。每次\n提高1點",
-			"deDE": " Schaden zu. Verursacht jedes Mal 1 Schaden mehr.",
-			"jaJP": "ダメージを与える。\n使用する度ダメージが\n+1される。",
-			"plPL": " pkt. obrażeń wrogiemu bohaterowi. +1 pkt. obrażeń za każdym razem.",
-			"esES": " p. de daño\nal héroe enemigo.\n+1 p. de daño cada vez.",
-			"ruRU": " ед. урона герою противника.\n+1 к урону с каждым использованием.",
-			"esMX": " de daño al héroe enemigo.\n+1 de daño cada vez.",
-			"koKR": " 줍니다. 사용할 때마다 피해가 +1 증가합니다.",
-			"thTH": " แต้ม[b]ให้ฮีโร่ศัตรู ความเสียหาย +1 ทุกครั้งที่ใช้"
-		},
 		"cost": 0,
 		"set": "Icecrown",
+		"collectionText": " damage to the enemy hero. +1 Damage each time.",
 		"name": "Remorseless Winter",
 		"mechanics": [
 			"AI_MUST_PLAY"
@@ -119011,24 +118577,9 @@
 	},
 	{
 		"collectible": true,
-		"collectionText": {
-			"ptBR": "Cause $2 de dano a um lacaio. <i>(Receba 3 de Armadura para aprimorar.)</i>",
-			"zhCN": "对一个随从造成$2点伤害。<i>（获得3点护甲值后升级。）</i>",
-			"itIT": "Infligge $2 danni a un servitore. <i>(Si potenzia ottenendo 3 Armatura)</i>",
-			"enUS": "Deal $2 damage to a minion. <i>(Gain 3 Armor to upgrade.)</i>",
-			"frFR": "Inflige $2 |4(point,points) de dégâts à un serviteur. <i>(Obtenez 3 points d’armure pour l’améliorer.)</i>",
-			"zhTW": "對一個手下造成$2點傷害<i>(獲得3點護甲值後升級)</i>",
-			"deDE": "Fügt einem Diener $2 Schaden zu. <i>(Zum Aufwerten 3 Rüstung erhalten.)</i>",
-			"jaJP": "[x]ミニオン1体に\n$2ダメージを与える。\n<i>（装甲を3獲得すると\n   アップグレード）</i>",
-			"plPL": "Zadaj $2 pkt. obrażeń stronnikowi. <i>(Otrzymaj 3 pkt. pancerza, aby ulepszyć.)</i>",
-			"esES": "Inflige $2 p. de daño a un esbirro. <i>(Obtén 3 p. de armadura para mejorarlo).</i>",
-			"ruRU": "Наносит $2 ед. урона выбранному существу. <i>(Получите 3 ед. брони для улучшения.)</i>",
-			"esMX": "Inflige $2 de daño a un esbirro. <i>(Obtén 3 de Armadura para mejorar esta carta).</i>",
-			"koKR": "하수인에게 피해를 $2 줍니다. <i>(방어도를 +3 얻으면 강화됩니다.)</i>",
-			"thTH": "สร้างความเสียหาย $2 แต้มให้มินเนี่ยนหนึ่งตัว <i>(รับเกราะ 3 แต้มเพื่ออัพเกรด)</i>"
-		},
 		"cost": 1,
 		"set": "Lootapalooza",
+		"collectionText": "Deal $2 damage to a minion. <i>(Gain 3 Armor to upgrade.)</i>",
 		"artist": "Jim Nelson",
 		"dbfId": 43288,
 		"type": "Spell",
@@ -119318,24 +118869,9 @@
 	},
 	{
 		"collectible": true,
-		"collectionText": {
-			"ptBR": "Evoque 1 cópia de um lacaio aliado. <i>(Cause <b>Sobrecarga</b> em 3 Cristais de Mana para aprimorar.)</i>",
-			"zhCN": "选择一个友方随从，召唤一个它的复制。<i>（<b>过载</b>三个法力水晶后升级。）</i>",
-			"itIT": "Evoca una copia di un tuo servitore. <i>(Si potenzia <b>Sovraccaricando</b> 3 Cristalli di Mana)</i>",
-			"enUS": "Summon 1 copy of a friendly minion. <i>(<b>Overload</b> 3 Mana Crystals to upgrade.)</i>",
-			"frFR": "Invoque 1 copie d’un serviteur allié. <i>(<b>Surchargez</b> 3 cristaux de mana pour l’améliorer.)</i>",
-			"zhTW": "召喚1個友方手下的分身<i>(<b>超載</b>3顆法力水晶後升級)</i>",
-			"deDE": "Ruft 1 Kopie eines befreundeten Dieners herbei. <i>(Zum Aufwerten 3 Manakristalle <b>überladen</b>.)</i>",
-			"jaJP": "[x]味方のミニオン1体の\nコピーを1体召喚する。\n<i>（マナクリスタルを3つ\n<b>オーバーロード</b>させると\nアップグレード）</i>",
-			"plPL": "Przyzwij 1 kopię przyjaznego stronnika. <i>(<b>Przeciąż</b> 3 kryształy many, aby ulepszyć.)</i>",
-			"esES": "Invoca 1 copia de un esbirro amistoso. <i>(<b>Sobrecarga</b> 3 cristales de maná para mejorarlo).</i>",
-			"ruRU": "Призывает 1 копию вашего выбранного существа. <i>(<b>Перегрузите</b> 3 кристалла маны для улучшения.)</i>",
-			"esMX": "Invoca 1 copia de un esbirro aliado. <i>(<b>Sobrecarga</b> 3 Cristales de maná para mejorar esta carta).</i>",
-			"koKR": "아군 하수인을 복사하여 소환합니다. <i>(내 마나 수정 3개를 <b>과부하</b>하면 강화됩니다.)</i>",
-			"thTH": "เรียกก๊อปปี้ของ[b]มินเนี่ยนฝ่ายคุณ 1 ตัว <i>(<b>โอเวอร์โหลด</b> คริสตัลมานา 3 อันเพื่ออัพเกรด)</i>"
-		},
 		"cost": 7,
 		"set": "Lootapalooza",
+		"collectionText": "Summon 1 copy of a friendly minion. <i>(<b>Overload</b> 3 Mana Crystals to upgrade.)</i>",
 		"artist": "Jason Kang",
 		"referencedTags": [
 			"OVERLOAD"
@@ -119693,24 +119229,9 @@
 	},
 	{
 		"collectible": true,
-		"collectionText": {
-			"ptBR": "Evoque um Espírito 2/2 com <b>Provocar</b>. <i>(Restaure 3 de Vida para aprimorar.)</i>",
-			"zhCN": "召唤一个2/2并具有<b>嘲讽</b>的灵魂。<i>（恢复3点生命值后升级。）</i>",
-			"itIT": "Evoca uno Spirito 2/2 con <b>Provocazione</b>. <i>(Si potenzia rigenerando 3 Salute)</i>",
-			"enUS": "Summon a 2/2 Spirit with <b>Taunt</b>. <i>(Restore 3 Health to upgrade.)</i>",
-			"frFR": "Invoque un esprit 2/2 avec <b>Provocation</b>. <i>(Rendez 3 PV pour l’améliorer.)</i>",
-			"zhTW": "召喚一個有<b>嘲諷</b>的2/2聖靈<i>(恢復3點生命值後升級)</i>",
-			"deDE": "Ruft einen Geist (2/2) mit <b>Spott</b> herbei. <i>(Zum Aufwerten 3 Leben wiederherstellen.)</i>",
-			"jaJP": "<b>挑発</b>を持つ\n2/2の精霊を\n1体召喚する。\n<i>（体力を3回復するとアップグレード）</i>",
-			"plPL": "Przyzwij Ducha 2/2 z <b>Prowokacją</b>. <i>(Przywróć 3 pkt. zdrowia, aby ulepszyć.)</i>",
-			"esES": "Invoca un espíritu 2/2 con <b>Provocar</b>. <i>(Restaura 3 p. de salud para mejorarla).</i>",
-			"ruRU": "Призывает духа 2/2 с <b>«Провокацией»</b>. <i>(Восстановите 3 ед. здоровья для улучшения.)</i>",
-			"esMX": "Invoca un Espíritu 2/2 con <b>Provocación</b>. <i>(Restaura 3 de Salud para mejorar esta carta).</i>",
-			"koKR": "<b>도발</b> 능력이 있는 2/2 영혼을 소환합니다. <i>(생명력을 3 회복하면 강화됩니다.)</i>",
-			"thTH": "เรียกวิญญาณ 2/2 ที่มี <b>ยั่วยุ</b> <i>(ฟื้นฟูพลังชีวิต 3 แต้มเพื่ออัพเกรด)</i>"
-		},
 		"cost": 2,
 		"set": "Lootapalooza",
+		"collectionText": "Summon a 2/2 Spirit with <b>Taunt</b>. <i>(Restore 3 Health to upgrade.)</i>",
 		"artist": "Konstantin Turovec",
 		"referencedTags": [
 			"TAUNT"
@@ -119917,24 +119438,9 @@
 	},
 	{
 		"collectible": true,
-		"collectionText": {
-			"ptBR": "Adicione 1 feitiço de Mago aleatório à sua mão. <i>(Jogue 2 Elementais para aprimorar.)</i>",
-			"zhCN": "随机将一张法师法术牌置入你的手牌。<i>（使用两张元素牌后升级。）</i>",
-			"itIT": "Mette nella tua mano una Magia casuale del Mago. <i>(Si potenzia giocando due Elementali)</i>",
-			"enUS": "Add 1 random Mage spell to your hand. <i>(Play 2 Elementals to upgrade.)</i>",
-			"frFR": "Place 1 sort de mage aléatoire dans votre main. <i>(Jouez 2 Élémentaires pour l’améliorer.)</i>",
-			"zhTW": "放1張隨機法師法術到你的手中<i>(打出2個元素後升級)</i>",
-			"deDE": "Erhaltet 1 zufälligen Magierzauber auf die Hand. <i>(Zum Aufwerten 2 Elementare ausspielen.)</i>",
-			"jaJP": "[x]ランダムなメイジの\n呪文カード1枚を\n自分の手札に追加する。\n<i>（エレメンタルを2体\n手札から使用すると\nアップグレード）</i>",
-			"plPL": "Dodaj 1 losowe zaklęcie maga do twojej ręki. <i>(Zagraj 2 Żywiołaki, aby ulepszyć.)</i>",
-			"esES": "Añade 1 hechizo de mago aleatorio a tu mano. <i>(Juega 2 elementales para mejorarlo.)</i>",
-			"ruRU": "Вы кладете в руку 1 случайное заклинание мага. <i>(Разыграйте 2 элементалей для улучшения.)</i>",
-			"esMX": "Agrega 1 hechizo de mago aleatorio a tu mano. <i>(Juega 2 Elementales para mejorar esta carta).</i>",
-			"koKR": "무작위 마법사 주문을 내 손으로 가져옵니다. <i>(정령을 2장 내면 강화됩니다.)</i>",
-			"thTH": "สุ่มเพิ่มการ์ดเวทมนตร์[b]ของเมจ 1 ใบในมือคุณ <i>(เล่นวิญญาณธาตุ 2 ใบเพื่ออัพเกรด)</i>"
-		},
 		"cost": 2,
 		"set": "Lootapalooza",
+		"collectionText": "Add 1 random Mage spell to your hand. <i>(Play 2 Elementals to upgrade.)</i>",
 		"artist": "Zoltan Boros",
 		"dbfId": 43414,
 		"type": "Spell",
@@ -124061,24 +123567,9 @@
 	},
 	{
 		"collectible": true,
-		"collectionText": {
-			"ptBR": "Destrua 1 lacaio inimigo aleatório. <i>(Jogue 3 cards com <b>Último Suspiro</b> para aprimorar.)</i>",
-			"zhCN": "随机消灭一个敌方随从。<i>（使用三张<b>亡语</b>牌后升级。）</i>",
-			"itIT": "Distrugge un servitore nemico casuale. <i>(Si potenzia giocando 3 carte con <b>Rantolo di Morte</b>)</i>",
-			"enUS": "Destroy 1 random enemy minion.\n<i>(Play 3 <b>Deathrattle</b> cards to upgrade.)</i>",
-			"frFR": "Détruit 1 serviteur adverse aléatoire. <i>(Jouez 3 cartes avec <b>Râle d’agonie</b> pour l’améliorer.)</i>",
-			"zhTW": "摧毀1個隨機敵方手下<i>(打出3張<b>死亡之聲</b>牌後升級)</i>",
-			"deDE": "Vernichtet 1 zufälligen feindlichen Diener. <i>(Zum Aufwerten 3 <b>Todesröcheln</b>-Karten ausspielen.)</i>",
-			"jaJP": "[x]ランダムな敵の\nミニオン1体を破壊する。\n<i>（<b>断末魔</b>カードを\n3枚手札から使用\nするとアップグレード）</i>",
-			"plPL": "Zniszcz jednego losowego wrogiego stronnika. <i>(Zagraj 3 karty z <b>Agonią</b>, aby ulepszyć.)</i>",
-			"esES": "Destruye 1 esbirro enemigo aleatorio. <i>(Juega 3 cartas con <b>Último aliento</b> para mejorarlo).</i>",
-			"ruRU": "Уничтожает 1 случайное существо противника. <i>(Разыграйте 3 карты с <b>«Предсмертным хрипом»</b> для улучшения.)</i>",
-			"esMX": "Destruye 1 esbirro enemigo aleatorio. <i>(Juega 3 cartas con <b>Estertor</b> para mejorar esta carta).</i>",
-			"koKR": "무작위 적 하수인을 처치합니다.\n<i>(<b>죽음의 메아리</b> 카드를 3회 내면 강화됩니다.)</i>",
-			"thTH": "สุ่มทำลายมินเนี่ยนศัตรู 1 ตัว <i>(เล่นการ์ด <b>เสียงสุดท้าย</b> 3 ใบเพื่ออัพเกรด)</i>"
-		},
 		"cost": 5,
 		"set": "Lootapalooza",
+		"collectionText": "Destroy 1 random enemy minion.\n<i>(Play 3 <b>Deathrattle</b> cards to upgrade.)</i>",
 		"artist": "Arthur Bozonnet",
 		"referencedTags": [
 			"DEATHRATTLE"
@@ -124274,24 +123765,9 @@
 	},
 	{
 		"collectible": true,
-		"collectionText": {
-			"ptBR": "Ressuscite 2 lacaios aliados diferentes. <i>(Lance 4 feitiços para aprimorar.)</i>",
-			"zhCN": "复活两个不同的友方随从。<i>（施放四个法术后升级。）</i>",
-			"itIT": "Evoca due tuoi servitori diversi morti in questa partita. <i>(Si potenzia lanciando 4 Magie)</i>",
-			"enUS": "Resurrect 2 different friendly minions. <i>(Cast 4 spells to upgrade.)</i>",
-			"frFR": "Ressuscite 2 serviteurs alliés différents. <i>(Lancez 4 sorts pour l’améliorer.)</i>",
-			"zhTW": "復活2個不同的友方手下<i>(施放\n4個法術後升級)</i>",
-			"deDE": "Belebt 2 verschiedene befreundete Diener wieder. <i>(Zum Aufwerten 4 Zauber wirken.)</i>",
-			"jaJP": "[x]味方のミニオン\n2種を復活させる。\n<i>（呪文を4回使用すると \n  アップグレード）</i>",
-			"plPL": "Wskrześ dwóch różnych przyjaznych stronników. <i>(Rzuć 4 zaklęcia, aby ulepszyć.)</i>",
-			"esES": "Resucita a 2 esbirros amistosos diferentes. <i>(Lanza 4 hechizos para mejorarlo).</i>",
-			"ruRU": "Воскрешает 2 ваших различных существ. <i>(Разыграйте 4 заклинания для улучшения.)</i>",
-			"esMX": "Revive 2 esbirros aliados diferentes. <i>(Lanza 4 hechizos para mejorar esta carta.)</i>",
-			"koKR": "서로 다른 아군 하수인 둘을 부활시킵니다. <i>(주문을 4회 시전하면 강화됩니다.)</i>",
-			"thTH": "ชุบชีวิตมินเนี่ยน[b]ฝ่ายคุณที่ต่างกัน 2 ตัว <i>(ร่ายเวทมนตร์ 4 ใบ[b]เพื่ออัพเกรด)</i>"
-		},
 		"cost": 7,
 		"set": "Lootapalooza",
+		"collectionText": "Resurrect 2 different friendly minions. <i>(Cast 4 spells to upgrade.)</i>",
 		"artist": "Tyler West Studio",
 		"dbfId": 46307,
 		"type": "Spell",
@@ -125908,24 +125384,9 @@
 		"cardClass": "NEUTRAL"
 	},
 	{
-		"collectionText": {
-			"ptBR": "<b>Adapte</b> um lacaio aliado {0} |4(vez, vezes).",
-			"zhCN": "使一个友方随从<b>进化</b>{0}次。",
-			"itIT": "<b>Adatta</b> un tuo servitore {0} |4(volta,volte).",
-			"enUS": "<b>Adapt</b> a friendly minion {0} |4(time, times).",
-			"frFR": "Confère <b>Adaptation</b> {0} fois à un serviteur allié.",
-			"zhTW": "<b>演化</b>一個友方手下{0}次",
-			"deDE": "<b>Mutiert</b> einen befreundeten Diener {0}-mal.",
-			"jaJP": "味方の\nミニオン1体を\n{0}回<b>適応</b>させる。",
-			"plPL": "<b>Adaptuj</b> przyjaznego stronnika {0} |4(raz,razy,razy).",
-			"esES": "<b>Adapta</b> a un esbirro amistoso {0} |4(vez,veces).",
-			"ruRU": "Ваше существо <b>адаптируется</b> {0} р.",
-			"esMX": "<b>Adapta</b> a un esbirro aliado {0} |4(vez, veces).",
-			"koKR": "아군 하수인을 {0}번 <b>적응</b>시킵니다.",
-			"thTH": "<b>ปรับตัว</b> {0} ครั้ง[b]ให้มินเนี่ยนฝ่ายคุณ[b]หนึ่งตัว"
-		},
 		"cost": 4,
 		"set": "Lootapalooza",
+		"collectionText": "<b>Adapt</b> a friendly minion {0} |4(time, times).",
 		"artist": "Clint Langley",
 		"referencedTags": [
 			"ADAPT"
@@ -143759,24 +143220,9 @@
 	},
 	{
 		"playerClass": "Neutral",
-		"collectionText": {
-			"ptBR": "Evoque um <b>Golem de Jade</b>.",
-			"zhCN": "召唤一个<b>青玉魔像</b>。",
-			"itIT": "Evoca un <b>Golem di Giada</b>.",
-			"enUS": "Summon a <b>Jade Golem</b>.",
-			"frFR": "Invoque un <b>golem de jade</b>.",
-			"zhTW": "召喚一個<b>翠玉魔像</b>",
-			"deDE": "Ruft einen <b>Jadegolem</b> herbei.",
-			"jaJP": "<b>翡翠のゴーレム</b>を1体召喚する。",
-			"plPL": "Przyzwij <b>Nefrytowego golema</b>.",
-			"esES": "Invoca un <b>gólem de jade</b>.",
-			"ruRU": "Призывает <b>нефритового голема</b>.",
-			"esMX": "Invoca un <b>Gólem de jade</b>.",
-			"koKR": "<b>비취 골렘</b>을 소환합니다.",
-			"thTH": "เรียก <b>เจดโกเล็ม</b> หนึ่งตัว"
-		},
 		"cost": 4,
 		"set": "Tb",
+		"collectionText": "Summon a <b>Jade Golem</b>.",
 		"name": "Construct Golem",
 		"id": "TB_BossRumble_002hp",
 		"audio": {
@@ -144128,6 +143574,41 @@
 		},
 		"text": "Reset Your Deck",
 		"dbfId": 56214,
+		"type": "Spell",
+		"cardClass": "NEUTRAL"
+	},
+	{
+		"playerClass": "Neutral",
+		"set": "Tb",
+		"name": "Innkeeper Tools - Reset Session",
+		"id": "TB_Champs_KeepWinnerDeck_Choice",
+		"text": "Reset the brawl or play as normal",
+		"dbfId": 56324,
+		"type": "Enchantment",
+		"entourage": [
+			"FB_ELO001a",
+			"FB_ELO001b"
+		],
+		"cardClass": "NEUTRAL"
+	},
+	{
+		"playerClass": "Neutral",
+		"set": "Tb",
+		"name": "Reset Champs Decks",
+		"id": "TB_Champs_KeepWinnerDeck_IK",
+		"text": "As the Innkeeper, you can reset your Fireside Brawl's decks.",
+		"dbfId": 56355,
+		"type": "Enchantment",
+		"cardClass": "NEUTRAL"
+	},
+	{
+		"playerClass": "Neutral",
+		"cost": 0,
+		"set": "Tb",
+		"name": "Reset Decks",
+		"id": "TB_Champs_KeepWinnerDeck_Reset",
+		"text": "Everyone gets a new deck, next game.",
+		"dbfId": 56322,
 		"type": "Spell",
 		"cardClass": "NEUTRAL"
 	},
@@ -145724,6 +145205,142 @@
 		"text": "+2/+2.",
 		"dbfId": 17264,
 		"type": "Enchantment",
+		"cardClass": "NEUTRAL"
+	},
+	{
+		"playerClass": "Neutral",
+		"set": "Tb",
+		"name": "Atramedes",
+		"health": 30,
+		"id": "TB_EVILBRM_Atramedes",
+		"audio": {
+			"play": [],
+			"death": [
+				"VO_BRMA16_1_DEATH_06.ogg"
+			],
+			"attack": []
+		},
+		"dbfId": 56559,
+		"type": "Hero",
+		"cardClass": "NEUTRAL"
+	},
+	{
+		"playerClass": "Neutral",
+		"set": "Tb",
+		"name": "Garr",
+		"health": 30,
+		"id": "TB_EVILBRM_Garr",
+		"audio": {
+			"play": [],
+			"death": [
+				"VO_BRMA04_1_DEATH_06.ogg"
+			],
+			"attack": []
+		},
+		"dbfId": 56552,
+		"type": "Hero",
+		"cardClass": "NEUTRAL"
+	},
+	{
+		"playerClass": "Neutral",
+		"set": "Tb",
+		"name": "Baron Geddon",
+		"health": 30,
+		"id": "TB_EVILBRM_Geddon",
+		"audio": {
+			"play": [],
+			"death": [],
+			"attack": []
+		},
+		"dbfId": 56560,
+		"type": "Hero",
+		"cardClass": "NEUTRAL"
+	},
+	{
+		"playerClass": "Neutral",
+		"set": "Tb",
+		"name": "Nefarian",
+		"health": 30,
+		"id": "TB_EVILBRM_Nefarian",
+		"audio": {
+			"play": [],
+			"death": [],
+			"attack": []
+		},
+		"dbfId": 56542,
+		"type": "Hero",
+		"entourage": [
+			"BRMA13_8",
+			"BRMA13_7",
+			"BRMA13_5",
+			"BRMA13_6"
+		],
+		"cardClass": "NEUTRAL"
+	},
+	{
+		"playerClass": "Neutral",
+		"set": "Tb",
+		"name": "Omnotron Defense System",
+		"health": 30,
+		"id": "TB_EVILBRM_Omnotron01",
+		"audio": {
+			"play": [],
+			"death": [],
+			"attack": []
+		},
+		"dbfId": 56286,
+		"type": "Hero",
+		"cardClass": "NEUTRAL"
+	},
+	{
+		"playerClass": "Neutral",
+		"set": "Tb",
+		"name": "Highlord Omokk",
+		"health": 30,
+		"id": "TB_EVILBRM_Omokk",
+		"audio": {
+			"play": [],
+			"death": [
+				"VO_BRMA07_1_DEATH_06.ogg"
+			],
+			"attack": []
+		},
+		"dbfId": 56553,
+		"type": "Hero",
+		"cardClass": "NEUTRAL"
+	},
+	{
+		"playerClass": "Neutral",
+		"set": "Tb",
+		"name": "Onyxia",
+		"health": 30,
+		"id": "TB_EVILBRM_Onyxia01",
+		"audio": {
+			"play": [],
+			"death": [],
+			"attack": []
+		},
+		"dbfId": 56290,
+		"type": "Hero",
+		"cardClass": "NEUTRAL"
+	},
+	{
+		"playerClass": "Neutral",
+		"set": "Tb",
+		"name": "Ragnaros the Firelord",
+		"health": 60,
+		"id": "TB_EVILBRM_Ragnaros01",
+		"audio": {
+			"play": [],
+			"death": [
+				"VO_BRM_027h_Death_63.ogg"
+			],
+			"attack": [
+				"VO_BRM_027h_Attack_15.ogg"
+			]
+		},
+		"dbfId": 56295,
+		"type": "Hero",
 		"cardClass": "NEUTRAL"
 	},
 	{
@@ -147731,6 +147348,21 @@
 		},
 		"dbfId": 41125,
 		"type": "Minion",
+		"cardClass": "NEUTRAL"
+	},
+	{
+		"playerClass": "Neutral",
+		"set": "Tb",
+		"name": "Mirror Match",
+		"id": "TB_KeepWinnerDeck_Mirror",
+		"audio": {
+			"play": [],
+			"death": [],
+			"attack": []
+		},
+		"text": "Flags if a player is playing against the same deck",
+		"dbfId": 57045,
+		"type": "Enchantment",
 		"cardClass": "NEUTRAL"
 	},
 	{
@@ -154627,7 +154259,7 @@
 	},
 	{
 		"collectible": true,
-		"cost": 3,
+		"cost": 4,
 		"set": "Troll",
 		"artist": "Jim Nelson",
 		"mechanics": [
@@ -156149,24 +155781,9 @@
 	},
 	{
 		"collectible": true,
-		"collectionText": {
-			"ptBR": "<b>Grito de Guerra:</b> Se seu Poder Heroico causou 8 de dano nesta partida, evoque Ragnaros, o Senhor do Fogo.\n",
-			"zhCN": "<b>战吼：</b>\n在本局对战中，如果你的英雄技能累计造成了8点伤害，则召唤炎魔之王拉格纳罗斯。",
-			"itIT": "[x]<b>Grido di Battaglia:</b> se il tuo\nPotere Eroe ha inflitto 8 danni in\nquesta partita, evoca Ragnaros.\n",
-			"enUS": "[x]<b>Battlecry:</b> If your Hero Power\ndealt 8 damage this game,\nsummon Ragnaros the\nFirelord.",
-			"frFR": "<b>Cri de guerre :</b> si votre pouvoir héroïque inflige 8 points de dégâts pendant cette partie, invoque Ragnaros, seigneur du feu.",
-			"zhTW": "[x]<b>戰吼：</b>若你的英雄能力\n已在本賽局造成8點\n傷害，召喚拉格納羅斯\n",
-			"deDE": "<b>Kampfschrei:</b> Ruft Ragnaros den\nFeuerfürsten herbei, wenn Eure\nHeldenfähigkeit in diesem Spiel\n8 Schaden verursacht hat.",
-			"jaJP": "[x]<b>雄叫び:</b> この対戦で自分の\nヒーローパワーが8ダメージ\n以上与えていた場合「炎の王\nラグナロス」を召喚する。\n",
-			"plPL": "<b>Okrzyk bojowy:</b> Jeśli twoja moc specjalna zadała w tej grze 8 pkt. obrażeń, przyzwij Ragnarosa, Władcę Ognia.\n",
-			"esES": "[x]<b>Grito de batalla:</b> Si tu poder\nde héroe ha infligido 8 p. de daño\nen esta partida, invoca a\nRagnaros, Señor del Fuego.\n",
-			"ruRU": "<b>Боевой клич:</b> если ваша сила героя нанесла 8 ед. урона в этом матче, призывает Рагнароса.",
-			"esMX": "<b>Grito de batalla:</b> si tu Poder de héroe infligió 8 de daño en esta partida, invoca a Ragnaros, el Señor del Fuego.",
-			"koKR": "<b>전투의 함성:</b> 이번 게임에서\n내 영웅 능력으로 피해를 8 이상 줬다면, 불의 군주 라그나로스를 소환합니다.",
-			"thTH": "<b>คำรามสู้ศึก:</b> ถ้าในเกมนี้พลังฮีโร่[b]ของคุณสร้างความเสียหายไป[b]แล้ว 8 แต้ม เรียกแร็กนารอส เจ้าแห่งเพลิง"
-		},
 		"cost": 7,
 		"set": "Troll",
+		"collectionText": "[x]<b>Battlecry:</b> If your Hero Power\ndealt 8 damage this game,\nsummon Ragnaros the\nFirelord.",
 		"race": "BEAST",
 		"artist": "Jakub Kasper",
 		"health": 4,
@@ -159193,24 +158810,9 @@
 	},
 	{
 		"collectible": true,
-		"collectionText": {
-			"ptBR": "<b>Grito de Guerra:</b> Se você tiver restaurado 10 de Vida nesta partida, receba +4/+4 e <b>Provocar</b>.",
-			"zhCN": "<b>战吼：</b>在本局对战中，如果你累计恢复了10点生命值，则获得+4/+4和<b>嘲讽</b>。",
-			"itIT": "[x]<b>Grido di Battaglia:</b> se hai\nrigenerato 10 Salute in\nquesta partita, ottiene +4/+4 e\n <b>Provocazione</b>.",
-			"enUS": "[x]<b>Battlecry:</b> If you've restored\n10 Health this game, gain\n+4/+4 and <b>Taunt</b>.",
-			"frFR": "<b>Cri de guerre :</b> si vous avez rendu 10 points de vie pendant cette partie, gagne +4/+4 et <b>Provocation</b>.",
-			"zhTW": "<b>戰吼：</b>若你在本賽局中已恢復10點生命值，獲得+4/+4和<b>嘲諷</b>",
-			"deDE": "<b>Kampfschrei:</b> Erhält +4/+4 und <b>Spott</b>, wenn Ihr in diesem Spiel 10 Leben wieder[d]herge[d]stellt habt.",
-			"jaJP": "[x]<b>雄叫び:</b>\nこの対戦で自分が体力を\n10以上回復していた場合\n+4/+4と<b>挑発</b>を獲得する。\n",
-			"plPL": "<b>Okrzyk bojowy:</b> Jeśli udało ci się przywrócić 10 pkt. zdrowia w tej grze, otrzymuje +4/+4 oraz <b>Prowokację</b>.",
-			"esES": "[x]<b>Grito de batalla:</b> Si has\nrestaurado 10 p. de salud\nen esta partida, obtiene +4/+4\ny <b>Provocar</b>.",
-			"ruRU": "<b>Боевой клич:</b> если вы\nвосстановили 10 ед. здоровья в течение матча, получает +4/+4 и <b>«Провокацию»</b>.",
-			"esMX": "<b>Grito de batalla:</b> si has restaurado 10 de salud en esta partida, obtiene +4/+4 y <b>Provocación</b>.",
-			"koKR": "<b>전투의 함성:</b> 이번 게임에서 생명력을 10 이상 회복했으면, +4/+4와 <b>도발</b>을 얻습니다.",
-			"thTH": "<b>คำรามสู้ศึก:</b> ถ้าในเกมนี้คุณ[b]ฟื้นฟูพลังชีวิตไปแล้ว 10 แต้ม ได้รับ +4/+4 และ <b>ยั่วยุ</b>"
-		},
 		"cost": 4,
 		"set": "Troll",
+		"collectionText": "[x]<b>Battlecry:</b> If you've restored\n10 Health this game, gain\n+4/+4 and <b>Taunt</b>.",
 		"artist": "James Ryman",
 		"health": 4,
 		"mechanics": [
@@ -159636,24 +159238,9 @@
 	},
 	{
 		"playerClass": "Hunter",
-		"collectionText": {
-			"ptBR": "<b>Poder Heroico</b>\nCause $2 de dano.",
-			"zhCN": "<b>英雄技能</b>\n造成$2点伤害。",
-			"itIT": "<b>Potere Eroe</b>\nInfligge $2 danni.",
-			"enUS": "<b>Hero Power</b>\nDeal $2 damage.",
-			"frFR": "<b>Pouvoir héroïque</b>\nInflige $2 points de dégâts.",
-			"zhTW": "<b>英雄能力</b>\n造成$2點傷害",
-			"deDE": "<b>Heldenfähigkeit</b>\nVerursacht $2 Schaden.",
-			"jaJP": "<b>ヒーローパワー</b>\n$2ダメージを\n与える。",
-			"plPL": "<b>Moc specjalna</b>\nZadaj $2 pkt. obrażeń.",
-			"esES": "<b>Poder de héroe</b>\nInflige $2 p. de daño.",
-			"ruRU": "<b>Сила героя</b>\nНаносит $2 ед. урона.",
-			"esMX": "<b>Poder de héroe</b>\nInflige $2 de daño.",
-			"koKR": "<b>영웅 능력</b>\n피해를 $2 줍니다.",
-			"thTH": "<b>พลังฮีโร่</b> สร้างความเสียหาย $2 แต้ม"
-		},
 		"cost": 2,
 		"set": "Troll",
+		"collectionText": "<b>Hero Power</b>\nDeal $2 damage.",
 		"name": "Steady Throw",
 		"id": "TRLA_065p",
 		"audio": {
