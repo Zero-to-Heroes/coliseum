@@ -57,7 +57,8 @@ export class ActiveSpellParserService {
             activeSpell = action.origin;
         }
         else {
-            activeSpell = previousAction && previousAction.activeSpell;
+            // Be default, hide the active spell. Only explic
+            activeSpell = undefined;
         }
         if (activeSpell) {
             this.logger.debug('Updating active spell', activeSpell);
