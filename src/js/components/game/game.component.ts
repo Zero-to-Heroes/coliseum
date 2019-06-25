@@ -9,15 +9,15 @@ import { NGXLogger } from 'ngx-logger';
         '../../../css/components/game/game.component.scss'
     ],
 	template: `
-        <div class="game" [ngClass]="{'mulligan': isMulligan}">
+        <div class="game" [ngClass]="{'mulligan': _isMulligan}">
             <div class="play-areas">
                 <play-area class="top"
-                        [mulligan]="isMulligan"
+                        [mulligan]="_isMulligan"
                         [entities]="_entities" 
                         [playerId]="_opponentId">
                 </play-area>
                 <play-area class="bottom" 
-                        [mulligan]="isMulligan"
+                        [mulligan]="_isMulligan"
                         [entities]="_entities" 
                         [playerId]="_playerId">
                 </play-area>
@@ -34,7 +34,7 @@ import { NGXLogger } from 'ngx-logger';
                     *ngIf="_activeSpell"
                     [entity]="_activeSpell">
             </active-spell>
-            <div class="overlays" *ngIf="isMulligan">
+            <div class="overlays" *ngIf="_isMulligan">
                 <mulligan class="top"
                         [entities]="_entities" 
                         [crossed]="_crossed"
@@ -60,18 +60,16 @@ export class GameComponent {
     _playerName: string;
     _opponentName: string;
     _activePlayer: number;
-    _activeSpell: Entity;
-    
-    isMulligan: boolean;
+    _activeSpell: Entity;    
+    _isMulligan: boolean;
 
     private activeSpellId: number;
 
     constructor(private logger: NGXLogger) { } 
 
     @Input('turn') set turn(value: string) {
+        this.logger.debug('[game] setting turn', value);
         this._turn = value;
-        this.updateActiveSpell();
-        this.logger.debug('[game] setting turn', value, this.isMulligan);
     }
 
     @Input('entities') set entities(entities: Map<number, Entity>) {
@@ -115,10 +113,12 @@ export class GameComponent {
         this.updateActiveSpell();
     }
 
-    private updateActiveSpell() {
-        this._activeSpell = this._entities && this._entities.get(this.activeSpellId);
-        // TODO: move this piece of logic out of the view
-        this.isMulligan = this._turn === 'Mulligan' && !this._activeSpell;
+    @Input('isMulligan') set isMulligan(value: boolean) {
+        this.logger.debug('[game] setting isMulligan', value);
+        this._isMulligan = value;
     }
 
+    private updateActiveSpell() {
+        this._activeSpell = this._entities && this.activeSpellId && this._entities.get(this.activeSpellId);
+    }
 }

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Map } from "immutable";
-import { HistoryItem } from '../../models/history/history-item';
-import { Entity } from '../../models/game/entity';
-import { TagChangeHistoryItem } from '../../models/history/tag-change-history-item';
-import { ShowEntityHistoryItem } from '../../models/history/show-entity-history-item';
-import { GameTag } from '../../models/enums/game-tags';
-import { Step } from '../../models/enums/step';
-import { FullEntityHistoryItem } from '../../models/history/full-entity-history-item';
+import { HistoryItem } from '../../../models/history/history-item';
+import { Entity } from '../../../models/game/entity';
+import { TagChangeHistoryItem } from '../../../models/history/tag-change-history-item';
+import { ShowEntityHistoryItem } from '../../../models/history/show-entity-history-item';
+import { GameTag } from '../../../models/enums/game-tags';
+import { Step } from '../../../models/enums/step';
+import { FullEntityHistoryItem } from '../../../models/history/full-entity-history-item';
 
 @Injectable()
 export class GameStateParserService {

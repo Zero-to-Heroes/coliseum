@@ -11,6 +11,7 @@ export abstract class Action {
     readonly crossedEntities: ReadonlyArray<number> = [];
     readonly highlightedEntities: ReadonlyArray<number>;
     readonly activeSpell: number;
+    readonly isMulligan: boolean;
 
     protected abstract getInstance(): Action;
     abstract update(entities: Map<number, Entity>): Action;

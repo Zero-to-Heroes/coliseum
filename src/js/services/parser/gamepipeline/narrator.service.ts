@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Game } from '../../models/game/game';
+import { Game } from '../../../models/game/game';
 import { NGXLogger } from 'ngx-logger';
-import { Turn } from '../../models/game/turn';
+import { Turn } from '../../../models/game/turn';
 
 @Injectable()
 export class NarratorService {

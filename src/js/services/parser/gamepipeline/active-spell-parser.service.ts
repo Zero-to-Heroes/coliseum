@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
-import { AllCardsService } from '../all-cards.service';
-import { Game } from '../../models/game/game';
-import { Turn } from '../../models/game/turn';
-import { Action } from '../../models/action/action';
-import { StartTurnAction } from '../../models/action/start-turn-action';
-import { CardPlayedFromHandAction } from '../../models/action/card-played-from-hand-action';
-import { GameTag } from '../../models/enums/game-tags';
-import { CardType } from '../../models/enums/card-type';
-import { PowerTargetAction } from '../../models/action/power-target-action';
+import { AllCardsService } from '../../all-cards.service';
+import { Game } from '../../../models/game/game';
+import { Turn } from '../../../models/game/turn';
+import { Action } from '../../../models/action/action';
+import { StartTurnAction } from '../../../models/action/start-turn-action';
+import { CardPlayedFromHandAction } from '../../../models/action/card-played-from-hand-action';
+import { GameTag } from '../../../models/enums/game-tags';
+import { CardType } from '../../../models/enums/card-type';
+import { PowerTargetAction } from '../../../models/action/power-target-action';
 
 @Injectable()
 export class ActiveSpellParserService {
@@ -34,7 +34,7 @@ export class ActiveSpellParserService {
     private enrichTurn(turn: Turn): Turn {
         const newActions = [];
         for (let i = 0; i < turn.actions.length; i++) {
-            const previousAction = i == 0 ? null : turn.actions[i - 1];
+            const previousAction = i == 0 ? null : newActions[i - 1];
             const newAction = this.enrichAction(turn.actions[i], previousAction);
             newActions.push(newAction);
         }

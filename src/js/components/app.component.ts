@@ -24,6 +24,7 @@ import { PlayerEntity } from '../models/game/player-entity';
                     [opponentName]="game.players[1].name"
                     [activePlayer]="activePlayer"
                     [activeSpell]="activeSpell"
+                    [isMulligan]="isMulligan"
                     [entities]="entities"
                     [crossed]="crossed">
             </game>
@@ -42,6 +43,7 @@ export class AppComponent {
     turnString: string;
     activePlayer: number;
     activeSpell: number;
+    isMulligan: boolean;
 
 	private currentActionInTurn: number = 0;
 	private currentTurn: number = 0;
@@ -85,6 +87,7 @@ export class AppComponent {
         this.turnString = this.computeTurnString();
         this.activePlayer = this.computeActivePlayer();
         this.activeSpell = this.computeActiveSpell();
+        this.isMulligan = this.computeMulligan();
         this.logger.debug('[app] setting turn', this.turnString);
         this.logger.debug('[app] Considering action', this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn]);
         if (!(<ViewRef>this.cdr).destroyed) {
@@ -94,6 +97,10 @@ export class AppComponent {
 
 	private computeActiveSpell(): number {
 		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].activeSpell;
+	}
+
+	private computeMulligan(): boolean {
+		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].isMulligan;
 	}
 
     private computeActivePlayer(): number {

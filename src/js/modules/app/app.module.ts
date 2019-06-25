@@ -31,13 +31,13 @@ import { WeaponComponent } from '../../components/game/hero/weapon.component';
 import { PlayAreaComponent } from '../../components/game/play-area.component';
 import { AllCardsService } from '../../services/all-cards.service';
 import { Events } from '../../services/events.service';
-import { ActionParserService } from '../../services/parser/action-parser.service';
-import { GameInitializerService } from '../../services/parser/game-initializer.service';
+import { ActionParserService } from '../../services/parser/gamepipeline/action-parser.service';
+import { GameInitializerService } from '../../services/parser/gamepipeline/game-initializer.service';
 import { GameParserService } from '../../services/parser/game-parser.service';
-import { GamePopulationService } from '../../services/parser/game-population.service';
-import { GameStateParserService } from '../../services/parser/game-state-parser.service';
+import { GamePopulationService } from '../../services/parser/entitiespipeline/game-population.service';
+import { GameStateParserService } from '../../services/parser/entitiespipeline/game-state-parser.service';
 import { StateProcessorService } from '../../services/parser/state-processor.service';
-import { TurnParserService } from '../../services/parser/turn-parser.service';
+import { TurnParserService } from '../../services/parser/gamepipeline/turn-parser.service';
 import { XmlParserService } from '../../services/parser/xml-parser.service';
 import { HeroPowerCostComponent } from '../../components/game/hero/hero-power-cost.component';
 import { HeroStatsComponent } from '../../components/game/hero/hero-stats.component';
@@ -45,13 +45,14 @@ import { ManaTrayComponent } from '../../components/game/manatray/mana-tray.comp
 import { TooltipsComponent, Tooltip } from '../../components/tooltips.component';
 import { BoardCardFrameComponent } from '../../components/game/board/board-card-frame.component';
 import { BoardCardStatsComponent } from '../../components/game/board/board-card-stats.component';
-import { NarratorService } from '../../services/parser/narrator.service';
+import { NarratorService } from '../../services/parser/gamepipeline/narrator.service';
 import { TurnNarratorComponent } from '../../components/turn-narrator.component';
 import { MulliganComponent } from '../../components/game/overlay/mulligan.component';
 import { OverlayCrossedComponent } from '../../components/game/card/overlay-crossed.component';
 import { PlayerNameComponent } from '../../components/game/overlay/player-name.component';
-import { ActiveSpellParserService } from '../../services/parser/active-spell-parser.service';
+import { ActiveSpellParserService } from '../../services/parser/gamepipeline/active-spell-parser.service';
 import { ActiveSpellComponent } from '../../components/game/active-spell.component';
+import { MulliganParserService } from '../../services/parser/gamepipeline/mulligan-parser.service';
 
 
 @NgModule({
@@ -114,7 +115,8 @@ import { ActiveSpellComponent } from '../../components/game/active-spell.compone
 		GameInitializerService,
 		GameParserService,
 		GamePopulationService,
-		GameStateParserService,
+        GameStateParserService,
+        MulliganParserService,
 		NarratorService,
 		StateProcessorService,
 		TurnParserService,
