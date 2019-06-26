@@ -40,4 +40,8 @@
             width: 15%;
         }
     }
+
+    ::ng-deep * {
+        user-select: none;
+    }
 }
