@@ -11,6 +11,7 @@ import { NGXLogger } from 'ngx-logger';
 		<div class="active-spell">
             <card class="active-spell"
                     *ngIf="_entity"
+                    [hasTooltip]="false"
                     [entity]="_entity">
             </card>
 		</div>
