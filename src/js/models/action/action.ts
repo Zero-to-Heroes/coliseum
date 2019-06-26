@@ -12,6 +12,7 @@ export abstract class Action {
     readonly highlightedEntities: ReadonlyArray<number>;
     readonly activeSpell: number;
     readonly isMulligan: boolean;
+    readonly targets: ReadonlyArray<[number, number]>;
 
     protected abstract getInstance(): Action;
     abstract update(entities: Map<number, Entity>): Action;

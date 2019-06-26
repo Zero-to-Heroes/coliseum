@@ -52,6 +52,8 @@ import { ActiveSpellParserService } from '../../services/parser/gamepipeline/act
 import { ActiveSpellComponent } from '../../components/game/active-spell.component';
 import { MulliganParserService } from '../../services/parser/gamepipeline/mulligan-parser.service';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
+import { TargetZoneComponent } from '../../components/game/target-zone.component';
+import { TargetsParserService } from '../../services/parser/gamepipeline/targets-parser.service';
 
 @NgModule({
 	imports: [
@@ -104,6 +106,7 @@ import { Location, LocationStrategy, PathLocationStrategy } from '@angular/commo
         MulliganComponent,
         PlayerNameComponent,
         ActiveSpellComponent,
+        TargetZoneComponent,
 	],
 	providers: [
         Location, 
@@ -119,7 +122,8 @@ import { Location, LocationStrategy, PathLocationStrategy } from '@angular/commo
         GameStateParserService,
         MulliganParserService,
 		NarratorService,
-		StateProcessorService,
+        StateProcessorService,
+        TargetsParserService,
 		TurnParserService,
 		XmlParserService
 	],

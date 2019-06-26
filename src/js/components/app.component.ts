@@ -27,6 +27,7 @@ import { PlayerEntity } from '../models/game/player-entity';
                     [activeSpell]="activeSpell"
                     [isMulligan]="isMulligan"
                     [entities]="entities"
+                    [targets]="targets"
                     [crossed]="crossed">
             </game>
 			<turn-narrator [text]="text"></turn-narrator>
@@ -45,6 +46,7 @@ export class AppComponent {
     activePlayer: number;
     activeSpell: number;
     isMulligan: boolean;
+    targets: ReadonlyArray<[number, number]>;
 
 	private currentActionInTurn: number = 0;
 	private currentTurn: number = 0;
@@ -103,6 +105,7 @@ export class AppComponent {
         this.activePlayer = this.computeActivePlayer();
         this.activeSpell = this.computeActiveSpell();
         this.isMulligan = this.computeMulligan();
+        this.targets = this.computeTargets();
         this.updateUrlQueryString();
         this.logger.debug('[app] setting turn', this.turnString);
         this.logger.debug('[app] Considering action', this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn]);
@@ -143,6 +146,10 @@ export class AppComponent {
         return this.game.turns.get(this.currentTurn).turn === 'mulligan'
                 ? 'Mulligan'
                 : `Turn${this.game.turns.get(this.currentTurn).turn}`
+	}
+
+	private computeTargets(): ReadonlyArray<[number, number]> {
+		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].targets;
 	}
 
 	private moveCursorToNextAction() {

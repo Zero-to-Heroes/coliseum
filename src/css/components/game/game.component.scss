@@ -4,7 +4,6 @@
     flex-grow: 0;
     flex-shrink: 0;
     height: 100%;
-    // background-image: url(https://static.zerotoheroes.com/hearthstone/asset/manastorm/game-board-bg.png), url(https://static.zerotoheroes.com/hearthstone/asset/manastorm/app-bg-wood.jpg);
 
     .play-areas {
         position: relative;
@@ -59,6 +58,22 @@
         }
     }  
 
+    active-spell {
+        position: absolute;
+        width: 17%;
+        top: 24%;
+        left: 3%;
+    }
+
+    target-zone {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        pointer-events: none;
+    }
+
     player-name {
         position: absolute;
         left: 0;
@@ -71,13 +86,6 @@
         &.bottom {
             top: 60%;
         }
-    }
-
-    active-spell {
-        position: absolute;
-        width: 17%;
-        top: 24%;
-        left: 3%;
     }
 
     mulligan {

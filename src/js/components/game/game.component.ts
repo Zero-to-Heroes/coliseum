@@ -34,6 +34,7 @@ import { NGXLogger } from 'ngx-logger';
                     *ngIf="_activeSpell"
                     [entity]="_activeSpell">
             </active-spell>
+            <target-zone *ngIf="_targets" [targets]="_targets"></target-zone>
             <div class="overlays" *ngIf="_isMulligan">
                 <mulligan class="top"
                         [entities]="_entities" 
@@ -62,6 +63,7 @@ export class GameComponent {
     _activePlayer: number;
     _activeSpell: Entity;    
     _isMulligan: boolean;
+    _targets: ReadonlyArray<[number, number]> = [];
 
     private activeSpellId: number;
 
@@ -116,6 +118,11 @@ export class GameComponent {
     @Input('isMulligan') set isMulligan(value: boolean) {
         this.logger.debug('[game] setting isMulligan', value);
         this._isMulligan = value;
+    }
+
+    @Input('targets') set targets(value: ReadonlyArray<[number, number]>) {
+        this.logger.debug('[game] setting targets', value);
+        this._targets = value;
     }
 
     private updateActiveSpell() {
