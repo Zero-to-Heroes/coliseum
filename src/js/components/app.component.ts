@@ -67,8 +67,8 @@ export class AppComponent {
 	public loadReplay(replayXml: Node) {
 		this.game = this.gameParser.parse(replayXml);
         this.logger.info('[app] Converted game', window.location.href, window.location);
-        const turn = parseInt(this.getSearchParam('turn')); 
-        const action = parseInt(this.getSearchParam('action')); 
+        const turn = parseInt(this.getSearchParam('turn')) || 0; 
+        const action = parseInt(this.getSearchParam('action')) || 0; 
         console.log('navigating to', turn, action);
         this.currentTurn = turn <= 0
                 ? 0
