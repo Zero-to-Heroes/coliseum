@@ -8,7 +8,7 @@ import { Entity } from '../models/game/entity';
 export class CardTooltipDirective {
 
     @Input() tooltipEntity: Entity;
-    @Input() hasTooltip: boolean;
+    @Input() hasTooltip: boolean = true;
     
     constructor(private el: ElementRef, private events: Events) {
 

@@ -14,7 +14,7 @@ import { NGXLogger } from 'ngx-logger';
 	],
 	template: `
 		<div class="card-on-board" 
-                cardTooltip [tooltipEntity]="_entity" [hasTooltip]="true"
+                cardTooltip [tooltipEntity]="_entity"
                 [attr.data-entity-id]="_entity.id">
 			<card-art [cardId]="cardId" [cardType]="cardType"></card-art>
             <board-card-frame 
