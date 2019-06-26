@@ -1,6 +1,7 @@
 import { Component, ChangeDetectionStrategy, Input, AfterViewInit, HostListener, ElementRef, ChangeDetectorRef, ViewRef } from '@angular/core';
 import { AllCardsService } from '../../../services/all-cards.service';
 import { NGXLogger } from 'ngx-logger';
+import { CardType } from '../../../models/enums/card-type';
 
 @Component({
 	selector: 'card-cost',
@@ -9,7 +10,7 @@ import { NGXLogger } from 'ngx-logger';
 		'../../../../css/components/game/card/card-cost.component.scss',
 	],
 	template: `
-        <div class="card-cost {{costClass}}">
+        <div class="card-cost {{costClass}} {{_cardType}}">
             <img class="mana-icon" src="https://static.zerotoheroes.com/hearthstone/asset/manastorm/mana.png" />
             <div class="cost">
                 <div>{{_cost}}</div>
@@ -22,6 +23,7 @@ export class CardCostComponent {
 
     _cost: number;
     costClass: string;
+    _cardType: string;
     
     private _cardId: string;
 
@@ -47,6 +49,11 @@ export class CardCostComponent {
         this.logger.debug('[card-cost] setting cost', cost);
         this._cost = cost;
         this.updateCost();
+    }
+    
+    @Input('cardType') set cardType(cardType: CardType) {
+        this.logger.debug('[card-text] setting cardType', cardType);
+        this._cardType = CardType[cardType].toLowerCase();
     }
 
     private updateCost() {
@@ -77,7 +84,9 @@ export class CardCostComponent {
             setTimeout(() => this.resizeText());
             return; 
         }
-        const fontSize = 0.8 * el.getBoundingClientRect().width;
+        const fontSize = this._cardType === CardType[CardType.HERO_POWER].toLowerCase()
+                ? 0.6 * el.getBoundingClientRect().width
+                : 0.8 * el.getBoundingClientRect().width;
         const textEl = this.elRef.nativeElement.querySelector(".cost");
         textEl.style.fontSize = fontSize + 'px';
         if (!(<ViewRef>this.cdr).destroyed) {

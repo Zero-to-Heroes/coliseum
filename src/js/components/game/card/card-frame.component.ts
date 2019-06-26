@@ -43,7 +43,7 @@ export class CardFrameComponent {
         const cardClass: CardClass = this.buildPlayerClass(originalCard);
         const cardType: CardType = CardType[originalCard.type.toUpperCase() as string];
         const frame: string = this.buildFrame(cardClass, cardType, this._premium);
-        this.image = `https://static.zerotoheroes.com/hearthstone/asset/manastorm/card/${frame}.png`;
+        this.image = `https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/card/${frame}.png`;
     }
 
     private buildPlayerClass(originalCard): CardClass {
@@ -53,8 +53,12 @@ export class CardFrameComponent {
     }
 
     private buildFrame(cardClass: CardClass, cardType: CardType, premium: boolean): string {
-        const strType = CardType[cardType].toLowerCase();
-        const strClass = premium ? 'premium' : CardClass[cardClass].toLowerCase();
-        return `frame-${strType}-${strClass}`;
+        const strType = '-' + CardType[cardType].toLowerCase();
+        const strClass = premium 
+                ? '-premium' 
+                : (cardType === CardType.HERO_POWER
+                        ? ''
+                        : '-' + CardClass[cardClass].toLowerCase());
+        return `frame${strType}${strClass}`;
     }
 }

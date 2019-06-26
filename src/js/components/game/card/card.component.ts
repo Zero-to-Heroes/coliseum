@@ -26,7 +26,11 @@ import { BehaviorSubject } from 'rxjs';
                     [cardType]="cardType">
             </card-text>
 			<card-race [cardId]="cardId" *ngIf="cardId"></card-race>
-			<card-cost [cardId]="cardId" [cost]="cost" *ngIf="cardId"></card-cost>
+            <card-cost *ngIf="cardId"
+                    [cardType]="cardType"
+                    [cardId]="cardId" 
+                    [cost]="cost">
+            </card-cost>
 			<card-stats *ngIf="cardId"
 					[cardId]="cardId" 
 					[attack]="attack"
@@ -85,7 +89,7 @@ export class CardComponent implements AfterViewInit {
             this.cardType = CardType[this.originalCard.type.toUpperCase() as string];
             this.cardClass = CardClass[this.originalCard.playerClass.toUpperCase() as string];
         }
-	}
+    }
 
 	@Input("hasTooltip") set hasTooltip(hasTooltip: boolean) {
 		this._hasTooltip = hasTooltip;
