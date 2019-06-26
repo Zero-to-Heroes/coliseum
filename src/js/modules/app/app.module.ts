@@ -1,10 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
 import { Ng2FittextModule } from "ng2-fittext";
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
-import { InlineSVGModule } from 'ng-inline-svg';
 
 import { AppComponent } from '../../components/app.component';
 import { BoardComponent } from '../../components/game/board/board.component';
@@ -53,7 +51,7 @@ import { PlayerNameComponent } from '../../components/game/overlay/player-name.c
 import { ActiveSpellParserService } from '../../services/parser/gamepipeline/active-spell-parser.service';
 import { ActiveSpellComponent } from '../../components/game/active-spell.component';
 import { MulliganParserService } from '../../services/parser/gamepipeline/mulligan-parser.service';
-
+import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 
 @NgModule({
 	imports: [
@@ -62,7 +60,7 @@ import { MulliganParserService } from '../../services/parser/gamepipeline/mullig
 		Ng2FittextModule,
 		LoggerModule.forRoot({ 
 			level: process.env.NODE_ENV === 'production' ? NgxLoggerLevel.INFO : NgxLoggerLevel.DEBUG 
-		}),
+        }),
 	],
 	declarations: [
 		AppComponent,
@@ -108,6 +106,9 @@ import { MulliganParserService } from '../../services/parser/gamepipeline/mullig
         ActiveSpellComponent,
 	],
 	providers: [
+        Location, 
+        { provide: LocationStrategy, useClass: PathLocationStrategy },
+
         ActionParserService,
         ActiveSpellParserService,
 		AllCardsService,

@@ -1,4 +1,5 @@
-import { Component, ChangeDetectionStrategy, NgZone, ChangeDetectorRef, HostListener, AfterViewInit, ViewRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, NgZone, ChangeDetectorRef, HostListener, ViewRef } from '@angular/core';
+
 import { Map } from 'immutable';
 import { Key } from 'ts-keycode-enum';
 import { Entity } from '../models/game/entity';
@@ -52,20 +53,34 @@ export class AppComponent {
 			private gameParser: GameParserService,
 			private events: Events,
 			private cdr: ChangeDetectorRef,
-			private logger: NGXLogger,
+            private logger: NGXLogger,
 			private zone: NgZone) {
 		window['coliseum'] = {
 			zone: this.zone,
 			component: this
 		};
 		this.cdr.detach();
-	}
+    }
 
 	public loadReplay(replayXml: Node) {
 		this.game = this.gameParser.parse(replayXml);
-        this.logger.info('[app] Converted game');
+        this.logger.info('[app] Converted game', window.location.href, window.location);
+        const turn = parseInt(this.getSearchParam('turn')); 
+        const action = parseInt(this.getSearchParam('action')); 
+        console.log('navigating to', turn, action);
+        this.currentTurn = turn <= 0
+                ? 0
+                : (turn >= this.game.turns.size
+                        ? this.game.turns.size - 1
+                        : turn);
+        this.currentActionInTurn = action <= 0
+                ? 0
+                : (action >= this.game.turns.get(this.currentTurn).actions.length
+                        ? this.game.turns.get(this.currentTurn).actions.length - 1
+                        : action);
+        console.log('which translates to', this.currentTurn, this.currentActionInTurn);
         this.populateInfo();
-	}
+    }
 
 	@HostListener('document:keyup', ['$event'])
 	onKeyPressHandler(event: KeyboardEvent) {
@@ -88,6 +103,7 @@ export class AppComponent {
         this.activePlayer = this.computeActivePlayer();
         this.activeSpell = this.computeActiveSpell();
         this.isMulligan = this.computeMulligan();
+        this.updateUrlQueryString();
         this.logger.debug('[app] setting turn', this.turnString);
         this.logger.debug('[app] Considering action', this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn]);
         if (!(<ViewRef>this.cdr).destroyed) {
@@ -130,24 +146,42 @@ export class AppComponent {
 	}
 
 	private moveCursorToNextAction() {
+        if (this.currentActionInTurn >= this.game.turns.get(this.currentTurn).actions.length 
+                && this.currentTurn === this.game.turns.size) {
+            return;
+        }
 		this.currentActionInTurn++;
 		if (this.currentActionInTurn >= this.game.turns.get(this.currentTurn).actions.length) {
-            if (this.currentTurn === this.game.turns.size) {
-                return;
-            }
 			this.currentActionInTurn = 0;
 			this.currentTurn++;
 		}
 	}
 
 	private moveCursorToPreviousAction() {
+        if (this.currentActionInTurn === 0 && this.currentTurn === 0) {
+            return;
+        }
 		this.currentActionInTurn--;
 		if (this.currentActionInTurn < 0) {
-            if (this.currentTurn === 0) {
-                return;
-            }
 			this.currentTurn--;
 			this.currentActionInTurn = this.game.turns.get(this.currentTurn).actions.length - 1;
 		}
 	}
+    
+    private getSearchParam(name: string): string {
+        const searchString = window.location.search.substring(1);
+        const searchParams = searchString.split('&');
+        return searchParams
+                .filter(param => param.indexOf('=') !== -1)
+                .filter(param => param.split('=')[0] === name)
+                .map(param => param.split('=')[1])
+                [0];
+    }
+
+    private updateUrlQueryString() {
+        const baseUrl = `${window.location.protocol}//${window.location.host}${window.location.pathname}`;
+        const queryString = `turn=${this.currentTurn}&action=${this.currentActionInTurn}`
+        const newUrl = `${baseUrl}?${queryString}`;
+        window.history.replaceState({ path: newUrl }, '', newUrl);
+    }
 }
