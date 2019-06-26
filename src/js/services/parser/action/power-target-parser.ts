@@ -76,8 +76,8 @@ export class PowerTargetParser implements Parser {
             {
                 timestamp: item.timestamp,
                 index: meta.index,
-                origin: entityId,
-                targets: [target]
+                originId: entityId,
+                targetIds: [target]
             },
             this.allCards)];
     }
@@ -92,15 +92,15 @@ export class PowerTargetParser implements Parser {
 
     private shouldMergeActions(previousAction: Action, currentAction: Action): boolean {
         if (previousAction instanceof PowerTargetAction && currentAction instanceof PowerTargetAction) {
-            return ((previousAction as PowerTargetAction).origin === (currentAction as PowerTargetAction).origin);
+            return ((previousAction as PowerTargetAction).originId === (currentAction as PowerTargetAction).originId);
         }
         // Spells that target would trigger twice otherwise
         if ((previousAction instanceof CardTargetAction) && (currentAction instanceof PowerTargetAction)) {
-            return ((previousAction as CardTargetAction).origin === (currentAction as PowerTargetAction).origin);
+            return ((previousAction as CardTargetAction).originId === (currentAction as PowerTargetAction).originId);
         }
         if (previousAction instanceof AttachingEnchantmentAction && currentAction instanceof PowerTargetAction) {
-            if (previousAction.creatorId === currentAction.origin 
-                        && isEqual(previousAction.targetIds, currentAction.targets)) {
+            if (previousAction.originId === currentAction.originId 
+                        && isEqual(previousAction.targetIds, currentAction.targetIds)) {
                 return true;
             }
         }
@@ -120,8 +120,8 @@ export class PowerTargetParser implements Parser {
                     timestamp: previousAction.timestamp,
                     index: previousAction.index,
                     entities: currentAction.entities,
-                    origin: currentAction.origin,
-                    targets: uniq([...uniq(previousAction.targets || []), ...uniq(currentAction.targets || [])])
+                    originId: currentAction.originId,
+                    targetIds: uniq([...uniq(previousAction.targetIds || []), ...uniq(currentAction.targetIds || [])])
                 },
                 this.allCards);
         }

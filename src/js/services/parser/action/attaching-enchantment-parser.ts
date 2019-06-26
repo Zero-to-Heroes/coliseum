@@ -40,7 +40,7 @@ export class AttachingEnchantmentParser implements Parser {
             {
                 timestamp: item.timestamp,
                 index: item.index,
-                creatorId: creatorId,
+                originId: creatorId,
                 // Enchantments with the same name are duplicated so we have a 1-1 mapping 
                 // with the card that is enchanted
                 enchantmentCardId: entity.cardID,
@@ -61,15 +61,15 @@ export class AttachingEnchantmentParser implements Parser {
         if (previousAction instanceof AttachingEnchantmentAction && currentAction instanceof AttachingEnchantmentAction) {
             const prev = previousAction as AttachingEnchantmentAction;
             const curr = currentAction as AttachingEnchantmentAction
-            if (prev.creatorId === curr.creatorId && prev.enchantmentCardId === curr.enchantmentCardId) {
+            if (prev.originId === curr.originId && prev.enchantmentCardId === curr.enchantmentCardId) {
                 return true;
             }
         }
         if ((previousAction instanceof CardTargetAction || previousAction instanceof PowerTargetAction) 
                 && currentAction instanceof AttachingEnchantmentAction) {
             // console.log('merging enchantment into target?', previousAction, currentAction);
-            if (previousAction.origin === currentAction.creatorId 
-                        && isEqual(previousAction.targets, currentAction.targetIds)) {
+            if (previousAction.originId === currentAction.originId 
+                        && isEqual(previousAction.targetIds, currentAction.targetIds)) {
                 // console.log('merging enchantment into target', previousAction, currentAction);
                 return true;
             }
@@ -88,7 +88,7 @@ export class AttachingEnchantmentParser implements Parser {
                 timestamp: previousAction.timestamp,
                 index: previousAction.index,
                 entities: currentAction.entities,
-                creatorId: currentAction.creatorId,
+                originId: currentAction.originId,
                 enchantmentCardId: currentAction.enchantmentCardId,
                 targetIds: targetIds,
             },

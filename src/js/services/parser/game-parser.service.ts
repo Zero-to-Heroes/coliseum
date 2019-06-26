@@ -16,6 +16,7 @@ import { NGXLogger } from 'ngx-logger';
 import { NarratorService } from './gamepipeline/narrator.service';
 import { ActiveSpellParserService } from './gamepipeline/active-spell-parser.service';
 import { MulliganParserService } from './gamepipeline/mulligan-parser.service';
+import { TargetsParserService } from './gamepipeline/targets-parser.service';
 
 @Injectable()
 export class GameParserService {
@@ -28,6 +29,7 @@ export class GameParserService {
 			private gameStateParser: GameStateParserService,
             private gameInitializer: GameInitializerService, 
             private activeSpellParser: ActiveSpellParserService,
+            private targetsParser: TargetsParserService,
             private mulliganParser: MulliganParserService,
 			private narrator: NarratorService,
 			private logger: NGXLogger,
@@ -65,6 +67,8 @@ export class GameParserService {
 			(game) => this.logPerf('parseActions', start, game),
             (game) => this.activeSpellParser.parseActiveSpell(game),
 			(game) => this.logPerf('activeSpellSet', start, game),
+            (game) => this.targetsParser.parseTargets(game),
+			(game) => this.logPerf('targets', start, game),
             (game) => this.mulliganParser.affectMulligan(game),
 			(game) => this.logPerf('affectMulligan', start, game),
             // (game) => this.stateProcessor.populateIntermediateStates(game, history),

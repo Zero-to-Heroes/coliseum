@@ -35,8 +35,8 @@ export class AttackParser implements Parser {
             {
                 timestamp: item.timestamp,
                 index: item.index,
-                origin: parseInt(item.node.attributes.entity),
-                target: target
+                originId: parseInt(item.node.attributes.entity),
+                targetId: target
             },
             this.allCards)];
     }

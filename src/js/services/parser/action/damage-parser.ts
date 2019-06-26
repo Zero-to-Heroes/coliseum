@@ -110,8 +110,8 @@ export class DamageParser implements Parser {
                 timestamp: previousAction.timestamp,
                 index: currentAction.index,
                 entities: currentAction.entities,
-                origin: previousAction.origin,
-                target: previousAction.target,
+                originId: previousAction.originId,
+                targetId: previousAction.targetId,
                 damages: [...(previousAction.damages || []), ...currentAction.damages],
             },
             this.allCards)

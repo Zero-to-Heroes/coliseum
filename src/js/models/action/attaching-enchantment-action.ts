@@ -3,9 +3,10 @@ import { Map } from "immutable";
 import { Entity } from "../game/entity";
 import { AllCardsService } from "../../services/all-cards.service";
 import { PlayerEntity } from "../game/player-entity";
+import { HasTargets } from "./has-targets";
 
-export class AttachingEnchantmentAction extends Action {
-    readonly creatorId: number;
+export class AttachingEnchantmentAction extends Action implements HasTargets {
+    readonly originId: number;
     readonly enchantmentCardId: string;
     readonly targetIds: ReadonlyArray<number>;
 
@@ -25,7 +26,7 @@ export class AttachingEnchantmentAction extends Action {
     }
 
     public enrichWithText(): AttachingEnchantmentAction {
-        const creatorCardId = this.entities.get(this.creatorId).cardID;
+        const creatorCardId = this.entities.get(this.originId).cardID;
         const creatorCard = this.allCards.getCard(creatorCardId);
         const enchantmentCard = this.allCards.getCard(this.enchantmentCardId);
         const targetCardNames = this.targetIds

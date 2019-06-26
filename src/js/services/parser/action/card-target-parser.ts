@@ -7,7 +7,6 @@ import { BlockType } from "../../../models/enums/block-type";
 import { Entity } from "../../../models/game/entity";
 import { Map } from "immutable";
 import { uniq, isEqual } from "lodash";
-import { PowerTargetAction } from "../../../models/action/power-target-action";
 import { ActionHelper } from "./action-helper";
 import { CardTargetAction } from "../../../models/action/card-target-action";
 import { AttachingEnchantmentAction } from "../../../models/action/attaching-enchantment-action";
@@ -36,8 +35,8 @@ export class CardTargetParser implements Parser {
                 {
                     timestamp: item.timestamp,
                     index: item.index,
-                    origin: parseInt(item.node.attributes.entity),
-                    targets: [targetId]
+                    originId: parseInt(item.node.attributes.entity),
+                    targetIds: [targetId]
                 },
                 this.allCards)];
         }
@@ -54,13 +53,13 @@ export class CardTargetParser implements Parser {
 
     private shouldMergeActions(previousAction: Action, currentAction: Action): boolean {
         if (previousAction instanceof CardTargetAction && currentAction instanceof CardTargetAction) {
-            if ((previousAction as CardTargetAction).origin === (currentAction as CardTargetAction).origin) {
+            if ((previousAction as CardTargetAction).originId === (currentAction as CardTargetAction).originId) {
                 return true;
             }
         }
         if (previousAction instanceof AttachingEnchantmentAction && currentAction instanceof CardTargetAction) {
-            if (previousAction.creatorId === currentAction.origin 
-                        && isEqual(previousAction.targetIds, currentAction.targets)) {
+            if (previousAction.originId === currentAction.originId 
+                        && isEqual(previousAction.targetIds, currentAction.targetIds)) {
                 return true;
             }
         }
@@ -80,8 +79,8 @@ export class CardTargetParser implements Parser {
                     timestamp: previousAction.timestamp,
                     index: previousAction.index,
                     entities: currentAction.entities,
-                    origin: currentAction.origin,
-                    targets: uniq([...uniq(previousAction.targets || []), ...uniq(currentAction.targets || [])])
+                    originId: currentAction.originId,
+                    targetIds: uniq([...uniq(previousAction.targetIds || []), ...uniq(currentAction.targetIds || [])])
                 },
                 this.allCards)
         }

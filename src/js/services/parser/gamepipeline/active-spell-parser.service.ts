@@ -53,8 +53,8 @@ export class ActiveSpellParserService {
             activeSpell = action.entityId;
         }
         else if (action instanceof PowerTargetAction
-                && action.entities.get(action.origin).getTag(GameTag.CARDTYPE) === CardType.SPELL) {
-            activeSpell = action.origin;
+                && action.entities.get(action.originId).getTag(GameTag.CARDTYPE) === CardType.SPELL) {
+            activeSpell = action.originId;
         }
         else {
             // Be default, hide the active spell. Only explic

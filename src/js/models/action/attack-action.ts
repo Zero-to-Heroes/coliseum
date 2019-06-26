@@ -4,10 +4,11 @@ import { Entity } from "../game/entity";
 import { AllCardsService } from "../../services/all-cards.service";
 import { Damage } from "./damage";
 import { HasDamage } from "./has-damage";
+import { HasTarget } from "./has-target";
 
-export class AttackAction extends Action implements HasDamage {
-    readonly origin: number;
-    readonly target: number;
+export class AttackAction extends Action implements HasDamage, HasTarget {
+    readonly originId: number;
+    readonly targetId: number;
     readonly damages: ReadonlyArray<Damage> = [];
 
     readonly allCards: AllCardsService;
@@ -26,8 +27,8 @@ export class AttackAction extends Action implements HasDamage {
     }
 
     public enrichWithText(): AttackAction {
-        const originCardId = this.entities.get(this.origin).cardID;
-        const targetCardId = this.entities.get(this.target).cardID;
+        const originCardId = this.entities.get(this.originId).cardID;
+        const targetCardId = this.entities.get(this.targetId).cardID;
         const originCard = this.allCards.getCard(originCardId);
         const targetCard = this.allCards.getCard(targetCardId);
         const damageText = this.damages
