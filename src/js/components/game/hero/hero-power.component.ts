@@ -9,7 +9,7 @@ import { NGXLogger } from 'ngx-logger';
         '../../../../css/components/game/hero/hero-power.component.scss'
     ],
 	template: `
-        <div class="hero-power">
+        <div class="hero-power" [attr.data-entity-id]="entityId">
             <hero-power-art [cardId]="cardId"></hero-power-art>
             <hero-power-frame></hero-power-frame>
 			<hero-power-cost [cardId]="cardId" [cost]="cost"></hero-power-cost>
@@ -19,6 +19,7 @@ import { NGXLogger } from 'ngx-logger';
 })
 export class HeroPowerComponent {
 
+    entityId: number;
     cardId: string;
     cost: number;
     
@@ -26,6 +27,7 @@ export class HeroPowerComponent {
 
     @Input('heroPower') set heroPower(heroPower: Entity) {
         this.logger.debug('[hero-power] setting new heroPower', heroPower);
+        this.entityId = heroPower.id;
         this.cardId = heroPower.cardID;
 		this.cost = heroPower.getTag(GameTag.COST);
     }

@@ -8,19 +8,25 @@ import { NGXLogger } from 'ngx-logger';
         '../../../../css/components/game/hero/weapon.component.scss'
     ],
 	template: `
-        <div class="weapon">
+        <div class="weapon" [attr.data-entity-id]="entityId">
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WeaponComponent {
 
+    entityId: number;
+
     private _weapon: Entity;
 
     constructor(private logger: NGXLogger) {}
 
     @Input('weapon') set weapon(weapon: Entity) {
+        if (!weapon) {
+            return;
+        }
         this.logger.debug('[weapon] setting new weapon', weapon);
+        this.entityId = weapon.id;
         this._weapon = weapon;
     }
 }

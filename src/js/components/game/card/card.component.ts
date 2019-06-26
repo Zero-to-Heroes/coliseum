@@ -6,7 +6,6 @@ import { CardClass } from '../../../models/enums/card-class';
 import { Events } from '../../../services/events.service';
 import { NGXLogger } from 'ngx-logger';
 import { AllCardsService } from '../../../services/all-cards.service';
-import { Map } from 'immutable';
 
 @Component({
 	selector: 'card',
@@ -14,7 +13,7 @@ import { Map } from 'immutable';
 		'../../../../css/components/game/card/card.component.scss'
 	],
 	template: `
-		<div class="card">
+		<div class="card" [attr.data-entity-id]="!forbiddenTargetSource && _entity.id">
 			<card-art [cardId]="cardId" [cardType]="cardType"></card-art>
 			<card-frame [cardId]="cardId" [premium]="premium" *ngIf="cardId"></card-frame>
 			<card-rarity [cardId]="cardId" *ngIf="cardId"></card-rarity>
@@ -55,7 +54,8 @@ export class CardComponent implements AfterViewInit {
 	armor: number;
     cost: number;
 
-	private _hasTooltip: boolean = true;
+    _forbiddenTargetSource: boolean = false;
+	_hasTooltip: boolean = true;
 
 	constructor(
 		private cards: AllCardsService, 
@@ -86,6 +86,10 @@ export class CardComponent implements AfterViewInit {
 
 	@Input("hasTooltip") set hasTooltip(hasTooltip: boolean) {
 		this._hasTooltip = hasTooltip;
+    }
+    
+	@Input("forbiddenTargetSource") set forbiddenTargetSource(value: boolean) {
+		this._forbiddenTargetSource = value;
 	}
 
 	@Input("crossed") set crossed(value: boolean) {

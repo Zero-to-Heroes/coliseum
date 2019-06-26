@@ -9,7 +9,12 @@ const CARD_ASPECT_RATIO = 1.56;
 	selector: 'tooltip',
   	styleUrls: [`../../css/components/tooltip.component.scss`],
   	encapsulation: ViewEncapsulation.None,
-	template: `<card class="tooltip" [entity]="entity" [hasTooltip]="false" *ngIf="entity"></card>`,
+    template: `
+    <card class="tooltip" 
+            [forbiddenTargetSource]="true"
+            [entity]="entity" 
+            [hasTooltip]="false" *ngIf="entity">
+    </card>`,
   	// I don't know how to make this work with OnPush
   	// changeDetection: ChangeDetectionStrategy.OnPush,
 })

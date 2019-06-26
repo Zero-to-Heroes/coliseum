@@ -10,7 +10,7 @@ import { NGXLogger } from 'ngx-logger';
         '../../../../css/components/game/hero/hero-card.component.scss'
     ],
 	template: `
-        <div class="hero-card">
+        <div class="hero-card" [attr.data-entity-id]="entityId">
             <hero-art [cardId]="cardId"></hero-art>
             <hero-frame></hero-frame>
 			<hero-stats 
@@ -26,19 +26,21 @@ import { NGXLogger } from 'ngx-logger';
 })
 export class HeroCardComponent {
 
+    entityId: number;
     cardId: string;
     cardType: CardType;
 	attack: number;
 	health: number;
 	damage: number;
 	armor: number;
-	shownDamage: number;
+    shownDamage: number;
 
 	constructor(private logger: NGXLogger) { }
 
     @Input('hero') set hero(hero: Entity) {
         // TODO: overlays (frozen, etc), secrets, highlight, stats
         this.logger.debug('[hero-card] setting new entity', hero);
+        this.entityId = hero.id;
         this.cardId = hero.cardID;
         this.cardType = CardType.HERO;
 		this.attack = hero.getTag(GameTag.ATK);

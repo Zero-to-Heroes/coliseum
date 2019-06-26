@@ -13,7 +13,7 @@ import { NGXLogger } from 'ngx-logger';
 		'../../../../css/components/game/board/card-on-board.component.scss'
 	],
 	template: `
-		<div class="card-on-board">
+		<div class="card-on-board" [attr.data-entity-id]="_entity.id">
 			<card-art [cardId]="cardId" [cardType]="cardType"></card-art>
             <board-card-frame 
                     [taunt]="taunt" 
