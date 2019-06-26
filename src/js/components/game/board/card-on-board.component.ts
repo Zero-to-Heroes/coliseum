@@ -15,8 +15,12 @@ import { NGXLogger } from 'ngx-logger';
 	template: `
 		<div class="card-on-board">
 			<card-art [cardId]="cardId" [cardType]="cardType"></card-art>
-			<board-card-frame [taunt]="taunt" [premium]="premium"></board-card-frame>
-			<board-card-stats 
+            <board-card-frame 
+                    [taunt]="taunt" 
+                    [hideStats]="hideStats"
+                    [premium]="premium">
+            </board-card-frame>
+			<board-card-stats *ngIf="!hideStats"
 					[cardId]="cardId" 
 					[attack]="attack"
 					[health]="health"
@@ -42,7 +46,8 @@ export class CardOnBoardComponent implements AfterViewInit {
 	armor: number;
 	cost: number;
 	taunt: boolean;
-	shownDamage: number;
+    shownDamage: number;
+    hideStats: boolean;
 
 	constructor(
 		private cards: AllCardsService, 
@@ -71,7 +76,9 @@ export class CardOnBoardComponent implements AfterViewInit {
 
 		this.taunt = entity.getTag(GameTag.TAUNT) == 1;
 
-		this.shownDamage = entity.damageForThisAction;
+        this.shownDamage = entity.damageForThisAction;
+        
+        this.hideStats = entity.getTag(GameTag.HIDE_STATS) === 1;
     }
 
 	@HostListener('mouseenter') onMouseEnter() {

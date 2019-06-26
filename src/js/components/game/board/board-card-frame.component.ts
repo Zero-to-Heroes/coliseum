@@ -1,7 +1,5 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { AllCardsService } from '../../../services/all-cards.service';
-import { CardClass } from '../../../models/enums/card-class';
-import { CardType } from '../../../models/enums/card-type';
 import { NGXLogger } from 'ngx-logger';
 
 @Component({
@@ -19,6 +17,7 @@ export class BoardCardFrameComponent {
     image: string;
 
     private _taunt: boolean;
+    private _hideStats: boolean;
     private _premium: boolean = undefined;
 
     constructor(private cards: AllCardsService, private logger: NGXLogger) { }
@@ -35,13 +34,19 @@ export class BoardCardFrameComponent {
         this.updateImage();
     }
 
+    @Input('hideStats') set hideStats(value: boolean) {
+        this.logger.debug('[board-card-frame] setting hideStats', value);
+        this._hideStats = value;
+        this.updateImage();
+    }
+
     private updateImage() {
-        if (this._taunt == undefined || this._premium == undefined) {
-            return;
-        }
-        const frame = this.taunt ? 'onboard_minion_taunt.png' : 'onboard_minion_frame.png';
-        const premiumFrame = this.premium ? `golden/${frame}` : frame;
-        
-        this.image = `https://static.zerotoheroes.com/hearthstone/asset/manastorm/${premiumFrame}`;
+        const frame = this._taunt 
+                ? 'onboard_minion_taunt' 
+                : (this._hideStats 
+                        ? 'onboard_minion_hide_stats'
+                        : 'onboard_minion_frame');
+        const premiumFrame = this._premium ? `${frame}_premium` : frame;
+        this.image = `https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/${premiumFrame}.png`;
     }
 }

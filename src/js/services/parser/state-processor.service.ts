@@ -20,10 +20,12 @@ export class StateProcessorService {
         GameTag.PREMIUM,
         GameTag.STEP,
         GameTag.TURN,
+        GameTag.CURRENT_PLAYER,
         GameTag.RESOURCES_USED,
         GameTag.RESOURCES,
         GameTag.HERO_ENTITY,
         GameTag.PLAYER_ID,
+        GameTag.ATTACHED,
         GameTag.DAMAGE,
         GameTag.HEALTH,
         GameTag.ATK,
@@ -39,9 +41,8 @@ export class StateProcessorService {
         GameTag.CREATOR,
         GameTag.PARENT_CARD,
         GameTag.OVERLOAD_LOCKED,
+        GameTag.HIDE_STATS,
         GameTag.QUEST,
-        GameTag.ATTACHED,
-        GameTag.CURRENT_PLAYER,
     ];
     
     public applyHistoryUntilNow(
