@@ -13,7 +13,9 @@ import { NGXLogger } from 'ngx-logger';
 		'../../../../css/components/game/board/card-on-board.component.scss'
 	],
 	template: `
-		<div class="card-on-board" [attr.data-entity-id]="_entity.id">
+		<div class="card-on-board" 
+                cardTooltip [tooltipEntity]="_entity" [hasTooltip]="true"
+                [attr.data-entity-id]="_entity.id">
 			<card-art [cardId]="cardId" [cardType]="cardType"></card-art>
             <board-card-frame 
                     [taunt]="taunt" 
@@ -80,25 +82,6 @@ export class CardOnBoardComponent implements AfterViewInit {
         
         this.hideStats = entity.getTag(GameTag.HIDE_STATS) === 1;
     }
-
-	@HostListener('mouseenter') onMouseEnter() {
-		let x = 100;
-		let y = 0;
-		let element = this.elRef.nativeElement;
-		while (element && !element.classList.contains("external-player")) {
-			x += element.offsetLeft;
-			y += element.offsetTop;
-			element = element.offsetParent;
-		}
-		// TODO: compute this once at component init + after each resize, instead of every time
-		// TODO: move the logic away to tooltips component, so it can take care of auto positioning
-		this.events.broadcast(Events.SHOW_TOOLTIP, this._entity, x, y);
-	}
-
-	@HostListener('mouseleave')
-	onMouseLeave() {
-		this.events.broadcast(Events.HIDE_TOOLTIP, this._entity);
-	}
 
 	ngAfterViewInit() {
 		setTimeout(() => this.resize());

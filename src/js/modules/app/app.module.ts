@@ -54,6 +54,7 @@ import { MulliganParserService } from '../../services/parser/gamepipeline/mullig
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { TargetZoneComponent } from '../../components/game/target-zone.component';
 import { TargetsParserService } from '../../services/parser/gamepipeline/targets-parser.service';
+import { CardTooltipDirective } from '../../directives/card-tooltip.directive';
 
 @NgModule({
 	imports: [
@@ -107,7 +108,9 @@ import { TargetsParserService } from '../../services/parser/gamepipeline/targets
         PlayerNameComponent,
         ActiveSpellComponent,
         TargetZoneComponent,
-	],
+
+        CardTooltipDirective,
+    ],
 	providers: [
         Location, 
         { provide: LocationStrategy, useClass: PathLocationStrategy },

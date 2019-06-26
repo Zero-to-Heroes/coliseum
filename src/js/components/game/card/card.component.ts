@@ -6,6 +6,7 @@ import { CardClass } from '../../../models/enums/card-class';
 import { Events } from '../../../services/events.service';
 import { NGXLogger } from 'ngx-logger';
 import { AllCardsService } from '../../../services/all-cards.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
 	selector: 'card',
@@ -13,7 +14,9 @@ import { AllCardsService } from '../../../services/all-cards.service';
 		'../../../../css/components/game/card/card.component.scss'
 	],
 	template: `
-		<div class="card" [attr.data-entity-id]="!forbiddenTargetSource && _entity.id">
+        <div class="card" 
+                cardTooltip [tooltipEntity]="_entity" [hasTooltip]="_hasTooltip"
+                [attr.data-entity-id]="!forbiddenTargetSource && _entity.id">
 			<card-art [cardId]="cardId" [cardType]="cardType"></card-art>
 			<card-frame [cardId]="cardId" [premium]="premium" *ngIf="cardId"></card-frame>
 			<card-rarity [cardId]="cardId" *ngIf="cardId"></card-rarity>
@@ -97,29 +100,7 @@ export class CardComponent implements AfterViewInit {
         if (value) {
             this.logger.debug('[card] marking card as crossed', this._entity);
         }
-	}
-
-	@HostListener('mouseenter') onMouseEnter() {
-		if (!this._hasTooltip || !this.cardId) {
-			return;
-		}
-		let x = 100;
-		let y = 0;
-		let element = this.elRef.nativeElement;
-		while (element && !element.classList.contains("external-player")) {
-			x += element.offsetLeft;
-			y += element.offsetTop;
-			element = element.offsetParent;
-		}
-		// TODO: compute this once at component init + after each resize, instead of every time
-		// TODO: move the logic away to tooltips component, so it can take care of auto positioning
-		this.events.broadcast(Events.SHOW_TOOLTIP, this._entity, x, y);
-	}
-
-	@HostListener('mouseleave')
-	onMouseLeave() {
-		this.events.broadcast(Events.HIDE_TOOLTIP, this._entity);
-	}
+    }
 
 	ngAfterViewInit() {
 		setTimeout(() => this.resize());
