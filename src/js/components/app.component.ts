@@ -108,7 +108,7 @@ export class AppComponent {
         this.targets = this.computeTargets();
         this.updateUrlQueryString();
         this.logger.debug('[app] setting turn', this.turnString);
-        this.logger.debug('[app] Considering action', this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn]);
+        this.logger.info('[app] Considering action', this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn]);
         if (!(<ViewRef>this.cdr).destroyed) {
             this.cdr.detectChanges();
         }

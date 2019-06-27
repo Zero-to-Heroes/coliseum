@@ -2,17 +2,11 @@ import { Action } from "./action";
 import { Map } from "immutable";
 import { Entity } from "../game/entity";
 import { AllCardsService } from "../../services/all-cards.service";
-import { HasDamage } from "./has-damage";
-import { Damage } from "./damage";
 
-export class HealingAction extends Action implements HasDamage {
-    readonly damages: ReadonlyArray<Damage>;
+export class HealingAction extends Action {
 
-    readonly allCards: AllCardsService;
-
-    constructor(allCards: AllCardsService) {
+    constructor(private allCards: AllCardsService) {
         super();
-        this.allCards = allCards;
     }
 
     public static create(newAction, allCards: AllCardsService): HealingAction {

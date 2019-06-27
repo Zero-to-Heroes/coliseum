@@ -12,6 +12,8 @@ import { AttackAction } from "../../../models/action/attack-action";
 import { ActionHelper } from "./action-helper";
 import { NGXLogger } from "ngx-logger";
 import { HealingAction } from "../../../models/action/healing-action";
+import { PowerTargetAction } from "../../../models/action/power-target-action";
+import { Damage } from "../../../models/action/damage";
 
 export class DamageParser implements Parser {
 
@@ -63,7 +65,7 @@ export class DamageParser implements Parser {
     }
 
     public reduce(actions: ReadonlyArray<Action>): ReadonlyArray<Action> {
-        return ActionHelper.combineActions<DamageAction | AttackAction>(
+        return ActionHelper.combineActions<Action>(
             actions,
             (previous, current) => this.shouldMergeActions(previous, current),
             (previous, current) => this.mergeActions(previous, current)
@@ -71,49 +73,23 @@ export class DamageParser implements Parser {
     }
 
     private shouldMergeActions(previousAction: Action, currentAction: Action): boolean {
-        if (previousAction instanceof DamageAction && currentAction instanceof DamageAction) {
-            return true;
+        if (!(currentAction instanceof DamageAction)) {
+            return false;
         }
-        if (previousAction instanceof AttackAction && currentAction instanceof DamageAction) {
-            return true;
-        }
-        return false;
+        return previousAction instanceof DamageAction // Merge all damages into a single action
+                || previousAction instanceof AttackAction // Add damage to the attack causing the damage
+                || previousAction instanceof PowerTargetAction; // Add damages to the power causing the damage
     }
 
-    private mergeActions(
-            previousAction: DamageAction | AttackAction, 
-            currentAction: DamageAction | AttackAction): DamageAction | AttackAction {
-        if (previousAction instanceof DamageAction && currentAction instanceof DamageAction) {
-            return this.mergeDamages(previousAction, currentAction);
-        }
-        if (previousAction instanceof AttackAction && currentAction instanceof DamageAction) {
-            return this.mergeDamageIntoAction(previousAction, currentAction);
-        }
-        this.logger.error('incorrect combination of actions to merge damage', previousAction, currentAction)
+    private mergeActions(previousAction: Action, currentAction: Action): Action {
+        return this.mergeDamageIntoAction(previousAction, currentAction as DamageAction);
     }
 
-    private mergeDamages(previousAction: DamageAction, currentAction: DamageAction): DamageAction {
-        const damages = ([...(previousAction.damages || []), ...(currentAction.damages || [])]);
-        return DamageAction.create(
-            {
-                timestamp: previousAction.timestamp,
-                index: currentAction.index,
-                entities: currentAction.entities,
-                damages: damages
-            },
-            this.allCards)
-    }
-
-    private mergeDamageIntoAction(previousAction: AttackAction, currentAction: DamageAction): AttackAction {
-        return AttackAction.create(
-            {
-                timestamp: previousAction.timestamp,
-                index: currentAction.index,
-                entities: currentAction.entities,
-                originId: previousAction.originId,
-                targetId: previousAction.targetId,
-                damages: [...(previousAction.damages || []), ...currentAction.damages],
-            },
-            this.allCards)
+    private mergeDamageIntoAction(previousAction: Action, currentAction: DamageAction): Action {
+        return previousAction.updateAction({
+            index: currentAction.index,
+            entities: currentAction.entities,
+            damages: [...(previousAction.damages || []), ...(currentAction.damages || [])] as ReadonlyArray<Damage>,
+        } as Action);
     }
 }

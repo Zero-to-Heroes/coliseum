@@ -2,20 +2,14 @@ import { Action } from "./action";
 import { Map } from "immutable";
 import { Entity } from "../game/entity";
 import { AllCardsService } from "../../services/all-cards.service";
-import { Damage } from "./damage";
-import { HasDamage } from "./has-damage";
 import { HasTarget } from "./has-target";
 
-export class AttackAction extends Action implements HasDamage, HasTarget {
+export class AttackAction extends Action implements HasTarget {
     readonly originId: number;
     readonly targetId: number;
-    readonly damages: ReadonlyArray<Damage> = [];
 
-    readonly allCards: AllCardsService;
-
-    constructor(allCards: AllCardsService) {
+    constructor(private allCards: AllCardsService) {
         super();
-        this.allCards = allCards;
     }
 
     public static create(newAction, allCards: AllCardsService): AttackAction {

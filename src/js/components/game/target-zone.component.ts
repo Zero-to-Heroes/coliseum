@@ -63,7 +63,7 @@ export class TargetZoneComponent implements AfterViewInit {
     private drawTargetLines() {
         const allPaths = this._targets.map(target => this.drawTargetLine(target[0], target[1]));
         if (allPaths.some(path => !path)) {
-            this.logger.debug('[targets] missing some elements, not drawing targets');
+            this.logger.error('[targets] missing some elements, not drawing targets');
             return;
         }
         const paths: string = allPaths.join('\n');
@@ -77,7 +77,7 @@ export class TargetZoneComponent implements AfterViewInit {
                 ${paths}
             </svg>
         `);
-        console.log('built svg', this.svg);
+        // console.log('built svg', this.svg);
         this.cdr.detectChanges();
     }
 
@@ -88,7 +88,7 @@ export class TargetZoneComponent implements AfterViewInit {
             this.logger.debug('[targets] missing some elements', originElement, originId, targetElement, targetId);
             return null;
         }
-        console.log('drawing arrow between', originElement, originElement.getBoundingClientRect(), targetElement, targetElement.getBoundingClientRect());
+        // console.log('drawing arrow between', originElement, originElement.getBoundingClientRect(), targetElement, targetElement.getBoundingClientRect());
         const orX = originElement.getBoundingClientRect().left 
                 + originElement.getBoundingClientRect().width / 2 
                 - this.left;
@@ -104,7 +104,7 @@ export class TargetZoneComponent implements AfterViewInit {
         const svgPath = `
             <line x1="${orX}" y1="${orY}" x2="${tarX}" y2="${tarY}" class="arrow" marker-end="url(#arrow)"/>
         `;
-        console.log('build svgPath', svgPath);
+        // console.log('build svgPath', svgPath);
         return svgPath;
     }
 }
