@@ -30,7 +30,10 @@
         height: 16%;
     }
 
-    &.weapon .text {
-        color: white;
+    &.weapon {
+        width: 62%;
+        .text {
+            color: white;
+        }
     }
 }
