@@ -20,6 +20,7 @@ import { NGXLogger } from 'ngx-logger';
 					[damage]="damage"
                     [armor]="armor">
             </hero-stats>
+            <damage *ngIf="shownDamage" [amount]="shownDamage"></damage>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,

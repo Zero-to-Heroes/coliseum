@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, AfterViewInit, HostListener, ElementRef, ChangeDetectorRef, ViewRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, ElementRef, ChangeDetectorRef, ViewRef } from '@angular/core';
 import { AllCardsService } from '../../../services/all-cards.service';
 import { NGXLogger } from 'ngx-logger';
 import { CardType } from '../../../models/enums/card-type';
@@ -10,12 +10,12 @@ import { CardType } from '../../../models/enums/card-type';
 		'../../../../css/components/game/card/card-cost.component.scss',
 	],
 	template: `
-        <div class="card-cost {{costClass}} {{_cardType}}">
-            <img class="mana-icon" src="https://static.zerotoheroes.com/hearthstone/asset/manastorm/mana.png" />
-            <div class="cost">
-                <div>{{_cost}}</div>
-            </div>
+    <div class="card-cost {{costClass}} {{_cardType}}">
+        <img class="mana-icon" src="https://static.zerotoheroes.com/hearthstone/asset/manastorm/mana.png" />
+        <div class="cost">
+            <div>{{_cost}}</div>
         </div>
+    </div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

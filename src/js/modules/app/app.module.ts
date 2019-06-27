@@ -57,6 +57,7 @@ import { TargetsParserService } from '../../services/parser/gamepipeline/targets
 import { CardTooltipDirective } from '../../directives/card-tooltip.directive';
 import { CardResizeDirective } from '../../directives/card-resize-.directive';
 import { DeckComponent } from '../../components/game/deck/deck.component';
+import { DamageComponent } from '../../components/game/card/damage.component';
 
 @NgModule({
 	imports: [
@@ -105,6 +106,7 @@ import { DeckComponent } from '../../components/game/deck/deck.component';
 		CardStatsComponent,
         CardCostComponent,
         OverlayCrossedComponent,
+        DamageComponent,
         
         DeckComponent,        
         PlayerNameComponent,
