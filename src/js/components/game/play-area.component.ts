@@ -23,6 +23,7 @@ import { NGXLogger } from 'ngx-logger';
                     [locked]="lockedCrystals"
                     [futureLocked]="futureLockedCrystals">
             </mana-tray>
+            <deck [deck]="deck"></deck>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -35,6 +36,7 @@ export class PlayAreaComponent {
 
     hand: ReadonlyArray<Entity>;
     board: ReadonlyArray<Entity>;
+    deck: ReadonlyArray<Entity>;
     hero: Entity;
     heroPower: Entity;
     weapon: Entity;
@@ -75,6 +77,7 @@ export class PlayAreaComponent {
         this.playerEntity = this._entities.find((entity) => entity.getTag(GameTag.PLAYER_ID) === this._playerId);
         this.hand = this.getHandEntities(this._playerId);
         this.board = this.getBoardEntities(this._playerId);
+        this.deck = this.getDeckEntities(this._playerId);
         this.hero = this.getHeroEntity(this.playerEntity);
         this.heroPower = this.getHeroPowerEntity(this._playerId); 
         this.weapon = this.getWeaponEntity(this._playerId); 
@@ -92,6 +95,12 @@ export class PlayAreaComponent {
                 .filter((entity) => entity.getTag(GameTag.CONTROLLER) === playerId)
                 .filter((entity) => entity.getTag(GameTag.ZONE) === Zone.HAND)
                 .sort((a, b) => a.getTag(GameTag.ZONE_POSITION) - b.getTag(GameTag.ZONE_POSITION));
+    }
+
+    private getDeckEntities(playerId: number): ReadonlyArray<Entity> {
+        return this._entities.toArray()
+                .filter((entity) => entity.getTag(GameTag.CONTROLLER) === playerId)
+                .filter((entity) => entity.getTag(GameTag.ZONE) === Zone.DECK);
     }
 
     private getBoardEntities(playerId: number): ReadonlyArray<Entity> {
