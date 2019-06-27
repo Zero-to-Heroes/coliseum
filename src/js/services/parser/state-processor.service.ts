@@ -26,6 +26,7 @@ export class StateProcessorService {
         GameTag.HERO_ENTITY,
         GameTag.PLAYER_ID,
         GameTag.ATTACHED,
+        GameTag.EXHAUSTED,
         GameTag.DAMAGE,
         GameTag.HEALTH,
         GameTag.ATK,
@@ -43,6 +44,7 @@ export class StateProcessorService {
         GameTag.OVERLOAD_LOCKED,
         GameTag.HIDE_STATS,
         GameTag.QUEST,
+        GameTag.HERO_POWER_DISABLED,
     ];
     
     public applyHistoryUntilNow(
