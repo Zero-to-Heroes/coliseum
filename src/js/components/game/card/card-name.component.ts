@@ -56,15 +56,15 @@ export class CardNameComponent {
     private buildPath(cardType: CardType, pathId: string): string {
         switch (cardType) {
             case CardType.MINION:
-                return `<path id=${pathId} d="M 0,130 C 30,140 100,140 180,125 M 180,125 C 250,110 750,-15 1000,100" />`;
+                return `<path id=${pathId} d="M 0,110 C 30,120 100,120 180,105 M 180,105 C 250,90 750,-35 1000,80" />`;
             case CardType.SPELL:
-                return `<path id=${pathId} d="M 0,140 Q 500,-23 1000,154" />`;
+                return `<path id=${pathId} d="M 0,120 Q 500,-35 1000,120" />`;
             case CardType.WEAPON:
-                return `<path id=${pathId} d="M 0,50 H 1000" />`;
+                return `<path id=${pathId} d="M 0,35 H 1000" />`;
             case CardType.HERO_POWER:
-                return `<path id=${pathId} d="M 0,50 H 1000" />`;
+                return `<path id=${pathId} d="M 0,35 H 1000" />`;
             case CardType.HERO:
-                return `<path id=${pathId} d="M 0,180 Q 500,-63 1000,180" />`;
+                return `<path id=${pathId} d="M 0,160 Q 500,-83 1000,160" />`;
         }
     }
 }
