@@ -2,16 +2,12 @@
 
 .mana-tray {
     position: absolute;
-	background: rgba(0, 0, 0, 0.3);
-	background-size: contain;
-	width: 25%;
-	left: inherit;
-	top: inherit;
-	bottom: 51%;
-    right: 0;
+    width: 22%;
+    top: inherit;
+    bottom: 10%;
+    left: 62.2%;
     display: flex;
-    border-radius: 0.5em;
-    padding: 10px 5px;
+    height: 6%;
     
     .summary {
         background: url(https://static.zerotoheroes.com/hearthstone/asset/manastorm/mana-container.png) center center no-repeat;
@@ -21,12 +17,10 @@
 		font-weight: bold;
 		text-align: center;
 		cursor: default;
-		text-shadow: $text-shadow;
-        width: 20%;
-
-		& > span {
-			margin: auto;
-		}
+        text-shadow: $text-shadow;
+        width: 25%;
+        align-items: center;        
+        justify-content: center;
     }
 
     .crystals {
