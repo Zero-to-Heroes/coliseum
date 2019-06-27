@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, ElementRef, ChangeDetectorRef, ViewRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, ChangeDetectorRef, ViewRef } from '@angular/core';
 import { AllCardsService } from '../../../services/all-cards.service';
 import { NGXLogger } from 'ngx-logger';
 import { CardType } from '../../../models/enums/card-type';
@@ -10,9 +10,9 @@ import { CardType } from '../../../models/enums/card-type';
 		'../../../../css/components/game/card/card-cost.component.scss',
 	],
 	template: `
-    <div class="card-cost {{costClass}} {{_cardType}}">
+    <div class="card-cost {{costClass}} {{_cardType}}" cardElementResize [fontSizeRatio]="fontSizeRatio">
         <img class="mana-icon" src="https://static.zerotoheroes.com/hearthstone/asset/manastorm/mana.png" />
-        <div class="cost">
+        <div class="cost" resizeTarget>
             <div>{{_cost}}</div>
         </div>
     </div>
@@ -24,19 +24,14 @@ export class CardCostComponent {
     _cost: number;
     costClass: string;
     _cardType: string;
+    fontSizeRatio: number;
     
     private _cardId: string;
 
     constructor(
             private cards: AllCardsService, 
-            private elRef: ElementRef, 
             private logger: NGXLogger,
             private cdr: ChangeDetectorRef) { 
-        this.cdr.detach();
-        document.addEventListener(
-            'card-resize',
-            (event) => this.resizeText(),
-            true);
     }
 
     @Input('cardId') set cardId(cardId: string) {
@@ -54,6 +49,7 @@ export class CardCostComponent {
     @Input('cardType') set cardType(cardType: CardType) {
         this.logger.debug('[card-text] setting cardType', cardType);
         this._cardType = CardType[cardType].toLowerCase();
+        this.fontSizeRatio = this._cardType === CardType[CardType.HERO_POWER].toLowerCase() ? 0.6 : 0.8 ;
     }
 
     private updateCost() {
@@ -73,22 +69,6 @@ export class CardCostComponent {
         else if (this._cost > originalCost) {
             this.costClass = 'higher-cost';
         }
-        if (!(<ViewRef>this.cdr).destroyed) {
-            this.cdr.detectChanges();
-        }
-    }
-
-    private resizeText() {
-        const el = this.elRef.nativeElement.querySelector(".card-cost");
-        if (!el) {
-            setTimeout(() => this.resizeText());
-            return; 
-        }
-        const fontSize = this._cardType === CardType[CardType.HERO_POWER].toLowerCase()
-                ? 0.6 * el.getBoundingClientRect().width
-                : 0.8 * el.getBoundingClientRect().width;
-        const textEl = this.elRef.nativeElement.querySelector(".cost");
-        textEl.style.fontSize = fontSize + 'px';
         if (!(<ViewRef>this.cdr).destroyed) {
             this.cdr.detectChanges();
         }

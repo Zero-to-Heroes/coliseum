@@ -24,7 +24,7 @@ import { AllCardsService } from '../../../services/all-cards.service';
                     [entity]="_entity"
                     [cardType]="cardType">
             </card-text>
-			<card-race [cardId]="cardId" *ngIf="cardId"></card-race>
+			<card-race [race]="race" *ngIf="race"></card-race>
             <card-cost *ngIf="cardId"
                     [cardType]="cardType"
                     [cardId]="cardId" 
@@ -59,6 +59,7 @@ export class CardComponent {
 	durability: number;
 	armor: number;
     cost: number;
+    race: string;
 
     _forbiddenTargetSource: boolean = false;
 	_hasTooltip: boolean = true;
@@ -81,6 +82,7 @@ export class CardComponent {
             this.armor = entity.getTag(GameTag.ARMOR);
             this.cost = entity.getTag(GameTag.COST);
             this.originalCard = this.cards.getCard(this.cardId);
+            this.race = this.originalCard.race ? this.originalCard.race.toLowerCase() : undefined;
             this.cardType = CardType[this.originalCard.type.toUpperCase() as string];
             this.cardClass = CardClass[this.originalCard.playerClass.toUpperCase() as string];
         }

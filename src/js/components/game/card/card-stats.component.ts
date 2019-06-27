@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, ChangeDetectorRef, AfterViewInit, ElementRef, ViewRef, HostListener } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { AllCardsService } from '../../../services/all-cards.service';
 import { NGXLogger } from 'ngx-logger';
 
@@ -10,7 +10,7 @@ import { NGXLogger } from 'ngx-logger';
 		'../../../../css/components/game/card/card-stats-colors.scss',
 	],
 	template: `
-        <div class="card-stats" *ngIf="hasStats">
+        <div class="card-stats" *ngIf="hasStats" cardElementResize [fontSizeRatio]="0.2" resizeTarget>
             <div class="stat {{attackClass}}">
                 <img class="stat-icon" src="https://static.zerotoheroes.com/hearthstone/asset/manastorm/attack.png" />
                 <div class="stat-value"><span>{{_attack}}</span></div>
@@ -42,17 +42,7 @@ export class CardStatsComponent {
     private _damage: number;
     private _durability: number;
 
-    constructor(
-            private cards: AllCardsService, 
-            private logger: NGXLogger,
-            private cdr: ChangeDetectorRef, 
-            private elRef: ElementRef) { 
-        this.cdr.detach();
-        document.addEventListener(
-            'card-resize',
-            (event) => this.resizeText(),
-            true);
-    }
+    constructor(private cards: AllCardsService, private logger: NGXLogger) { }
 
     @Input('cardId') set cardId(cardId: string) {
         this.logger.debug('[card-stats] setting cardId', cardId);
@@ -120,9 +110,6 @@ export class CardStatsComponent {
         this.healthLeft = (this._health || this._durability) - (this._damage);
         this.updateAttackClass(originalCard);
         this.updateHealthClass(originalCard);
-        if (!(<ViewRef>this.cdr).destroyed) {
-            this.cdr.detectChanges();
-        }
     }
 
     private updateAttackClass(originalCard) {
@@ -142,20 +129,6 @@ export class CardStatsComponent {
         }
         else if (this.healthLeft < originalCard.health) {
             this.healthClass += ' damaged';
-        }
-    }
-
-    private resizeText() {
-        const el = this.elRef.nativeElement.querySelector(".card-stats");
-        if (!el) {
-            setTimeout(() => this.resizeText());
-            return;
-        }
-        const fontSize = 0.2 * el.getBoundingClientRect().width;
-        const textEl = this.elRef.nativeElement.querySelector(".card-stats");
-        textEl.style.fontSize = fontSize + 'px';
-        if (!(<ViewRef>this.cdr).destroyed) {
-            this.cdr.detectChanges();
         }
     }
 }

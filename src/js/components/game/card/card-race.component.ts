@@ -1,5 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, HostListener, ElementRef, AfterViewInit, ChangeDetectorRef, ViewRef } from '@angular/core';
-import { AllCardsService } from '../../../services/all-cards.service';
+import { Component, ChangeDetectionStrategy, Input, ChangeDetectorRef } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
 
 @Component({
@@ -9,59 +8,21 @@ import { NGXLogger } from 'ngx-logger';
 		'../../../../css/components/game/card/card-race.component.scss',
 	],
 	template: `
-        <div class="card-race" *ngIf="race">
+        <div class="card-race" cardElementResize [fontSizeRatio]="0.3">
             <img class="banner" src="https://static.zerotoheroes.com/hearthstone/asset/manastorm/card/race-banner.png" />
-            <div class="text"><div>{{race}}</div></div>
+            <div class="text" resizeTarget><div>{{_race}}</div></div>
         </div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardRaceComponent {
 
-    race: string;
+    _race: string;
 
-    constructor(
-            private cards: AllCardsService, 
-            private elRef: ElementRef, 
-            private logger: NGXLogger,
-            private cdr: ChangeDetectorRef) { 
-        this.cdr.detach();
-        document.addEventListener(
-            'card-resize',
-            (event) => this.resizeText(),
-            true);
-    }
+    constructor(private logger: NGXLogger, private cdr: ChangeDetectorRef) { }
 
-    @Input('cardId') set cardId(cardId: string) {
-        this.race = undefined;
-        this.logger.debug('[card-race] setting cardId', cardId);
-        const originalCard = this.cards.getCard(cardId);
-        if (!originalCard.race) {
-            if (!(<ViewRef>this.cdr).destroyed) {
-                this.cdr.detectChanges();
-            }
-            return;
-        }
-        this.race = originalCard.race.toLowerCase();
-        // We need to detect the changes so that the component is rendered first (because 
-        // of the *ngIf)
-        if (!(<ViewRef>this.cdr).destroyed) {
-            this.cdr.detectChanges();
-        }
-        setTimeout(() => this.resizeText());
-    }
-
-    private resizeText() {
-        const el = this.elRef.nativeElement.querySelector(".card-race");
-        if (!el) {
-            setTimeout(() => this.resizeText());
-            return; 
-        }
-        const fontSize = 0.3 * el.getBoundingClientRect().width;
-        const textEl = this.elRef.nativeElement.querySelector(".card-race");
-        textEl.style.fontSize = fontSize + 'px';
-        if (!(<ViewRef>this.cdr).destroyed) {
-            this.cdr.detectChanges();
-        }
+    @Input('race') set race(value: string) {
+        this.logger.debug('[card-race] setting race', value);
+        this._race = value;
     }
 }
