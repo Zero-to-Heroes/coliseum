@@ -61,7 +61,6 @@ export class AppComponent {
 			zone: this.zone,
 			component: this
 		};
-		this.cdr.detach();
     }
 
 	public loadReplay(replayXml: Node) {

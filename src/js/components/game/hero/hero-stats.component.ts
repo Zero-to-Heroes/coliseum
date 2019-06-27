@@ -44,7 +44,6 @@ export class HeroStatsComponent implements AfterViewInit {
         private cdr: ChangeDetectorRef, 
         private logger: NGXLogger,
         private elRef: ElementRef) { 
-            this.cdr.detach();
     }
 
     @Input('cardId') set cardId(cardId: string) {

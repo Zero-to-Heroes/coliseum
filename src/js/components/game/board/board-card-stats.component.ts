@@ -40,7 +40,6 @@ export class BoardCardStatsComponent {
         private cdr: ChangeDetectorRef, 
         private elRef: ElementRef, 
         private logger: NGXLogger) { 
-        this.cdr.detach();
     }
 
     @Input('cardId') set cardId(cardId: string) {

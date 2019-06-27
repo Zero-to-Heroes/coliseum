@@ -10,17 +10,17 @@ import { NGXLogger } from 'ngx-logger';
 		'../../../../css/components/game/card/card-stats-colors.scss',
 	],
 	template: `
-        <div class="card-stats" *ngIf="hasStats" cardElementResize [fontSizeRatio]="0.2" resizeTarget>
+        <div class="card-stats" *ngIf="hasStats" cardElementResize [fontSizeRatio]="0.2">
             <div class="stat {{attackClass}}">
                 <img class="stat-icon" src="https://static.zerotoheroes.com/hearthstone/asset/manastorm/attack.png" />
-                <div class="stat-value"><span>{{_attack}}</span></div>
+                <div class="stat-value" resizeTarget><span>{{_attack}}</span></div>
             </div>
             <div class="stat {{healthClass}}">
                 <img class="stat-icon" src="https://static.zerotoheroes.com/hearthstone/asset/manastorm/health_new.png" />
-                <div class="stat-value"><span>{{healthLeft}}</span></div>
+                <div class="stat-value" resizeTarget><span>{{healthLeft}}</span></div>
             </div>
             <div class="stat armor">
-                <span>{{_armor}}</span>
+                <span resizeTarget>{{_armor}}</span>
             </div>
         </div>
 	`,

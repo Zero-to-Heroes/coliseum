@@ -24,7 +24,9 @@ import { AllCardsService } from '../../../services/all-cards.service';
                     [entity]="_entity"
                     [cardType]="cardType">
             </card-text>
-			<card-race [race]="race" *ngIf="race"></card-race>
+            <card-race *ngIf="race" 
+                    [race]="race">
+            </card-race>
             <card-cost *ngIf="cardId"
                     [cardType]="cardType"
                     [cardId]="cardId" 

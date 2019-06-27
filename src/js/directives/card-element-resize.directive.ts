@@ -16,6 +16,9 @@ export class CardElementResizeDirective {
 
     ngAfterViewInit() {
         this.elRef.nativeElement.style.opacity = 0;
+        if (!(<ViewRef>this.cdr).destroyed) {
+            this.cdr.detectChanges();
+        }
         setTimeout(() => this.resizeText());
     }
 
@@ -26,11 +29,13 @@ export class CardElementResizeDirective {
             return; 
         }
         const fontSize = this.fontSizeRatio * el.getBoundingClientRect().width;
-        const textEl = this.elRef.nativeElement.querySelector("[resizeTarget]");
-        textEl.style.fontSize = fontSize + 'px';
-        this.elRef.nativeElement.style.opacity = 1;
-        if (!(<ViewRef>this.cdr).destroyed) {
-            this.cdr.detectChanges();
+        const textEls = this.elRef.nativeElement.querySelectorAll("[resizeTarget]");
+        for (let textEl of textEls) {
+            textEl.style.fontSize = fontSize + 'px';
+            this.elRef.nativeElement.style.opacity = 1;
+            if (!(<ViewRef>this.cdr).destroyed) {
+                this.cdr.detectChanges();
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
 
 @Component({
@@ -8,9 +8,9 @@ import { NGXLogger } from 'ngx-logger';
 		'../../../../css/components/game/card/card-race.component.scss',
 	],
 	template: `
-        <div class="card-race" cardElementResize [fontSizeRatio]="0.3">
+        <div class="card-race" cardElementResize [fontSizeRatio]="0.1">
             <img class="banner" src="https://static.zerotoheroes.com/hearthstone/asset/manastorm/card/race-banner.png" />
-            <div class="text" resizeTarget><div>{{_race}}</div></div>
+            <div class="text" resizeTarget>{{_race}}</div>
         </div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -19,7 +19,7 @@ export class CardRaceComponent {
 
     _race: string;
 
-    constructor(private logger: NGXLogger, private cdr: ChangeDetectorRef) { }
+    constructor(private logger: NGXLogger) { }
 
     @Input('race') set race(value: string) {
         this.logger.debug('[card-race] setting race', value);

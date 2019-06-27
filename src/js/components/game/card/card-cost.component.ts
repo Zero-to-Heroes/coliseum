@@ -10,12 +10,12 @@ import { CardType } from '../../../models/enums/card-type';
 		'../../../../css/components/game/card/card-cost.component.scss',
 	],
 	template: `
-    <div class="card-cost {{costClass}} {{_cardType}}" cardElementResize [fontSizeRatio]="fontSizeRatio">
-        <img class="mana-icon" src="https://static.zerotoheroes.com/hearthstone/asset/manastorm/mana.png" />
-        <div class="cost" resizeTarget>
-            <div>{{_cost}}</div>
+        <div class="card-cost {{costClass}} {{_cardType}}" cardElementResize [fontSizeRatio]="fontSizeRatio">
+            <img class="mana-icon" src="https://static.zerotoheroes.com/hearthstone/asset/manastorm/mana.png" />
+            <div class="cost">
+                <div resizeTarget>{{_cost}}</div>
+            </div>
         </div>
-    </div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -49,7 +49,8 @@ export class CardCostComponent {
     @Input('cardType') set cardType(cardType: CardType) {
         this.logger.debug('[card-text] setting cardType', cardType);
         this._cardType = CardType[cardType].toLowerCase();
-        this.fontSizeRatio = this._cardType === CardType[CardType.HERO_POWER].toLowerCase() ? 0.6 : 0.8 ;
+        this.fontSizeRatio = this._cardType === CardType[CardType.HERO_POWER].toLowerCase() ? 0.6 : 0.8;
+        this.updateCost();
     }
 
     private updateCost() {

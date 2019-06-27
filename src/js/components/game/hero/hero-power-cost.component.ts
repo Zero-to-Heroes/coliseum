@@ -27,7 +27,6 @@ export class HeroPowerCostComponent implements AfterViewInit {
             private elRef: ElementRef, 
             private logger: NGXLogger,
             private cdr: ChangeDetectorRef) { 
-        this.cdr.detach();
     }
 
     @Input('cardId') set cardId(cardId: string) {

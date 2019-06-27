@@ -91,7 +91,6 @@ export class TooltipsComponent implements AfterViewInit {
 	}
 
 	ngAfterViewInit() {
-		this.cdr.detach();
 		// https://blog.angularindepth.com/everything-you-need-to-know-about-the-expressionchangedafterithasbeencheckederror-error-e3fd9ce7dbb4
 		setTimeout(() => {
 		    // We create a factory out of the component we want to create
