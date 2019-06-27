@@ -125,10 +125,7 @@ export class HeroStatsComponent implements AfterViewInit {
 
     private updateHealthClass(originalCard) {
         this.healthClass = 'health';
-        if (this.healthLeft > originalCard.health) {
-            this.healthClass += ' buff';
-        }
-        else if (this.healthLeft < originalCard.health) {
+        if (this._damage > 0) {
             this.healthClass += ' damaged';
         }
     }
