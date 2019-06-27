@@ -1,12 +1,10 @@
-import { Component, ChangeDetectionStrategy, Input, HostListener, ElementRef, AfterViewInit, ChangeDetectorRef, ViewRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { Entity } from '../../../models/game/entity';
 import { GameTag } from '../../../models/enums/game-tags';
 import { CardType } from '../../../models/enums/card-type';
 import { CardClass } from '../../../models/enums/card-class';
-import { Events } from '../../../services/events.service';
 import { NGXLogger } from 'ngx-logger';
 import { AllCardsService } from '../../../services/all-cards.service';
-import { BehaviorSubject } from 'rxjs';
 
 @Component({
 	selector: 'card',
@@ -15,6 +13,7 @@ import { BehaviorSubject } from 'rxjs';
 	],
 	template: `
         <div class="card" 
+                cardResize
                 cardTooltip [tooltipEntity]="_entity" [hasTooltip]="_hasTooltip"
                 [attr.data-entity-id]="!forbiddenTargetSource && _entity.id">
 			<card-art [cardId]="cardId" [cardType]="cardType"></card-art>
@@ -44,7 +43,7 @@ import { BehaviorSubject } from 'rxjs';
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CardComponent implements AfterViewInit {
+export class CardComponent {
 
     _entity: Entity;
     _crossed: boolean;
@@ -65,17 +64,13 @@ export class CardComponent implements AfterViewInit {
 	_hasTooltip: boolean = true;
 
 	constructor(
-		private cards: AllCardsService, 
-		private events: Events, 
-		private cdr: ChangeDetectorRef,
-		private logger: NGXLogger,
-		private elRef: ElementRef) { }
+            private cards: AllCardsService, 
+            private logger: NGXLogger) { 
+    }
 
     @Input('entity') set entity(entity: Entity) {
 		this.logger.debug('[card] setting entity', entity);
-		
 		this._entity = entity;
-
         this.cardId = entity.cardID;
         if (this.cardId) {
             this.premium = entity.getTag(GameTag.PREMIUM) == 1;
@@ -105,26 +100,4 @@ export class CardComponent implements AfterViewInit {
             this.logger.debug('[card] marking card as crossed', this._entity);
         }
     }
-
-	ngAfterViewInit() {
-		setTimeout(() => this.resize());
-	}
-
-    @HostListener('window:resize', ['$event'])
-    onResize(event) {
-        this.resize();
-    }
-
-	private resize() {
-        const el = this.elRef.nativeElement;
-        const width = 120.0 / 187 * el.getBoundingClientRect().height;
-		const textEl = this.elRef.nativeElement;
-		textEl.style.width = width + 'px';
-        if (!(<ViewRef>this.cdr).destroyed) {
-            this.cdr.detectChanges();
-        }
-		setTimeout(() => {
-			el.dispatchEvent(new Event('card-resize', { bubbles: false }));
-		});
-	}
 }

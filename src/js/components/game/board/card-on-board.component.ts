@@ -13,7 +13,8 @@ import { NGXLogger } from 'ngx-logger';
 		'../../../../css/components/game/board/card-on-board.component.scss'
 	],
 	template: `
-		<div class="card-on-board" 
+        <div class="card-on-board" 
+                cardResize
                 cardTooltip [tooltipEntity]="_entity"
                 [attr.data-entity-id]="_entity.id">
 			<card-art [cardId]="cardId" [cardType]="cardType"></card-art>
@@ -32,7 +33,7 @@ import { NGXLogger } from 'ngx-logger';
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CardOnBoardComponent implements AfterViewInit {
+export class CardOnBoardComponent {
 
 	_entity: Entity;
 
@@ -52,11 +53,8 @@ export class CardOnBoardComponent implements AfterViewInit {
     hideStats: boolean;
 
 	constructor(
-		private cards: AllCardsService, 
-		private elRef: ElementRef, 
-		private cdr: ChangeDetectorRef,
-		private logger: NGXLogger,
-		private events: Events) { }
+		private cards: AllCardsService,
+		private logger: NGXLogger) { }
 
     @Input('entity') set entity(entity: Entity) {
 		this.logger.debug('[card-on-board] setting entity', entity);
@@ -82,26 +80,4 @@ export class CardOnBoardComponent implements AfterViewInit {
         
         this.hideStats = entity.getTag(GameTag.HIDE_STATS) === 1;
     }
-
-	ngAfterViewInit() {
-		setTimeout(() => this.resize());
-	}
-
-    @HostListener('window:resize', ['$event'])
-    onResize(event) {
-        this.resize();
-    }
-
-	private resize() {
-        const el = this.elRef.nativeElement;
-        const width = 140.0 / 187 * el.getBoundingClientRect().height;
-		const textEl = this.elRef.nativeElement;
-		textEl.style.width = width + 'px';
-        if (!(<ViewRef>this.cdr).destroyed) {
-            this.cdr.detectChanges();
-        }
-		setTimeout(() => {
-			el.dispatchEvent(new Event('card-resize', { bubbles: false }));
-		});
-	}
 }
