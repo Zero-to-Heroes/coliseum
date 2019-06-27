@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, ElementRef, ChangeDetectorRef, ViewRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, ElementRef, ChangeDetectorRef, ViewRef, AfterViewInit } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
 
 @Component({
@@ -17,7 +17,7 @@ import { NGXLogger } from 'ngx-logger';
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DamageComponent {
+export class DamageComponent implements AfterViewInit {
 
     _amount: number;
 
@@ -25,11 +25,15 @@ export class DamageComponent {
             private elRef: ElementRef, 
             private logger: NGXLogger,
             private cdr: ChangeDetectorRef) { 
-        this.cdr.detach();
         document.addEventListener(
             'card-resize',
             (event) => this.resizeText(),
             true);
+    }
+
+    ngAfterViewInit() {
+        this.elRef.nativeElement.style.opacity = 0;
+        setTimeout(() => this.resizeText());
     }
 
     @Input('amount') set amount(value: number) {
@@ -46,6 +50,7 @@ export class DamageComponent {
         const fontSize = 0.3 * el.getBoundingClientRect().width;
         const textEl = this.elRef.nativeElement.querySelector(".amount");
         textEl.style.fontSize = fontSize + 'px';
+        this.elRef.nativeElement.style.opacity = 1;
         if (!(<ViewRef>this.cdr).destroyed) {
             this.cdr.detectChanges();
         }

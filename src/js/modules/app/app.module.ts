@@ -55,7 +55,7 @@ import { Location, LocationStrategy, PathLocationStrategy } from '@angular/commo
 import { TargetZoneComponent } from '../../components/game/target-zone.component';
 import { TargetsParserService } from '../../services/parser/gamepipeline/targets-parser.service';
 import { CardTooltipDirective } from '../../directives/card-tooltip.directive';
-import { CardResizeDirective } from '../../directives/card-resize-.directive';
+import { CardResizeDirective } from '../../directives/card-resize.directive';
 import { DeckComponent } from '../../components/game/deck/deck.component';
 import { DamageComponent } from '../../components/game/card/damage.component';
 
