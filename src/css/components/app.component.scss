@@ -43,5 +43,6 @@
 
     ::ng-deep * {
         user-select: none;
+        -moz-user-select: none;
     }
 }
