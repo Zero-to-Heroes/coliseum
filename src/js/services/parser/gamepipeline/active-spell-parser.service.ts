@@ -9,6 +9,7 @@ import { CardPlayedFromHandAction } from '../../../models/action/card-played-fro
 import { GameTag } from '../../../models/enums/game-tags';
 import { CardType } from '../../../models/enums/card-type';
 import { PowerTargetAction } from '../../../models/action/power-target-action';
+import { AttachingEnchantmentAction } from '../../../models/action/attaching-enchantment-action';
 
 @Injectable()
 export class ActiveSpellParserService {
@@ -53,6 +54,10 @@ export class ActiveSpellParserService {
             activeSpell = action.entityId;
         }
         else if (action instanceof PowerTargetAction
+                && action.entities.get(action.originId).getTag(GameTag.CARDTYPE) === CardType.SPELL) {
+            activeSpell = action.originId;
+        }
+        else if (action instanceof AttachingEnchantmentAction
                 && action.entities.get(action.originId).getTag(GameTag.CARDTYPE) === CardType.SPELL) {
             activeSpell = action.originId;
         }
