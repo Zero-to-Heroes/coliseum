@@ -29,6 +29,7 @@ import { NGXLogger } from 'ngx-logger';
 					[health]="health"
 					[damage]="damage">
 			</board-card-stats>
+            <damage *ngIf="shownDamage" [amount]="shownDamage"></damage>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
