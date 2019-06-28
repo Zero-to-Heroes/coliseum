@@ -10,7 +10,7 @@ import { NGXLogger } from 'ngx-logger';
         '../../../../css/components/game/hero/hero-card.component.scss'
     ],
 	template: `
-        <div class="hero-card" [attr.data-entity-id]="entityId">
+        <div class="hero-card" [attr.data-entity-id]="entityId" [attr.data-player-entity-id]="playerEntityId">
             <hero-art [cardId]="cardId"></hero-art>
             <hero-frame></hero-frame>
 			<hero-stats 
@@ -27,6 +27,9 @@ import { NGXLogger } from 'ngx-logger';
 })
 export class HeroCardComponent {
 
+    // Some actions use the player id instead of the entity id when describing targets
+    // so having both of them makes us able to ignore these discrepancies 
+    playerEntityId: number;
     entityId: number;
     cardId: string;
     cardType: CardType;
@@ -39,9 +42,9 @@ export class HeroCardComponent {
 	constructor(private logger: NGXLogger) { }
 
     @Input('hero') set hero(hero: Entity) {
-        // TODO: overlays (frozen, etc), secrets, highlight, stats
-        this.logger.debug('[hero-card] setting new entity', hero);
+        this.logger.debug('[hero-card] setting hero', hero, hero.tags.toJS());
         this.entityId = hero.id;
+        this.playerEntityId = hero.getTag(GameTag.CONTROLLER) + 1; // If they ever change this logic we need to do something :)
         this.cardId = hero.cardID;
         this.cardType = CardType.HERO;
 		this.attack = hero.getTag(GameTag.ATK);

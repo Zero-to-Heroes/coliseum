@@ -97,8 +97,10 @@ export class TargetZoneComponent implements AfterViewInit {
     }
 
     private drawTargetLine(originId: number, targetId: number): string {
-        const originElement = this.gameEl.querySelector(`[data-entity-id="${originId}"]`);
-        const targetElement = this.gameEl.querySelector(`[data-entity-id="${targetId}"]`);
+        const originElement = this.gameEl.querySelector(`[data-entity-id="${originId}"]`)
+                || this.gameEl.querySelector(`[data-player-entity-id="${originId}"]`);
+        const targetElement = this.gameEl.querySelector(`[data-entity-id="${targetId}"]`)
+                || this.gameEl.querySelector(`[data-player-entity-id="${targetId}"]`);
         if (!originElement || !targetElement) {
             this.logger.debug('[targets] missing some elements', originElement, originId, targetElement, targetId);
             return null;
