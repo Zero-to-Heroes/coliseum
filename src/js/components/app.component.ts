@@ -65,10 +65,9 @@ export class AppComponent {
 
 	public loadReplay(replayXml: Node) {
 		this.game = this.gameParser.parse(replayXml);
-        this.logger.info('[app] Converted game', window.location.href, window.location);
+        this.logger.info('[app] Converted game');
         const turn = parseInt(this.getSearchParam('turn')) || 0; 
         const action = parseInt(this.getSearchParam('action')) || 0; 
-        console.log('navigating to', turn, action);
         this.currentTurn = turn <= 0
                 ? 0
                 : (turn >= this.game.turns.size
@@ -79,7 +78,6 @@ export class AppComponent {
                 : (action >= this.game.turns.get(this.currentTurn).actions.length
                         ? this.game.turns.get(this.currentTurn).actions.length - 1
                         : action);
-        console.log('which translates to', this.currentTurn, this.currentActionInTurn);
         this.populateInfo();
     }
 
