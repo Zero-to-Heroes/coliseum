@@ -8,6 +8,7 @@ import { CardType } from '../../../models/enums/card-type';
 	styleUrls: [
 		'../../../../css/global/text.scss',
 		'../../../../css/components/game/card/card-cost.component.scss',
+		'../../../../css/components/game/card/card-cost-colors.scss',
 	],
 	template: `
         <div class="card-cost {{costClass}} {{_cardType}}" cardElementResize [fontSizeRatio]="fontSizeRatio">

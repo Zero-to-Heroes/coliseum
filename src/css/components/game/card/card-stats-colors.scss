@@ -2,18 +2,18 @@
 
 .attack {
     &.buff {
-        color: #31C331;
+        color: $buff;
     }
     &.debuff {
-        color: red;
+        color: $damage;
     }
 }
 
 .health {
     &.buff {
-        color: #31C331;
+        color: $buff;
     }
     &.damaged {
-        color: red;
+        color: $damage;
     }
 }

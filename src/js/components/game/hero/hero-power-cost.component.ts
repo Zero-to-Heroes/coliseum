@@ -7,6 +7,7 @@ import { NGXLogger } from 'ngx-logger';
 	styleUrls: [
 		'../../../../css/global/text.scss',
 		'../../../../css/components/game/hero/hero-power-cost.component.scss',
+		'../../../../css/components/game/card/card-cost-colors.scss',
 	],
 	template: `
         <div class="hero-power-cost {{costClass}}">
@@ -54,6 +55,7 @@ export class HeroPowerCostComponent implements AfterViewInit {
         if (!this._cardId) {
             return;
         }
+        this.costClass = undefined;
         const originalCard = this.cards.getCard(this._cardId);
         const originalCost: number = originalCard.cost;
         
@@ -63,8 +65,7 @@ export class HeroPowerCostComponent implements AfterViewInit {
 
         if (this._cost < originalCost) {
             this.costClass = 'lower-cost';
-        }
-        else if (this._cost > originalCost) {
+        } else if (this._cost > originalCost) {
             this.costClass = 'higher-cost';
         }
         if (!(<ViewRef>this.cdr).destroyed) {
