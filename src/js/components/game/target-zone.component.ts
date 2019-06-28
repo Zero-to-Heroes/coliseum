@@ -41,8 +41,12 @@ export class TargetZoneComponent implements AfterViewInit {
         this.logger.debug('[target-zone] setting targets', value);
         this._targets = value || [];
         this.svg = undefined;
+        
+        const anyMissingTarget = this.assessTargetsAvailability();
         // We want to wait until the origin / target elements are rendered first
-        setTimeout(() => this.drawTargetLines());
+        // The timeout value is totally arbitrary, and should be used only when going 
+        // directly to a target game state from a hyperlink
+        setTimeout(() => this.drawTargetLines(), anyMissingTarget ? 1000 : 0);
     }
 
     @HostListener('window:resize', ['$event'])
@@ -50,6 +54,17 @@ export class TargetZoneComponent implements AfterViewInit {
         this.computeParentDimensions();
         this.cdr.detectChanges();
         setTimeout(() => this.drawTargetLines());
+    }
+
+    private assessTargetsAvailability(): boolean {
+        const allTargetIds: number[] = this._targets
+                .reduce((a, b) => a.concat(b), [])
+                .filter((v, i, a) => a.indexOf(v) === i); // Keep unique values
+        // console.log('all targets', allTargetIds);
+        const anyMissingTargetElement = allTargetIds
+                .some(targetId => !this.el.nativeElement.parentNode.querySelector(`[data-entity-id="${targetId}"]`));
+        // console.log('any missing?', anyMissingTargetElement);
+        return anyMissingTargetElement;                
     }
 
     private computeParentDimensions() {
