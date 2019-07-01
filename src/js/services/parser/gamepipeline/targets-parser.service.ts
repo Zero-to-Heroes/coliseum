@@ -47,10 +47,10 @@ export class TargetsParserService {
     }
 
     private hasTarget(action: any): action is HasTarget {
-        return 'originId' in action && 'targetId' in action;
+        return 'originId' in action && 'targetId' in action && action['originId'] && action['targetId'];
     }
 
     private hasTargets(action: any): action is HasTargets {
-        return 'originId' in action && 'targetIds' in action;
+        return 'originId' in action && 'targetIds' in action && action['originId'] && action['targetIds'];
     }
 }

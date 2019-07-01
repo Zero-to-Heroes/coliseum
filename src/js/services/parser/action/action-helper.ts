@@ -4,8 +4,8 @@ import { Map } from "immutable";
 import { GameTag } from "../../../models/enums/game-tags";
 import { Action } from "../../../models/action/action";
 import { isEqual } from "lodash";
-import { EnrichedTag } from "../../../models/parser/enriched-tag";
 import { EntityTag } from "../../../models/parser/entity-tag";
+import { Damage } from "../../../models/action/damage";
 
 export class ActionHelper {
 
@@ -40,12 +40,20 @@ export class ActionHelper {
         return defender ? defender.value : 0;
     }
 
+    public static mergeIntoFirstAction<T extends Action>(first: T, second: Action, newElements: T): T {
+        const result = first.updateAction(newElements);
+        return result.updateAction({
+            damages: [...(first.damages || []), ...(second.damages || [])] as ReadonlyArray<Damage>,
+        } as T) as T;
+    }
+
     private static doCombine<T extends Action>(
             actions: ReadonlyArray<Action>, 
             shouldMerge: (a: Action, b: Action) => boolean,
             combiner: (a: T, b: T) => T): ReadonlyArray<Action> {
         const result: Action[] = [];
         let previousAction: Action;
+        // console.log('considering actions to merge', actions);
         for (let i = 0; i < actions.length; i++) {
             const currentAction = actions[i];
             if (shouldMerge(previousAction, currentAction)) {

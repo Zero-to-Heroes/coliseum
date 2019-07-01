@@ -4,15 +4,12 @@ import { Entity } from "../game/entity";
 import { AllCardsService } from "../../services/all-cards.service";
 import { HasTargets } from "./has-targets";
 
-export class PowerTargetAction extends Action implements HasTargets {    
+export class PowerTargetAction extends Action implements HasTargets {   
     readonly originId: number;
-    readonly targetIds: ReadonlyArray<number>;
-
-    readonly allCards: AllCardsService;
-
-    constructor(allCards: AllCardsService) {
+    readonly targetIds: ReadonlyArray<number>; 
+    
+    constructor(private allCards: AllCardsService) {
         super();
-        this.allCards = allCards;
     }
 
     public static create(newAction, allCards: AllCardsService): PowerTargetAction {

@@ -191,6 +191,13 @@ export class ActionParserService {
         for (const parser of actionParsers) {
             reducedActions = parser.reduce(reducedActions);
         }
+        // Because the different parsers can interact with each other, we need to apply all 
+        // of them until the result doesn't change anymore
+        // This looks heavy in perf, but there aren't many actions, and it lets us 
+        // handle each action type independently, which makes for more separated concerns
+        if (!this.areEqual(reducedActions, actionsForTurn)) {
+            return this.reduceActions(actionParsers, reducedActions);
+        }
         return reducedActions;
     }
 
@@ -198,5 +205,17 @@ export class ActionParserService {
         let intermediate: T[] = [...array];
         intermediate.sort(sortingFunction);
         return intermediate as ReadonlyArray<T>;
+    }
+
+    private areEqual(actions1: ReadonlyArray<Action>, actions2: ReadonlyArray<Action>): boolean {
+        if (actions1.length !== actions2.length) {
+            return false;
+        }
+        for (let i = 0; i < actions1.length; i++) {
+            if (actions1[i] !== actions2[i]) {
+                return false;
+            }
+        }
+        return true;
     }
 }

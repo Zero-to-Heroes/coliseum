@@ -86,10 +86,14 @@ export class DamageParser implements Parser {
     }
 
     private mergeDamageIntoAction(previousAction: Action, currentAction: DamageAction): Action {
-        return previousAction.updateAction({
+        const result = previousAction.updateAction({
             index: currentAction.index,
             entities: currentAction.entities,
             damages: [...(previousAction.damages || []), ...(currentAction.damages || [])] as ReadonlyArray<Damage>,
         } as Action);
+        // if (previousAction instanceof PowerTargetAction) {
+        //     console.log('merging damage into target action', previousAction.originId, previousAction, currentAction, result, result instanceof PowerTargetAction)
+        // }
+        return result;
     }
 }
