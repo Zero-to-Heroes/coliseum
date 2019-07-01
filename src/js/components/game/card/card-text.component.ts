@@ -139,7 +139,6 @@ export class CardTextComponent {
 
     private modifier(bonus: number, double: number) {
         return (match, part1) => {
-		    console.log('applying modifier for', bonus, double, match, part1);
 			let value = +part1;
 			if (bonus !== 0 || double !== 0) {
                 value += bonus;

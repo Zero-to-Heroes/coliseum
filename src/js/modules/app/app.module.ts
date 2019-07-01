@@ -66,7 +66,7 @@ import { CardElementResizeDirective } from '../../directives/card-element-resize
 		BrowserAnimationsModule,
 		Ng2FittextModule,
 		LoggerModule.forRoot({ 
-			level: process.env.NODE_ENV === 'production' ? NgxLoggerLevel.INFO : NgxLoggerLevel.DEBUG 
+			level: process.env.NODE_ENV === 'production' ? NgxLoggerLevel.INFO : NgxLoggerLevel.INFO 
         }),
 	],
 	declarations: [

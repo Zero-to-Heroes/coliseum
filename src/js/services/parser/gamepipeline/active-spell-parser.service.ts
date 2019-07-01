@@ -10,6 +10,8 @@ import { GameTag } from '../../../models/enums/game-tags';
 import { CardType } from '../../../models/enums/card-type';
 import { PowerTargetAction } from '../../../models/action/power-target-action';
 import { AttachingEnchantmentAction } from '../../../models/action/attaching-enchantment-action';
+import { DamageAction } from '../../../models/action/damage-action';
+import { CardTargetAction } from '../../../models/action/card-target-action';
 
 @Injectable()
 export class ActiveSpellParserService {
@@ -61,12 +63,16 @@ export class ActiveSpellParserService {
                 && action.entities.get(action.originId).getTag(GameTag.CARDTYPE) === CardType.SPELL) {
             activeSpell = action.originId;
         }
+        else if (action instanceof CardTargetAction
+                && action.entities.get(action.originId).getTag(GameTag.CARDTYPE) === CardType.SPELL) {
+            activeSpell = action.originId;
+        }
         else {
             // Be default, hide the active spell. Only explic
             activeSpell = undefined;
         }
         if (activeSpell) {
-            this.logger.debug('Updating active spell', activeSpell);
+            // this.logger.debug('Updating active spell', activeSpell);
             return action.updateAction({ activeSpell: activeSpell } as Action);
         }
         return action;
