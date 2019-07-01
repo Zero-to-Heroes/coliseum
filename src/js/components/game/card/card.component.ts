@@ -13,6 +13,7 @@ import { AllCardsService } from '../../../services/all-cards.service';
 	],
 	template: `
         <div class="card" 
+                [ngClass]="{ 'highlight': _option }"
                 cardResize
                 cardTooltip [tooltipEntity]="_entity" [hasTooltip]="_hasTooltip"
                 [attr.data-entity-id]="!forbiddenTargetSource && _entity.id">
@@ -51,6 +52,7 @@ export class CardComponent {
     _entity: Entity;
     _controller: Entity;
     _crossed: boolean;
+    _option: boolean;
 
 	cardId: string;
 	cardType: CardType;
@@ -103,6 +105,10 @@ export class CardComponent {
     
 	@Input("forbiddenTargetSource") set forbiddenTargetSource(value: boolean) {
 		this._forbiddenTargetSource = value;
+	}
+    
+	@Input("option") set option(value: boolean) {
+		this._option = value;
 	}
 
 	@Input("crossed") set crossed(value: boolean) {

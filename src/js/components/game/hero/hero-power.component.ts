@@ -10,6 +10,7 @@ import { NGXLogger } from 'ngx-logger';
     ],
 	template: `
         <div class="hero-power" 
+                [ngClass]="{ 'highlight': _option }"
                 cardTooltip [tooltipEntity]="entity"
                 [attr.data-entity-id]="entityId">
             <hero-power-art [cardId]="cardId" *ngIf="!exhausted"></hero-power-art>
@@ -26,6 +27,7 @@ export class HeroPowerComponent {
     cardId: string;
     cost: number;
     exhausted: boolean;
+    _option: boolean;
     
     constructor(private logger: NGXLogger) {}
 
@@ -37,4 +39,8 @@ export class HeroPowerComponent {
         this.exhausted = heroPower.getTag(GameTag.EXHAUSTED) === 1 || heroPower.getTag(GameTag.HERO_POWER_DISABLED) === 1;
 		this.cost = heroPower.getTag(GameTag.COST);
     }
+    
+	@Input("option") set option(value: boolean) {
+		this._option = value;
+	}
 }

@@ -1,4 +1,10 @@
+@import '../card/highlights.scss';
+
 .hero-power {
     height: 100%;
     position: relative;
+    
+    &.highlight {
+        filter: $highlight;
+    }
 }

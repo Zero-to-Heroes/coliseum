@@ -30,6 +30,7 @@ import { Damage } from '../../../models/action/damage';
 import { DiscoveryPickParser } from '../action/discovery-pick-parser';
 import { MulliganCardChoiceParser } from '../action/mulligan-card-choice-parser';
 import { CardDiscardParser } from '../action/card-discard-parser';
+import { OptionsParser } from '../action/options-parser';
 
 @Injectable()
 export class ActionParserService {
@@ -60,6 +61,7 @@ export class ActionParserService {
             new AttachingEnchantmentParser(this.allCards),
             new DamageParser(this.allCards, this.logger),
             new CardDiscardParser(this.allCards, this.logger),
+            new OptionsParser(this.allCards, this.logger),
         ];
     }
 

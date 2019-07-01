@@ -10,7 +10,10 @@ import { NGXLogger } from 'ngx-logger';
         '../../../../css/components/game/hero/hero-card.component.scss'
     ],
 	template: `
-        <div class="hero-card" [attr.data-entity-id]="entityId" [attr.data-player-entity-id]="playerEntityId">
+        <div class="hero-card" 
+                [ngClass]="{ 'highlight': _option }"
+                [attr.data-entity-id]="entityId" 
+                [attr.data-player-entity-id]="playerEntityId">
             <hero-art [cardId]="cardId"></hero-art>
             <hero-frame></hero-frame>
 			<hero-stats 
@@ -38,6 +41,7 @@ export class HeroCardComponent {
 	damage: number;
 	armor: number;
     shownDamage: number;
+    _option: boolean;
 
 	constructor(private logger: NGXLogger) { }
 
@@ -54,4 +58,8 @@ export class HeroCardComponent {
 
 		this.shownDamage = hero.damageForThisAction;
     }
+    
+	@Input("option") set option(value: boolean) {
+		this._option = value;
+	}
 }

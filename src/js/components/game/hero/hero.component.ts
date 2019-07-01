@@ -10,8 +10,8 @@ import { NGXLogger } from 'ngx-logger';
 	template: `
         <div class="hero">
             <weapon [weapon]="_weapon"></weapon>
-            <hero-card [hero]="_hero"></hero-card>
-            <hero-power [heroPower]="_heroPower"></hero-power>
+            <hero-card [hero]="_hero" [option]="isOption(_hero)"></hero-card>
+            <hero-power [heroPower]="_heroPower" [option]="isOption(_heroPower)"></hero-power>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -21,6 +21,7 @@ export class HeroComponent {
     _hero: Entity;
     _heroPower: Entity;
     _weapon: Entity;
+    _options: ReadonlyArray<number>;
 
     constructor(private logger: NGXLogger) {}
 
@@ -37,5 +38,14 @@ export class HeroComponent {
     @Input('weapon') set weapon(weapon: Entity) {
         this.logger.debug('[hero] setting new weapon', weapon);
         this._weapon = weapon;
+    }
+
+    @Input('options') set options(value: ReadonlyArray<number>) {
+        this.logger.debug('[hero] setting options', value);
+        this._options = value;
+    }
+
+    isOption(entity: Entity): boolean {
+        return this._options.indexOf(entity.id) !== -1;
     }
 }

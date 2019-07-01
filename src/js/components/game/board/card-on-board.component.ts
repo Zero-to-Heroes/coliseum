@@ -14,6 +14,7 @@ import { NGXLogger } from 'ngx-logger';
 	],
 	template: `
         <div class="card-on-board" 
+                [ngClass]="{ 'highlight': _option }"
                 cardResize
                 cardTooltip [tooltipEntity]="_entity"
                 [attr.data-entity-id]="_entity.id">
@@ -37,6 +38,7 @@ import { NGXLogger } from 'ngx-logger';
 export class CardOnBoardComponent {
 
 	_entity: Entity;
+    _option: boolean;
 
 	cardId: string;
 	cardType: CardType;
@@ -81,4 +83,8 @@ export class CardOnBoardComponent {
         
         this.hideStats = entity.getTag(GameTag.HIDE_STATS) === 1;
     }
+    
+	@Input("option") set option(value: boolean) {
+		this._option = value;
+	}
 }

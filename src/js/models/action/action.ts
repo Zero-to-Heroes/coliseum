@@ -14,6 +14,7 @@ export abstract class Action {
     readonly activeSpell: number;
     readonly isMulligan: boolean;
     readonly targets: ReadonlyArray<[number, number]>;
+    readonly options: ReadonlyArray<number> = [];
     // This is part of the global action, because damage actions can be merged 
     // into non-damage ones
     readonly damages: ReadonlyArray<Damage>; 

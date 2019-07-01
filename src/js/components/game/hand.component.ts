@@ -11,7 +11,7 @@ import { NGXLogger } from 'ngx-logger';
 		<ul class="hand">
 			<li *ngFor="let entity of _entities; let i = index; trackBy: trackByFn" 
 					[style.marginLeft.%]="i !== 0 ? marginLeft : 0">
-				<card [entity]="entity" [controller]="_controller"></card>
+				<card [entity]="entity" [option]="isOption(entity)" [controller]="_controller"></card>
 			</li>
 		</ul>
 	`,
@@ -20,6 +20,7 @@ import { NGXLogger } from 'ngx-logger';
 export class HandComponent {
 
     _entities: ReadonlyArray<Entity>;
+    _options: ReadonlyArray<number>;
     _controller: Entity;
 	marginLeft: number;
 
@@ -46,10 +47,19 @@ export class HandComponent {
 				this.marginLeft = -1;
 		}
     }
+
+    @Input('options') set options(value: ReadonlyArray<number>) {
+        this.logger.debug('[hand] setting options', value);
+        this._options = value;
+    }
     
     @Input('controller') set controller(value: Entity) {
 		this.logger.debug('[hand] setting controller', value);
         this._controller = value;
+    }
+
+    isOption(entity: Entity): boolean {
+        return this._options.indexOf(entity.id) !== -1;
     }
 	
 	trackByFn(index, item: Entity) {

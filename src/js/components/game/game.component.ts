@@ -15,11 +15,13 @@ import { GameTag } from '../../models/enums/game-tags';
                 <play-area class="top"
                         [mulligan]="_isMulligan"
                         [entities]="_entities" 
+                        [options]="_options"
                         [playerId]="_opponentId">
                 </play-area>
                 <play-area class="bottom" 
                         [mulligan]="_isMulligan"
                         [entities]="_entities" 
+                        [options]="_options"
                         [playerId]="_playerId">
                 </play-area>
             </div>
@@ -67,6 +69,7 @@ export class GameComponent {
     _activeSpellController: Entity;  
     _isMulligan: boolean;
     _targets: ReadonlyArray<[number, number]> = [];
+    _options: ReadonlyArray<number> = [];
 
     private activeSpellId: number;
 
@@ -126,6 +129,11 @@ export class GameComponent {
     @Input('targets') set targets(value: ReadonlyArray<[number, number]>) {
         this.logger.debug('[game] setting targets', value);
         this._targets = value;
+    }
+
+    @Input('options') set options(value: ReadonlyArray<number>) {
+        this.logger.debug('[game] setting options', value);
+        this._options = value;
     }
 
     private updateActiveSpell() {

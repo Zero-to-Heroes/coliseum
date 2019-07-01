@@ -13,9 +13,9 @@ import { NGXLogger } from 'ngx-logger';
     ],
 	template: `
         <div class="play-area" [ngClass]="{ 'mulligan': _isMulligan }">
-            <hand [entities]="hand" [controller]="playerEntity"></hand>
-            <hero [hero]="hero" [heroPower]="heroPower" [weapon]="weapon"></hero>
-            <board [entities]="board"></board>
+            <hand [entities]="hand" [options]="handOptions" [controller]="playerEntity"></hand>
+            <hero [hero]="hero" [heroPower]="heroPower" [weapon]="weapon" [options]="heroOptions"></hero>
+            <board [entities]="board" [options]="boardOptions"></board>
             <mana-tray 
                     [total]="totalCrystals" 
                     [available]="availableCrystals"
@@ -35,10 +35,13 @@ export class PlayAreaComponent {
     _playerId: number;
 
     hand: ReadonlyArray<Entity>;
+    handOptions: ReadonlyArray<number>;
     board: ReadonlyArray<Entity>;
+    boardOptions: ReadonlyArray<number>;
     deck: ReadonlyArray<Entity>;
     playerEntity: Entity;
     hero: Entity;
+    heroOptions: ReadonlyArray<number>;
     heroPower: Entity;
     weapon: Entity;
 
@@ -48,6 +51,7 @@ export class PlayAreaComponent {
     lockedCrystals: number;
     futureLockedCrystals: number;
 
+    private _options: ReadonlyArray<number>;
 
     constructor(private logger: NGXLogger) {}
 
@@ -59,6 +63,12 @@ export class PlayAreaComponent {
     @Input('entities') set entities(entities: Map<number, Entity>) {
         this.logger.debug('[play-area] setting new entities', entities.toJS());
         this._entities = entities;
+        this.updateEntityGroups();
+    }
+
+    @Input('options') set options(value: ReadonlyArray<number>) {
+        this.logger.debug('[play-area] setting options', value);
+        this._options = value;
         this.updateEntityGroups();
     }
 
@@ -76,11 +86,14 @@ export class PlayAreaComponent {
         
         this.playerEntity = this._entities.find((entity) => entity.getTag(GameTag.PLAYER_ID) === this._playerId);
         this.hand = this.getHandEntities(this._playerId);
+        this.handOptions = this.getOptions(this.hand, this._options);
         this.board = this.getBoardEntities(this._playerId);
+        this.boardOptions = this.getOptions(this.board, this._options);
         this.deck = this.getDeckEntities(this._playerId);
         this.hero = this.getHeroEntity(this.playerEntity);
         this.heroPower = this.getHeroPowerEntity(this._playerId); 
         this.weapon = this.getWeaponEntity(this._playerId); 
+        this.heroOptions = this.getOptions([this.hero, this.heroPower, this.weapon], this._options);
 
         this.totalCrystals = this.playerEntity.getTag(GameTag.RESOURCES) || 0;
         this.availableCrystals = this.totalCrystals - (this.playerEntity.getTag(GameTag.RESOURCES_USED) || 0);
@@ -131,6 +144,13 @@ export class PlayAreaComponent {
                 .filter((entity) => entity.getTag(GameTag.ZONE) === Zone.PLAY)
                 .filter((entity) => entity.getTag(GameTag.CONTROLLER) === playerId)
                 [0];
+    }
+
+    private getOptions(zone: ReadonlyArray<Entity>, options: ReadonlyArray<number>): ReadonlyArray<number> {
+        return zone
+                .filter(entity => entity)
+                .map(entity => entity.id)
+                .filter(id => options.indexOf(id) !== -1);
     }
 
 }
