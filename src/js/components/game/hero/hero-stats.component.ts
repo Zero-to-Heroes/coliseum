@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, ChangeDetectorRef, AfterViewInit, ElementRef, ViewRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { AllCardsService } from '../../../services/all-cards.service';
 import { NGXLogger } from 'ngx-logger';
 
@@ -9,22 +9,22 @@ import { NGXLogger } from 'ngx-logger';
 		'../../../../css/components/game/hero/hero-stats.component.scss'
 	],
 	template: `
-        <div class="hero-stats" *ngIf="hasStats">
-            <div class="stat {{attackClass}}" [style.opacity]="_attack ? 1 : 0">
+        <div class="hero-stats" *ngIf="hasStats" cardElementResize [fontSizeRatio]="0.15">
+            <div class="stat {{attackClass}}" [style.opacity]="_attack ? 1 : 0" resizeTarget>
                 <img class="stat-icon" src="https://static.zerotoheroes.com/hearthstone/asset/manastorm/attack.png" />
                 <div class="stat-value"><span>{{_attack}}</span></div>
             </div>
-            <div class="stat {{healthClass}}">
+            <div class="stat {{healthClass}}" resizeTarget>
                 <div class="stat-value"><span>{{healthLeft}}</span></div>
             </div>
-            <div class="stat armor">
+            <div class="stat armor" resizeTarget>
                 <span>{{_armor}}</span>
             </div>
         </div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeroStatsComponent implements AfterViewInit {
+export class HeroStatsComponent {
 
     hasStats: boolean;
 
@@ -39,12 +39,7 @@ export class HeroStatsComponent implements AfterViewInit {
     private _health: number;
     private _damage: number;
 
-    constructor(
-        private cards: AllCardsService, 
-        private cdr: ChangeDetectorRef, 
-        private logger: NGXLogger,
-        private elRef: ElementRef) { 
-    }
+    constructor(private cards: AllCardsService, private logger: NGXLogger) { }
 
     @Input('cardId') set cardId(cardId: string) {
         this.logger.debug('[card-stats] setting cardId', cardId);
@@ -76,10 +71,6 @@ export class HeroStatsComponent implements AfterViewInit {
         this.updateStats();
     }
 
-    ngAfterViewInit() {
-        setTimeout(() => this.resizeText());
-    }
-
     private updateStats() {
         this.attackClass = undefined;
         this.healthClass = undefined;
@@ -107,9 +98,6 @@ export class HeroStatsComponent implements AfterViewInit {
         this.healthLeft = this._health - this._damage;
         this.updateAttackClass(originalCard);
         this.updateHealthClass(originalCard);
-        if (!(<ViewRef>this.cdr).destroyed) {
-            this.cdr.detectChanges();
-        }
     }
 
     private updateAttackClass(originalCard) {
@@ -126,20 +114,6 @@ export class HeroStatsComponent implements AfterViewInit {
         this.healthClass = 'health';
         if (this._damage > 0) {
             this.healthClass += ' damaged';
-        }
-    }
-
-    private resizeText() {
-        const el = this.elRef.nativeElement.querySelector(".hero-stats");
-        if (!el) {
-            setTimeout(() => this.resizeText());
-            return;
-        }
-        const fontSize = 0.15 * el.getBoundingClientRect().width;
-        const textEl = this.elRef.nativeElement.querySelector(".hero-stats");
-        textEl.style.fontSize = fontSize + 'px';
-        if (!(<ViewRef>this.cdr).destroyed) {
-            this.cdr.detectChanges();
         }
     }
 }

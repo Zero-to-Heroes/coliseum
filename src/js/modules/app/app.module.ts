@@ -59,6 +59,9 @@ import { CardResizeDirective } from '../../directives/card-resize.directive';
 import { DeckComponent } from '../../components/game/deck/deck.component';
 import { DamageComponent } from '../../components/game/card/damage.component';
 import { CardElementResizeDirective } from '../../directives/card-element-resize.directive';
+import { WeaponArtComponent } from '../../components/game/hero/weapon-art.component';
+import { WeaponFrameComponent } from '../../components/game/hero/weapon-frame.component';
+import { WeaponStatsComponent } from '../../components/game/hero/weapon-stats.component';
 
 @NgModule({
 	imports: [
@@ -94,9 +97,13 @@ import { CardElementResizeDirective } from '../../directives/card-element-resize
 		HeroPowerComponent,
 		HeroPowerArtComponent,
 		HeroPowerCostComponent,
-		HeroPowerFrameComponent,
-
+        HeroPowerFrameComponent,
+        
 		WeaponComponent,
+        WeaponArtComponent,
+        WeaponFrameComponent,
+        WeaponStatsComponent,
+
 		CardComponent,
 		CardArtComponent,
 		CardFrameComponent,

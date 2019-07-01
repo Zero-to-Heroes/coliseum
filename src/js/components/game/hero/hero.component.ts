@@ -9,7 +9,7 @@ import { NGXLogger } from 'ngx-logger';
     ],
 	template: `
         <div class="hero">
-            <weapon [weapon]="_weapon"></weapon>
+            <weapon [weapon]="_weapon" *ngIf="_weapon"></weapon>
             <hero-card [hero]="_hero" [option]="isOption(_hero)"></hero-card>
             <hero-power [heroPower]="_heroPower" [option]="isOption(_heroPower)"></hero-power>
 		</div>

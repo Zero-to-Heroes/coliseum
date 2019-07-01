@@ -68,11 +68,10 @@ export class GameParserService {
             (game) => this.activeSpellParser.parseActiveSpell(game),
 			(game) => this.logPerf('activeSpellSet', start, game),
             (game) => this.targetsParser.parseTargets(game),
-			(game) => this.logPerf('targets', start, game),
+            (game) => this.logPerf('targets', start, game),
+            // Add the red cross for mulligan 
             (game) => this.mulliganParser.affectMulligan(game),
 			(game) => this.logPerf('affectMulligan', start, game),
-            // (game) => this.stateProcessor.populateIntermediateStates(game, history),
-			// (game) => this.logPerf('populateIntermediateStates', start, game),
 			(game) => this.narrator.populateActionText(game),
 			(game) => this.logPerf('populateActionText', start, game),
 			(game) => this.narrator.createGameStory(game),
