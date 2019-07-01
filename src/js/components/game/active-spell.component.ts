@@ -12,6 +12,7 @@ import { NGXLogger } from 'ngx-logger';
             <card class="active-spell"
                     *ngIf="_entity"
                     [hasTooltip]="false"
+                    [controller]="_controller"
                     [entity]="_entity">
             </card>
 		</div>
@@ -20,7 +21,8 @@ import { NGXLogger } from 'ngx-logger';
 })
 export class ActiveSpellComponent {
 
-	_entity: Entity;
+    _entity: Entity;
+    _controller: Entity;
 
 	constructor(private logger: NGXLogger) {
 	}
@@ -28,5 +30,10 @@ export class ActiveSpellComponent {
     @Input('entity') set entity(value: Entity) {
         this.logger.debug('[active-spell] setting new entity', value);
 		this._entity = value;
+	}
+
+    @Input('controller') set controller(value: Entity) {
+        this.logger.debug('[active-spell] setting controller', value);
+		this._controller = value;
 	}
 }

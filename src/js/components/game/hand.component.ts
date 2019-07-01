@@ -11,7 +11,7 @@ import { NGXLogger } from 'ngx-logger';
 		<ul class="hand">
 			<li *ngFor="let entity of _entities; let i = index; trackBy: trackByFn" 
 					[style.marginLeft.%]="i !== 0 ? marginLeft : 0">
-				<card [entity]="entity"></card>
+				<card [entity]="entity" [controller]="_controller"></card>
 			</li>
 		</ul>
 	`,
@@ -19,7 +19,8 @@ import { NGXLogger } from 'ngx-logger';
 })
 export class HandComponent {
 
-	_entities: ReadonlyArray<Entity>;
+    _entities: ReadonlyArray<Entity>;
+    _controller: Entity;
 	marginLeft: number;
 
 	constructor(private logger: NGXLogger) {
@@ -44,7 +45,12 @@ export class HandComponent {
 			default:
 				this.marginLeft = -1;
 		}
-	}
+    }
+    
+    @Input('controller') set controller(value: Entity) {
+		this.logger.debug('[hand] setting controller', value);
+        this._controller = value;
+    }
 	
 	trackByFn(index, item: Entity) {
 		return item.id;

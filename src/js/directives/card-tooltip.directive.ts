@@ -8,6 +8,7 @@ import { Entity } from '../models/game/entity';
 export class CardTooltipDirective {
 
     @Input() tooltipEntity: Entity;
+    @Input() tooltipControllerEntity: Entity;
     @Input() hasTooltip: boolean = true;
     
     constructor(private el: ElementRef, private events: Events) {
@@ -29,7 +30,7 @@ export class CardTooltipDirective {
 		}
 		// TODO: compute this once at component init + after each resize, instead of every time
 		// TODO: move the logic away to tooltips component, so it can take care of auto positioning
-		this.events.broadcast(Events.SHOW_TOOLTIP, this.tooltipEntity, x, y);
+		this.events.broadcast(Events.SHOW_TOOLTIP, this.tooltipEntity, this.tooltipControllerEntity, x, y);
 	}
 
 	@HostListener('mouseleave')

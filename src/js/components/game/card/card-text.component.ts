@@ -45,6 +45,9 @@ export class CardTextComponent {
     maxFontSize: number;
     dirtyFlag: boolean = false;
 
+    private _entity: Entity;
+    private _controller: Entity;
+
     constructor(
             private cards: AllCardsService, 
             private domSanitizer: DomSanitizer,
@@ -57,8 +60,23 @@ export class CardTextComponent {
         }
     
     @Input('entity') set entity(value: Entity) {
-        const cardId = value.cardID;
-        this.logger.debug('[card-text] setting cardId', cardId);
+        this.logger.debug('[card-text] setting entity', value.tags.toJS());
+        this._entity = value;
+        this.updateText();
+    }
+    
+
+    @Input('controller') set controller(value: Entity) {
+        this.logger.debug('[card-text] setting controller', value && value.tags.toJS());
+        this._controller = value;
+        this.updateText();
+    }
+
+    private updateText() {
+        if (!this._entity) {
+            return;
+        }
+        const cardId = this._entity.cardID;
         this.text = undefined;
         const originalCard = this.cards.getCard(cardId);
         if (!originalCard.text) {
@@ -76,14 +94,31 @@ export class CardTextComponent {
                 .replace(/\u00a0/g, " ")
                 .replace(/^\[x\]/, "");
         // E.g. Fatespinner
-        if (value.getTag(GameTag.HIDDEN_CHOICE) && description.indexOf('@') !== -1) {
-            console.log('hidden choice', value.tags.toJS(), description);
-            description = description.split('@')[value.getTag(GameTag.HIDDEN_CHOICE)];
+        if (this._entity.getTag(GameTag.HIDDEN_CHOICE) && description.indexOf('@') !== -1) {
+            console.log('hidden choice', this._entity.tags.toJS(), description);
+            description = description.split('@')[this._entity.getTag(GameTag.HIDDEN_CHOICE)];
         }
+        // Damage placeholder, influenced by spell damage
+        let damageBonus = 0;
+        let doubleDamage = 0;
+        if (this._controller) {
+            if (this._entity.getCardType() === CardType.SPELL) {
+                damageBonus = this._controller.getTag(GameTag.CURRENT_SPELLPOWER) || 0;
+                if (this._entity.getTag(GameTag.RECEIVES_DOUBLE_SPELLDAMAGE_BONUS) === 1) {
+                    damageBonus *= 2;
+                }
+                doubleDamage = this._controller.getTag(GameTag.SPELLPOWER_DOUBLE) || 0;
+            } else if (this._entity.getCardType() === CardType.HERO_POWER) {
+                damageBonus = this._controller.getTag(GameTag.CURRENT_HEROPOWER_DAMAGE_BONUS) || 0;
+                doubleDamage = this._controller.getTag(GameTag.HERO_POWER_DOUBLE) || 0;
+            }
+        }        
 
         description = description
                 // Now replace the value, if relevant
-                .replace('@', `${value.getTag(GameTag.TAG_SCRIPT_DATA_NUM_1)}`);
+                .replace('@', `${this._entity.getTag(GameTag.TAG_SCRIPT_DATA_NUM_1)}`)
+                .replace(/\$(\d+)/g, this.modifier(damageBonus, doubleDamage))
+                .replace(/\#(\d+)/g, this.modifier(damageBonus, doubleDamage));
         this.text = this.domSanitizer.bypassSecurityTrustHtml(description);
         if (!(<ViewRef>this.cdr).destroyed) {
             this.cdr.detectChanges();
@@ -99,6 +134,20 @@ export class CardTextComponent {
         this.dirtyFlag = !this.dirtyFlag;
         if (!(<ViewRef>this.cdr).destroyed) {
             this.cdr.detectChanges();
+        }
+    }
+
+    private modifier(bonus: number, double: number) {
+        return (match, part1) => {
+		    console.log('applying modifier for', bonus, double, match, part1);
+			let value = +part1;
+			if (bonus !== 0 || double !== 0) {
+                value += bonus;
+                value *= Math.pow(2, double);
+                console.log('updated value', value);
+                return "*" + value + "*";
+            }
+            return "" + value;
         }
     }
 }

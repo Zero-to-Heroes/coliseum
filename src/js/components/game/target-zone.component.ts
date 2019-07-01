@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, ChangeDetectorRef, ElementRef, AfterViewInit, HostListener } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, ChangeDetectorRef, ElementRef, AfterViewInit, HostListener, ViewRef } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
 import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 
@@ -52,7 +52,9 @@ export class TargetZoneComponent implements AfterViewInit {
     @HostListener('window:resize', ['$event'])
     onResize(event) {
         this.computeParentDimensions();
-        this.cdr.detectChanges();
+        if (!(<ViewRef>this.cdr).destroyed) {
+            this.cdr.detectChanges();
+        }
         setTimeout(() => this.drawTargetLines());
     }
 
@@ -72,7 +74,9 @@ export class TargetZoneComponent implements AfterViewInit {
         this.height = this.el.nativeElement.getBoundingClientRect().height;
         this.left = this.el.nativeElement.getBoundingClientRect().left;
         this.top = this.el.nativeElement.getBoundingClientRect().top;
-        this.cdr.detectChanges();
+        if (!(<ViewRef>this.cdr).destroyed) {
+            this.cdr.detectChanges();
+        }
     }
 
     private drawTargetLines() {
@@ -93,7 +97,9 @@ export class TargetZoneComponent implements AfterViewInit {
             </svg>
         `);
         // console.log('built svg', this.svg);
-        this.cdr.detectChanges();
+        if (!(<ViewRef>this.cdr).destroyed) {
+            this.cdr.detectChanges();
+        }
     }
 
     private drawTargetLine(originId: number, targetId: number): string {

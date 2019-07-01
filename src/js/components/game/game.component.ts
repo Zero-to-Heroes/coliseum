@@ -2,6 +2,7 @@ import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { Map } from 'immutable';
 import { Entity } from '../../models/game/entity';
 import { NGXLogger } from 'ngx-logger';
+import { GameTag } from '../../models/enums/game-tags';
 
 @Component({
 	selector: 'game',
@@ -32,7 +33,8 @@ import { NGXLogger } from 'ngx-logger';
             </player-name>
             <active-spell class="active-spell"
                     *ngIf="_activeSpell"
-                    [entity]="_activeSpell">
+                    [entity]="_activeSpell"
+                    [controller]="_activeSpellController">
             </active-spell>
             <target-zone *ngIf="_targets" [targets]="_targets"></target-zone>
             <div class="overlays" *ngIf="_isMulligan">
@@ -61,7 +63,8 @@ export class GameComponent {
     _playerName: string;
     _opponentName: string;
     _activePlayer: number;
-    _activeSpell: Entity;    
+    _activeSpell: Entity;  
+    _activeSpellController: Entity;  
     _isMulligan: boolean;
     _targets: ReadonlyArray<[number, number]> = [];
 
@@ -127,5 +130,6 @@ export class GameComponent {
 
     private updateActiveSpell() {
         this._activeSpell = this._entities && this.activeSpellId && this._entities.get(this.activeSpellId);
+        this._activeSpellController = this._entities.find((entity) => entity.getTag(GameTag.PLAYER_ID) === this._playerId);
     }
 }

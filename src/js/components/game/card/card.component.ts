@@ -22,6 +22,7 @@ import { AllCardsService } from '../../../services/all-cards.service';
 			<card-name [cardId]="cardId" *ngIf="cardId"></card-name>
             <card-text *ngIf="cardId"
                     [entity]="_entity"
+                    [controller]="_controller"
                     [cardType]="cardType">
             </card-text>
             <card-race *ngIf="race" 
@@ -48,6 +49,7 @@ import { AllCardsService } from '../../../services/all-cards.service';
 export class CardComponent {
 
     _entity: Entity;
+    _controller: Entity;
     _crossed: boolean;
 
 	cardId: string;
@@ -88,6 +90,11 @@ export class CardComponent {
             this.cardType = CardType[this.originalCard.type.toUpperCase() as string];
             this.cardClass = CardClass[this.originalCard.playerClass.toUpperCase() as string];
         }
+    }
+
+    @Input('controller') set controller(value: Entity) {
+		this.logger.debug('[card] setting controller', value);
+        this._controller = value;
     }
 
 	@Input("hasTooltip") set hasTooltip(hasTooltip: boolean) {

@@ -13,13 +13,15 @@ const CARD_ASPECT_RATIO = 1.56;
     <card class="tooltip" 
             [forbiddenTargetSource]="true"
             [entity]="entity" 
+            [controller]="controller"
             [hasTooltip]="false" *ngIf="entity">
     </card>`,
   	// I don't know how to make this work with OnPush
   	// changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Tooltip {
-  	@Input() entity: Tooltip;
+  	@Input() entity: Entity;
+  	@Input() controller: Entity;
 
   	@HostBinding('style.left') left: string;
   	@HostBinding('style.top') top: string;
@@ -57,9 +59,10 @@ export class TooltipsComponent implements AfterViewInit {
 				// let start = Date.now();
 				this.destroy();
                 const entity: Entity = data.data[0];
+                const controller: Entity = data.data[1];
                 
-				const leftInput = data.data[1];
-                const topInput = data.data[2];
+				const leftInput = data.data[2];
+                const topInput = data.data[3];
                 
                 const left = leftInput < this.rect.left
                         ? this.rect.left
@@ -74,6 +77,7 @@ export class TooltipsComponent implements AfterViewInit {
 
 			    // this.tooltip.instance.display = 'block';
 			    this.tooltip.instance.entity = entity;
+			    this.tooltip.instance.controller = controller;
 			    this.tooltip.instance.left = left + 'px';
 			    this.tooltip.instance.top = top + 'px';
 			    // this.tooltip.instance.position = 'absolute';

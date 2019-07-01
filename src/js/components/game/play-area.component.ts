@@ -13,7 +13,7 @@ import { NGXLogger } from 'ngx-logger';
     ],
 	template: `
         <div class="play-area" [ngClass]="{ 'mulligan': _isMulligan }">
-            <hand [entities]="hand"></hand>
+            <hand [entities]="hand" [controller]="playerEntity"></hand>
             <hero [hero]="hero" [heroPower]="heroPower" [weapon]="weapon"></hero>
             <board [entities]="board"></board>
             <mana-tray 
@@ -37,6 +37,7 @@ export class PlayAreaComponent {
     hand: ReadonlyArray<Entity>;
     board: ReadonlyArray<Entity>;
     deck: ReadonlyArray<Entity>;
+    playerEntity: Entity;
     hero: Entity;
     heroPower: Entity;
     weapon: Entity;
@@ -47,7 +48,6 @@ export class PlayAreaComponent {
     lockedCrystals: number;
     futureLockedCrystals: number;
 
-    private playerEntity: Entity;
 
     constructor(private logger: NGXLogger) {}
 
