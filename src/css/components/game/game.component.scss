@@ -31,7 +31,7 @@
         flex-shrink: 0; 
     }
 
-    &.mulligan {
+    &.in-overlay {
         .play-areas, player-name {
             filter: blur(3px);
         }

@@ -9,6 +9,7 @@ import { Events } from '../services/events.service';
 import { NGXLogger } from 'ngx-logger';
 import { GameTag } from '../models/enums/game-tags';
 import { PlayerEntity } from '../models/game/player-entity';
+import { PlayState } from '../models/enums/playstate';
 
 @Component({
 	selector: 'app-root',
@@ -26,6 +27,8 @@ import { PlayerEntity } from '../models/game/player-entity';
                     [activePlayer]="activePlayer"
                     [activeSpell]="activeSpell"
                     [isMulligan]="isMulligan"
+                    [isEndGame]="isEndGame"
+                    [endGameStatus]="endGameStatus"
                     [entities]="entities"
                     [targets]="targets"
                     [options]="options"
@@ -46,9 +49,12 @@ export class AppComponent {
     turnString: string;
     activePlayer: number;
     activeSpell: number;
-    isMulligan: boolean;
     targets: ReadonlyArray<[number, number]>;
     options: ReadonlyArray<number>;
+    
+    isMulligan: boolean;
+    isEndGame: boolean;
+    endGameStatus: PlayState;
 
 	private currentActionInTurn: number = 0;
 	private currentTurn: number = 0;
@@ -103,9 +109,11 @@ export class AppComponent {
         this.turnString = this.computeTurnString();
         this.activePlayer = this.computeActivePlayer();
         this.activeSpell = this.computeActiveSpell();
-        this.isMulligan = this.computeMulligan();
         this.targets = this.computeTargets();
         this.options = this.computeOptions();
+        this.isMulligan = this.computeMulligan();
+        this.isEndGame = this.computeEndGame();
+        this.endGameStatus = this.computeEndGameStatus();
         this.updateUrlQueryString();
         this.logger.debug('[app] setting turn', this.turnString);
         this.logger.info('[app] Considering action', this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn]);
@@ -120,6 +128,14 @@ export class AppComponent {
 
 	private computeMulligan(): boolean {
 		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].isMulligan;
+	}
+
+	private computeEndGame(): boolean {
+		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].isEndGame;
+	}
+
+	private computeEndGameStatus(): PlayState {
+		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].endGameStatus;
 	}
 
 	private computeOptions(): ReadonlyArray<number> {
@@ -157,8 +173,8 @@ export class AppComponent {
 	}
 
 	private moveCursorToNextAction() {
-        if (this.currentActionInTurn >= this.game.turns.get(this.currentTurn).actions.length 
-                && this.currentTurn === this.game.turns.size) {
+        if (this.currentActionInTurn >= this.game.turns.get(this.currentTurn).actions.length - 1
+                && this.currentTurn >= this.game.turns.size - 1) {
             return;
         }
 		this.currentActionInTurn++;

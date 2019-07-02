@@ -3,6 +3,7 @@ import { Map } from 'immutable';
 import { Entity } from '../../models/game/entity';
 import { NGXLogger } from 'ngx-logger';
 import { GameTag } from '../../models/enums/game-tags';
+import { PlayState } from '../../models/enums/playstate';
 
 @Component({
 	selector: 'game',
@@ -10,7 +11,7 @@ import { GameTag } from '../../models/enums/game-tags';
         '../../../css/components/game/game.component.scss'
     ],
 	template: `
-        <div class="game" [ngClass]="{'mulligan': _isMulligan}">
+        <div class="game" [ngClass]="{'in-overlay': isOverlay}">
             <div class="play-areas">
                 <play-area class="top"
                         [mulligan]="_isMulligan"
@@ -39,17 +40,22 @@ import { GameTag } from '../../models/enums/game-tags';
                     [controller]="_activeSpellController">
             </active-spell>
             <target-zone *ngIf="_targets" [targets]="_targets"></target-zone>
-            <div class="overlays" *ngIf="_isMulligan">
-                <mulligan class="top"
+            <div class="overlays" *ngIf="isOverlay">
+                <mulligan *ngIf="_isMulligan" class="top"
                         [entities]="_entities" 
                         [crossed]="_crossed"
                         [playerId]="_opponentId">
                 </mulligan>
-                <mulligan class="bottom"
+                <mulligan *ngIf="_isMulligan" class="bottom"
                         [entities]="_entities" 
                         [crossed]="_crossed"
                         [playerId]="_playerId">
                 </mulligan>
+                <end-game *ngIf="_isEndGame" 
+                        [status]="_endGameStatus" 
+                        [entities]="_entities" 
+                        [playerId]="_playerId">
+                </end-game>
             </div>
 		</div>
 	`,
@@ -67,9 +73,13 @@ export class GameComponent {
     _activePlayer: number;
     _activeSpell: Entity;  
     _activeSpellController: Entity;  
-    _isMulligan: boolean;
     _targets: ReadonlyArray<[number, number]> = [];
     _options: ReadonlyArray<number> = [];
+    
+    isOverlay: boolean;
+    _isMulligan: boolean;
+    _isEndGame: boolean;
+    _endGameStatus: PlayState;
 
     private activeSpellId: number;
 
@@ -124,6 +134,19 @@ export class GameComponent {
     @Input('isMulligan') set isMulligan(value: boolean) {
         this.logger.debug('[game] setting isMulligan', value);
         this._isMulligan = value;
+        this.updateOverlay();
+    }
+
+    @Input('isEndGame') set isEndGame(value: boolean) {
+        this.logger.debug('[game] setting isEndGame', value);
+        this._isEndGame = value;
+        this.updateOverlay();
+    }
+
+    @Input('endGameStatus') set endGameStatus(value: PlayState) {
+        this.logger.debug('[game] setting endGameStatus', value);
+        this._endGameStatus = value;
+        this.updateOverlay();
     }
 
     @Input('targets') set targets(value: ReadonlyArray<[number, number]>) {
@@ -134,6 +157,10 @@ export class GameComponent {
     @Input('options') set options(value: ReadonlyArray<number>) {
         this.logger.debug('[game] setting options', value);
         this._options = value;
+    }
+
+    private updateOverlay() {
+        this.isOverlay = this._isMulligan || this._isEndGame;
     }
 
     private updateActiveSpell() {

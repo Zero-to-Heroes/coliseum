@@ -62,6 +62,8 @@ import { CardElementResizeDirective } from '../../directives/card-element-resize
 import { WeaponArtComponent } from '../../components/game/hero/weapon-art.component';
 import { WeaponFrameComponent } from '../../components/game/hero/weapon-frame.component';
 import { WeaponStatsComponent } from '../../components/game/hero/weapon-stats.component';
+import { EndGameParserService } from '../../services/parser/gamepipeline/end-game-parser.service';
+import { EndGameComponent } from '../../components/game/overlay/end-game.component';
 
 @NgModule({
 	imports: [
@@ -69,7 +71,7 @@ import { WeaponStatsComponent } from '../../components/game/hero/weapon-stats.co
 		BrowserAnimationsModule,
 		Ng2FittextModule,
 		LoggerModule.forRoot({ 
-			level: process.env.NODE_ENV === 'production' ? NgxLoggerLevel.INFO : NgxLoggerLevel.INFO 
+			level: process.env.NODE_ENV === 'production' ? NgxLoggerLevel.INFO : NgxLoggerLevel.DEBUG 
         }),
 	],
 	declarations: [
@@ -118,6 +120,7 @@ import { WeaponStatsComponent } from '../../components/game/hero/weapon-stats.co
         
         DeckComponent,        
         PlayerNameComponent,
+        EndGameComponent,
         
         MulliganComponent,
         ActiveSpellComponent,
@@ -140,6 +143,7 @@ import { WeaponStatsComponent } from '../../components/game/hero/weapon-stats.co
 		GamePopulationService,
         GameStateParserService,
         MulliganParserService,
+        EndGameParserService,
 		NarratorService,
         StateProcessorService,
         TargetsParserService,

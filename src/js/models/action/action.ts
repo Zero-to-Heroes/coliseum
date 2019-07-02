@@ -1,6 +1,7 @@
 import { Map } from "immutable";
 import { Entity } from "../game/entity";
 import { Damage } from "./damage";
+import { PlayState } from "../enums/playstate";
 
 export abstract class Action {
     readonly timestamp: number;
@@ -13,6 +14,8 @@ export abstract class Action {
     readonly highlightedEntities: ReadonlyArray<number>;
     readonly activeSpell: number;
     readonly isMulligan: boolean;
+    readonly isEndGame: boolean;
+    readonly endGameStatus: PlayState;
     readonly targets: ReadonlyArray<[number, number]>;
     readonly options: ReadonlyArray<number> = [];
     // This is part of the global action, because damage actions can be merged 
