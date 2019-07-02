@@ -64,6 +64,7 @@ import { WeaponFrameComponent } from '../../components/game/hero/weapon-frame.co
 import { WeaponStatsComponent } from '../../components/game/hero/weapon-stats.component';
 import { EndGameParserService } from '../../services/parser/gamepipeline/end-game-parser.service';
 import { EndGameComponent } from '../../components/game/overlay/end-game.component';
+import { DiscoverComponent } from '../../components/game/overlay/discover.component';
 
 @NgModule({
 	imports: [
@@ -123,6 +124,7 @@ import { EndGameComponent } from '../../components/game/overlay/end-game.compone
         EndGameComponent,
         
         MulliganComponent,
+        DiscoverComponent,
         ActiveSpellComponent,
         TargetZoneComponent,
 

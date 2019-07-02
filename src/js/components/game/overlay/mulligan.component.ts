@@ -30,7 +30,7 @@ export class MulliganComponent {
     constructor(private logger: NGXLogger) {}
 
     @Input('entities') set entities(entities: Map<number, Entity>) {
-        this.logger.debug('[play-area] setting new entities', entities.toJS());
+        this.logger.debug('[mulligan] setting new entities', entities.toJS());
         this._entities = entities;
         this.updateEntityGroups();
     }
@@ -40,7 +40,7 @@ export class MulliganComponent {
     }
 
     @Input('playerId') set playerId(playerId: number) {
-        this.logger.debug('[play-area] setting playerId', playerId);
+        this.logger.debug('[mulligan] setting playerId', playerId);
         this._playerId = playerId;
         this.updateEntityGroups();
     }
@@ -50,8 +50,8 @@ export class MulliganComponent {
 	}
 
     private updateEntityGroups() {
-        if (!this._entities || ! this._playerId) {
-            this.logger.debug('[play-area] entities not initialized yet');
+        if (!this._entities || !this._playerId) {
+            this.logger.debug('[mulligan] entities not initialized yet');
             return;
         }
         

@@ -10,6 +10,7 @@ import { NGXLogger } from 'ngx-logger';
 import { GameTag } from '../models/enums/game-tags';
 import { PlayerEntity } from '../models/game/player-entity';
 import { PlayState } from '../models/enums/playstate';
+import { DiscoverAction } from '../models/action/discover-action';
 
 @Component({
 	selector: 'app-root',
@@ -31,6 +32,7 @@ import { PlayState } from '../models/enums/playstate';
                     [endGameStatus]="endGameStatus"
                     [entities]="entities"
                     [targets]="targets"
+                    [discovers]="discovers"
                     [options]="options"
                     [crossed]="crossed">
             </game>
@@ -49,6 +51,7 @@ export class AppComponent {
     turnString: string;
     activePlayer: number;
     activeSpell: number;
+    discovers: ReadonlyArray<number>;
     targets: ReadonlyArray<[number, number]>;
     options: ReadonlyArray<number>;
     
@@ -111,6 +114,7 @@ export class AppComponent {
         this.activeSpell = this.computeActiveSpell();
         this.targets = this.computeTargets();
         this.options = this.computeOptions();
+        this.discovers = this.computeDiscovers();
         this.isMulligan = this.computeMulligan();
         this.isEndGame = this.computeEndGame();
         this.endGameStatus = this.computeEndGameStatus();
@@ -140,6 +144,14 @@ export class AppComponent {
 
 	private computeOptions(): ReadonlyArray<number> {
 		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].options;
+	}
+
+	private computeDiscovers(): ReadonlyArray<number> {
+        const action = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn];
+        if (action instanceof DiscoverAction) {
+            return action.choices;
+        }
+        return null;
 	}
 
     private computeActivePlayer(): number {
