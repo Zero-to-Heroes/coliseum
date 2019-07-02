@@ -8,10 +8,11 @@ import { DiscoverAction } from "../../../models/action/discover-action";
 import { ChosenEntityHistoryItem } from "../../../models/history/chosen-entities-history-item";
 import { DiscoveryPickAction as DiscoveryPickAction } from "../../../models/action/discovery-pick-action";
 import { ActionHelper } from "./action-helper";
+import { NGXLogger } from "ngx-logger";
 
 export class DiscoveryPickParser implements Parser {
 
-    constructor(private allCards: AllCardsService) {}
+    constructor(private allCards: AllCardsService, private logger: NGXLogger) {}
 
     public applies(item: HistoryItem): boolean {
         return item instanceof ChosenEntityHistoryItem && item.tag.cards && item.tag.cards.length === 1;
@@ -41,18 +42,24 @@ export class DiscoveryPickParser implements Parser {
     }
 
     private shouldMergeActions(previousAction: Action, currentAction: Action): boolean {
-        // For now we keep the pick as a separate action
+        // Merge it into the discover action
         if (previousAction instanceof DiscoverAction && currentAction instanceof DiscoveryPickAction) {
-            return false;
+            return true;
         }
         // In all the other cases, we just remove the DiscoveryPickAction
         else if (currentAction instanceof DiscoveryPickAction) {
+            this.logger.warn('removing discovery pick action', previousAction, currentAction);
             return true;
         }
         return false;
     }
 
     private mergeActions(previousAction: Action, currentAction: Action): Action {
+        if (previousAction instanceof DiscoverAction && currentAction instanceof DiscoveryPickAction) {
+            return previousAction.updateAction<DiscoverAction>({
+                chosen: [currentAction.choice] as ReadonlyArray<number>
+            } as DiscoverAction);
+        }
         return previousAction;
     }
 }

@@ -9,6 +9,7 @@ export class DiscoverAction extends Action {
     readonly origin: number;
     readonly ownerId: number;
     readonly choices: ReadonlyArray<number>;
+    readonly chosen: ReadonlyArray<number>;
 
     readonly allCards: AllCardsService;
 
@@ -27,6 +28,7 @@ export class DiscoverAction extends Action {
 
     public enrichWithText(): DiscoverAction {
         const owner = this.entities.get(this.ownerId) as PlayerEntity;
+
         const offeredCards = this.choices
                 .map((cardId) => this.entities.get(cardId))
                 .map((entity) => entity.cardID)
@@ -39,7 +41,21 @@ export class DiscoverAction extends Action {
         else {
             offerInfo = offeredCards.map((card) => card.name).join(', ');
         }
-        const textRaw = `\t${owner.name} discovers ${offerInfo}`;
+
+        const chosenCards = this.chosen && this.chosen.length > 0 && this.chosen
+                .map((cardId) => this.entities.get(cardId))
+                .map((entity) => entity.cardID)
+                .map((cardId) => this.allCards.getCard(cardId));
+        let choiceInfo = undefined;
+        // We don't have the mulligan info, so we just display the amount of cards being mulliganed
+        if (chosenCards.some((card) => !card)) {
+            choiceInfo = `${chosenCards.length} cards`;
+        }
+        else {
+            choiceInfo = chosenCards.map((card) => card.name).join(', ');
+        }
+        const chosenText = choiceInfo && ` and picks ${choiceInfo}`;
+        const textRaw = `\t${owner.name} discovers ${offerInfo}${chosenText}`;
         return Object.assign(new DiscoverAction(this.allCards), this, { textRaw: textRaw });                
     }
 

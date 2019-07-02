@@ -56,7 +56,7 @@ export class ActionParserService {
             new PowerTargetParser(this.allCards, this.logger),
             new CardTargetParser(this.allCards, this.logger),
             new DiscoverParser(this.allCards),
-            new DiscoveryPickParser(this.allCards),
+            new DiscoveryPickParser(this.allCards, this.logger),
             new SummonsParser(this.allCards),
             new SecretRevealedParser(this.allCards),
             new AttachingEnchantmentParser(this.allCards),
