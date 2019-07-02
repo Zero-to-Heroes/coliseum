@@ -11,7 +11,7 @@ import { PlayState } from '../../models/enums/playstate';
         '../../../css/components/game/game.component.scss'
     ],
 	template: `
-        <div class="game" [ngClass]="{'in-overlay': isOverlay}">
+        <div class="game" [ngClass]="{'in-overlay': isOverlay, 'mulligan': _isMulligan}">
             <div class="play-areas">
                 <play-area class="top"
                         [mulligan]="_isMulligan"

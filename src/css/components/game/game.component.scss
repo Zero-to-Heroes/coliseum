@@ -35,7 +35,9 @@
         .play-areas, player-name {
             filter: blur(3px);
         }
+    }
 
+    &.mulligan {
         ::ng-deep hand {
             opacity: 0;
         }
