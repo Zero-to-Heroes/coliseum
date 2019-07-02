@@ -14,7 +14,7 @@
     top: 68%;
     left: 20%;
     width: 66%;
-    height: 20%;
+    height: 19%;
     text-align: center;
     display: flex;
 
@@ -36,5 +36,12 @@
         .text {
             color: white;
         }
+    }
+
+    &.spell {
+        top: 70%;
+        left: 22%;
+        width: 60%;
+        height: 19%;
     }
 }
