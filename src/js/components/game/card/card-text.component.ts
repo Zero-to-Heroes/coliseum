@@ -13,7 +13,7 @@ import { GameTag } from '../../../models/enums/game-tags';
 		'../../../../css/components/game/card/card-text.component.scss'
 	],
 	template: `
-        <div class="card-text {{_cardType}}" *ngIf="text">
+        <div class="card-text {{_cardType}}" [ngClass]="{ 'premium': premium }" *ngIf="text">
             <div class="text" 
                     [fittext]="true" 
                     [minFontSize]="2" 
@@ -40,7 +40,8 @@ export class CardTextComponent {
         'ICCA08_030p', // Remorseless Winter
     ]
 
-	_cardType: string;
+    _cardType: string;
+    premium: boolean;
     text: SafeHtml;
     maxFontSize: number;
     dirtyFlag: boolean = false;
@@ -120,6 +121,10 @@ export class CardTextComponent {
                 .replace(/\$(\d+)/g, this.modifier(damageBonus, doubleDamage))
                 .replace(/\#(\d+)/g, this.modifier(damageBonus, doubleDamage));
         this.text = this.domSanitizer.bypassSecurityTrustHtml(description);
+
+        // Text is not the same color for premium cards
+        this.premium = this._entity.getTag(GameTag.PREMIUM) === 1;
+
         if (!(<ViewRef>this.cdr).destroyed) {
             this.cdr.detectChanges();
         }

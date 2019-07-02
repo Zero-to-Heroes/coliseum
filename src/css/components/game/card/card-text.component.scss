@@ -44,4 +44,10 @@
         width: 60%;
         height: 19%;
     }
+
+    &.premium {
+        .text {
+            color: white;
+        }
+    }
 }
