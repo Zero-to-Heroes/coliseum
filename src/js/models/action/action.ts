@@ -23,7 +23,7 @@ export abstract class Action {
     abstract update(entities: Map<number, Entity>): Action;
     abstract enrichWithText(): Action;
 
-    public updateAction(newAction: Action): Action {
+    public updateAction<T extends Action>(newAction: T): T {
         return Object.assign(this.getInstance(), this, newAction);
     }
 }

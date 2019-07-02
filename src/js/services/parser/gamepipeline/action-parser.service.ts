@@ -31,6 +31,7 @@ import { DiscoveryPickParser } from '../action/discovery-pick-parser';
 import { MulliganCardChoiceParser } from '../action/mulligan-card-choice-parser';
 import { CardDiscardParser } from '../action/card-discard-parser';
 import { OptionsParser } from '../action/options-parser';
+import { EndGameParser } from '../action/end-game-parser';
 
 @Injectable()
 export class ActionParserService {
@@ -62,6 +63,7 @@ export class ActionParserService {
             new DamageParser(this.allCards, this.logger),
             new CardDiscardParser(this.allCards, this.logger),
             new OptionsParser(this.allCards, this.logger),
+            new EndGameParser(this.logger),
         ];
     }
 
