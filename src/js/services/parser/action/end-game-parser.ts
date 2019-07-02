@@ -45,7 +45,8 @@ export class EndGameParser implements Parser {
     }
 
     private shouldMergeActions(previous: Action, current: Action): boolean {
-        return previous instanceof EndGameAction && current instanceof EndGameAction
+        // Absorbs all actions after the end game
+        return previous instanceof EndGameAction;
     }
 
     private mergeActions(previousAction: EndGameAction, currentAction: EndGameAction): EndGameAction {
