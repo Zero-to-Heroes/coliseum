@@ -9,9 +9,9 @@ import { NGXLogger } from 'ngx-logger';
 	],
 	template: `
         <div class="damage" cardElementResize [fontSizeRatio]="0.3">
-            <img class="damage-icon" src="https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/icon_damage.png" />
+            <img class="damage-icon" src="{{image}}" />
             <div class="amount" resizeTarget>
-                <div>-{{_amount}}</div>
+                <div>{{prefix}}{{_amount}}</div>
             </div>
         </div>
 	`,
@@ -19,6 +19,8 @@ import { NGXLogger } from 'ngx-logger';
 })
 export class DamageComponent {
 
+    image: string;
+    prefix: string;
     _amount: number;
 
     constructor(
@@ -29,6 +31,15 @@ export class DamageComponent {
 
     @Input('amount') set amount(value: number) {
         this.logger.debug('[damage] setting amount', value);
-        this._amount = value;
+        this._amount = Math.abs(value);
+        if (value >= 0) {
+            this.prefix = '-';
+            this.image = 'https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/icon_damage.png';
+        }
+        else {
+            this.prefix = '+';
+            console.warn('missing heal image');
+            this.image = 'https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/icon_damage.png';
+        }
     }
 }
