@@ -31,6 +31,7 @@ import { NGXLogger } from 'ngx-logger';
 					[damage]="damage">
 			</board-card-stats>
             <damage *ngIf="shownDamage" [amount]="shownDamage"></damage>
+            <sleeping *ngIf="sleeping"></sleeping>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -54,6 +55,7 @@ export class CardOnBoardComponent {
 	taunt: boolean;
     shownDamage: number;
     hideStats: boolean;
+    sleeping: boolean;
 
 	constructor(
 		private cards: AllCardsService,
@@ -82,6 +84,7 @@ export class CardOnBoardComponent {
         this.shownDamage = entity.damageForThisAction;
         
         this.hideStats = entity.getTag(GameTag.HIDE_STATS) === 1;
+        this.sleeping = entity.getTag(GameTag.EXHAUSTED) === 1;
     }
     
 	@Input("option") set option(value: boolean) {
