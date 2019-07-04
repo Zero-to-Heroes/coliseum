@@ -30,7 +30,17 @@ export class PowerTargetAction extends Action implements HasTargets {
                 .map((cardId) => this.allCards.getCard(cardId))
                 .map((card) => card.name)
                 .join(', ');
-        const textRaw = `\t${originCardName} targets ${targetCardNames}`;
+        let damageText = '';
+        if (this.damages) {
+            damageText = this.damages
+                    .map((damage) => {
+                        const entityCardId = this.entities.get(damage.entity).cardID;
+                        const entityCard = this.allCards.getCard(entityCardId);
+                        return `${entityCard.name} takes ${damage.amount} damage`;
+                    })
+                    .join(', ');
+        }
+        const textRaw = `\t${originCardName} targets ${targetCardNames}. ${damageText}`;
         return Object.assign(new PowerTargetAction(this.allCards), this, { textRaw: textRaw });                
     }
 
