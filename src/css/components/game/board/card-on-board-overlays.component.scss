@@ -23,11 +23,20 @@
     .overlay {
         position: absolute;
         pointer-events: none;
+        width: 195%;
+        left: -47%;
+        top: -19%;
 
         &.minion_divine_shield {
             width: 195%;
             left: -47%;
             top: -19%;
+        }
+        &.stealth {
+            width: 127%;
+            left: -14%;
+            top: 8%;
+            height: 91%;
         }
     }
 }
