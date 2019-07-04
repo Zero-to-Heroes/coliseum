@@ -25,13 +25,16 @@ export class AttackAction extends Action implements HasTarget {
         const targetCardId = this.entities.get(this.targetId).cardID;
         const originCard = this.allCards.getCard(originCardId);
         const targetCard = this.allCards.getCard(targetCardId);
-        const damageText = this.damages
-                .map((damage) => {
-                    const entityCardId = this.entities.get(damage.entity).cardID;
-                    const entityCard = this.allCards.getCard(entityCardId);
-                    return `${entityCard.name} takes ${damage.amount} damage`;
-                })
-                .join(', ');
+        let damageText = '';
+        if (this.damages) {
+            damageText = this.damages
+                    .map((damage) => {
+                        const entityCardId = this.entities.get(damage.entity).cardID;
+                        const entityCard = this.allCards.getCard(entityCardId);
+                        return `${entityCard.name} takes ${damage.amount} damage`;
+                    })
+                    .join(', ');
+        }
         const textRaw = `\t${originCard.name} attacks ${targetCard.name}. ${damageText}`;
         return Object.assign(new AttackAction(this.allCards), this, { textRaw: textRaw });                
     }
