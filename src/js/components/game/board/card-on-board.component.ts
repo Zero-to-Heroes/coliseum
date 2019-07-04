@@ -14,25 +14,27 @@ import { NGXLogger } from 'ngx-logger';
 	],
 	template: `
         <div class="card-on-board" 
-                [ngClass]="{ 'highlight': _option }"
                 cardResize
                 cardTooltip [tooltipEntity]="_entity"
                 [attr.data-entity-id]="_entity.id">
-			<card-art [cardId]="cardId" [cardType]="cardType"></card-art>
-            <board-card-frame 
-                    [taunt]="taunt" 
-                    [hideStats]="hideStats"
-                    [premium]="premium">
-            </board-card-frame>
-			<board-card-stats *ngIf="!hideStats"
-					[cardId]="cardId" 
-					[attack]="attack"
-					[health]="health"
-					[damage]="damage">
-			</board-card-stats>
+            <div class="main-card" [ngClass]="{ 'highlight': _option }">
+                <card-art [cardId]="cardId" [cardType]="cardType"></card-art>
+                <board-card-frame 
+                        [taunt]="taunt" 
+                        [hideStats]="hideStats"
+                        [premium]="premium">
+                </board-card-frame>
+                <board-card-stats *ngIf="!hideStats"
+                        [cardId]="cardId" 
+                        [attack]="attack"
+                        [health]="health"
+                        [damage]="damage">
+                </board-card-stats>
+            </div>
             <damage *ngIf="shownDamage" [amount]="shownDamage"></damage>
             <sleeping *ngIf="sleeping"></sleeping>
             <power-indicator [entity]="_entity"></power-indicator>
+            <card-on-board-overlays [entity]="_entity"></card-on-board-overlays>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,

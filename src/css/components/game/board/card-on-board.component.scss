@@ -11,10 +11,19 @@
 		position: relative;
 		display: block;
     }
-    
-    &.highlight {
-        filter: $highlight;
+
+    .main-card {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        
+        &.highlight {
+            filter: $highlight;
+        }
     }
+    
     
     ::ng-deep .card-art {
         width: 123%;

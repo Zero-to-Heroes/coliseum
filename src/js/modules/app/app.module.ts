@@ -67,6 +67,7 @@ import { EndGameComponent } from '../../components/game/overlay/end-game.compone
 import { DiscoverComponent } from '../../components/game/overlay/discover.component';
 import { SleepingComponent } from '../../components/game/board/sleeping.component';
 import { PowerIndicatorComponent } from '../../components/game/board/power-indicator.component';
+import { CardOnBoardOverlaysComponent } from '../../components/game/board/card-on-board-overlays.component';
 
 @NgModule({
 	imports: [
@@ -122,6 +123,7 @@ import { PowerIndicatorComponent } from '../../components/game/board/power-indic
         DamageComponent,
         SleepingComponent,
         PowerIndicatorComponent,
+        CardOnBoardOverlaysComponent,
         
         DeckComponent,        
         PlayerNameComponent,
