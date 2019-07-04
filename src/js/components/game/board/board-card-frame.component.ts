@@ -7,14 +7,18 @@ import { NGXLogger } from 'ngx-logger';
 	styleUrls: [
 		'../../../../css/components/game/board/board-card-frame.component.scss'
 	],
-	template: `
-        <img src="{{image}}" class="card-frame" />
+    template: `
+        <div class="board-card-frame">
+            <img src="{{imageTaunt}}" class="card-frame taunt" *ngIf="imageTaunt" />
+            <img src="{{image}}" class="card-frame" />
+        </div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BoardCardFrameComponent {
 
     image: string;
+    imageTaunt: string;
 
     private _taunt: boolean;
     private _hideStats: boolean;
@@ -25,7 +29,7 @@ export class BoardCardFrameComponent {
     @Input('taunt') set taunt(taunt: boolean) {
         this.logger.debug('[board-card-frame] setting taunt', taunt);
         this._taunt = taunt;
-        this.updateImage();
+        this.updateImageTaunt();
     }
 
     @Input('premium') set premium(premium: boolean) {
@@ -41,12 +45,19 @@ export class BoardCardFrameComponent {
     }
 
     private updateImage() {
-        const frame = this._taunt 
-                ? 'onboard_minion_taunt' 
-                : (this._hideStats 
+        const frame = this._hideStats 
                         ? 'onboard_minion_hide_stats'
-                        : 'onboard_minion_frame');
+                        : 'onboard_minion_frame';
         const premiumFrame = this._premium ? `${frame}_premium` : frame;
         this.image = `https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/${premiumFrame}.png`;
+    }
+    
+    private updateImageTaunt() {
+        if (!this._taunt) {
+            this.imageTaunt = undefined;
+            return;
+        }
+        const frame = this._premium ? `onboard_minion_taunt_premium` : 'onboard_minion_taunt';
+        this.imageTaunt = `https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/${frame}.png`;
     }
 }
