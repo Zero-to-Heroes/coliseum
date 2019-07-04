@@ -87,7 +87,9 @@ export class CardOnBoardComponent {
         this.shownDamage = entity.damageForThisAction;
         
         this.hideStats = entity.getTag(GameTag.HIDE_STATS) === 1;
-        this.sleeping = entity.getTag(GameTag.EXHAUSTED) === 1;
+        this.sleeping = entity.getTag(GameTag.EXHAUSTED) === 1 
+                && entity.getTag(GameTag.JUST_PLAYED) === 1
+                && entity.getTag(GameTag.CHARGE) !== 1;
     }
     
 	@Input("option") set option(value: boolean) {
