@@ -33,6 +33,7 @@ import { DiscoverAction } from '../models/action/discover-action';
                     [entities]="entities"
                     [targets]="targets"
                     [discovers]="discovers"
+                    [chosen]="chosen"
                     [options]="options"
                     [crossed]="crossed">
             </game>
@@ -52,6 +53,7 @@ export class AppComponent {
     activePlayer: number;
     activeSpell: number;
     discovers: ReadonlyArray<number>;
+    chosen: ReadonlyArray<number>;
     targets: ReadonlyArray<[number, number]>;
     options: ReadonlyArray<number>;
     
@@ -115,6 +117,7 @@ export class AppComponent {
         this.targets = this.computeTargets();
         this.options = this.computeOptions();
         this.discovers = this.computeDiscovers();
+        this.chosen = this.computeChosen();
         this.isMulligan = this.computeMulligan();
         this.isEndGame = this.computeEndGame();
         this.endGameStatus = this.computeEndGameStatus();
@@ -150,6 +153,14 @@ export class AppComponent {
         const action = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn];
         if (action instanceof DiscoverAction) {
             return action.choices;
+        }
+        return null;
+	}
+
+	private computeChosen(): ReadonlyArray<number> {
+        const action = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn];
+        if (action instanceof DiscoverAction) {
+            return action.chosen;
         }
         return null;
 	}

@@ -58,7 +58,8 @@ import { PlayState } from '../../models/enums/playstate';
                 </end-game>
                 <discover *ngIf="_discovers" 
                         [entities]="_entities" 
-                        [choices]="_discovers">
+                        [choices]="_discovers"
+                        [chosen]="_chosen">
                 </discover>
             </div>
 		</div>
@@ -82,6 +83,7 @@ export class GameComponent {
     
     isOverlay: boolean;
     _discovers: ReadonlyArray<number>;
+    _chosen: ReadonlyArray<number>;
     _isMulligan: boolean;
     _isEndGame: boolean;
     _endGameStatus: PlayState;
@@ -140,6 +142,11 @@ export class GameComponent {
         this.logger.debug('[game] setting discovers', value);
         this._discovers = value;
         this.updateOverlay();
+    }
+
+    @Input('chosen') set chosen(value: ReadonlyArray<number>) {
+        this.logger.debug('[game] setting chosen', value);
+        this._chosen = value;
     }
 
     @Input('isMulligan') set isMulligan(value: boolean) {

@@ -65,6 +65,7 @@ import { WeaponStatsComponent } from '../../components/game/hero/weapon-stats.co
 import { EndGameParserService } from '../../services/parser/gamepipeline/end-game-parser.service';
 import { EndGameComponent } from '../../components/game/overlay/end-game.component';
 import { DiscoverComponent } from '../../components/game/overlay/discover.component';
+import { OverlayTickedComponent } from '../../components/game/card/overlay-ticked.component';
 import { SleepingComponent } from '../../components/game/board/sleeping.component';
 import { PowerIndicatorComponent } from '../../components/game/board/power-indicator.component';
 import { CardOnBoardOverlaysComponent } from '../../components/game/board/card-on-board-overlays.component';
@@ -120,6 +121,7 @@ import { CardOnBoardOverlaysComponent } from '../../components/game/board/card-o
 		CardStatsComponent,
         CardCostComponent,
         OverlayCrossedComponent,
+        OverlayTickedComponent,
         DamageComponent,
         SleepingComponent,
         PowerIndicatorComponent,

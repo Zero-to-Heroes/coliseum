@@ -43,6 +43,7 @@ import { AllCardsService } from '../../../services/all-cards.service';
 					[armor]="armor">
             </card-stats>
             <overlay-crossed *ngIf="_crossed"></overlay-crossed>
+            <overlay-ticked *ngIf="_ticked"></overlay-ticked>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -51,8 +52,9 @@ export class CardComponent {
 
     _entity: Entity;
     _controller: Entity;
-    _crossed: boolean;
     _option: boolean;
+    _crossed: boolean;
+    _ticked: boolean;
 
 	cardId: string;
 	cardType: CardType;
@@ -115,6 +117,13 @@ export class CardComponent {
         this._crossed = value;
         if (value) {
             this.logger.debug('[card] marking card as crossed', this._entity);
+        }
+    }
+
+	@Input("ticked") set ticked(value: boolean) {
+        this._ticked = value;
+        if (value) {
+            this.logger.debug('[card] marking card as ticked', this._entity);
         }
     }
 }

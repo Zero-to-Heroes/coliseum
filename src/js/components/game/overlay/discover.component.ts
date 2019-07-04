@@ -11,7 +11,7 @@ import { Map } from 'immutable';
 	template: `
         <div class="discover">
             <li *ngFor="let entity of discoverCards; let i = index; trackBy: trackByFn">
-                <card [entity]="entity" [hasTooltip]="false"></card>
+                <card [entity]="entity" [hasTooltip]="false" [ticked]="_chosen.indexOf(entity.id) !== -1"></card>
             </li>
 		</div>
 	`,
@@ -21,6 +21,7 @@ export class DiscoverComponent {
 
     _entities: Map<number, Entity>;
     _choices: ReadonlyArray<number>;
+    _chosen: ReadonlyArray<number>;
 
     discoverCards: ReadonlyArray<Entity>
     
@@ -37,6 +38,11 @@ export class DiscoverComponent {
         this._choices = value;
         this.updateEntityGroups();
     }
+
+    @Input('chosen') set chosen(value: ReadonlyArray<number>) {
+        this.logger.debug('[discover] setting chosen', value);
+        this._chosen = value;
+    }
 	
 	trackByFn(index, item: Entity) {
 		return item.id;
@@ -49,6 +55,5 @@ export class DiscoverComponent {
         }
         this.discoverCards = this._entities.toArray()
                 .filter(entity => this._choices.indexOf(entity.id) !== -1);
-        console.log('set discoverCards', this.discoverCards, this._choices);
     }
 }
