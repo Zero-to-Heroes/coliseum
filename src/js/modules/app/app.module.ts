@@ -66,6 +66,7 @@ import { EndGameParserService } from '../../services/parser/gamepipeline/end-gam
 import { EndGameComponent } from '../../components/game/overlay/end-game.component';
 import { DiscoverComponent } from '../../components/game/overlay/discover.component';
 import { SleepingComponent } from '../../components/game/board/sleeping.component';
+import { PowerIndicatorComponent } from '../../components/game/board/power-indicator.component';
 
 @NgModule({
 	imports: [
@@ -120,6 +121,7 @@ import { SleepingComponent } from '../../components/game/board/sleeping.componen
         OverlayCrossedComponent,
         DamageComponent,
         SleepingComponent,
+        PowerIndicatorComponent,
         
         DeckComponent,        
         PlayerNameComponent,

@@ -32,6 +32,7 @@ import { NGXLogger } from 'ngx-logger';
 			</board-card-stats>
             <damage *ngIf="shownDamage" [amount]="shownDamage"></damage>
             <sleeping *ngIf="sleeping"></sleeping>
+            <power-indicator [entity]="_entity"></power-indicator>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
