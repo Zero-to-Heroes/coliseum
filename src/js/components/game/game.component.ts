@@ -39,6 +39,10 @@ import { PlayState } from '../../models/enums/playstate';
                     [entity]="_activeSpell"
                     [controller]="_activeSpellController">
             </active-spell>
+            <secret-revealed class="secret-revealed"
+                    *ngIf="_secretRevealed"
+                    [entity]="_secretRevealed">
+            </secret-revealed>
             <target-zone *ngIf="_targets" [targets]="_targets"></target-zone>
             <div class="overlays" *ngIf="isOverlay">
                 <mulligan *ngIf="_isMulligan" class="top"
@@ -76,6 +80,7 @@ export class GameComponent {
     _playerName: string;
     _opponentName: string;
     _activePlayer: number;
+    _secretRevealed: Entity;
     _activeSpell: Entity;  
     _activeSpellController: Entity;  
     _targets: ReadonlyArray<[number, number]> = [];
@@ -89,6 +94,7 @@ export class GameComponent {
     _endGameStatus: PlayState;
 
     private activeSpellId: number;
+    private secretRevealedId: number;
 
     constructor(private logger: NGXLogger) { } 
 
@@ -101,6 +107,7 @@ export class GameComponent {
         this.logger.debug('[game] setting new entities', entities.toJS());
         this._entities = entities;
         this.updateActiveSpell();
+        this.updateSecretRevealed();
     }
 
     @Input('crossed') set crossed(value: ReadonlyArray<number>) {
@@ -136,6 +143,12 @@ export class GameComponent {
         this.logger.debug('[game] setting activeSpell', value);
         this.activeSpellId = value;
         this.updateActiveSpell();
+    }
+
+    @Input('secretRevealed') set secretRevealed(value: number) {
+        this.logger.debug('[game] setting secretRevealed', value);
+        this.secretRevealedId = value;
+        this.updateSecretRevealed();
     }
 
     @Input('discovers') set discovers(value: ReadonlyArray<number>) {
@@ -186,5 +199,9 @@ export class GameComponent {
     private updateActiveSpell() {
         this._activeSpell = this._entities && this.activeSpellId && this._entities.get(this.activeSpellId);
         this._activeSpellController = this._entities.find((entity) => entity.getTag(GameTag.PLAYER_ID) === this._playerId);
+    }
+
+    private updateSecretRevealed() {
+        this._secretRevealed = this._entities && this.secretRevealedId && this._entities.get(this.secretRevealedId);
     }
 }

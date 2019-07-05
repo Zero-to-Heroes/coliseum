@@ -71,6 +71,7 @@ import { PowerIndicatorComponent } from '../../components/game/board/power-indic
 import { CardOnBoardOverlaysComponent } from '../../components/game/board/card-on-board-overlays.component';
 import { SecretsComponent } from '../../components/game/hero/secrets.component';
 import { SecretComponent } from '../../components/game/hero/secret.component';
+import { SecretRevealedComponent } from '../../components/game/secret-revealed.component';
 
 @NgModule({
 	imports: [
@@ -139,6 +140,7 @@ import { SecretComponent } from '../../components/game/hero/secret.component';
         MulliganComponent,
         DiscoverComponent,
         ActiveSpellComponent,
+        SecretRevealedComponent,
         TargetZoneComponent,
 
         CardTooltipDirective,

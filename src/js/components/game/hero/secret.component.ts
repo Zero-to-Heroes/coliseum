@@ -31,17 +31,20 @@ export class SecretComponent {
     @Input('entity') set entity(value: Entity) {
         this.logger.debug('[secret] setting new entity', value, value.tags.toJS());
         this._entity = value;
-        this.entityId = value.id;
-        const playerClass: number = value.getTag(GameTag.CLASS)
-        if (playerClass) {
-            this.image = this.buildImage(playerClass);
-        }
-        else if (value.cardID) {
-            const card = this.cards.getCard(value.cardID);
-            this.image = this.buildImageFromDb(card.cardClass);
-        }
-        else {
-            this.logger.error('[secret] Could not assign player class', value, value.tags.toJS());
+        this.image = undefined;
+        if (value) {
+            this.entityId = value.id;
+            const playerClass: number = value.getTag(GameTag.CLASS)
+            if (playerClass) {
+                this.image = this.buildImage(playerClass);
+            }
+            else if (value.cardID) {
+                const card = this.cards.getCard(value.cardID);
+                this.image = this.buildImageFromDb(card.cardClass);
+            }
+            else {
+                this.logger.error('[secret] Could not assign player class', value, value.tags.toJS());
+            }
         }
     }
 

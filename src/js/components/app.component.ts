@@ -11,6 +11,7 @@ import { GameTag } from '../models/enums/game-tags';
 import { PlayerEntity } from '../models/game/player-entity';
 import { PlayState } from '../models/enums/playstate';
 import { DiscoverAction } from '../models/action/discover-action';
+import { SecretRevealedAction } from '../models/action/secret-revealed-action';
 
 @Component({
 	selector: 'app-root',
@@ -32,6 +33,7 @@ import { DiscoverAction } from '../models/action/discover-action';
                     [endGameStatus]="endGameStatus"
                     [entities]="entities"
                     [targets]="targets"
+                    [secretRevealed]="secretRevealed"
                     [discovers]="discovers"
                     [chosen]="chosen"
                     [options]="options"
@@ -56,6 +58,7 @@ export class AppComponent {
     chosen: ReadonlyArray<number>;
     targets: ReadonlyArray<[number, number]>;
     options: ReadonlyArray<number>;
+    secretRevealed: number;
     
     isMulligan: boolean;
     isEndGame: boolean;
@@ -114,6 +117,7 @@ export class AppComponent {
         this.turnString = this.computeTurnString();
         this.activePlayer = this.computeActivePlayer();
         this.activeSpell = this.computeActiveSpell();
+        this.secretRevealed = this.computeSecretRevealed();
         this.targets = this.computeTargets();
         this.options = this.computeOptions();
         this.discovers = this.computeDiscovers();
@@ -161,6 +165,14 @@ export class AppComponent {
         const action = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn];
         if (action instanceof DiscoverAction) {
             return action.chosen;
+        }
+        return null;
+	}
+
+	private computeSecretRevealed(): number {
+        const action = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn];
+        if (action instanceof SecretRevealedAction) {
+            return action.entityId;
         }
         return null;
 	}
