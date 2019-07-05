@@ -12,6 +12,7 @@ const CARD_ASPECT_RATIO = 1.56;
     template: `
     <card class="tooltip" 
             [forbiddenTargetSource]="true"
+            [enchantments]="enchantments"
             [entity]="entity" 
             [controller]="controller"
             [hasTooltip]="false" *ngIf="entity">
@@ -21,6 +22,7 @@ const CARD_ASPECT_RATIO = 1.56;
 })
 export class Tooltip {
   	@Input() entity: Entity;
+  	@Input() enchantments: ReadonlyArray<Entity>;
   	@Input() controller: Entity;
 
   	@HostBinding('style.left') left: string;
@@ -65,6 +67,7 @@ export class TooltipsComponent implements AfterViewInit {
                 
 				const leftInput = data.data[2];
                 const topInput = data.data[3];
+                const enchantments = data.data[4];
                 
                 const left = leftInput < this.rect.left
                         ? this.rect.left
@@ -78,7 +81,8 @@ export class TooltipsComponent implements AfterViewInit {
                                 : topInput);
 
 			    this.tooltip.instance.entity = entity;
-			    this.tooltip.instance.controller = controller;
+                this.tooltip.instance.controller = controller;
+                this.tooltip.instance.enchantments = enchantments;
 			    this.tooltip.instance.left = left + 'px';
 			    this.tooltip.instance.top = top + 'px';
 				if (!(<ViewRef>this.cdr).destroyed) {

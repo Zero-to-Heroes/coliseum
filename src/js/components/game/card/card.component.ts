@@ -44,6 +44,9 @@ import { AllCardsService } from '../../../services/all-cards.service';
             </card-stats>
             <overlay-crossed *ngIf="_crossed"></overlay-crossed>
             <overlay-ticked *ngIf="_ticked"></overlay-ticked>
+            <card-enchantments *ngIf="_enchantments && _enchantments.length > 0" 
+                    [enchantments]="_enchantments">
+            </card-enchantments>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -55,6 +58,7 @@ export class CardComponent {
     _option: boolean;
     _crossed: boolean;
     _ticked: boolean;
+    _enchantments: ReadonlyArray<Entity>;
 
 	cardId: string;
 	cardType: CardType;
@@ -126,4 +130,8 @@ export class CardComponent {
             this.logger.debug('[card] marking card as ticked', this._entity);
         }
     }
+    
+	@Input("enchantments") set enchantments(value: ReadonlyArray<Entity>) {
+		this._enchantments = value;
+	}
 }

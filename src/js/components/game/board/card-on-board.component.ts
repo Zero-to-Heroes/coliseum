@@ -1,10 +1,9 @@
-import { Component, ChangeDetectionStrategy, Input, HostListener, ElementRef, AfterViewInit, ViewRef, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { Entity } from '../../../models/game/entity';
 import { GameTag } from '../../../models/enums/game-tags';
 import { CardType } from '../../../models/enums/card-type';
 import { CardClass } from '../../../models/enums/card-class';
 import { AllCardsService } from '../../../services/all-cards.service';
-import { Events } from '../../../services/events.service';
 import { NGXLogger } from 'ngx-logger';
 
 @Component({
@@ -15,7 +14,7 @@ import { NGXLogger } from 'ngx-logger';
 	template: `
         <div class="card-on-board" 
                 cardResize
-                cardTooltip [tooltipEntity]="_entity"
+                cardTooltip [tooltipEntity]="_entity" [tooltipEnchantments]="_enchantments"
                 [attr.data-entity-id]="_entity.id">
             <div class="main-card" [ngClass]="{ 'highlight': _option }">
                 <card-art [cardId]="cardId" [cardType]="cardType"></card-art>
@@ -41,7 +40,8 @@ import { NGXLogger } from 'ngx-logger';
 })
 export class CardOnBoardComponent {
 
-	_entity: Entity;
+    _entity: Entity;
+    _enchantments: ReadonlyArray<Entity>;
     _option: boolean;
 
 	cardId: string;
@@ -94,5 +94,10 @@ export class CardOnBoardComponent {
     
 	@Input("option") set option(value: boolean) {
 		this._option = value;
+	}
+    
+	@Input("enchantments") set enchantments(value: ReadonlyArray<Entity>) {
+		this.logger.debug('[card-on-board] setting enchantments', value);
+		this._enchantments = value;
 	}
 }

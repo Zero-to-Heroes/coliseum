@@ -15,4 +15,12 @@
     &.highlight {
         filter: $highlight;
     }
+
+    & > * {
+        z-index: 1;
+    }
+    
+    card-enchantments {
+        z-index: 0;
+    }
 }

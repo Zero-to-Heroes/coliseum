@@ -18,6 +18,7 @@
 
     tooltip {
         width: 35%;
+        z-index: 1;
         &:before {
             content: "";
         }

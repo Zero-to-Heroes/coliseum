@@ -26,6 +26,10 @@ export class Entity {
         return this.getTag(GameTag.COST) && this.getTag(GameTag.COST) !== -1;
     }
 
+    public zone(): number {
+        return this.getTag(GameTag.ZONE);
+    }
+
     public updateDamage(damage: number): Entity {
         const base: Entity = this;
         return Object.assign(new Entity(), {...base, damageForThisAction: damage});

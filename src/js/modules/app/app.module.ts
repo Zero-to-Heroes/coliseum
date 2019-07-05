@@ -72,6 +72,8 @@ import { CardOnBoardOverlaysComponent } from '../../components/game/board/card-o
 import { SecretsComponent } from '../../components/game/hero/secrets.component';
 import { SecretComponent } from '../../components/game/hero/secret.component';
 import { SecretRevealedComponent } from '../../components/game/secret-revealed.component';
+import { CardEnchantmentsComponent } from '../../components/game/card/card-enchantments.component';
+import { CardEnchantmentComponent } from '../../components/game/card/card-enchantment.component';
 
 @NgModule({
 	imports: [
@@ -79,7 +81,7 @@ import { SecretRevealedComponent } from '../../components/game/secret-revealed.c
 		BrowserAnimationsModule,
 		Ng2FittextModule,
 		LoggerModule.forRoot({ 
-			level: process.env.NODE_ENV === 'production' ? NgxLoggerLevel.INFO : NgxLoggerLevel.DEBUG 
+			level: process.env.NODE_ENV === 'production' ? NgxLoggerLevel.WARN : NgxLoggerLevel.DEBUG 
         }),
 	],
 	declarations: [
@@ -95,6 +97,12 @@ import { SecretRevealedComponent } from '../../components/game/secret-revealed.c
 		CardOnBoardComponent,
 		BoardCardFrameComponent,
 		BoardCardStatsComponent,
+        DamageComponent,
+        SleepingComponent,
+        PowerIndicatorComponent,
+        CardOnBoardOverlaysComponent,
+        CardEnchantmentsComponent,
+        CardEnchantmentComponent,
 		
 		TooltipsComponent,
 		Tooltip,
@@ -128,10 +136,6 @@ import { SecretRevealedComponent } from '../../components/game/secret-revealed.c
         CardCostComponent,
         OverlayCrossedComponent,
         OverlayTickedComponent,
-        DamageComponent,
-        SleepingComponent,
-        PowerIndicatorComponent,
-        CardOnBoardOverlaysComponent,
         
         DeckComponent,        
         PlayerNameComponent,

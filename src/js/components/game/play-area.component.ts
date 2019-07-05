@@ -21,7 +21,11 @@ import { NGXLogger } from 'ngx-logger';
                     [secrets]="secrets"
                     [options]="heroOptions">
             </hero>
-            <board [entities]="board" [options]="boardOptions"></board>
+            <board 
+                    [entities]="board" 
+                    [enchantmentCandidates]="enchantmentCandidates" 
+                    [options]="boardOptions">
+            </board>
             <mana-tray 
                     [total]="totalCrystals" 
                     [available]="availableCrystals"
@@ -43,6 +47,7 @@ export class PlayAreaComponent {
     hand: ReadonlyArray<Entity>;
     handOptions: ReadonlyArray<number>;
     board: ReadonlyArray<Entity>;
+    enchantmentCandidates: ReadonlyArray<Entity>;
     boardOptions: ReadonlyArray<number>;
     deck: ReadonlyArray<Entity>;
     playerEntity: Entity;
@@ -96,6 +101,7 @@ export class PlayAreaComponent {
         this.handOptions = this.getOptions(this.hand, this._options);
         this.board = this.getBoardEntities(this._playerId);
         this.boardOptions = this.getOptions(this.board, this._options);
+        this.enchantmentCandidates = this.getEnchantmentCandidates(this.board, this._entities.toArray());
         this.deck = this.getDeckEntities(this._playerId);
         this.hero = this.getHeroEntity(this.playerEntity);
         this.heroPower = this.getHeroPowerEntity(this._playerId); 
@@ -130,6 +136,13 @@ export class PlayAreaComponent {
                 .filter((entity) => entity.getTag(GameTag.ZONE) === Zone.PLAY)
                 .filter((entity) => entity.getTag(GameTag.CARDTYPE) === CardType.MINION)
                 .sort((a, b) => a.getTag(GameTag.ZONE_POSITION) - b.getTag(GameTag.ZONE_POSITION));
+    }
+
+    private getEnchantmentCandidates(board: ReadonlyArray<Entity>, entities: ReadonlyArray<Entity>): ReadonlyArray<Entity> {
+        const boardIds = board.map(entity => entity.id);
+        return entities
+                .filter(entity => entity.zone() === Zone.PLAY)
+                .filter(entity => boardIds.indexOf(entity.getTag(GameTag.ATTACHED)) !== -1);
     }
 
     private getHeroEntity(playerEntity: Entity): Entity {

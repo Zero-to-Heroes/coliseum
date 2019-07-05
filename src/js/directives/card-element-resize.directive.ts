@@ -6,6 +6,7 @@ import { Directive, ElementRef, Input, ViewRef, ChangeDetectorRef } from '@angul
 export class CardElementResizeDirective {
 
     @Input() fontSizeRatio: number;
+    @Input() timeout: number = 0;
     
     constructor(private elRef: ElementRef, private cdr: ChangeDetectorRef) {
         document.addEventListener(
@@ -19,7 +20,7 @@ export class CardElementResizeDirective {
         if (!(<ViewRef>this.cdr).destroyed) {
             this.cdr.detectChanges();
         }
-        setTimeout(() => this.resizeText());
+        setTimeout(() => this.resizeText(), this.timeout);
     }
 
     private resizeText() {
