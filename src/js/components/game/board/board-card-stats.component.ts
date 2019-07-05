@@ -110,7 +110,7 @@ export class BoardCardStatsComponent {
         if (this.healthLeft > originalCard.health) {
             this.healthClass += ' buff';
         }
-        else if (this.healthLeft < originalCard.health) {
+        if (this._damage > 0) {
             this.healthClass += ' damaged';
         }
     }
