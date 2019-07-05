@@ -32,16 +32,16 @@ export class HandComponent {
 		this._entities = entities;
 		switch (entities.length) {
 			case 7:
-				this.marginLeft = -3;
+				this.marginLeft = -2;
 				return;
 			case 8:
-				this.marginLeft = -5;
+				this.marginLeft = -2.5;
 				return;
 			case 9:
-				this.marginLeft = -7;
+				this.marginLeft = -3;
 				return;
 			case 10:
-				this.marginLeft = -9;
+				this.marginLeft = -3.5;
 				return;
 			default:
 				this.marginLeft = -1;
