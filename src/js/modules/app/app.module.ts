@@ -69,6 +69,8 @@ import { OverlayTickedComponent } from '../../components/game/card/overlay-ticke
 import { SleepingComponent } from '../../components/game/board/sleeping.component';
 import { PowerIndicatorComponent } from '../../components/game/board/power-indicator.component';
 import { CardOnBoardOverlaysComponent } from '../../components/game/board/card-on-board-overlays.component';
+import { SecretsComponent } from '../../components/game/hero/secrets.component';
+import { SecretComponent } from '../../components/game/hero/secret.component';
 
 @NgModule({
 	imports: [
@@ -110,6 +112,9 @@ import { CardOnBoardOverlaysComponent } from '../../components/game/board/card-o
         WeaponArtComponent,
         WeaponFrameComponent,
         WeaponStatsComponent,
+
+        SecretsComponent,
+        SecretComponent,
 
 		CardComponent,
 		CardArtComponent,

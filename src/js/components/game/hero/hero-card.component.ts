@@ -16,6 +16,7 @@ import { NGXLogger } from 'ngx-logger';
                 [attr.data-player-entity-id]="playerEntityId">
             <hero-art [cardId]="cardId"></hero-art>
             <hero-frame></hero-frame>
+            <secrets [secrets]="_secrets" *ngIf="_secrets && _secrets.length > 0"></secrets>
 			<hero-stats 
 					[cardId]="cardId" 
 					[attack]="attack"
@@ -42,6 +43,7 @@ export class HeroCardComponent {
 	armor: number;
     shownDamage: number;
     _option: boolean;
+    _secrets: ReadonlyArray<Entity>;
 
 	constructor(private logger: NGXLogger) { }
 
@@ -62,4 +64,9 @@ export class HeroCardComponent {
 	@Input("option") set option(value: boolean) {
 		this._option = value;
 	}
+
+    @Input('secrets') set secrets(value: ReadonlyArray<Entity>) {
+        this.logger.debug('[hero-card] setting secrets', value);
+        this._secrets = value;
+    }
 }

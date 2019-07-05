@@ -10,7 +10,11 @@ import { NGXLogger } from 'ngx-logger';
 	template: `
         <div class="hero">
             <weapon [weapon]="_weapon" *ngIf="_weapon"></weapon>
-            <hero-card [hero]="_hero" [option]="isOption(_hero)"></hero-card>
+            <hero-card 
+                    [hero]="_hero" 
+                    [secrets]="_secrets"
+                    [option]="isOption(_hero)">
+            </hero-card>
             <hero-power [heroPower]="_heroPower" [option]="isOption(_heroPower)"></hero-power>
 		</div>
 	`,
@@ -22,6 +26,7 @@ export class HeroComponent {
     _heroPower: Entity;
     _weapon: Entity;
     _options: ReadonlyArray<number>;
+    _secrets: ReadonlyArray<Entity>;
 
     constructor(private logger: NGXLogger) {}
 
@@ -43,6 +48,11 @@ export class HeroComponent {
     @Input('options') set options(value: ReadonlyArray<number>) {
         this.logger.debug('[hero] setting options', value);
         this._options = value;
+    }
+
+    @Input('secrets') set secrets(value: ReadonlyArray<Entity>) {
+        this.logger.debug('[hero] setting secrets', value);
+        this._secrets = value;
     }
 
     isOption(entity: Entity): boolean {

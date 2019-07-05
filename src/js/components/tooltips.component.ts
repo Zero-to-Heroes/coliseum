@@ -56,8 +56,10 @@ export class TooltipsComponent implements AfterViewInit {
 
 		this.events.on(Events.SHOW_TOOLTIP).subscribe(
 			(data) => {
-				// let start = Date.now();
-				this.destroy();
+                this.destroy();
+                if (!this.rect) {
+                    return;
+                }
                 const entity: Entity = data.data[0];
                 const controller: Entity = data.data[1];
                 
@@ -75,12 +77,10 @@ export class TooltipsComponent implements AfterViewInit {
                                 ? this.rect.bottom - this.tooltipHeight
                                 : topInput);
 
-			    // this.tooltip.instance.display = 'block';
 			    this.tooltip.instance.entity = entity;
 			    this.tooltip.instance.controller = controller;
 			    this.tooltip.instance.left = left + 'px';
 			    this.tooltip.instance.top = top + 'px';
-			    // this.tooltip.instance.position = 'absolute';
 				if (!(<ViewRef>this.cdr).destroyed) {
 					this.cdr.detectChanges();
                 }

@@ -14,7 +14,13 @@ import { NGXLogger } from 'ngx-logger';
 	template: `
         <div class="play-area" [ngClass]="{ 'mulligan': _isMulligan }">
             <hand [entities]="hand" [options]="handOptions" [controller]="playerEntity"></hand>
-            <hero [hero]="hero" [heroPower]="heroPower" [weapon]="weapon" [options]="heroOptions"></hero>
+            <hero 
+                    [hero]="hero" 
+                    [heroPower]="heroPower" 
+                    [weapon]="weapon" 
+                    [secrets]="secrets"
+                    [options]="heroOptions">
+            </hero>
             <board [entities]="board" [options]="boardOptions"></board>
             <mana-tray 
                     [total]="totalCrystals" 
@@ -44,6 +50,7 @@ export class PlayAreaComponent {
     heroOptions: ReadonlyArray<number>;
     heroPower: Entity;
     weapon: Entity;
+    secrets: ReadonlyArray<Entity>;
 
     totalCrystals: number;
     availableCrystals: number;
@@ -93,6 +100,7 @@ export class PlayAreaComponent {
         this.hero = this.getHeroEntity(this.playerEntity);
         this.heroPower = this.getHeroPowerEntity(this._playerId); 
         this.weapon = this.getWeaponEntity(this._playerId); 
+        this.secrets = this.getSecretEntities(this._playerId);
         this.heroOptions = this.getOptions([this.hero, this.heroPower, this.weapon], this._options);
 
         this.totalCrystals = this.playerEntity.getTag(GameTag.RESOURCES) || 0;
@@ -144,6 +152,13 @@ export class PlayAreaComponent {
                 .filter((entity) => entity.getTag(GameTag.ZONE) === Zone.PLAY)
                 .filter((entity) => entity.getTag(GameTag.CONTROLLER) === playerId)
                 [0];
+    }
+
+    private getSecretEntities(playerId: number): ReadonlyArray<Entity> {
+        return this._entities.toArray()
+                .filter((entity) => entity.getTag(GameTag.CONTROLLER) === playerId)
+                .filter((entity) => entity.getTag(GameTag.ZONE) === Zone.SECRET)
+                .sort((a, b) => a.getTag(GameTag.ZONE_POSITION) - b.getTag(GameTag.ZONE_POSITION));
     }
 
     private getOptions(zone: ReadonlyArray<Entity>, options: ReadonlyArray<number>): ReadonlyArray<number> {
