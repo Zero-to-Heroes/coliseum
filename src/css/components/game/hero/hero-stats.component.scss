@@ -40,17 +40,34 @@
 
     .attack {
         position: relative;
-        left: -3%;
+        left: -10%;
         width: 33%;
-        top: -19%;
+        top: -44%;
     }
 
     .health {
         position: relative;
         left: 39%;
         width: 33%;        
-        // top: -15%;
         top: -30%;
+    }
+
+    .armor {
+        position: relative;
+        left: 8%;
+        width: 33%;
+        top: -177%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .stat-icon {
+            width: 80%;
+        }
+
+        .stat-value {
+            top: auto;
+        }
     }
 
     span { 

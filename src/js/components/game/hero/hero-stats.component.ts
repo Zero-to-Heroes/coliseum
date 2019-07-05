@@ -11,14 +11,15 @@ import { NGXLogger } from 'ngx-logger';
 	template: `
         <div class="hero-stats" *ngIf="hasStats" cardElementResize [fontSizeRatio]="0.15">
             <div class="stat {{attackClass}}" [style.opacity]="_attack ? 1 : 0" resizeTarget>
-                <img class="stat-icon" src="https://static.zerotoheroes.com/hearthstone/asset/manastorm/attack.png" />
+                <img class="stat-icon" src="https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/attack.png" />
                 <div class="stat-value"><span>{{_attack}}</span></div>
             </div>
             <div class="stat {{healthClass}}" resizeTarget>
                 <div class="stat-value"><span>{{healthLeft}}</span></div>
             </div>
-            <div class="stat armor" resizeTarget>
-                <span>{{_armor}}</span>
+            <div class="stat armor" resizeTarget *ngIf="_armor">
+                <img class="stat-icon" src="https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/armor.png" />
+                <div class="stat-value"><span>{{_armor}}</span></div>
             </div>
         </div>
 	`,

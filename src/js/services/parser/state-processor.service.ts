@@ -72,7 +72,7 @@ export class StateProcessorService {
         GameTag.HERO_POWER_DISABLED,
         GameTag.PLAYSTATE,
         GameTag.CHARGE,
-
+        GameTag.ARMOR,
     ];
     
     public applyHistoryUntilNow(
