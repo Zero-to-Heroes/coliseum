@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 	<head>
-		<title>Coliseum</title>
+        <title>Coliseum</title>
     	<meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -27,20 +27,10 @@
 	<body>
 		<div id="externalPlayer" class="external-player">
 			Waiting waiting
-		</div>
+        </div>
+        <replay-loader></replay-loader>
 
 		<script src="./app.js"></script>
-		<script>
-			$.ajax({
-				url: 'replay.xml',
-				dataType: 'xml',
-				success: function(response) {
-                    const replayAsString = new XMLSerializer().serializeToString(response);
-					window.coliseum.zone.run(() => {
-						window.coliseum.component.loadReplay(replayAsString);
-					})
-				}
-			})
-		</script>
+		<script src="./loader.js"></script>
 	</body>
 </html>

@@ -19,7 +19,8 @@ module.exports = function(env, argv) {
     mode: env.production ? 'production' : 'development',
 
     entry: {
-      app: "./src/js/modules/app/main.ts"
+      app: "./src/js/modules/app/main.ts",
+      loader: "./src/js/modules/loader/main.ts",
     },
 
     target: "web",
@@ -77,6 +78,7 @@ module.exports = function(env, argv) {
         tsConfigPath: "./tsconfig.json",
         entryModules: [
           "./src/js/modules/app/app.module#AppModule",
+          "./src/js/modules/loader/loader.module#LoaderModule",
         ],
         sourceMap: true
       }),
@@ -87,6 +89,7 @@ module.exports = function(env, argv) {
 
       new CopyWebpackPlugin([
         { from: path.join(process.cwd(), "src/html/app.html") },
+        { from: path.join(process.cwd(), "src/html/index.html") },
         { from: path.join(process.cwd(), "/../*") },
         { from: path.join(process.cwd(), "replay.xml") },
       ]),

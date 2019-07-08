@@ -38,9 +38,8 @@ export class GameParserService {
 			private stateProcessor: StateProcessorService) {
     }
 
-    public parse(replayXml: Node): Game {
+    public parse(replayAsString: string): Game {
         const start = Date.now();
-		const replayAsString = new XMLSerializer().serializeToString(replayXml);
 		this.logPerf('Parsing replay', start);
 		const history: ReadonlyArray<HistoryItem> = this.replayParser.parseXml(replayAsString);
 		this.logPerf('Creating history', start);

@@ -14,7 +14,6 @@ import { DiscoverAction } from '../models/action/discover-action';
 import { SecretRevealedAction } from '../models/action/secret-revealed-action';
 
 @Component({
-	selector: 'app-root',
 	styleUrls: [
 		'../../css/components/app.component.scss'
 	],
@@ -46,6 +45,8 @@ import { SecretRevealedAction } from '../models/action/secret-revealed-action';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
+    
+    reviewId: string;
 
 	game: Game;
     entities: Map<number, Entity>;
@@ -79,11 +80,12 @@ export class AppComponent {
 		};
     }
 
-	public loadReplay(replayXml: Node) {
+	public loadReplay(replayXml: string) {
 		this.game = this.gameParser.parse(replayXml);
         this.logger.info('[app] Converted game');
         const turn = parseInt(this.getSearchParam('turn')) || 0; 
-        const action = parseInt(this.getSearchParam('action')) || 0; 
+        const action = parseInt(this.getSearchParam('action')) || 0;
+        this.reviewId = this.getSearchParam('reviewId');
         this.currentTurn = turn <= 0
                 ? 0
                 : (turn >= this.game.turns.size
@@ -111,6 +113,9 @@ export class AppComponent {
     }
     
     private populateInfo() {
+        if (!this.game) {
+            return;
+        }
         this.entities = this.computeNewEntities();
         this.crossed = this.computeCrossed();
 		this.text = this.computeText();
@@ -242,7 +247,8 @@ export class AppComponent {
 
     private updateUrlQueryString() {
         const baseUrl = `${window.location.protocol}//${window.location.host}${window.location.pathname}`;
-        const queryString = `turn=${this.currentTurn}&action=${this.currentActionInTurn}`
+        const reviewQuery = this.reviewId ? `reviewId=${this.reviewId}&` : '';
+        const queryString = `${reviewQuery}turn=${this.currentTurn}&action=${this.currentActionInTurn}`
         const newUrl = `${baseUrl}?${queryString}`;
         window.history.replaceState({ path: newUrl }, '', newUrl);
     }
