@@ -12,6 +12,7 @@ import { PowerTargetAction } from '../../../models/action/power-target-action';
 import { AttachingEnchantmentAction } from '../../../models/action/attaching-enchantment-action';
 import { DamageAction } from '../../../models/action/damage-action';
 import { CardTargetAction } from '../../../models/action/card-target-action';
+import { SummonAction } from '../../../models/action/summon-action';
 
 @Injectable()
 export class ActiveSpellParserService {
@@ -50,6 +51,7 @@ export class ActiveSpellParserService {
             return action;
         }
 
+        // By default, don't show any active spell
         let activeSpell = undefined;
         if (action instanceof CardPlayedFromHandAction 
                 && action.entities.get(action.entityId).getTag(GameTag.CARDTYPE) === CardType.SPELL) {
@@ -67,10 +69,16 @@ export class ActiveSpellParserService {
                 && action.entities.get(action.originId).getTag(GameTag.CARDTYPE) === CardType.SPELL) {
             activeSpell = action.originId;
         }
-        else {
-            // Be default, hide the active spell. Only explic
-            activeSpell = undefined;
+        else if (action instanceof SummonAction
+                && action.entities.get(action.origin).getTag(GameTag.CARDTYPE) === CardType.SPELL) {
+            activeSpell = action.origin;
         }
+        // If there is alraedy an active spell, attaching an enchantment is probably linked to that spell
+        else if (action instanceof AttachingEnchantmentAction && previousAction && previousAction.activeSpell) {
+            // Don't touch the active spell
+            activeSpell = previousAction.activeSpell;
+        }
+        
         if (activeSpell) {
             // this.logger.debug('Updating active spell', activeSpell);
             return action.updateAction({ activeSpell: activeSpell } as Action);
