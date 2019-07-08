@@ -86,11 +86,9 @@ module.exports = function(env, argv) {
       }),
 
       new CopyWebpackPlugin([
-        { from: path.join(process.cwd(), "src/html/app.html"), to: "html" },
+        { from: path.join(process.cwd(), "src/html/app.html") },
         { from: path.join(process.cwd(), "/../*") },
-        { from: path.join(process.cwd(), "src/assets"), to: "assets" },
-        { from: path.join(process.cwd(), "dependencies"), to: "dependencies" },
-        { from: path.join(process.cwd(), "replay.xml"), to: "html" },
+        { from: path.join(process.cwd(), "replay.xml") },
       ]),
     ]
   };
