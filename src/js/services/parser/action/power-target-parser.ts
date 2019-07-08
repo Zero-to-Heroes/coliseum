@@ -17,44 +17,43 @@ import { ActionHelper } from "./action-helper";
 import { CardTargetAction } from "../../../models/action/card-target-action";
 import { AttachingEnchantmentAction } from "../../../models/action/attaching-enchantment-action";
 import { NGXLogger } from "ngx-logger";
+import { MetadataHistoryItem } from "../../../models/history/metadata-history-item";
 
 export class PowerTargetParser implements Parser {
 
     constructor(private allCards: AllCardsService, private logger: NGXLogger) {}
 
     public applies(item: HistoryItem): boolean {
-        return item instanceof ActionHistoryItem;
+        return item instanceof MetadataHistoryItem;
     }
 
     public parse(
-            item: ActionHistoryItem, 
+            item: MetadataHistoryItem, 
             currentTurn: number, 
             entitiesBeforeAction: Map<number, Entity>,
             history: ReadonlyArray<HistoryItem>): Action[] {
-        if (parseInt(item.node.attributes.type) !== BlockType.POWER 
-                && parseInt(item.node.attributes.type) !== BlockType.TRIGGER) {
+        const meta = item.meta;
+        const parentAction = history
+                .filter(historyItem => historyItem instanceof ActionHistoryItem)
+                .filter(historyItem => historyItem.index === item.meta.parentIndex)
+                .map(historyItem => historyItem as ActionHistoryItem)
+                [0];
+        if (parseInt(parentAction.node.attributes.type) !== BlockType.POWER 
+                && parseInt(parentAction.node.attributes.type) !== BlockType.TRIGGER) {
             return;
         }
         // TODO: hard-code Malchezaar?
-
-        const result: PowerTargetAction[] = [];
-        if (item.node.meta && item.node.meta.length > 0) {
-            for (let meta of item.node.meta) {
-                if (!meta.info && !meta.meta) {
-                    continue;
-                }
-                if (meta.meta !== MetaTags[MetaTags.TARGET]) {
-                    continue;
-                }
-                if (meta.info) {
-                    const targetActions = meta.info
-                            .map((info) => this.buildPowerActions(entitiesBeforeAction, item, meta, info))
-                            .reduce((a, b) => a.concat(b), []);
-                    result.push(...targetActions);
-                }
-            }
+        if (!meta.info && !meta.meta) {
+            return;
         }
-        return result;
+        if (meta.meta !== MetaTags[MetaTags.TARGET]) {
+            return;
+        }
+        if (meta.info) {
+            return meta.info
+                    .map((info) => this.buildPowerActions(entitiesBeforeAction, parentAction, meta, info))
+                    .reduce((a, b) => a.concat(b), []);
+        }
     }
 
     private buildPowerActions(

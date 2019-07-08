@@ -26,6 +26,7 @@ import { EntityDefinitionAttribute } from '../../models/parser/entity-definition
 import { GameTag } from '../../models/enums/game-tags';
 import { MetaTags } from '../../models/enums/meta-tags';
 import { NGXLogger } from 'ngx-logger';
+import { MetadataHistoryItem } from '../../models/history/metadata-history-item';
 
 @Injectable()
 export class XmlParserService {
@@ -212,6 +213,8 @@ export class XmlParserService {
                     info: [],
 					index: this.index++
 				};
+                const metaItem: MetadataHistoryItem = new MetadataHistoryItem(this.metaData, this.buildTimestamp(ts), node.index);
+                this.enqueueHistoryItem(metaItem);
                 let parentMeta: ReadonlyArray<MetaData> = this.stack[this.stack.length - 2].meta || [];
                 parentMeta = [...parentMeta, this.metaData];
                 this.stack[this.stack.length - 2].meta = parentMeta;
