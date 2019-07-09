@@ -76,6 +76,9 @@ import { CardEnchantmentsComponent } from '../../components/game/card/card-encha
 import { CardEnchantmentComponent } from '../../components/game/card/card-enchantment.component';
 import { ActivePlayerParserService } from '../../services/parser/gamepipeline/active-player-parser.service';
 
+console.log('version is ' + process.env.APP_VERSION);
+console.log('environment is', process.env.NODE_ENV);
+
 @NgModule({
 	imports: [
 		BrowserModule,
