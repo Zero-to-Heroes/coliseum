@@ -13,6 +13,7 @@ export abstract class Action {
     readonly crossedEntities: ReadonlyArray<number> = [];
     readonly highlightedEntities: ReadonlyArray<number>;
     readonly activeSpell: number;
+    readonly activePlayer: number;
     readonly isMulligan: boolean;
     readonly isEndGame: boolean;
     readonly endGameStatus: PlayState;

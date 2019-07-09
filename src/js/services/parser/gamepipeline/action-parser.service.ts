@@ -94,6 +94,7 @@ export class ActionParserService {
 
             const updatedTurn: Turn = this.updateCurrentTurn(item, game, actionsForTurn);
             if (updatedTurn) {
+                console.log('updating turn');
                 // The last action is a start turn action, which we want to keep for the start 
                 // of the next turn instead
                 const lastAction = actionsForTurn[actionsForTurn.length - 1];
@@ -127,9 +128,15 @@ export class ActionParserService {
         // action that draws two cards
         actionsForTurn = this.reduceActions(actionParsers, actionsForTurn);
         actionsForTurn = this.addDamageToEntities(actionsForTurn, previousStateEntities);
-        const turnWithNewActions = game.turns.get(this.currentTurn).update({actions: actionsForTurn});
-        turns = turns.set(turnWithNewActions.turn == 'mulligan' ? 0 : parseInt(turnWithNewActions.turn), turnWithNewActions);
-        actionsForTurn = [];
+        try {
+            const turnWithNewActions = game.turns.get(this.currentTurn).update({actions: actionsForTurn});
+            turns = turns.set(turnWithNewActions.turn == 'mulligan' ? 0 : parseInt(turnWithNewActions.turn), turnWithNewActions);
+            actionsForTurn = [];
+        }
+        catch (e) {
+            this.logger.error(e);
+            this.logger.debug(this.currentTurn, game.turns.toJS(), actionsForTurn);
+        }
 
 
         return Game.createGame(game, { turns: turns });

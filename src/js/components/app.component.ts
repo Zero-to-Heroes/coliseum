@@ -183,11 +183,7 @@ export class AppComponent {
 	}
 
     private computeActivePlayer(): number {
-        return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].entities
-                .filter(entity => entity.getTag(GameTag.CURRENT_PLAYER) === 1)
-                .map(entity => entity as PlayerEntity)
-                .first()
-                .playerId;
+        return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].activePlayer;
     }
 
 	private computeNewEntities(): Map<number, Entity> {

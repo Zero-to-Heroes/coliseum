@@ -18,6 +18,7 @@ import { ActiveSpellParserService } from './gamepipeline/active-spell-parser.ser
 import { MulliganParserService } from './gamepipeline/mulligan-parser.service';
 import { TargetsParserService } from './gamepipeline/targets-parser.service';
 import { EndGameParserService } from './gamepipeline/end-game-parser.service';
+import { ActivePlayerParserService } from './gamepipeline/active-player-parser.service';
 
 @Injectable()
 export class GameParserService {
@@ -29,6 +30,7 @@ export class GameParserService {
 			private gamePopulationService: GamePopulationService, 
 			private gameStateParser: GameStateParserService,
             private gameInitializer: GameInitializerService, 
+            private activePlayerParser: ActivePlayerParserService,
             private activeSpellParser: ActiveSpellParserService,
             private targetsParser: TargetsParserService,
             private mulliganParser: MulliganParserService,
@@ -66,8 +68,10 @@ export class GameParserService {
 			(game) => this.logPerf('createTurns', start, game),
             (game) => this.actionParser.parseActions(game, history),
 			(game) => this.logPerf('parseActions', start, game),
+            (game) => this.activePlayerParser.parseActivePlayer(game),
+			(game) => this.logPerf('activePlayerParser', start, game),
             (game) => this.activeSpellParser.parseActiveSpell(game),
-			(game) => this.logPerf('activeSpellSet', start, game),
+			(game) => this.logPerf('activeSpellParser', start, game),
             (game) => this.targetsParser.parseTargets(game),
             (game) => this.logPerf('targets', start, game),
             // Add the red cross for mulligan 

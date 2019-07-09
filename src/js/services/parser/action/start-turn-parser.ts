@@ -8,6 +8,7 @@ import { StartTurnAction } from "../../../models/action/start-turn-action";
 import { Map } from "immutable";
 import { Entity } from "../../../models/game/entity";
 import { Step } from "../../../models/enums/step";
+import { PlayerEntity } from "../../../models/game/player-entity";
 
 export class StartTurnParser implements Parser {
 
@@ -18,13 +19,19 @@ export class StartTurnParser implements Parser {
     }
 
     public parse(
-        item: ActionHistoryItem, 
-        currentTurn: number, 
-        entitiesBeforeAction: Map<number, Entity>,
-        history: ReadonlyArray<HistoryItem>): Action[] {
+            item: ActionHistoryItem, 
+            currentTurn: number, 
+            entitiesBeforeAction: Map<number, Entity>,
+            history: ReadonlyArray<HistoryItem>): Action[] {
+        const activePlayerId = entitiesBeforeAction
+                .filter(entity => entity.getTag(GameTag.CURRENT_PLAYER) === 1)
+                .map(entity => entity as PlayerEntity)
+                .first()
+                .playerId;
         return [StartTurnAction.create({
             timestamp: item.timestamp,
             turn: currentTurn + 1,
+            activePlayer: activePlayerId,
             index: item.index
         })];
     }

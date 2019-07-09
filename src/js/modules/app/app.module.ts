@@ -74,6 +74,7 @@ import { SecretComponent } from '../../components/game/hero/secret.component';
 import { SecretRevealedComponent } from '../../components/game/secret-revealed.component';
 import { CardEnchantmentsComponent } from '../../components/game/card/card-enchantments.component';
 import { CardEnchantmentComponent } from '../../components/game/card/card-enchantment.component';
+import { ActivePlayerParserService } from '../../services/parser/gamepipeline/active-player-parser.service';
 
 @NgModule({
 	imports: [
@@ -156,6 +157,7 @@ import { CardEnchantmentComponent } from '../../components/game/card/card-enchan
         { provide: LocationStrategy, useClass: PathLocationStrategy },
 
         ActionParserService,
+        ActivePlayerParserService,
         ActiveSpellParserService,
 		AllCardsService,
 		Events,
