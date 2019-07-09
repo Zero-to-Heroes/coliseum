@@ -35,13 +35,13 @@ export class HandComponent {
 				this.marginLeft = -2;
 				return;
 			case 8:
-				this.marginLeft = -2.5;
+				this.marginLeft = -2.3;
 				return;
 			case 9:
-				this.marginLeft = -3;
+				this.marginLeft = -2.5;
 				return;
 			case 10:
-				this.marginLeft = -3.5;
+				this.marginLeft = -2.7;
 				return;
 			default:
 				this.marginLeft = -1;
