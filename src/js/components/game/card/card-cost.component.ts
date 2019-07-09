@@ -44,6 +44,7 @@ export class CardCostComponent {
     @Input('cost') set cost(cost: number) {
         this.logger.debug('[card-cost] setting cost', cost);
         this._cost = cost;
+        this.costClass = undefined;
         this.updateCost();
     }
     
@@ -69,6 +70,7 @@ export class CardCostComponent {
             this.costClass = 'lower-cost';
         }
         else if (this._cost > originalCost) {
+            console.log('flagger higher cost', this._cost, originalCost);
             this.costClass = 'higher-cost';
         }
         if (!(<ViewRef>this.cdr).destroyed) {
