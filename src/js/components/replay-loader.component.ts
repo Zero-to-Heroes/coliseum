@@ -17,9 +17,8 @@ export class ReplayLoaderComponent implements AfterViewInit {
     }
 
     async ngAfterViewInit() {
-        console.log('window location', window.location);
         const reviewId = this.getSearchParam('reviewId');
-        console.log('reviewId', reviewId);
+        // console.log('reviewId', reviewId);
         if (!reviewId) {
             console.warn('loading default replay for demo purposes');
             $.ajax({
@@ -27,9 +26,9 @@ export class ReplayLoaderComponent implements AfterViewInit {
                 dataType: 'xml',
                 success: function(response) {
                     const replayAsString = new XMLSerializer().serializeToString(response);
-                    console.log('loaded replay xml', response, window['coliseum']);
+                    // console.log('loaded replay xml', response, window['coliseum']);
                     window['coliseum'].zone.run(() => {
-                        console.log('init replay loading');
+                        // console.log('init replay loading');
                         window['coliseum'].component.loadReplay(replayAsString);
                     });
                 }
@@ -38,11 +37,11 @@ export class ReplayLoaderComponent implements AfterViewInit {
         }
 
         const review: any = await this.http.get(REVIEW_API + reviewId).toPromise();
-        console.log('loaded review', review);
+        // console.log('loaded review', review);
 
         const headers = new HttpHeaders({ 'Content-Type': 'text/xml' }).set('Accept', 'text/xml');
         const replay = await this.http.get(REPLAY_API + review.key, { headers: headers, responseType: 'text' }).toPromise();
-        console.log('loaded replay', replay);
+        // console.log('loaded replay', replay);
         window['coliseum'].zone.run(() => {
             window['coliseum'].component.loadReplay(replay);
         });

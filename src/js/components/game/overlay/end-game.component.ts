@@ -71,7 +71,6 @@ export class EndGameComponent {
                 .first();
         const heroEntityId = player.getTag(GameTag.HERO_ENTITY);
         const hero = this._entities.get(heroEntityId);
-        console.log('end found player', player, hero)
         this.heroImage = `https://static.zerotoheroes.com/hearthstone/cardart/256x/${hero.cardID}.jpg`;
     }
 }
