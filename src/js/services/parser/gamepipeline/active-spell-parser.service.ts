@@ -15,6 +15,7 @@ import { CardTargetAction } from '../../../models/action/card-target-action';
 import { SummonAction } from '../../../models/action/summon-action';
 import { CardDrawAction } from '../../../models/action/card-draw-action';
 import { HealingAction } from '../../../models/action/healing-action';
+import { SecretRevealedAction } from '../../../models/action/secret-revealed-action';
 
 @Injectable()
 export class ActiveSpellParserService {
@@ -74,6 +75,10 @@ export class ActiveSpellParserService {
         else if (action instanceof SummonAction
                 && action.entities.get(action.origin).getTag(GameTag.CARDTYPE) === CardType.SPELL) {
             activeSpell = action.origin;
+        }
+        else if (action instanceof SecretRevealedAction
+                && action.entities.get(action.entityId).getTag(GameTag.CARDTYPE) === CardType.SPELL) {
+            activeSpell = action.entityId;
         }
         // If there is alraedy an active spell, attaching an enchantment is probably linked to that spell
         else if (action instanceof AttachingEnchantmentAction && previousAction && previousAction.activeSpell) {
