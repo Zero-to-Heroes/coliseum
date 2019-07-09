@@ -38,8 +38,7 @@ export class DamageComponent {
         }
         else {
             this.prefix = '+';
-            console.warn('missing heal image');
-            this.image = 'https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/icon_damage.png';
+            this.image = 'https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/icon_heal.png';
         }
     }
 }
