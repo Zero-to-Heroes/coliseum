@@ -88,6 +88,11 @@
                 display: none;
             }
         }
+        .hand {
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%; // So that the margins don't keep all the cards together
+        }
         .deck {
             top: 53%;
         }
