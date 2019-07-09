@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaderResponse, HttpHeaders } from '@angular/common/htt
 
 declare var $;
 
-const REVIEW_API = 'http://www.zerotoheroes.com/api/reviews/';
+const REVIEW_API = 'https://www.zerotoheroes.com/api/reviews/';
 const REPLAY_API = 'https://s3-us-west-2.amazonaws.com/com.zerotoheroes.output/';
 
 @Component({
@@ -15,7 +15,6 @@ export class ReplayLoaderComponent implements AfterViewInit {
 
 	constructor(private http: HttpClient) {
     }
-    // 5d20ad5073829e00018d7e4f
 
     async ngAfterViewInit() {
         console.log('window location', window.location);
