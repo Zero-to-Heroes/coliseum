@@ -83,6 +83,10 @@
         .mana-tray {
             bottom: 83.5%;
             left: 60.5%;
+
+            .crystals {
+                display: none;
+            }
         }
         .deck {
             top: 53%;
