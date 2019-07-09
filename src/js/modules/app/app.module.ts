@@ -84,9 +84,8 @@ console.log('environment is', process.env.NODE_ENV);
 		BrowserModule,
 		BrowserAnimationsModule,
 		Ng2FittextModule,
-		LoggerModule.forRoot({ 
-			level: process.env.NODE_ENV === 'production' ? NgxLoggerLevel.WARN : NgxLoggerLevel.DEBUG 
-        }),
+        LoggerModule.forRoot({ level: NgxLoggerLevel.WARN }),
+        // LoggerModule.forRoot({ level: NgxLoggerLevel.DEBUG }),
 	],
 	declarations: [
 		AppComponent,
@@ -181,5 +180,5 @@ console.log('environment is', process.env.NODE_ENV);
 	]
 })
 export class AppModule {
-	ngDoBootstrap() {}
+    ngDoBootstrap() {}
  }

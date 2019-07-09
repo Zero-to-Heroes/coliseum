@@ -23,7 +23,11 @@
 		"types": [
 			"node",
 		]
-	},
+    },
+    "angularCompilerOptions": {
+        "skipTemplateCodegen": false,
+        "strictMetadataEmit": false
+    },
 	"exclude": [
     	"node_modules/*",
 	]

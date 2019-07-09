@@ -11,7 +11,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
         BrowserModule,
         HttpClientModule,
 		LoggerModule.forRoot({ 
-			level: process.env.NODE_ENV === 'production' ? NgxLoggerLevel.WARN : NgxLoggerLevel.DEBUG 
+			level: NgxLoggerLevel.WARN
         }),
 	],
 	declarations: [
