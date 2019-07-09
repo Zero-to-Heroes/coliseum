@@ -32,28 +32,36 @@ export class MulliganCardParser implements Parser {
         // Adding the cards mulliganed by the player
         if (parseInt(item.node.attributes.type) == BlockType.TRIGGER
                 && item.node.hideEntities
+                && item.node.hideEntities.length > 0
                 && GameHepler.isPlayerEntity(parseInt(item.node.attributes.entity), entitiesBeforeAction)) {
-            return [MulliganCardAction.create(
+            const result = [MulliganCardAction.create(
                 {
                     timestamp: item.timestamp,
                     index: item.index,
                     playerMulligan: item.node.hideEntities
                 },
                 this.allCards)];
+            console.log('player result', result);
+            return result;
         }
         if (parseInt(item.node.attributes.type) == BlockType.TRIGGER 
                 && GameHepler.isPlayerEntity(parseInt(item.node.attributes.entity), entitiesBeforeAction)
-                && item.node.tags) {
-            return item.node.tags
+                && item.node.tags
+                && item.node.tags.length > 0) {
+            const relevantTags = item.node.tags
                 .filter((tag) => tag.tag === GameTag.ZONE)
-                .filter((tag) => tag.value === Zone.DECK)
-                .map((tag) => MulliganCardAction.create(
+                .filter((tag) => tag.value === Zone.DECK);
+            if (relevantTags && relevantTags.length > 0) {
+                const result = relevantTags.map((tag) => MulliganCardAction.create(
                     {
                         timestamp: item.timestamp,
                         index: item.index,
                         opponentMulligan: [tag.entity]
                     },
                     this.allCards));
+                console.log('result', result);
+                return result;
+            }
         }
         return null;
     }
@@ -67,6 +75,7 @@ export class MulliganCardParser implements Parser {
     }
 
     private mergeActions(previousAction: MulliganCardAction, currentAction: MulliganCardAction): MulliganCardAction {
+        console.log('merging', previousAction, currentAction);
         return MulliganCardAction.create(
             {
                 timestamp: previousAction.timestamp,

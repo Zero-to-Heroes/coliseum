@@ -94,7 +94,6 @@ export class ActionParserService {
 
             const updatedTurn: Turn = this.updateCurrentTurn(item, game, actionsForTurn);
             if (updatedTurn) {
-                console.log('updating turn');
                 // The last action is a start turn action, which we want to keep for the start 
                 // of the next turn instead
                 const lastAction = actionsForTurn[actionsForTurn.length - 1];

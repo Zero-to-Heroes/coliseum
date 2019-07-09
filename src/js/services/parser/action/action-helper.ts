@@ -25,9 +25,10 @@ export class ActionHelper {
     public static combineActions<T extends Action> (
             actions: ReadonlyArray<Action>, 
             shouldMerge: (a: Action, b: Action) => boolean,
-            combiner: (a: T, b: T) => T): ReadonlyArray<Action> {
+            combiner: (a: T, b: T) => T,
+            shouldSwap?: (a: Action, b: Action) => boolean): ReadonlyArray<Action> {
         let previousResult = actions;
-        let result: ReadonlyArray<Action> = ActionHelper.doCombine(previousResult, shouldMerge, combiner);
+        let result: ReadonlyArray<Action> = ActionHelper.doCombine(previousResult, shouldMerge, combiner, shouldSwap);
         while (!isEqual(result, previousResult)) {
             previousResult = result;
             result = ActionHelper.doCombine(previousResult, shouldMerge, combiner);
@@ -50,7 +51,8 @@ export class ActionHelper {
     private static doCombine<T extends Action>(
             actions: ReadonlyArray<Action>, 
             shouldMerge: (a: Action, b: Action) => boolean,
-            combiner: (a: T, b: T) => T): ReadonlyArray<Action> {
+            combiner: (a: T, b: T) => T,
+            shouldSwap?: (a: Action, b: Action) => boolean): ReadonlyArray<Action> {
         const result: Action[] = [];
         let previousAction: Action;
         // console.log('considering actions to merge', actions);
@@ -60,6 +62,12 @@ export class ActionHelper {
                 const index = result.indexOf(previousAction);
                 previousAction = combiner(previousAction as T, currentAction as T);
                 result[index] = previousAction;
+            }
+            // This occurs rarely, when some mulligan card chocies are logged before the full mulligan card options
+            else if (shouldSwap && shouldSwap(previousAction, currentAction)) {
+                const index = result.indexOf(previousAction);
+                result[index] = currentAction;
+                result[index + 1] = previousAction;
             }
             else {
                 previousAction = currentAction;

@@ -12,6 +12,7 @@ import { ChosenEntityHistoryItem } from "../../../models/history/chosen-entities
 import { PlayerEntity } from "../../../models/game/player-entity";
 import { MulliganCardChoiceAction } from "../../../models/action/mulligan-card-choice-action";
 import { StartTurnAction } from "../../../models/action/start-turn-action";
+import { MulliganCardAction } from "../../../models/action/mulligan-card-action";
 
 export class MulliganCardChoiceParser implements Parser {
 
@@ -61,7 +62,8 @@ export class MulliganCardChoiceParser implements Parser {
             actions,
             (previous, current) => (previous instanceof MulliganCardChoiceAction && current instanceof MulliganCardChoiceAction)
                     || (previous instanceof StartTurnAction && current instanceof MulliganCardChoiceAction),
-            (previous, current) => this.mergeActions(previous, current)
+            (previous, current) => this.mergeActions(previous, current),
+            (previous, current) => previous instanceof MulliganCardAction && current instanceof MulliganCardChoiceAction
         );
     }
 
