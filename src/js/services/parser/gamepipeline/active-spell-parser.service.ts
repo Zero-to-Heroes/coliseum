@@ -14,6 +14,7 @@ import { DamageAction } from '../../../models/action/damage-action';
 import { CardTargetAction } from '../../../models/action/card-target-action';
 import { SummonAction } from '../../../models/action/summon-action';
 import { CardDrawAction } from '../../../models/action/card-draw-action';
+import { HealingAction } from '../../../models/action/healing-action';
 
 @Injectable()
 export class ActiveSpellParserService {
@@ -84,6 +85,9 @@ export class ActiveSpellParserService {
         }
         // Similarly if damage is dealth
         else if (action instanceof DamageAction && previousAction && previousAction.activeSpell) {
+            activeSpell = previousAction.activeSpell;
+        }
+        else if (action instanceof HealingAction && previousAction && previousAction.activeSpell) {
             activeSpell = previousAction.activeSpell;
         }
         
