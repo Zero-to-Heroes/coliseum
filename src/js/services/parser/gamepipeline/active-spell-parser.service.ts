@@ -82,6 +82,10 @@ export class ActiveSpellParserService {
         else if (action instanceof CardDrawAction && previousAction && previousAction.activeSpell) {
             activeSpell = previousAction.activeSpell;
         }
+        // Similarly if damage is dealth
+        else if (action instanceof DamageAction && previousAction && previousAction.activeSpell) {
+            activeSpell = previousAction.activeSpell;
+        }
         
         if (activeSpell) {
             // this.logger.debug('Updating active spell', activeSpell);
