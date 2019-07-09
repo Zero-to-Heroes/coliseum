@@ -43,7 +43,10 @@ import { PlayState } from '../../models/enums/playstate';
                     *ngIf="_secretRevealed"
                     [entity]="_secretRevealed">
             </secret-revealed>
-            <target-zone *ngIf="_targets" [targets]="_targets"></target-zone>
+            <target-zone *ngIf="_targets" 
+                    [targets]="_targets" 
+                    [active]="_playerId === _activePlayer">
+            </target-zone>
             <div class="overlays" *ngIf="isOverlay">
                 <mulligan *ngIf="_isMulligan" class="top"
                         [entities]="_entities" 

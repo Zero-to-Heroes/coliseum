@@ -8,13 +8,14 @@ import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
         '../../../css/components/game/target-zone.component.scss'
     ],
 	template: `
-        <div class="target-zone" [innerHTML]="svg"></div>
+        <div class="target-zone" [innerHTML]="svg" [ngClass]="{ 'inactive': !_active }"></div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TargetZoneComponent implements AfterViewInit {
 
     _targets: ReadonlyArray<[number, number]>;
+    _active: boolean;
     svg: SafeHtml;
     
     private width: number;
@@ -47,6 +48,11 @@ export class TargetZoneComponent implements AfterViewInit {
         // The timeout value is totally arbitrary, and should be used only when going 
         // directly to a target game state from a hyperlink
         setTimeout(() => this.drawTargetLines(), anyMissingTarget ? 1000 : 0);
+    }
+
+    @Input('active') set active(value: boolean) {
+        this.logger.debug('[target-zone] setting active', value);
+        this._active = value;
     }
 
     @HostListener('window:resize', ['$event'])
@@ -90,7 +96,7 @@ export class TargetZoneComponent implements AfterViewInit {
             <svg width="${this.width}px" height="${this.height}px" viewBox="0 0 ${this.width} ${this.height}">
                 <defs>
                     <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="6" orient="auto-start-reverse">
-                        <path d="M 0 0 L 10 5 L 0 10 z" fill="#4786FF" />
+                        <path d="M 0 0 L 10 5 L 0 10 z" />
                     </marker>
                 </defs>
                 ${paths}
