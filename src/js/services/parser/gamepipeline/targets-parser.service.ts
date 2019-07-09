@@ -38,7 +38,8 @@ export class TargetsParserService {
         if (this.hasTarget(action)) {
             const targetPair: ReadonlyArray<[number, number]> = [[action.originId, action.targetId]];
             return action.updateAction( { targets: targetPair } as Action);
-        } else if (this.hasTargets(action)) {
+        } 
+        else if (this.hasTargets(action)) {
             const targetPairs = action.targetIds
                     .map(targetId => [action.originId, targetId] as [number, number]) as ReadonlyArray<[number, number]>;
             return action.updateAction( { targets: targetPairs } as Action);

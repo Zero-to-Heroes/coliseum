@@ -13,6 +13,7 @@ import { AttachingEnchantmentAction } from '../../../models/action/attaching-enc
 import { DamageAction } from '../../../models/action/damage-action';
 import { CardTargetAction } from '../../../models/action/card-target-action';
 import { SummonAction } from '../../../models/action/summon-action';
+import { CardDrawAction } from '../../../models/action/card-draw-action';
 
 @Injectable()
 export class ActiveSpellParserService {
@@ -75,7 +76,10 @@ export class ActiveSpellParserService {
         }
         // If there is alraedy an active spell, attaching an enchantment is probably linked to that spell
         else if (action instanceof AttachingEnchantmentAction && previousAction && previousAction.activeSpell) {
-            // Don't touch the active spell
+            activeSpell = previousAction.activeSpell;
+        }
+        // Similarly if we draw a card
+        else if (action instanceof CardDrawAction && previousAction && previousAction.activeSpell) {
             activeSpell = previousAction.activeSpell;
         }
         
