@@ -79,11 +79,22 @@
 }
 
 :host.top {
-    ::ng-deep .mana-tray {
-        bottom: 83.5%;
-        left: 60.5%;
-    }
-    ::ng-deep .deck {
-        top: 53%;
+    ::ng-deep {
+        .mana-tray {
+            bottom: 83.5%;
+            left: 60.5%;
+        }
+        .deck {
+            top: 53%;
+        }
+        .hero-power .hero-power-cost .cost {
+            top: 13%;
+        }
+        .hero-stats .attack .stat-value {
+            top: 45%;
+        }
+        .play-area .hero .hero-stats .armor .stat-value {
+            top: 10%;
+        }
     }
 }

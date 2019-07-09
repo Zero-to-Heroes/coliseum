@@ -36,6 +36,10 @@
         color: white;
         font-weight: bold;
         text-shadow: $text-shadow;
+
+        div {
+            font-family: 'Passion One';
+        }
     }
 
     &.hero_power {
