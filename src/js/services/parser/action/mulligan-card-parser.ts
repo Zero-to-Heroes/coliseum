@@ -41,7 +41,6 @@ export class MulliganCardParser implements Parser {
                     playerMulligan: item.node.hideEntities
                 },
                 this.allCards)];
-            console.log('player result', result);
             return result;
         }
         if (parseInt(item.node.attributes.type) == BlockType.TRIGGER 
@@ -59,7 +58,6 @@ export class MulliganCardParser implements Parser {
                         opponentMulligan: [tag.entity]
                     },
                     this.allCards));
-                console.log('result', result);
                 return result;
             }
         }
@@ -75,7 +73,6 @@ export class MulliganCardParser implements Parser {
     }
 
     private mergeActions(previousAction: MulliganCardAction, currentAction: MulliganCardAction): MulliganCardAction {
-        console.log('merging', previousAction, currentAction);
         return MulliganCardAction.create(
             {
                 timestamp: previousAction.timestamp,
