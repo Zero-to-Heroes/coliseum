@@ -21,7 +21,7 @@ export class EndGameAction extends Action {
         let concededText = '';
         for (let status of this.winStatus) {
             if (status[1] === PlayState.CONCEDED) {
-                const name = ActionHelper.getOwner(this.entities, this.entityId).name;
+                const name = ActionHelper.getOwner(this.entities, status[0]).name;
                 concededText = `${name} conceded, `;
             }
         }
