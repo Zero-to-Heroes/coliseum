@@ -11,7 +11,7 @@ import { Map } from 'immutable';
 	template: `
         <div class="discover">
             <li *ngFor="let entity of discoverCards; let i = index; trackBy: trackByFn">
-                <card [entity]="entity" [hasTooltip]="false" [ticked]="_chosen.indexOf(entity.id) !== -1"></card>
+                <card [entity]="entity" [hasTooltip]="false" [ngClass]="{ 'chosen': _chosen.indexOf(entity.id) !== -1 }"></card>
             </li>
 		</div>
 	`,

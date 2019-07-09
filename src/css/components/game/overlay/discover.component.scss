@@ -24,6 +24,10 @@
         card {
             height: 100%;
             display: flex;
+
+            &:not(.chosen) {
+                filter: grayscale(1);
+            }
         }
 
         .unknown-card {
