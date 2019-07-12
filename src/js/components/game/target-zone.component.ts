@@ -88,7 +88,7 @@ export class TargetZoneComponent implements AfterViewInit {
     private drawTargetLines() {
         const allPaths = this._targets.map(target => this.drawTargetLine(target[0], target[1]));
         if (allPaths.some(path => !path)) {
-            this.logger.error('[targets] missing some elements, not drawing targets');
+            this.logger.warn('[targets] missing some elements, not drawing targets');
             return;
         }
         const paths: string = allPaths.join('\n');
