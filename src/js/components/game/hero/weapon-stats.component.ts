@@ -6,7 +6,8 @@ import { NGXLogger } from 'ngx-logger';
 	selector: 'weapon-stats',
 	styleUrls: [
 		'../../../../css/global/text.scss',
-		'../../../../css/components/game/hero/weapon-stats.component.scss'
+		'../../../../css/components/game/hero/weapon-stats.component.scss',
+		'../../../../css/components/game/card/card-stats-colors.scss',
 	],
 	template: `
         <div class="weapon-stats" cardElementResize [fontSizeRatio]="0.15">
