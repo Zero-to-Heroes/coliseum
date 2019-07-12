@@ -24,7 +24,7 @@ export class SecretPlayedFromHandAction extends Action {
 
     public enrichWithText(): SecretPlayedFromHandAction {
         const ownerName: string = ActionHelper.getOwner(this.entities, this.entityId).name;
-        const cardId: string = this.entities.get(this.entityId).cardID;
+        const cardId: string = ActionHelper.getCardId(this.entities, this.entityId);
         const card = this.allCards.getCard(cardId);
         const textRaw = `\t${ownerName} plays a secret! ${card.name}`;
         return Object.assign(new SecretPlayedFromHandAction(this.allCards), this, { textRaw: textRaw });                

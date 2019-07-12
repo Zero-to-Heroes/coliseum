@@ -3,6 +3,7 @@ import { Map } from "immutable";
 import { Entity } from "../game/entity";
 import { AllCardsService } from "../../services/all-cards.service";
 import { HasTargets } from "./has-targets";
+import { ActionHelper } from "../../services/parser/action/action-helper";
 
 export class PowerTargetAction extends Action implements HasTargets {   
     readonly originId: number;
@@ -21,10 +22,9 @@ export class PowerTargetAction extends Action implements HasTargets {
     }
 
     public enrichWithText(): PowerTargetAction {
-        const originCardId = this.entities.get(this.originId).cardID;
+        const originCardId = ActionHelper.getCardId(this.entities, this.originId);
         const targetCardIds = this.targetIds
-                .map((entityId) => this.entities.get(entityId))
-                .map((entity) => entity.cardID);
+                .map((entityId) => ActionHelper.getCardId(this.entities, entityId));
         const originCardName = this.allCards.getCard(originCardId).name;
         const cardIds = targetCardIds.map((cardId) => this.allCards.getCard(cardId));
         const targetCardNames = cardIds.some(card => !card) 
@@ -34,7 +34,7 @@ export class PowerTargetAction extends Action implements HasTargets {
         if (this.damages) {
             damageText = this.damages
                     .map((amount, entityId) => {
-                        const entityCardId = this.entities.get(entityId).cardID;
+                        const entityCardId = ActionHelper.getCardId(this.entities, entityId);
                         const entityCard = this.allCards.getCard(entityCardId);
                         return `${entityCard.name} takes ${amount} damage`;
                     })

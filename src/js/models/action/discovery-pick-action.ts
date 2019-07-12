@@ -21,7 +21,7 @@ export class DiscoveryPickAction extends Action {
 
     public enrichWithText(): DiscoveryPickAction {
         const ownerEntity = ActionHelper.getOwner(this.entities, this.owner);
-        const choiceCardId = this.entities.get(this.choice).cardID;
+        const choiceCardId = ActionHelper.getCardId(this.entities, this.choice);
         let chosenCardText = "one card";
         if (choiceCardId) {
             chosenCardText = this.allCards.getCard(choiceCardId).name;

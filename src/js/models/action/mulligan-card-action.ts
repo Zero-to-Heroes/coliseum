@@ -41,8 +41,7 @@ export class MulliganCardAction extends Action {
         }
         const ownerName = ownerNames[0];
         const mulliganedCards = cards
-                .map((cardId) => this.entities.get(cardId))
-                .map((entity) => entity.cardID)
+                .map((entityId) => ActionHelper.getCardId(this.entities, entityId))
                 .map((cardId) => this.allCards.getCard(cardId));
         let mulliganInfo = '';
         // We don't have the mulligan info, so we just display the amount of cards being mulliganed

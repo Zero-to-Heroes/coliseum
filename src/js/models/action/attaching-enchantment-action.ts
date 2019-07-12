@@ -4,6 +4,7 @@ import { Entity } from "../game/entity";
 import { AllCardsService } from "../../services/all-cards.service";
 import { PlayerEntity } from "../game/player-entity";
 import { HasTargets } from "./has-targets";
+import { ActionHelper } from "../../services/parser/action/action-helper";
 
 export class AttachingEnchantmentAction extends Action implements HasTargets {
     readonly originId: number;
@@ -26,7 +27,7 @@ export class AttachingEnchantmentAction extends Action implements HasTargets {
     }
 
     public enrichWithText(): AttachingEnchantmentAction {
-        const creatorCardId = this.entities.get(this.originId).cardID;
+        const creatorCardId = ActionHelper.getCardId(this.entities, this.originId);
         const creatorCard = this.allCards.getCard(creatorCardId);
         const enchantmentCard = this.allCards.getCard(this.enchantmentCardId);
         const targetCardNames = this.targetIds

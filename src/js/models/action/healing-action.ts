@@ -2,6 +2,7 @@ import { Action } from "./action";
 import { Map } from "immutable";
 import { Entity } from "../game/entity";
 import { AllCardsService } from "../../services/all-cards.service";
+import { ActionHelper } from "../../services/parser/action/action-helper";
 
 export class HealingAction extends Action {
 
@@ -20,7 +21,7 @@ export class HealingAction extends Action {
     public enrichWithText(): HealingAction {
         const textRaw = '\t' + this.damages
                 .map((amount, entityId) => {
-                    const entityCardId = this.entities.get(entityId).cardID;
+                    const entityCardId = ActionHelper.getCardId(this.entities, entityId);
                     const entityCard = this.allCards.getCard(entityCardId);
                     return `${entityCard.name} heals for ${-amount}`;
                 })

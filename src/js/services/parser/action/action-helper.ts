@@ -29,7 +29,8 @@ export class ActionHelper {
         }
         // Otherwise, this can happen when we're targeting a player entity, which doesn't have a card id
         if (!(entity instanceof PlayerEntity)) {
-            console.warn('Could not get card id from a non-player entity', entityId, entity, entity.tags.toJS());
+            // Since we don't always know the entity id, it is often correct to say we don't know
+            return null;
         }
         const heroEntityId = entity.getTag(GameTag.HERO_ENTITY);
         return entities.get(heroEntityId).cardID;

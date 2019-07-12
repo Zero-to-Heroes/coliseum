@@ -2,6 +2,7 @@ import { Action } from "./action";
 import { Map } from "immutable";
 import { Entity } from "../game/entity";
 import { AllCardsService } from "../../services/all-cards.service";
+import { ActionHelper } from "../../services/parser/action/action-helper";
 
 export class SecretRevealedAction extends Action {
     readonly entityId: number;
@@ -22,7 +23,7 @@ export class SecretRevealedAction extends Action {
     }
 
     public enrichWithText(): SecretRevealedAction {
-        const cardId = this.entities.get(this.entityId).cardID;
+        const cardId = ActionHelper.getCardId(this.entities, this.entityId);
         const cardName = this.allCards.getCard(cardId).name;
         const textRaw = `\t... which triggers ${cardName}!`;
         return Object.assign(new SecretRevealedAction(this.allCards), this, { textRaw: textRaw });                

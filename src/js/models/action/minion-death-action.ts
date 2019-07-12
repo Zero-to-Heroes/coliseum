@@ -2,6 +2,7 @@ import { Action } from "./action";
 import { Map } from "immutable";
 import { Entity } from "../game/entity";
 import { AllCardsService } from "../../services/all-cards.service";
+import { ActionHelper } from "../../services/parser/action/action-helper";
 
 export class MinionDeathAction extends Action {
     readonly deadMinions: ReadonlyArray<number>;
@@ -23,7 +24,7 @@ export class MinionDeathAction extends Action {
 
     public enrichWithText(): MinionDeathAction {
         const deadMinionNames = this.deadMinions
-                .map((entityId) => this.entities.get(entityId).cardID)
+                .map((entityId) => ActionHelper.getCardId(this.entities, entityId))
                 .map((cardId) => this.allCards.getCard(cardId))
                 .map((card) => card.name)
                 .join(', ');

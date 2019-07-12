@@ -3,6 +3,7 @@ import { Map } from "immutable";
 import { Entity } from "../game/entity";
 import { AllCardsService } from "../../services/all-cards.service";
 import { PlayerEntity } from "../game/player-entity";
+import { ActionHelper } from "../../services/parser/action/action-helper";
 
 export class DiscoverAction extends Action {
 
@@ -30,8 +31,7 @@ export class DiscoverAction extends Action {
         const owner = this.entities.get(this.ownerId) as PlayerEntity;
 
         const offeredCards = this.choices
-                .map((cardId) => this.entities.get(cardId))
-                .map((entity) => entity.cardID)
+                .map((entityId) => ActionHelper.getCardId(this.entities, entityId))
                 .map((cardId) => this.allCards.getCard(cardId));
         let offerInfo = '';
         // We don't have the mulligan info, so we just display the amount of cards being mulliganed
@@ -43,8 +43,7 @@ export class DiscoverAction extends Action {
         }
 
         const chosenCards = this.chosen && this.chosen.length > 0 && this.chosen
-                .map((cardId) => this.entities.get(cardId))
-                .map((entity) => entity.cardID)
+                .map((entityId) => ActionHelper.getCardId(this.entities, entityId))
                 .map((cardId) => this.allCards.getCard(cardId));
         let choiceInfo = undefined;
         // We don't have the mulligan info, so we just display the amount of cards being mulliganed

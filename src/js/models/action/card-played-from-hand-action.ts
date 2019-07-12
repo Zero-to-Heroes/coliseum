@@ -27,7 +27,7 @@ export class CardPlayedFromHandAction extends Action {
     public enrichWithText(): CardPlayedFromHandAction {
         const ownerName: string = ActionHelper.getOwner(this.entities, this.entityId).name;
         const cardEntity = this.entities.get(this.entityId);
-        const cardId: string = cardEntity.cardID;
+        const cardId: string = ActionHelper.getCardId(this.entities, this.entityId);
         const card = this.allCards.getCard(cardId);
         let playVerb = 'plays';
         if (cardEntity.getTag(GameTag.CARDTYPE) === CardType.WEAPON) {

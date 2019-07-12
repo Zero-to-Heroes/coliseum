@@ -2,6 +2,7 @@ import { Action } from "./action";
 import { Map } from "immutable";
 import { Entity } from "../game/entity";
 import { AllCardsService } from "../../services/all-cards.service";
+import { ActionHelper } from "../../services/parser/action/action-helper";
 
 export class SummonAction extends Action {
     readonly origin: number;
@@ -23,10 +24,10 @@ export class SummonAction extends Action {
     }
 
     public enrichWithText(): SummonAction {
-        const originCardId = this.entities.get(this.origin).cardID;
+        const originCardId = ActionHelper.getCardId(this.entities, this.origin);
         const originCardName = this.allCards.getCard(originCardId).name;
         const summonCardNames = this.entityIds
-                .map((entityId) => this.entities.get(entityId).cardID)
+                .map((entityId) => ActionHelper.getCardId(this.entities, entityId))
                 .map((cardId) => this.allCards.getCard(cardId).name)
                 .join(', ');
         const textRaw = `\t${originCardName} summons ${summonCardNames}`;

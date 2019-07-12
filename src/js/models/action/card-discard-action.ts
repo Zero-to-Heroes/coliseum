@@ -40,8 +40,7 @@ export class CardDiscardAction extends Action {
         }
         const ownerName = ownerNames[0];
         const discardedCards = this.data
-                .map((cardId) => this.entities.get(cardId))
-                .map((entity) => entity.cardID)
+                .map((entityId) => ActionHelper.getCardId(this.entities, entityId))
                 .map((cardId) => this.allCards.getCard(cardId));
         let discardInfo = '';
         if (discardedCards.some((card) => !card || !card.name)) {

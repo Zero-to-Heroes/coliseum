@@ -3,6 +3,7 @@ import { Map } from "immutable";
 import { Entity } from "../game/entity";
 import { AllCardsService } from "../../services/all-cards.service";
 import { HasTarget } from "./has-target";
+import { ActionHelper } from "../../services/parser/action/action-helper";
 
 export class AttackAction extends Action implements HasTarget {
     readonly originId: number;
@@ -21,15 +22,15 @@ export class AttackAction extends Action implements HasTarget {
     }
 
     public enrichWithText(): AttackAction {
-        const originCardId = this.entities.get(this.originId).cardID;
-        const targetCardId = this.entities.get(this.targetId).cardID;
+        const originCardId = ActionHelper.getCardId(this.entities, this.originId);
+        const targetCardId = ActionHelper.getCardId(this.entities, this.targetId);
         const originCard = this.allCards.getCard(originCardId);
         const targetCard = this.allCards.getCard(targetCardId);
         let damageText = '';
         if (this.damages) {
             damageText = this.damages
                     .map((amount, entityId) => {
-                        const entityCardId = this.entities.get(entityId).cardID;
+                        const entityCardId = ActionHelper.getCardId(this.entities, entityId);
                         const entityCard = this.allCards.getCard(entityCardId);
                         return `${entityCard.name} takes ${amount} damage`;
                     })
