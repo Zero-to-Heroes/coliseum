@@ -8,7 +8,7 @@ import { NGXLogger } from 'ngx-logger';
 		'../../../../css/components/game/board/board-card-frame.component.scss'
 	],
     template: `
-        <div class="board-card-frame">
+        <div class="board-card-frame" [ngClass]="{ 'premium': _premium }">
             <img src="{{imageTaunt}}" class="card-frame taunt" *ngIf="imageTaunt" />
             <img src="{{image}}" class="card-frame" />
         </div>
@@ -36,6 +36,7 @@ export class BoardCardFrameComponent {
         this.logger.debug('[board-card-frame] setting premium', premium);
         this._premium = premium;
         this.updateImage();
+        this.updateImageTaunt();
     }
 
     @Input('hideStats') set hideStats(value: boolean) {
