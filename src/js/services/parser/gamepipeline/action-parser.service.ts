@@ -32,6 +32,7 @@ import { CardDiscardParser } from '../action/card-discard-parser';
 import { OptionsParser } from '../action/options-parser';
 import { EndGameParser } from '../action/end-game-parser';
 import { CardBurnParser } from '../action/card-burn-parser';
+import { FatigueDamageParser } from '../action/fatigue-damage-parser';
 
 @Injectable()
 export class ActionParserService {
@@ -65,6 +66,7 @@ export class ActionParserService {
             new CardDiscardParser(this.allCards, this.logger),
             new OptionsParser(this.allCards, this.logger),
             new EndGameParser(this.logger),
+            new FatigueDamageParser(this.allCards, this.logger),
         ];
     }
 
