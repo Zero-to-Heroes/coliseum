@@ -22,6 +22,19 @@ export class ActionHelper {
         return owner as PlayerEntity;
     }
 
+    public static getCardId(entities: Map<number, Entity>, entityId: number): string {
+        const entity = entities.get(entityId);
+        if (entity.cardID) {
+            return entity.cardID;
+        }
+        // Otherwise, this can happen when we're targeting a player entity, which doesn't have a card id
+        if (!(entity instanceof PlayerEntity)) {
+            console.warn('Could not get card id from a non-player entity', entityId, entity, entity.tags.toJS());
+        }
+        const heroEntityId = entity.getTag(GameTag.HERO_ENTITY);
+        return entities.get(heroEntityId).cardID;
+    }
+
     public static combineActions<T extends Action> (
             actions: ReadonlyArray<Action>, 
             shouldMerge: (a: Action, b: Action) => boolean,

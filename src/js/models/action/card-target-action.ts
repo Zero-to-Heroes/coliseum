@@ -3,6 +3,7 @@ import { Map } from "immutable";
 import { Entity } from "../game/entity";
 import { AllCardsService } from "../../services/all-cards.service";
 import { HasTargets } from "./has-targets";
+import { ActionHelper } from "../../services/parser/action/action-helper";
 
 export class CardTargetAction extends Action implements HasTargets {    
     readonly originId: number;
@@ -24,10 +25,9 @@ export class CardTargetAction extends Action implements HasTargets {
     }
 
     public enrichWithText(): CardTargetAction {
-        const originCardId = this.entities.get(this.originId).cardID;
+        const originCardId = ActionHelper.getCardId(this.entities, this.originId);
         const targetCardIds = this.targetIds
-                .map((entityId) => this.entities.get(entityId))
-                .map((entity) => entity.cardID);
+                .map((entityId) => ActionHelper.getCardId(this.entities, entityId));
         const originCardName = this.allCards.getCard(originCardId).name;
         const targetCardNames = targetCardIds
                 .map((cardId) => this.allCards.getCard(cardId))
