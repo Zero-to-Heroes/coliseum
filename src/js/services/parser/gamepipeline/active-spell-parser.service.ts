@@ -95,6 +95,10 @@ export class ActiveSpellParserService {
         else if (action instanceof HealingAction && previousAction && previousAction.activeSpell) {
             activeSpell = previousAction.activeSpell;
         }
+        // This usually happens when reacting to a spell, so it makes sense to show the active spell
+        else if (action instanceof PowerTargetAction && previousAction && previousAction.activeSpell) {
+            activeSpell = previousAction.activeSpell;
+        }
         
         if (activeSpell) {
             // this.logger.debug('Updating active spell', activeSpell);
