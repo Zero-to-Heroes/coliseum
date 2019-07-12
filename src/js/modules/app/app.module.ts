@@ -75,6 +75,7 @@ import { SecretRevealedComponent } from '../../components/game/secret-revealed.c
 import { CardEnchantmentsComponent } from '../../components/game/card/card-enchantments.component';
 import { CardEnchantmentComponent } from '../../components/game/card/card-enchantment.component';
 import { ActivePlayerParserService } from '../../services/parser/gamepipeline/active-player-parser.service';
+import { BurnComponent } from '../../components/game/overlay/burn.component';
 
 console.log('version is ' + process.env.APP_VERSION);
 console.log('environment is', process.env.NODE_ENV);
@@ -85,7 +86,7 @@ console.log('environment is', process.env.NODE_ENV);
 		BrowserAnimationsModule,
 		Ng2FittextModule,
         LoggerModule.forRoot({ level: NgxLoggerLevel.WARN }),
-        // LoggerModule.forRoot({ level: NgxLoggerLevel.DEBUG }),
+        // LoggerModule.forRoot({ level: NgxLoggerLevel.INFO }),
 	],
 	declarations: [
 		AppComponent,
@@ -145,6 +146,7 @@ console.log('environment is', process.env.NODE_ENV);
         EndGameComponent,
         
         MulliganComponent,
+        BurnComponent,
         DiscoverComponent,
         ActiveSpellComponent,
         SecretRevealedComponent,

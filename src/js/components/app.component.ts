@@ -12,6 +12,7 @@ import { PlayerEntity } from '../models/game/player-entity';
 import { PlayState } from '../models/enums/playstate';
 import { DiscoverAction } from '../models/action/discover-action';
 import { SecretRevealedAction } from '../models/action/secret-revealed-action';
+import { CardBurnAction } from '../models/action/card-burn-action';
 
 @Component({
 	styleUrls: [
@@ -34,6 +35,7 @@ import { SecretRevealedAction } from '../models/action/secret-revealed-action';
                     [targets]="targets"
                     [secretRevealed]="secretRevealed"
                     [discovers]="discovers"
+                    [burned]="burned"
                     [chosen]="chosen"
                     [options]="options"
                     [crossed]="crossed">
@@ -57,6 +59,7 @@ export class AppComponent {
     activeSpell: number;
     discovers: ReadonlyArray<number>;
     chosen: ReadonlyArray<number>;
+    burned: ReadonlyArray<number>;
     targets: ReadonlyArray<[number, number]>;
     options: ReadonlyArray<number>;
     secretRevealed: number;
@@ -127,6 +130,7 @@ export class AppComponent {
         this.options = this.computeOptions();
         this.discovers = this.computeDiscovers();
         this.chosen = this.computeChosen();
+        this.burned = this.computeBurned();
         this.isMulligan = this.computeMulligan();
         this.isEndGame = this.computeEndGame();
         this.endGameStatus = this.computeEndGameStatus();
@@ -156,6 +160,14 @@ export class AppComponent {
 
 	private computeOptions(): ReadonlyArray<number> {
 		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].options;
+	}
+
+	private computeBurned(): ReadonlyArray<number> {
+        const action = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn];
+        if (action instanceof CardBurnAction) {
+            return action.burnedCardIds;
+        }
+        return null;
 	}
 
 	private computeDiscovers(): ReadonlyArray<number> {

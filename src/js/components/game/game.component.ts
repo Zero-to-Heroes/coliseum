@@ -68,6 +68,10 @@ import { PlayState } from '../../models/enums/playstate';
                         [choices]="_discovers"
                         [chosen]="_chosen">
                 </discover>
+                <burn *ngIf="_burned" 
+                        [entities]="_entities" 
+                        [burned]="_burned">
+                </burn>
             </div>
 		</div>
 	`,
@@ -91,6 +95,7 @@ export class GameComponent {
     
     isOverlay: boolean;
     _discovers: ReadonlyArray<number>;
+    _burned: ReadonlyArray<number>;
     _chosen: ReadonlyArray<number>;
     _isMulligan: boolean;
     _isEndGame: boolean;
@@ -160,6 +165,12 @@ export class GameComponent {
         this.updateOverlay();
     }
 
+    @Input('burned') set burned(value: ReadonlyArray<number>) {
+        this.logger.debug('[game] setting burned', value);
+        this._burned = value;
+        this.updateOverlay();
+    }
+
     @Input('chosen') set chosen(value: ReadonlyArray<number>) {
         this.logger.debug('[game] setting chosen', value);
         this._chosen = value;
@@ -196,7 +207,8 @@ export class GameComponent {
     private updateOverlay() {
         this.isOverlay = this._isMulligan 
                 || this._isEndGame 
-                || (this._discovers && this._discovers.length > 0);
+                || (this._discovers && this._discovers.length > 0)
+                || (this._burned && this._burned.length > 0);
     }
 
     private updateActiveSpell() {
