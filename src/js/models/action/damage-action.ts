@@ -18,10 +18,10 @@ export class DamageAction extends Action {
 
     public enrichWithText(): DamageAction {
         const textRaw = '\t' + this.damages
-                .map((damage) => {
-                    const entityCardId = this.entities.get(damage.entity).cardID;
+                .map((amount, entityId) => {
+                    const entityCardId = this.entities.get(entityId).cardID;
                     const entityCard = this.allCards.getCard(entityCardId);
-                    return `${entityCard.name} takes ${damage.amount} damage`;
+                    return `${entityCard.name} takes ${amount} damage`;
                 })
                 .join(', ');
         return Object.assign(new DamageAction(this.allCards), this, { textRaw: textRaw });                

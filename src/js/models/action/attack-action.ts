@@ -28,10 +28,10 @@ export class AttackAction extends Action implements HasTarget {
         let damageText = '';
         if (this.damages) {
             damageText = this.damages
-                    .map((damage) => {
-                        const entityCardId = this.entities.get(damage.entity).cardID;
+                    .map((amount, entityId) => {
+                        const entityCardId = this.entities.get(entityId).cardID;
                         const entityCard = this.allCards.getCard(entityCardId);
-                        return `${entityCard.name} takes ${damage.amount} damage`;
+                        return `${entityCard.name} takes ${amount} damage`;
                     })
                     .join(', ');
         }

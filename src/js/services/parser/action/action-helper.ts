@@ -43,8 +43,10 @@ export class ActionHelper {
 
     public static mergeIntoFirstAction<T extends Action>(first: T, second: Action, newElements: T): T {
         const result = first.updateAction(newElements);
+        // const concat = [...(first.damages || []), ...(second.damages || [])] as ReadonlyArray<Damage>;
+        const finalDamages = first.damages.mergeWith((prev, next) => prev + next, second.damages);
         return result.updateAction({
-            damages: [...(first.damages || []), ...(second.damages || [])] as ReadonlyArray<Damage>,
+            damages: finalDamages,
         } as T) as T;
     }
 

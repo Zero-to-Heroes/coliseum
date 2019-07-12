@@ -19,10 +19,10 @@ export class HealingAction extends Action {
 
     public enrichWithText(): HealingAction {
         const textRaw = '\t' + this.damages
-                .map((damage) => {
-                    const entityCardId = this.entities.get(damage.entity).cardID;
+                .map((amount, entityId) => {
+                    const entityCardId = this.entities.get(entityId).cardID;
                     const entityCard = this.allCards.getCard(entityCardId);
-                    return `${entityCard.name} heals for ${-damage.amount}`;
+                    return `${entityCard.name} heals for ${-amount}`;
                 })
                 .join(', ');
         return Object.assign(new HealingAction(this.allCards), this, { textRaw: textRaw });                

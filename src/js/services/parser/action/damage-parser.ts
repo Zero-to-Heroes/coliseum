@@ -41,11 +41,8 @@ export class DamageParser implements Parser {
                 {
                     timestamp: item.timestamp,
                     index: item.index,
-                    damages: [{
-                        entity: item.tag.entity,
-                        amount: damageTaken,
-                    }]
-                },
+                    damages: Map.of(item.tag.entity, damageTaken)
+                } as Action,
                 this.allCards)];            
         }
         else 
@@ -54,10 +51,7 @@ export class DamageParser implements Parser {
                 {
                     timestamp: item.timestamp,
                     index: item.index,
-                    damages: [{
-                        entity: item.tag.entity,
-                        amount: damageTaken,
-                    }]
+                    damages: Map.of(item.tag.entity, damageTaken)
                 },
                 this.allCards)];            
         }
@@ -86,10 +80,9 @@ export class DamageParser implements Parser {
     }
 
     private mergeDamageIntoAction(previousAction: Action, currentAction: DamageAction): Action {
-        const result = previousAction.updateAction({
+        const result = ActionHelper.mergeIntoFirstAction(previousAction, currentAction, {
             index: currentAction.index,
             entities: currentAction.entities,
-            damages: [...(previousAction.damages || []), ...(currentAction.damages || [])] as ReadonlyArray<Damage>,
         } as Action);
         // if (previousAction instanceof PowerTargetAction) {
         //     console.log('merging damage into target action', previousAction.originId, previousAction, currentAction, result, result instanceof PowerTargetAction)

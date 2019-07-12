@@ -21,7 +21,7 @@ export abstract class Action {
     readonly options: ReadonlyArray<number> = [];
     // This is part of the global action, because damage actions can be merged 
     // into non-damage ones
-    readonly damages: ReadonlyArray<Damage>; 
+    readonly damages: Map<number, number> = Map.of(); 
 
     protected abstract getInstance(): Action;
     abstract update(entities: Map<number, Entity>): Action;

@@ -177,9 +177,9 @@ export class ActionParserService {
     }
 
     private updateDamageForEntity(damageAction: Action, entity: Entity): Entity {
-        const damages: ReadonlyArray<Damage> = damageAction['damages'];
-        const damage = damages.find((damage) => damage.entity === entity.id);
-        return damage ? entity.updateDamage(damage.amount) : entity;
+        const damages: Map<number, number> = damageAction['damages'];
+        const damage = damages.get(entity.id, 0);
+        return damage ? entity.updateDamage(damage) : entity;
     }
     
     private updateCurrentTurn(item: HistoryItem, game: Game, actions: ReadonlyArray<Action>): Turn {
