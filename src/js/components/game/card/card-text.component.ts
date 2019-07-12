@@ -38,6 +38,11 @@ export class CardTextComponent {
         'FB_LK005', // Remorseless Winter
         'GILA_601', // Cannon
         'ICCA08_030p', // Remorseless Winter
+        'DAL_007', // Rafaam's Scheme
+        'DAL_008', // Dr Boom's Scheme
+        'DAL_009', // Hagatha's Scheme
+        'DAL_010', // Togwaggle's Scheme
+        'DAL_011', // Lazul's Scheme
     ]
 
     _cardType: string;
@@ -86,6 +91,7 @@ export class CardTextComponent {
             }
             return;
         }
+
         // There are a few cards whose text is truncated in the json cards export
         const originalText = this.CARD_IDS_TO_FIX.indexOf(cardId) !== -1
                 ? originalCard.text + ' @' + originalCard.collectionText
