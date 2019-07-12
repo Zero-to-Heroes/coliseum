@@ -1,6 +1,5 @@
 import { Parser } from "./parser";
 import { HistoryItem } from "../../../models/history/history-item";
-import { ActionHistoryItem } from "../../../models/history/action-history-item";
 import { Action } from "../../../models/action/action";
 import { TagChangeHistoryItem } from "../../../models/history/tag-change-history-item";
 import { GameTag } from "../../../models/enums/game-tags";
@@ -41,7 +40,7 @@ export class CardDrawParser implements Parser {
                     && (previousZone === Zone.DECK || previousZone === Zone.SETASIDE || !previousZone)) {
                 const controller = entitiesBeforeAction.get(item.tag.entity).getTag(GameTag.CONTROLLER);
                 if (!controller) {
-                    this.logger.error('empty controller', item, entitiesBeforeAction.get(item.tag.entity));
+                    this.logger.error('[card-draw-parser] empty controller', item, entitiesBeforeAction.get(item.tag.entity));
                 }
                 return [CardDrawAction.create(
                     {
@@ -85,7 +84,7 @@ export class CardDrawParser implements Parser {
             const controller = item.entityDefintion.tags.get(GameTag[GameTag.CONTROLLER]) 
                     || entitiesBeforeAction.get(item.entityDefintion.id).getTag(GameTag.CONTROLLER);
             if (!controller) {
-                this.logger.error('empty controller', item);
+                this.logger.error('[card-draw-parser] empty controller', item);
                 return [];
             }
             return [CardDrawAction.create(
@@ -114,7 +113,7 @@ export class CardDrawParser implements Parser {
             return false;
         }
         if (previous.controller === undefined || current.controller === undefined) {
-            this.logger.error('Empty controller for draw action', previous, current);
+            this.logger.error('[card-draw-parser] Empty controller for draw action', previous, current);
         }
         return previous.controller === current.controller;
     }

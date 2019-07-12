@@ -26,12 +26,12 @@ import { SecretPlayedFromHandParser } from '../action/secret-played-from-hand-pa
 import { SecretRevealedParser } from '../action/secret-revealed-parser';
 import { AttachingEnchantmentParser } from '../action/attaching-enchantment-parser';
 import { DamageParser } from '../action/damage-parser';
-import { Damage } from '../../../models/action/damage';
 import { DiscoveryPickParser } from '../action/discovery-pick-parser';
 import { MulliganCardChoiceParser } from '../action/mulligan-card-choice-parser';
 import { CardDiscardParser } from '../action/card-discard-parser';
 import { OptionsParser } from '../action/options-parser';
 import { EndGameParser } from '../action/end-game-parser';
+import { CardBurnParser } from '../action/card-burn-parser';
 
 @Injectable()
 export class ActionParserService {
@@ -48,6 +48,7 @@ export class ActionParserService {
             new MulliganCardChoiceParser(this.allCards, this.logger),
             new StartOfMulliganParser(),
             new CardDrawParser(this.allCards, this.logger),
+            new CardBurnParser(this.allCards, this.logger),
             new HeroPowerUsedParser(this.allCards),
             new CardPlayedFromHandParser(this.allCards),
             new SecretPlayedFromHandParser(this.allCards),
