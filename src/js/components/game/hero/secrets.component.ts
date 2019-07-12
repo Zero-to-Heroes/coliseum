@@ -1,6 +1,7 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { Entity } from '../../../models/game/entity';
 import { NGXLogger } from 'ngx-logger';
+import { GameTag } from '../../../models/enums/game-tags';
 
 @Component({
 	selector: 'secrets',
@@ -9,24 +10,31 @@ import { NGXLogger } from 'ngx-logger';
     ],
 	template: `
         <div class="secrets">
-            <secret *ngFor="let entity of _secrets; let i = index; trackBy: trackByFn" 
+            <quest *ngFor="let entity of _quests; let i = index; trackBy: trackByFn" 
                     [entity]="entity"
                     [style.left.%]="getLeft(i)"
                     [style.top.%]="getTop(i)">
-            </secret>        
+            </quest>
+            <secret *ngFor="let entity of _secrets; let i = index; trackBy: trackByFn" 
+                    [entity]="entity"
+                    [style.left.%]="getLeft(i + _quests.length)"
+                    [style.top.%]="getTop(i + _quests.length)">
+            </secret>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SecretsComponent {
 
+    _quests: ReadonlyArray<Entity>;
     _secrets: ReadonlyArray<Entity>;
 
 	constructor(private logger: NGXLogger) { }
 
     @Input('secrets') set secrets(value: ReadonlyArray<Entity>) {
         this.logger.debug('[secrets] setting secrets', value);
-        this._secrets = value;
+        this._secrets = value.filter(entity => entity.getTag(GameTag.QUEST) !== 1) || [];
+        this._quests = value.filter(entity => entity.getTag(GameTag.QUEST) === 1) || [];
     }
 
     getLeft(i: number): number {

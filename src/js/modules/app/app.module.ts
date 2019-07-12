@@ -78,6 +78,7 @@ import { ActivePlayerParserService } from '../../services/parser/gamepipeline/ac
 import { BurnComponent } from '../../components/game/overlay/burn.component';
 import { FatigueComponent } from '../../components/game/overlay/fatigue.component';
 import { HeroOverlaysComponent } from '../../components/game/hero/hero-overlays.component';
+import { QuestComponent } from '../../components/game/hero/quest.component';
 
 console.log('version is ' + process.env.APP_VERSION);
 console.log('environment is', process.env.NODE_ENV);
@@ -131,6 +132,7 @@ console.log('environment is', process.env.NODE_ENV);
 
         SecretsComponent,
         SecretComponent,
+        QuestComponent,
 
 		CardComponent,
 		CardArtComponent,
