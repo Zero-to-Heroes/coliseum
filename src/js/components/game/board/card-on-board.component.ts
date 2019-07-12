@@ -65,7 +65,7 @@ export class CardOnBoardComponent {
 		private logger: NGXLogger) { }
 
     @Input('entity') set entity(entity: Entity) {
-		this.logger.debug('[card-on-board] setting entity', entity);
+		this.logger.debug('[card-on-board] setting entity', entity.id, entity, entity.tags.toJS());
 		
 		this._entity = entity;
 
