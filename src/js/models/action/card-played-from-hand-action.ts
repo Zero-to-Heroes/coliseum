@@ -29,11 +29,12 @@ export class CardPlayedFromHandAction extends Action {
         const cardEntity = this.entities.get(this.entityId);
         const cardId: string = ActionHelper.getCardId(this.entities, this.entityId);
         const card = this.allCards.getCard(cardId);
+        const cardName = card ? card.name : 'one card';
         let playVerb = 'plays';
         if (cardEntity.getTag(GameTag.CARDTYPE) === CardType.WEAPON) {
             playVerb = 'equips'
         }
-        const textRaw = `\t${ownerName} ${playVerb} ${card.name}`;
+        const textRaw = `\t${ownerName} ${playVerb} ${cardName}`;
         return Object.assign(new CardPlayedFromHandAction(this.allCards), this, { textRaw: textRaw });                
     }
 
