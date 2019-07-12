@@ -25,9 +25,14 @@ export class CardTargetParser implements Parser {
             currentTurn: number, 
             entitiesBeforeAction: Map<number, Entity>,
             history: ReadonlyArray<HistoryItem>): Action[] {
-
         if (parseInt(item.node.attributes.type) !== BlockType.POWER && parseInt(item.node.attributes.type) !== BlockType.TRIGGER) {
             return;
+        }
+        const originId = parseInt(item.node.attributes.entity);
+        const entity = entitiesBeforeAction.get(originId);
+        // Remove the dummy effects
+        if (['DALA_744d'].indexOf(entity.cardID) !== -1) {
+            return [];
         }
         const targetId = parseInt(item.node.attributes.target);
         if (targetId > 0) {
@@ -35,7 +40,7 @@ export class CardTargetParser implements Parser {
                 {
                     timestamp: item.timestamp,
                     index: item.index,
-                    originId: parseInt(item.node.attributes.entity),
+                    originId: originId,
                     targetIds: [targetId]
                 },
                 this.allCards)];
