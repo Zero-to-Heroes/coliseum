@@ -10,7 +10,7 @@ import { GameTag } from '../../../models/enums/game-tags';
     ],
 	template: `
         <div class="weapon" 
-                cardTooltip [tooltipEntity]="weapon"
+                cardTooltip [tooltipEntity]="_weapon"
                 [attr.data-entity-id]="entityId">
             <weapon-art [cardId]="cardId" *ngIf="!exhausted"></weapon-art>
             <weapon-frame [exhausted]="exhausted"></weapon-frame>
@@ -32,22 +32,21 @@ export class WeaponComponent {
     durability: number;
     damage: number;
     exhausted: boolean;
-
-    private _weapon: Entity;
+    _weapon: Entity;
 
     constructor(private logger: NGXLogger) {}
 
-    @Input('weapon') set weapon(weapon: Entity) {
-        if (!weapon) {
+    @Input('weapon') set weapon(value: Entity) {
+        if (!value) {
             return;
         }
-        this.logger.debug('[weapon] setting new weapon', weapon, weapon.tags.toJS());
-        this.entityId = weapon.id;
-        this.cardId = weapon.cardID;
-        this._weapon = weapon;
-		this.attack = weapon.getTag(GameTag.ATK);
-		this.durability = weapon.getTag(GameTag.DURABILITY);
-		this.damage = weapon.getTag(GameTag.DAMAGE);
-        this.exhausted = weapon.getTag(GameTag.EXHAUSTED) === 1;
+        this.logger.debug('[weapon] setting new weapon', value, value.tags.toJS());
+        this._weapon = value;
+        this.entityId = value.id;
+        this.cardId = value.cardID;
+		this.attack = value.getTag(GameTag.ATK);
+		this.durability = value.getTag(GameTag.DURABILITY);
+		this.damage = value.getTag(GameTag.DAMAGE);
+        this.exhausted = value.getTag(GameTag.EXHAUSTED) === 1;
     }
 }
