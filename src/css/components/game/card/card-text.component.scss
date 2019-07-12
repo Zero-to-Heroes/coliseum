@@ -45,7 +45,7 @@
         height: 19%;
     }
 
-    &.premium {
+    &.premium:not(.hero_power) {
         .text {
             color: white;
         }
