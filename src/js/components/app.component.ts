@@ -13,6 +13,7 @@ import { PlayState } from '../models/enums/playstate';
 import { DiscoverAction } from '../models/action/discover-action';
 import { SecretRevealedAction } from '../models/action/secret-revealed-action';
 import { CardBurnAction } from '../models/action/card-burn-action';
+import { FatigueDamageAction } from '../models/action/fatigue-damage-action';
 
 @Component({
 	styleUrls: [
@@ -36,6 +37,7 @@ import { CardBurnAction } from '../models/action/card-burn-action';
                     [secretRevealed]="secretRevealed"
                     [discovers]="discovers"
                     [burned]="burned"
+                    [fatigue]="fatigue"
                     [chosen]="chosen"
                     [options]="options"
                     [crossed]="crossed">
@@ -60,6 +62,7 @@ export class AppComponent {
     discovers: ReadonlyArray<number>;
     chosen: ReadonlyArray<number>;
     burned: ReadonlyArray<number>;
+    fatigue: number;
     targets: ReadonlyArray<[number, number]>;
     options: ReadonlyArray<number>;
     secretRevealed: number;
@@ -131,6 +134,7 @@ export class AppComponent {
         this.discovers = this.computeDiscovers();
         this.chosen = this.computeChosen();
         this.burned = this.computeBurned();
+        this.fatigue = this.computeFatigue();
         this.isMulligan = this.computeMulligan();
         this.isEndGame = this.computeEndGame();
         this.endGameStatus = this.computeEndGameStatus();
@@ -182,6 +186,14 @@ export class AppComponent {
         const action = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn];
         if (action instanceof DiscoverAction) {
             return action.chosen;
+        }
+        return null;
+	}
+
+	private computeFatigue(): number {
+        const action = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn];
+        if (action instanceof FatigueDamageAction) {
+            return action.amount;
         }
         return null;
 	}

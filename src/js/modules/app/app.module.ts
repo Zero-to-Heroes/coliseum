@@ -76,6 +76,7 @@ import { CardEnchantmentsComponent } from '../../components/game/card/card-encha
 import { CardEnchantmentComponent } from '../../components/game/card/card-enchantment.component';
 import { ActivePlayerParserService } from '../../services/parser/gamepipeline/active-player-parser.service';
 import { BurnComponent } from '../../components/game/overlay/burn.component';
+import { FatigueComponent } from '../../components/game/overlay/fatigue.component';
 
 console.log('version is ' + process.env.APP_VERSION);
 console.log('environment is', process.env.NODE_ENV);
@@ -150,6 +151,8 @@ console.log('environment is', process.env.NODE_ENV);
         DiscoverComponent,
         ActiveSpellComponent,
         SecretRevealedComponent,
+        FatigueComponent,
+        
         TargetZoneComponent,
 
         CardTooltipDirective,

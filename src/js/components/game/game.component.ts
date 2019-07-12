@@ -72,6 +72,7 @@ import { PlayState } from '../../models/enums/playstate';
                         [entities]="_entities" 
                         [burned]="_burned">
                 </burn>
+                <fatigue *ngIf="_fatigue" [fatigue]="_fatigue"></fatigue>
             </div>
 		</div>
 	`,
@@ -94,6 +95,7 @@ export class GameComponent {
     _options: ReadonlyArray<number> = [];
     
     isOverlay: boolean;
+    _fatigue: number;
     _discovers: ReadonlyArray<number>;
     _burned: ReadonlyArray<number>;
     _chosen: ReadonlyArray<number>;
@@ -171,6 +173,12 @@ export class GameComponent {
         this.updateOverlay();
     }
 
+    @Input('fatigue') set fatigue(value: number) {
+        this.logger.debug('[game] setting fatigue', value);
+        this._fatigue = value;
+        this.updateOverlay();
+    }
+
     @Input('chosen') set chosen(value: ReadonlyArray<number>) {
         this.logger.debug('[game] setting chosen', value);
         this._chosen = value;
@@ -208,7 +216,8 @@ export class GameComponent {
         this.isOverlay = this._isMulligan 
                 || this._isEndGame 
                 || (this._discovers && this._discovers.length > 0)
-                || (this._burned && this._burned.length > 0);
+                || (this._burned && this._burned.length > 0)
+                || this._fatigue > 0;
     }
 
     private updateActiveSpell() {
