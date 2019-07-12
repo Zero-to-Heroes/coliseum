@@ -4,6 +4,7 @@ import { Entity } from "../game/entity";
 
 export class StartTurnAction extends Action {
     readonly turn: number;
+    readonly isStartOfMulligan: boolean;
 
     public static create(newAction): StartTurnAction {
         return Object.assign(new StartTurnAction(), newAction);

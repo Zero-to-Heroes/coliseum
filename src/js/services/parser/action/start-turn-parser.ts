@@ -19,7 +19,7 @@ export class StartTurnParser implements Parser {
     }
 
     public parse(
-            item: ActionHistoryItem, 
+            item: TagChangeHistoryItem, 
             currentTurn: number, 
             entitiesBeforeAction: Map<number, Entity>,
             history: ReadonlyArray<HistoryItem>): Action[] {

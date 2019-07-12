@@ -22,12 +22,13 @@ export class TurnParserService {
         for (const item of history) {
             if (turnNumber === 0 && this.isMulligan(item, game)) {
                 const mulliganTurn: MulliganTurn = this.parseMulliganTurn(item as TagChangeHistoryItem, turns);
-                turns = turns.set(turnNumber++, mulliganTurn);
+                turns = turns.set(0, mulliganTurn);
+                turnNumber++;
             }
             else if (this.isStartOfTurn(item, game)) {
-                const currentTurnNumber = turnNumber++;
-                const turn: ActionTurn = this.parseTurn(currentTurnNumber, item as TagChangeHistoryItem, turns);
-                turns = turns.set(currentTurnNumber, turn);
+                const turn: ActionTurn = this.parseTurn(turnNumber, item as TagChangeHistoryItem, turns);
+                turns = turns.set(turnNumber, turn);
+                turnNumber++;
             }
         }
         this.logger.info('created turns', turns.toJS());

@@ -137,7 +137,7 @@ export class ActionParserService {
         }
         catch (e) {
             this.logger.error(e);
-            this.logger.debug(this.currentTurn, game.turns.toJS(), actionsForTurn);
+            this.logger.warn(this.currentTurn, turns.toJS(), actionsForTurn);
         }
 
 
@@ -186,11 +186,10 @@ export class ActionParserService {
     }
     
     private updateCurrentTurn(item: HistoryItem, game: Game, actions: ReadonlyArray<Action>): Turn {
-        if (actions.length > 1 && actions[actions.length - 1] instanceof StartTurnAction) {
+        if (actions.length > 1 
+                && actions[actions.length - 1] instanceof StartTurnAction
+                && !(actions[actions.length - 1] as StartTurnAction).isStartOfMulligan) {
             let turnToUpdate: Turn = game.turns.get(this.currentTurn);
-            if (!turnToUpdate) {
-                this.logger.warn('could not find turn to update', item, this.currentTurn, game.turns.toJS());
-            }
             this.currentTurn++;
             return turnToUpdate;
         }

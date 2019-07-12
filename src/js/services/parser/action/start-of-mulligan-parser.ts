@@ -31,6 +31,7 @@ export class StartOfMulliganParser implements Parser {
         return [StartTurnAction.create({
             timestamp: item.timestamp,
             turn: currentTurn,
+            isStartOfMulligan: true,
             index: item.index
         })];
     }
