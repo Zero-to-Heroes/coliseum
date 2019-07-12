@@ -74,6 +74,7 @@ export class StateProcessorService {
         GameTag.CHARGE,
         GameTag.ARMOR,
         GameTag.TAUNT,
+        GameTag.HEAVILY_ARMORED,
     ];
     
     public applyHistoryUntilNow(

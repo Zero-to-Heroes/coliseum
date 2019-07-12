@@ -154,7 +154,7 @@ export class CardTextComponent {
 			if (bonus !== 0 || double !== 0) {
                 value += bonus;
                 value *= Math.pow(2, double);
-                console.log('updated value', value);
+                // console.log('updated value', value);
                 return "*" + value + "*";
             }
             return "" + value;

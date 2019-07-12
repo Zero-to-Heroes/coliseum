@@ -77,6 +77,7 @@ import { CardEnchantmentComponent } from '../../components/game/card/card-enchan
 import { ActivePlayerParserService } from '../../services/parser/gamepipeline/active-player-parser.service';
 import { BurnComponent } from '../../components/game/overlay/burn.component';
 import { FatigueComponent } from '../../components/game/overlay/fatigue.component';
+import { HeroOverlaysComponent } from '../../components/game/hero/hero-overlays.component';
 
 console.log('version is ' + process.env.APP_VERSION);
 console.log('environment is', process.env.NODE_ENV);
@@ -87,7 +88,7 @@ console.log('environment is', process.env.NODE_ENV);
 		BrowserAnimationsModule,
 		Ng2FittextModule,
         LoggerModule.forRoot({ level: NgxLoggerLevel.WARN }),
-        // LoggerModule.forRoot({ level: NgxLoggerLevel.INFO }),
+        // LoggerModule.forRoot({ level: NgxLoggerLevel.DEBUG }),
 	],
 	declarations: [
 		AppComponent,
@@ -113,7 +114,8 @@ console.log('environment is', process.env.NODE_ENV);
 		Tooltip,
 
 		HeroComponent,
-		HeroCardComponent,
+        HeroCardComponent,
+        HeroOverlaysComponent,
 		HeroArtComponent,
 		HeroStatsComponent,
 		HeroFrameComponent,
