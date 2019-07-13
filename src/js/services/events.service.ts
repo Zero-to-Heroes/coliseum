@@ -13,6 +13,8 @@ interface BroadcastEvent {
 export class Events {
 	public static readonly SHOW_TOOLTIP = 'show-tooltip';
 	public static readonly HIDE_TOOLTIP = 'hide-tooltip';
+	public static readonly SHOW_QUEST_TOOLTIP = 'show-quest-tooltip';
+	public static readonly HIDE_QUEST_TOOLTIP = 'hide-quest-tooltip';
 
 	private _eventBus: Subject<BroadcastEvent>;
 

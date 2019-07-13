@@ -37,6 +37,12 @@
         }
     }
 
+    &.quest {
+        .play-areas, player-name {
+            filter: grayscale(1);
+        }
+    }
+
     &.mulligan {
         ::ng-deep hand {
             opacity: 0;

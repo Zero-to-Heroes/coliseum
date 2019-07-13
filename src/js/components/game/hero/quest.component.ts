@@ -1,9 +1,7 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, HostListener } from '@angular/core';
 import { Entity } from '../../../models/game/entity';
-import { GameTag } from '../../../models/enums/game-tags';
 import { NGXLogger } from 'ngx-logger';
-import { CardClass } from '../../../models/enums/card-class';
-import { AllCardsService } from '../../../services/all-cards.service';
+import { Events } from '../../../services/events.service';
 
 @Component({
 	selector: 'quest',
@@ -11,9 +9,7 @@ import { AllCardsService } from '../../../services/all-cards.service';
         '../../../../css/components/game/hero/quest.component.scss'
     ],
 	template: `
-        <div class="quest" 
-                cardTooltip [tooltipEntity]="_entity"
-                [attr.data-entity-id]="entityId">
+        <div class="quest" [attr.data-entity-id]="entityId">
             <img class="quest-image" src="https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/secrets/quest_button.png">
             <img class="question-mark" src="https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/secrets/quest_bang.png">
 		</div>
@@ -27,7 +23,7 @@ export class QuestComponent {
     image: string;
     questionMark: string;
     
-    constructor(private logger: NGXLogger, private cards: AllCardsService) {}
+    constructor(private logger: NGXLogger, private events: Events) {}
 
     @Input('entity') set entity(value: Entity) {
         this.logger.debug('[quest] setting new entity', value, value.tags.toJS());
@@ -38,4 +34,14 @@ export class QuestComponent {
         }
         this.entityId = value.id;
     }
+
+    @HostListener('mouseenter') 
+    onMouseEnter() {
+		this.events.broadcast(Events.SHOW_QUEST_TOOLTIP, this._entity);
+	}
+
+	@HostListener('mouseleave')
+	onMouseLeave() {
+		this.events.broadcast(Events.HIDE_QUEST_TOOLTIP);
+	}
 }

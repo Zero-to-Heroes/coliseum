@@ -1,9 +1,10 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, AfterViewInit, ChangeDetectorRef, ViewRef } from '@angular/core';
 import { Map } from 'immutable';
 import { Entity } from '../../models/game/entity';
 import { NGXLogger } from 'ngx-logger';
 import { GameTag } from '../../models/enums/game-tags';
 import { PlayState } from '../../models/enums/playstate';
+import { Events } from '../../services/events.service';
 
 @Component({
 	selector: 'game',
@@ -11,7 +12,8 @@ import { PlayState } from '../../models/enums/playstate';
         '../../../css/components/game/game.component.scss'
     ],
 	template: `
-        <div class="game" [ngClass]="{'in-overlay': isOverlay, 'mulligan': _isMulligan}">
+        <div class="game" 
+                [ngClass]="{ 'in-overlay': isOverlay, 'mulligan': _isMulligan, 'quest': _quest }">
             <div class="play-areas">
                 <play-area class="top"
                         [mulligan]="_isMulligan"
@@ -43,6 +45,7 @@ import { PlayState } from '../../models/enums/playstate';
                     *ngIf="_secretRevealed"
                     [entity]="_secretRevealed">
             </secret-revealed>
+            <quest-tooltip *ngIf="_quest" [quest]="_quest"></quest-tooltip>
             <target-zone *ngIf="_targets" 
                     [targets]="_targets" 
                     [active]="_playerId === _activePlayer">
@@ -78,7 +81,7 @@ import { PlayState } from '../../models/enums/playstate';
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GameComponent {
+export class GameComponent implements AfterViewInit {
 
     _turn: string;
     _entities: Map<number, Entity>;
@@ -94,6 +97,7 @@ export class GameComponent {
     _targets: ReadonlyArray<[number, number]> = [];
     _options: ReadonlyArray<number> = [];
     
+    _quest: Entity;
     isOverlay: boolean;
     _fatigue: number;
     _discovers: ReadonlyArray<number>;
@@ -106,7 +110,22 @@ export class GameComponent {
     private activeSpellId: number;
     private secretRevealedId: number;
 
-    constructor(private logger: NGXLogger) { } 
+    constructor(private logger: NGXLogger, private events: Events, private cdr: ChangeDetectorRef) { } 
+
+    ngAfterViewInit() {
+        this.events.on(Events.SHOW_QUEST_TOOLTIP).subscribe(data => {
+            this._quest = data.data[0];
+            if (!(<ViewRef>this.cdr).destroyed) {
+                this.cdr.detectChanges();
+            }
+        });
+        this.events.on(Events.HIDE_QUEST_TOOLTIP).subscribe(data => {
+            this._quest = undefined;
+            if (!(<ViewRef>this.cdr).destroyed) {
+                this.cdr.detectChanges();
+            }
+        })
+    }
 
     @Input('turn') set turn(value: string) {
         this.logger.debug('[game] setting turn', value);
