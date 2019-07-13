@@ -114,6 +114,12 @@ export class AppComponent {
 			case Key.LeftArrow:
 				this.moveCursorToPreviousAction();
 				break;
+            case Key.UpArrow:
+                this.moveCursorToNextTurn();
+                break;
+            case Key.DownArrow:
+                this.moveCursorToPreviousTurn();
+                break;
 		}
         this.populateInfo();
     }
@@ -253,6 +259,23 @@ export class AppComponent {
 			this.currentTurn--;
 			this.currentActionInTurn = this.game.turns.get(this.currentTurn).actions.length - 1;
 		}
+	}
+
+	private moveCursorToNextTurn() {
+        if (this.currentTurn >= this.game.turns.size - 1) {
+            return;
+        }
+        this.currentActionInTurn = 0;
+        this.currentTurn++;
+	}
+
+	private moveCursorToPreviousTurn() {
+        if (this.currentTurn === 0) {
+            return;
+        }
+        this.currentActionInTurn = 0;
+        this.currentTurn--;
+        
 	}
     
     private getSearchParam(name: string): string {
