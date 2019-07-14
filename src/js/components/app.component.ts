@@ -14,6 +14,7 @@ import { DiscoverAction } from '../models/action/discover-action';
 import { SecretRevealedAction } from '../models/action/secret-revealed-action';
 import { CardBurnAction } from '../models/action/card-burn-action';
 import { FatigueDamageAction } from '../models/action/fatigue-damage-action';
+import { QuestCompletedAction } from '../models/action/quest-completed-action';
 
 @Component({
 	styleUrls: [
@@ -35,6 +36,7 @@ import { FatigueDamageAction } from '../models/action/fatigue-damage-action';
                     [entities]="entities"
                     [targets]="targets"
                     [secretRevealed]="secretRevealed"
+                    [questCompleted]="questCompleted"
                     [discovers]="discovers"
                     [burned]="burned"
                     [fatigue]="fatigue"
@@ -66,6 +68,7 @@ export class AppComponent {
     targets: ReadonlyArray<[number, number]>;
     options: ReadonlyArray<number>;
     secretRevealed: number;
+    questCompleted: number;
     
     isMulligan: boolean;
     isEndGame: boolean;
@@ -135,6 +138,7 @@ export class AppComponent {
         this.activePlayer = this.computeActivePlayer();
         this.activeSpell = this.computeActiveSpell();
         this.secretRevealed = this.computeSecretRevealed();
+        this.questCompleted = this.computeQuestCompleted();
         this.targets = this.computeTargets();
         this.options = this.computeOptions();
         this.discovers = this.computeDiscovers();
@@ -208,6 +212,14 @@ export class AppComponent {
         const action = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn];
         if (action instanceof SecretRevealedAction) {
             return action.entityId;
+        }
+        return null;
+	}
+
+	private computeQuestCompleted(): number {
+        const action = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn];
+        if (action instanceof QuestCompletedAction) {
+            return action.originId;
         }
         return null;
 	}

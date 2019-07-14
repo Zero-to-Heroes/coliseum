@@ -46,6 +46,7 @@ import { Events } from '../../services/events.service';
                     [entity]="_secretRevealed">
             </secret-revealed>
             <quest-tooltip *ngIf="_quest" [quest]="_quest"></quest-tooltip>
+            <quest-completed *ngIf="_questCompleted" [quest]="_questCompleted"></quest-completed>
             <target-zone *ngIf="_targets" 
                     [targets]="_targets" 
                     [active]="_playerId === _activePlayer">
@@ -92,6 +93,7 @@ export class GameComponent implements AfterViewInit {
     _opponentName: string;
     _activePlayer: number;
     _secretRevealed: Entity;
+    _questCompleted: Entity;
     _activeSpell: Entity;  
     _activeSpellController: Entity;  
     _targets: ReadonlyArray<[number, number]> = [];
@@ -109,6 +111,7 @@ export class GameComponent implements AfterViewInit {
 
     private activeSpellId: number;
     private secretRevealedId: number;
+    private questCompletedId: number;
 
     constructor(private logger: NGXLogger, private events: Events, private cdr: ChangeDetectorRef) { } 
 
@@ -137,6 +140,7 @@ export class GameComponent implements AfterViewInit {
         this._entities = entities;
         this.updateActiveSpell();
         this.updateSecretRevealed();
+        this.updateQuestCompleted();
     }
 
     @Input('crossed') set crossed(value: ReadonlyArray<number>) {
@@ -178,6 +182,12 @@ export class GameComponent implements AfterViewInit {
         this.logger.debug('[game] setting secretRevealed', value);
         this.secretRevealedId = value;
         this.updateSecretRevealed();
+    }
+
+    @Input('questCompleted') set questCompleted(value: number) {
+        this.logger.debug('[game] setting questCompleted', value);
+        this.questCompletedId = value;
+        this.updateQuestCompleted();
     }
 
     @Input('discovers') set discovers(value: ReadonlyArray<number>) {
@@ -246,5 +256,9 @@ export class GameComponent implements AfterViewInit {
 
     private updateSecretRevealed() {
         this._secretRevealed = this._entities && this.secretRevealedId && this._entities.get(this.secretRevealedId);
+    }
+
+    private updateQuestCompleted() {
+        this._questCompleted = this._entities && this.questCompletedId && this._entities.get(this.questCompletedId);
     }
 }
