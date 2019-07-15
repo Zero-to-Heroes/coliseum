@@ -10,12 +10,12 @@ import { NGXLogger } from 'ngx-logger';
 		'../../../../css/components/game/card/card-stats-colors.scss',
 	],
 	template: `
-        <div class="card-stats" *ngIf="hasStats">
+        <div class="card-stats" *ngIf="hasStats" cardElementResize [fontSizeRatio]="0.2">
             <div class="stat {{attackClass}}">
-                <div class="stat-value"><span>{{_attack}}</span></div>
+                <div class="stat-value" resizeTarget><span>{{_attack}}</span></div>
             </div>
             <div class="stat {{healthClass}}">
-                <div class="stat-value"><span>{{healthLeft}}</span></div>
+                <div class="stat-value" resizeTarget><span>{{healthLeft}}</span></div>
             </div>
         </div>
 	`,

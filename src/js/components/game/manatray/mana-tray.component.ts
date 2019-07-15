@@ -8,8 +8,8 @@ import { NGXLogger } from 'ngx-logger';
         '../../../../css/components/game/manatray/mana-tray.component.scss',
     ],
 	template: `
-        <div class="mana-tray">
-            <div class="summary">
+        <div class="mana-tray" cardElementResize [fontSizeRatio]="0.06">
+            <div class="summary"resizeTarget>
                 <span class="available">{{_available}}</span>
                 <span class="separator">/</span>
                 <span class="total">{{_total}}</span>
