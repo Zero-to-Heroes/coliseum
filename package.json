@@ -21,7 +21,7 @@
     "@angular/platform-server": "7.2.13",
     "@angular/router": "7.2.13",
     "immutable": "3.8.2",
-    "lodash": "4.17.11",
+    "lodash": "4.17.14",
     "moment": "2.22.2",
     "ng2-fittext": "1.2.0",
     "ngx-logger": "^3.3.11",
