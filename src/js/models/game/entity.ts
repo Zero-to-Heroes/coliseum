@@ -1,7 +1,6 @@
 import { EntityDefinition } from "../parser/entity-definition";
-import { Map, fromJS } from "immutable";
+import { Map } from "immutable";
 import { GameTag } from "../enums/game-tags";
-import { Damage } from "../action/damage";
 
 export class Entity {
 
@@ -23,7 +22,11 @@ export class Entity {
     public isRevealed(): boolean {
         // There are many tags that are set only when ShowEntity triggers. This is only 
         // one of the possible choices
-        return this.getTag(GameTag.COST) && this.getTag(GameTag.COST) !== -1;
+        const revealed = (this.getTag(GameTag.COST) && this.getTag(GameTag.COST) !== -1)
+                // For some reasons it happens that the cost is not always set?
+                || (this.getTag(GameTag.CARDTYPE) && this.getTag(GameTag.CARDTYPE) !== -1);
+        // console.log('revealed', revealed, this.id, this.cardID, this.tags.toJS());
+        return revealed;
     }
 
     public zone(): number {
