@@ -7,14 +7,13 @@
     }
 
     ::ng-deep .background svg {
-        width: 14%;
+        width: 100%;
     }
 
     .text {
         font-family: Open Sans;
         font-style: normal;
         font-weight: bold;
-        font-size: 1em;
         color: #2F0D0D;
         position: absolute;
         display: flex;
@@ -22,7 +21,11 @@
         height: 100%;
         justify-content: center;
         align-items: center;
-        margin-left: 1%;
-        width: 10%;
+        margin-left: 5%;
+        width: 69%;
+        height: 100%;
+        justify-content: flex-start;
+        align-items: center;
+        margin-left: 10%;
     }
 }

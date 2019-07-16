@@ -9,16 +9,16 @@ import { playerName } from '../../../../assets/svg/player_name';
         '../../../../css/components/game/overlay/player-name.component.scss'
     ],
 	template: `
-        <div class="player-name" [ngClass]="{'active': _active}">
+        <div class="player-name" [ngClass]="{'active': _active}" cardElementResize [fontSizeRatio]="0.08">
             <div class="background" [innerHTML]="svg"></div>
-            <div class="text"><span>{{_name}}</span></div>
+            <div class="text" resizeTarget><span>{{_name}}</span></div>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlayerNameComponent {
 
-    _name: string;
+    _name: string; 
     _active: boolean;
     svg: SafeHtml;
     
