@@ -80,12 +80,12 @@ module.exports = function(env, argv) {
 				'process.env.APP_VERSION': JSON.stringify(env.appversion),
             }),
             
-            // new TSLintPlugin({
-            //     files: ['./src/**/*.ts'],
-            //     project: './tsconfig.json',
-            //     config: './tslint.json',
-            //     warningsAsError: true
-            // }),
+            new TSLintPlugin({
+                files: ['./src/**/*.ts'],
+                project: './tsconfig.json',
+                config: './tslint.json',
+                warningsAsError: false
+            }),
 			
 			new AngularCompilerPlugin({
 				tsConfigPath: "./tsconfig.json",
