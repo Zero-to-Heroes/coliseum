@@ -6,8 +6,8 @@ import { Map } from 'immutable';
 @Component({
 	selector: 'fatigue',
 	styleUrls: [
-        '../../../../css/components/game/overlay/fatigue.component.scss'
-    ],
+		'../../../../css/components/game/overlay/fatigue.component.scss'
+	],
 	template: `
         <div class="fatigue" cardElementResize [fontSizeRatio]="0.05">
             <img src="https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/fatigue.png">
@@ -18,12 +18,12 @@ import { Map } from 'immutable';
 })
 export class FatigueComponent {
 
-    _fatigue: number;
-    
-    constructor(private logger: NGXLogger) {}
+	_fatigue: number;
 
-    @Input('fatigue') set fatigue(value: number) {
-        this.logger.debug('[fatigue] setting fatigue', value);
-        this._fatigue = value;
-    }
+	constructor(private logger: NGXLogger) {}
+
+	@Input('fatigue') set fatigue(value: number) {
+		this.logger.debug('[fatigue] setting fatigue', value);
+		this._fatigue = value;
+	}
 }

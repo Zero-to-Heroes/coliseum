@@ -19,15 +19,15 @@ import { Entity } from '../../../models/game/entity';
 })
 export class CardEnchantmentsComponent {
 
-    _enchantments: ReadonlyArray<Entity>;
+	_enchantments: ReadonlyArray<Entity>;
 
-    constructor(private logger: NGXLogger) { }
+	constructor(private logger: NGXLogger) { }
 
-    @Input('enchantments') set enchantments(value: ReadonlyArray<Entity>) {
-        this.logger.debug('[card-enchantments] setting enchantments', value);
-        this._enchantments = value;
-    }
-	
+	@Input('enchantments') set enchantments(value: ReadonlyArray<Entity>) {
+		this.logger.debug('[card-enchantments] setting enchantments', value);
+		this._enchantments = value;
+	}
+
 	trackByFn(index, item: Entity) {
 		return item.id;
 	}

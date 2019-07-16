@@ -1,4 +1,5 @@
-import { Component, ChangeDetectionStrategy, Input, ElementRef, ChangeDetectorRef, ViewRef, HostListener } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, ElementRef,
+		ChangeDetectorRef, ViewRef, HostListener, AfterViewInit } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
 import { Entity } from '../../../models/game/entity';
 
@@ -18,39 +19,39 @@ import { Entity } from '../../../models/game/entity';
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DeckComponent {
+export class DeckComponent implements AfterViewInit {
 
-    _deck: ReadonlyArray<Entity>;
-    numberOfCards: number;
+	_deck: ReadonlyArray<Entity>;
+	numberOfCards: number;
 
-    constructor(private logger: NGXLogger, private elRef: ElementRef, private cdr: ChangeDetectorRef) {  }
+	constructor(private logger: NGXLogger, private elRef: ElementRef, private cdr: ChangeDetectorRef) {  }
 
-    @Input('deck') set deck(value: ReadonlyArray<Entity>) {
-        this.logger.debug('[deck] setting deck', value);
-        this._deck = value;
-        this.numberOfCards = this._deck.length;
-    }
+	@Input('deck') set deck(value: ReadonlyArray<Entity>) {
+		this.logger.debug('[deck] setting deck', value);
+		this._deck = value;
+		this.numberOfCards = this._deck.length;
+	}
 
-    @HostListener('window:resize', ['$event'])
-    onResize(event) {
-        this.resizeText();
-    }
+	@HostListener('window:resize', ['$event'])
+	onResize(event) {
+		this.resizeText();
+	}
 
-    ngAfterViewInit() {
-        setTimeout(() => this.resizeText());
-    }
+	ngAfterViewInit() {
+		setTimeout(() => this.resizeText());
+	}
 
-    private resizeText() {
-        const el = this.elRef.nativeElement.querySelector(".deck");
-        if (!el) {
-            setTimeout(() => this.resizeText());
-            return; 
-        }
-        const fontSize = 0.5 * el.getBoundingClientRect().width;
-        const textEl = this.elRef.nativeElement.querySelector(".count");
-        textEl.style.fontSize = fontSize + 'px';
-        if (!(<ViewRef>this.cdr).destroyed) {
-            this.cdr.detectChanges();
-        }
-    }
+	private resizeText() {
+		const el = this.elRef.nativeElement.querySelector('.deck');
+		if (!el) {
+			setTimeout(() => this.resizeText());
+			return;
+		}
+		const fontSize = 0.5 * el.getBoundingClientRect().width;
+		const textEl = this.elRef.nativeElement.querySelector('.count');
+		textEl.style.fontSize = fontSize + 'px';
+		if (!(<ViewRef>this.cdr).destroyed) {
+			this.cdr.detectChanges();
+		}
+	}
 }

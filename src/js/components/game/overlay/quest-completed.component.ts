@@ -6,7 +6,7 @@ import { AllCardsService } from '../../../services/all-cards.service';
 @Component({
 	selector: 'quest-completed',
 	styleUrls: [
-        '../../../../css/components/game/overlay/quest-completed.component.scss'
+		'../../../../css/components/game/overlay/quest-completed.component.scss'
 	],
 	template: `
         <div class="quest-completed">
@@ -17,13 +17,13 @@ import { AllCardsService } from '../../../services/all-cards.service';
 })
 export class QuestCompletedComponent {
 
-    _quest: Entity;
+	_quest: Entity;
 
 	constructor(private logger: NGXLogger, private cards: AllCardsService) {
 	}
 
-    @Input('quest') set quest(value: Entity) {
-        this.logger.debug('[quest-completed] setting quest', value);
-        this._quest = value;
-    }
+	@Input('quest') set quest(value: Entity) {
+		this.logger.debug('[quest-completed] setting quest', value);
+		this._quest = value;
+	}
 }

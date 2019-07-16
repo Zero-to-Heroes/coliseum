@@ -19,39 +19,37 @@ import { HealingAction } from '../../../models/action/healing-action';
 @Injectable()
 export class ActivePlayerParserService {
 
-    constructor(private logger: NGXLogger, private allCards: AllCardsService) {
-    }
+	constructor(private logger: NGXLogger, private allCards: AllCardsService) {
+	}
 
-    public parseActivePlayer(game: Game): Game {
-        let turns = game.turns;
-        const numberOfTurns = turns.size;
-        for (let i = 0; i < numberOfTurns; i++) {
-            const turn = game.turns.get(i);
-            const enrichedTurn = this.enrichTurn(turn);
-            turns = turns.set(i, enrichedTurn);
-        }
-        return Game.createGame(game, { turns: turns });
-    }
+	public parseActivePlayer(game: Game): Game {
+		let turns = game.turns;
+		const numberOfTurns = turns.size;
+		for (let i = 0; i < numberOfTurns; i++) {
+			const turn = game.turns.get(i);
+			const enrichedTurn = this.enrichTurn(turn);
+			turns = turns.set(i, enrichedTurn);
+		}
+		return Game.createGame(game, { turns: turns });
+	}
 
-    private enrichTurn(turn: Turn): Turn {
-        const newActions = [];
-        for (let i = 0; i < turn.actions.length; i++) {
-            const previousAction = i == 0 ? null : newActions[i - 1];
-            const newAction = this.enrichAction(turn.actions[i], previousAction);
-            newActions.push(newAction);
-        }
-        return turn.update({ actions: newActions as ReadonlyArray<Action> } as Turn);
-    }
+	private enrichTurn(turn: Turn): Turn {
+		const newActions = [];
+		for (let i = 0; i < turn.actions.length; i++) {
+			const previousAction = i === 0 ? null : newActions[i - 1];
+			const newAction = this.enrichAction(turn.actions[i], previousAction);
+			newActions.push(newAction);
+		}
+		return turn.update({ actions: newActions as ReadonlyArray<Action> } as Turn);
+	}
 
-    private enrichAction(action: Action, previousAction: Action): Action {
-        if (action.activePlayer) {
-            return action;
-        }
-        else if (previousAction && previousAction.activePlayer) {
-            return action.updateAction({ activePlayer: previousAction.activePlayer } as Action);
-        }
-        else {
-            return action;
-        }
-    }
+	private enrichAction(action: Action, previousAction: Action): Action {
+		if (action.activePlayer) {
+			return action;
+		} else if (previousAction && previousAction.activePlayer) {
+			return action.updateAction({ activePlayer: previousAction.activePlayer } as Action);
+		} else {
+			return action;
+		}
+	}
 }

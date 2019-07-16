@@ -13,14 +13,14 @@ import { NGXLogger } from 'ngx-logger';
 })
 export class HeroPowerFrameComponent {
 
-    image: string;
-    
-    constructor(private logger: NGXLogger) { }
-    
-    @Input('exhausted') set exhausted(value: boolean) {
-        this.logger.debug('[hero-power-frame] setting exhausted', value);
-        this.image = value
-                ? `https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/hero_power_exhausted.png`
-                : `https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/hero_power.png`;
-    }
+	image: string;
+
+	constructor(private logger: NGXLogger) { }
+
+	@Input('exhausted') set exhausted(value: boolean) {
+		this.logger.debug('[hero-power-frame] setting exhausted', value);
+		this.image = value
+				? `https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/hero_power_exhausted.png`
+				: `https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/hero_power.png`;
+	}
 }

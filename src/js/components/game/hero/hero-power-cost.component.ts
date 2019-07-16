@@ -1,4 +1,5 @@
-import { Component, ChangeDetectionStrategy, Input, AfterViewInit, HostListener, ElementRef, ChangeDetectorRef, ViewRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, AfterViewInit,
+	HostListener, ElementRef, ChangeDetectorRef, ViewRef } from '@angular/core';
 import { AllCardsService } from '../../../services/all-cards.service';
 import { NGXLogger } from 'ngx-logger';
 
@@ -18,72 +19,72 @@ import { NGXLogger } from 'ngx-logger';
 })
 export class HeroPowerCostComponent implements AfterViewInit {
 
-    _cost: number;
-    costClass: string;
-    
-    private _cardId: string;
+	_cost: number;
+	costClass: string;
 
-    constructor(
-            private cards: AllCardsService, 
-            private elRef: ElementRef, 
-            private logger: NGXLogger,
-            private cdr: ChangeDetectorRef) { 
-    }
+	private _cardId: string;
 
-    @Input('cardId') set cardId(cardId: string) {
-        this.logger.debug('[hero-power-cost] setting cardId', cardId);
-        this._cardId = cardId;
-        this.updateCost();
-    }
+	constructor(
+			private cards: AllCardsService,
+			private elRef: ElementRef,
+			private logger: NGXLogger,
+			private cdr: ChangeDetectorRef) {
+	}
 
-    @Input('cost') set cost(cost: number) {
-        this.logger.debug('[hero-power-cost] setting cost', cost);
-        this._cost = cost;
-        this.updateCost();
-    }
+	@Input('cardId') set cardId(cardId: string) {
+		this.logger.debug('[hero-power-cost] setting cardId', cardId);
+		this._cardId = cardId;
+		this.updateCost();
+	}
 
-    @HostListener('window:resize', ['$event'])
-    onResize(event) {
-        this.resizeText();
-    }
+	@Input('cost') set cost(cost: number) {
+		this.logger.debug('[hero-power-cost] setting cost', cost);
+		this._cost = cost;
+		this.updateCost();
+	}
 
-    ngAfterViewInit() {
-        setTimeout(() => this.resizeText());
-    }
+	@HostListener('window:resize', ['$event'])
+	onResize(event) {
+		this.resizeText();
+	}
 
-    private updateCost() {
-        if (!this._cardId) {
-            return;
-        }
-        this.costClass = undefined;
-        const originalCard = this.cards.getCard(this._cardId);
-        const originalCost: number = originalCard.cost;
-        
-        if (this._cost == null) {
-            this._cost = originalCost;
-        }
+	ngAfterViewInit() {
+		setTimeout(() => this.resizeText());
+	}
 
-        if (this._cost < originalCost) {
-            this.costClass = 'lower-cost';
-        } else if (this._cost > originalCost) {
-            this.costClass = 'higher-cost';
-        }
-        if (!(<ViewRef>this.cdr).destroyed) {
-            this.cdr.detectChanges();
-        }
-    }
+	private updateCost() {
+		if (!this._cardId) {
+			return;
+		}
+		this.costClass = undefined;
+		const originalCard = this.cards.getCard(this._cardId);
+		const originalCost: number = originalCard.cost;
 
-    private resizeText() {
-        const el = this.elRef.nativeElement.querySelector(".hero-power-cost");
-        if (!el) {
-            setTimeout(() => this.resizeText());
-            return; 
-        }
-        const fontSize = 0.8 * el.getBoundingClientRect().width;
-        const textEl = this.elRef.nativeElement.querySelector(".cost");
-        textEl.style.fontSize = fontSize + 'px';
-        if (!(<ViewRef>this.cdr).destroyed) {
-            this.cdr.detectChanges();
-        }
-    }
+		if (this._cost == null) {
+			this._cost = originalCost;
+		}
+
+		if (this._cost < originalCost) {
+			this.costClass = 'lower-cost';
+		} else if (this._cost > originalCost) {
+			this.costClass = 'higher-cost';
+		}
+		if (!(<ViewRef>this.cdr).destroyed) {
+			this.cdr.detectChanges();
+		}
+	}
+
+	private resizeText() {
+		const el = this.elRef.nativeElement.querySelector('.hero-power-cost');
+		if (!el) {
+			setTimeout(() => this.resizeText());
+			return;
+		}
+		const fontSize = 0.8 * el.getBoundingClientRect().width;
+		const textEl = this.elRef.nativeElement.querySelector('.cost');
+		textEl.style.fontSize = fontSize + 'px';
+		if (!(<ViewRef>this.cdr).destroyed) {
+			this.cdr.detectChanges();
+		}
+	}
 }

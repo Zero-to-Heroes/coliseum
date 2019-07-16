@@ -1,4 +1,4 @@
 export class Damage {
-    readonly entity: number;
-    readonly amount: number;
+	readonly entity: number;
+	readonly amount: number;
 }

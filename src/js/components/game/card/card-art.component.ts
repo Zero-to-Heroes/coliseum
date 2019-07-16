@@ -19,15 +19,15 @@ export class CardArtComponent {
 
 	constructor(private logger: NGXLogger) { }
 
-    @Input('cardId') set cardId(cardId: string) {
-        this.logger.debug('[card-art] setting cardId', cardId);
-        this.image = cardId 
-                ? `https://static.zerotoheroes.com/hearthstone/cardart/256x/${cardId}.jpg`
-                : `http://static.zerotoheroes.com/hearthstone/asset/manastorm/card_unknown.png`;
+	@Input('cardId') set cardId(cardId: string) {
+		this.logger.debug('[card-art] setting cardId', cardId);
+		this.image = cardId
+				? `https://static.zerotoheroes.com/hearthstone/cardart/256x/${cardId}.jpg`
+				: `http://static.zerotoheroes.com/hearthstone/asset/manastorm/card_unknown.png`;
 	}
-	
-    @Input('cardType') set cardType(cardType: CardType) {
-        this.logger.debug('[card-art] setting cardType', cardType);
-        this._cardType = cardType ? CardType[cardType].toLowerCase() : 'unknown';
-    }
+
+	@Input('cardType') set cardType(cardType: CardType) {
+		this.logger.debug('[card-art] setting cardType', cardType);
+		this._cardType = cardType ? CardType[cardType].toLowerCase() : 'unknown';
+	}
 }

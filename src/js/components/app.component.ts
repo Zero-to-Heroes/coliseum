@@ -22,7 +22,7 @@ import { QuestCompletedAction } from '../models/action/quest-completed-action';
 		<div class="coliseum wide">
             <game *ngIf="game"
                     [turn]="turnString"
-                    [playerId]="game.players[0].playerId" 
+                    [playerId]="game.players[0].playerId"
                     [opponentId]="game.players[1].playerId"
                     [playerName]="game.players[0].name"
                     [opponentName]="game.players[1].name"
@@ -49,63 +49,63 @@ import { QuestCompletedAction } from '../models/action/quest-completed-action';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
-    
-    reviewId: string;
+
+	reviewId: string;
 
 	game: Game;
-    entities: Map<number, Entity>;
-    crossed: ReadonlyArray<number>;
-    text: string;
-    turnString: string;
-    activePlayer: number;
-    activeSpell: number;
-    discovers: ReadonlyArray<number>;
-    chosen: ReadonlyArray<number>;
-    burned: ReadonlyArray<number>;
-    fatigue: number;
-    targets: ReadonlyArray<[number, number]>;
-    options: ReadonlyArray<number>;
-    secretRevealed: number;
-    questCompleted: number;
-    
-    isMulligan: boolean;
-    isEndGame: boolean;
-    endGameStatus: PlayState;
+	entities: Map<number, Entity>;
+	crossed: ReadonlyArray<number>;
+	text: string;
+	turnString: string;
+	activePlayer: number;
+	activeSpell: number;
+	discovers: ReadonlyArray<number>;
+	chosen: ReadonlyArray<number>;
+	burned: ReadonlyArray<number>;
+	fatigue: number;
+	targets: ReadonlyArray<[number, number]>;
+	options: ReadonlyArray<number>;
+	secretRevealed: number;
+	questCompleted: number;
 
-	private currentActionInTurn: number = 0;
-	private currentTurn: number = 0;
+	isMulligan: boolean;
+	isEndGame: boolean;
+	endGameStatus: PlayState;
+
+	private currentActionInTurn = 0;
+	private currentTurn = 0;
 
 	constructor(
 			private gameParser: GameParserService,
 			private events: Events,
 			private cdr: ChangeDetectorRef,
-            private logger: NGXLogger,
+			private logger: NGXLogger,
 			private zone: NgZone) {
-        const existingColiseum = window['coliseum'] || {};
+		const existingColiseum = window['coliseum'] || {};
 		window['coliseum'] = Object.assign(existingColiseum, {
 			zone: this.zone,
 			component: this
 		});
-    }
+	}
 
 	public loadReplay(replayXml: string) {
 		this.game = this.gameParser.parse(replayXml);
-        this.logger.info('[app] Converted game');
-        const turn = parseInt(this.getSearchParam('turn')) || 0; 
-        const action = parseInt(this.getSearchParam('action')) || 0;
-        this.reviewId = this.getSearchParam('reviewId');
-        this.currentTurn = turn <= 0
-                ? 0
-                : (turn >= this.game.turns.size
-                        ? this.game.turns.size - 1
-                        : turn);
-        this.currentActionInTurn = action <= 0
-                ? 0
-                : (action >= this.game.turns.get(this.currentTurn).actions.length
-                        ? this.game.turns.get(this.currentTurn).actions.length - 1
-                        : action);
-        this.populateInfo();
-    }
+		this.logger.info('[app] Converted game');
+		const turn = parseInt(this.getSearchParam('turn')) || 0;
+		const action = parseInt(this.getSearchParam('action')) || 0;
+		this.reviewId = this.getSearchParam('reviewId');
+		this.currentTurn = turn <= 0
+				? 0
+				: (turn >= this.game.turns.size
+						? this.game.turns.size - 1
+						: turn);
+		this.currentActionInTurn = action <= 0
+				? 0
+				: (action >= this.game.turns.get(this.currentTurn).actions.length
+						? this.game.turns.get(this.currentTurn).actions.length - 1
+						: action);
+		this.populateInfo();
+	}
 
 	@HostListener('document:keyup', ['$event'])
 	onKeyPressHandler(event: KeyboardEvent) {
@@ -116,44 +116,44 @@ export class AppComponent {
 			case Key.LeftArrow:
 				this.moveCursorToPreviousAction();
 				break;
-            case Key.UpArrow:
-                this.moveCursorToNextTurn();
-                break;
-            case Key.DownArrow:
-                this.moveCursorToPreviousTurn();
-                break;
+			case Key.UpArrow:
+				this.moveCursorToNextTurn();
+				break;
+			case Key.DownArrow:
+				this.moveCursorToPreviousTurn();
+				break;
 		}
-        this.populateInfo();
-    }
-    
-    private populateInfo() {
-        if (!this.game) {
-            return;
-        }
-        this.entities = this.computeNewEntities();
-        this.crossed = this.computeCrossed();
+		this.populateInfo();
+	}
+
+	private populateInfo() {
+		if (!this.game) {
+			return;
+		}
+		this.entities = this.computeNewEntities();
+		this.crossed = this.computeCrossed();
 		this.text = this.computeText();
-        this.turnString = this.computeTurnString();
-        this.activePlayer = this.computeActivePlayer();
-        this.activeSpell = this.computeActiveSpell();
-        this.secretRevealed = this.computeSecretRevealed();
-        this.questCompleted = this.computeQuestCompleted();
-        this.targets = this.computeTargets();
-        this.options = this.computeOptions();
-        this.discovers = this.computeDiscovers();
-        this.chosen = this.computeChosen();
-        this.burned = this.computeBurned();
-        this.fatigue = this.computeFatigue();
-        this.isMulligan = this.computeMulligan();
-        this.isEndGame = this.computeEndGame();
-        this.endGameStatus = this.computeEndGameStatus();
-        this.updateUrlQueryString();
-        this.logger.debug('[app] setting turn', this.turnString);
-        this.logger.info('[app] Considering action', this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn]);
-        if (!(<ViewRef>this.cdr).destroyed) {
-            this.cdr.detectChanges();
-        }
-    }
+		this.turnString = this.computeTurnString();
+		this.activePlayer = this.computeActivePlayer();
+		this.activeSpell = this.computeActiveSpell();
+		this.secretRevealed = this.computeSecretRevealed();
+		this.questCompleted = this.computeQuestCompleted();
+		this.targets = this.computeTargets();
+		this.options = this.computeOptions();
+		this.discovers = this.computeDiscovers();
+		this.chosen = this.computeChosen();
+		this.burned = this.computeBurned();
+		this.fatigue = this.computeFatigue();
+		this.isMulligan = this.computeMulligan();
+		this.isEndGame = this.computeEndGame();
+		this.endGameStatus = this.computeEndGameStatus();
+		this.updateUrlQueryString();
+		this.logger.debug('[app] setting turn', this.turnString);
+		this.logger.info('[app] Considering action', this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn]);
+		if (!(<ViewRef>this.cdr).destroyed) {
+			this.cdr.detectChanges();
+		}
+	}
 
 	private computeActiveSpell(): number {
 		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].activeSpell;
@@ -176,56 +176,56 @@ export class AppComponent {
 	}
 
 	private computeBurned(): ReadonlyArray<number> {
-        const action = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn];
-        if (action instanceof CardBurnAction) {
-            return action.burnedCardIds;
-        }
-        return null;
+		const action = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn];
+		if (action instanceof CardBurnAction) {
+			return action.burnedCardIds;
+		}
+		return null;
 	}
 
 	private computeDiscovers(): ReadonlyArray<number> {
-        const action = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn];
-        if (action instanceof DiscoverAction) {
-            return action.choices;
-        }
-        return null;
+		const action = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn];
+		if (action instanceof DiscoverAction) {
+			return action.choices;
+		}
+		return null;
 	}
 
 	private computeChosen(): ReadonlyArray<number> {
-        const action = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn];
-        if (action instanceof DiscoverAction) {
-            return action.chosen;
-        }
-        return null;
+		const action = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn];
+		if (action instanceof DiscoverAction) {
+			return action.chosen;
+		}
+		return null;
 	}
 
 	private computeFatigue(): number {
-        const action = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn];
-        if (action instanceof FatigueDamageAction) {
-            return action.amount;
-        }
-        return null;
+		const action = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn];
+		if (action instanceof FatigueDamageAction) {
+			return action.amount;
+		}
+		return null;
 	}
 
 	private computeSecretRevealed(): number {
-        const action = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn];
-        if (action instanceof SecretRevealedAction) {
-            return action.entityId;
-        }
-        return null;
+		const action = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn];
+		if (action instanceof SecretRevealedAction) {
+			return action.entityId;
+		}
+		return null;
 	}
 
 	private computeQuestCompleted(): number {
-        const action = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn];
-        if (action instanceof QuestCompletedAction) {
-            return action.originId;
-        }
-        return null;
+		const action = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn];
+		if (action instanceof QuestCompletedAction) {
+			return action.originId;
+		}
+		return null;
 	}
 
-    private computeActivePlayer(): number {
-        return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].activePlayer;
-    }
+	private computeActivePlayer(): number {
+		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].activePlayer;
+	}
 
 	private computeNewEntities(): Map<number, Entity> {
 		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].entities;
@@ -237,12 +237,12 @@ export class AppComponent {
 
 	private computeText(): string {
 		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].textRaw;
-    }
-    
+	}
+
 	private computeTurnString(): string {
-        return this.game.turns.get(this.currentTurn).turn === 'mulligan'
-                ? 'Mulligan'
-                : `Turn${this.game.turns.get(this.currentTurn).turn}`
+		return this.game.turns.get(this.currentTurn).turn === 'mulligan'
+				? 'Mulligan'
+				: `Turn${this.game.turns.get(this.currentTurn).turn}`;
 	}
 
 	private computeTargets(): ReadonlyArray<[number, number]> {
@@ -250,10 +250,10 @@ export class AppComponent {
 	}
 
 	private moveCursorToNextAction() {
-        if (this.currentActionInTurn >= this.game.turns.get(this.currentTurn).actions.length - 1
-                && this.currentTurn >= this.game.turns.size - 1) {
-            return;
-        }
+		if (this.currentActionInTurn >= this.game.turns.get(this.currentTurn).actions.length - 1
+				&& this.currentTurn >= this.game.turns.size - 1) {
+			return;
+		}
 		this.currentActionInTurn++;
 		if (this.currentActionInTurn >= this.game.turns.get(this.currentTurn).actions.length) {
 			this.currentActionInTurn = 0;
@@ -262,9 +262,9 @@ export class AppComponent {
 	}
 
 	private moveCursorToPreviousAction() {
-        if (this.currentActionInTurn === 0 && this.currentTurn === 0) {
-            return;
-        }
+		if (this.currentActionInTurn === 0 && this.currentTurn === 0) {
+			return;
+		}
 		this.currentActionInTurn--;
 		if (this.currentActionInTurn < 0) {
 			this.currentTurn--;
@@ -273,37 +273,37 @@ export class AppComponent {
 	}
 
 	private moveCursorToNextTurn() {
-        if (this.currentTurn >= this.game.turns.size - 1) {
-            return;
-        }
-        this.currentActionInTurn = 0;
-        this.currentTurn++;
+		if (this.currentTurn >= this.game.turns.size - 1) {
+			return;
+		}
+		this.currentActionInTurn = 0;
+		this.currentTurn++;
 	}
 
 	private moveCursorToPreviousTurn() {
-        if (this.currentTurn === 0) {
-            return;
-        }
-        this.currentActionInTurn = 0;
-        this.currentTurn--;
-        
-	}
-    
-    private getSearchParam(name: string): string {
-        const searchString = window.location.search.substring(1);
-        const searchParams = searchString.split('&');
-        return searchParams
-                .filter(param => param.indexOf('=') !== -1)
-                .filter(param => param.split('=')[0] === name)
-                .map(param => param.split('=')[1])
-                [0];
-    }
+		if (this.currentTurn === 0) {
+			return;
+		}
+		this.currentActionInTurn = 0;
+		this.currentTurn--;
 
-    private updateUrlQueryString() {
-        const baseUrl = `${window.location.protocol}//${window.location.host}${window.location.pathname}`;
-        const reviewQuery = this.reviewId ? `reviewId=${this.reviewId}&` : '';
-        const queryString = `${reviewQuery}turn=${this.currentTurn}&action=${this.currentActionInTurn}`
-        const newUrl = `${baseUrl}?${queryString}`;
-        window.history.replaceState({ path: newUrl }, '', newUrl);
-    }
+	}
+
+	private getSearchParam(name: string): string {
+		const searchString = window.location.search.substring(1);
+		const searchParams = searchString.split('&');
+		return searchParams
+				.filter(param => param.indexOf('=') !== -1)
+				.filter(param => param.split('=')[0] === name)
+				.map(param => param.split('=')[1])
+				[0];
+	}
+
+	private updateUrlQueryString() {
+		const baseUrl = `${window.location.protocol}//${window.location.host}${window.location.pathname}`;
+		const reviewQuery = this.reviewId ? `reviewId=${this.reviewId}&` : '';
+		const queryString = `${reviewQuery}turn=${this.currentTurn}&action=${this.currentActionInTurn}`;
+		const newUrl = `${baseUrl}?${queryString}`;
+		window.history.replaceState({ path: newUrl }, '', newUrl);
+	}
 }

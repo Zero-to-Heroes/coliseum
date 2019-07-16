@@ -17,8 +17,8 @@ export class WeaponArtComponent {
 
 	constructor(private logger: NGXLogger) {}
 
-    @Input('cardId') set cardId(cardId: string) {
-        this.logger.debug('[weapon-art] setting cardId', cardId);
-        this.image = `https://static.zerotoheroes.com/hearthstone/cardart/256x/${cardId}.jpg`;
+	@Input('cardId') set cardId(cardId: string) {
+		this.logger.debug('[weapon-art] setting cardId', cardId);
+		this.image = `https://static.zerotoheroes.com/hearthstone/cardart/256x/${cardId}.jpg`;
 	}
 }

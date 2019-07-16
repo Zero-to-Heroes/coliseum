@@ -27,94 +27,93 @@ import { NGXLogger } from 'ngx-logger';
 })
 export class HeroStatsComponent {
 
-    hasStats: boolean;
+	hasStats: boolean;
 
-    attackClass: string;
-    healthClass: string;
+	attackClass: string;
+	healthClass: string;
 
-    healthLeft: number;
-    _attack: number;
-    _armor: number;
-    
-    private _cardId: string;
-    private _health: number;
-    private _damage: number;
+	healthLeft: number;
+	_attack: number;
+	_armor: number;
 
-    constructor(private cards: AllCardsService, private logger: NGXLogger) { }
+	private _cardId: string;
+	private _health: number;
+	private _damage: number;
 
-    @Input('cardId') set cardId(cardId: string) {
-        this.logger.debug('[card-stats] setting cardId', cardId);
-        this._cardId = cardId;
-        this.updateStats();
-    }
+	constructor(private cards: AllCardsService, private logger: NGXLogger) { }
 
-    @Input('attack') set attack(attack: number) {
-        this.logger.debug('[card-stats] setting attack', attack);
-        this._attack = attack;
-        this.updateStats();
-    }
+	@Input('cardId') set cardId(cardId: string) {
+		this.logger.debug('[card-stats] setting cardId', cardId);
+		this._cardId = cardId;
+		this.updateStats();
+	}
 
-    @Input('health') set health(health: number) {
-        this.logger.debug('[card-stats] setting health', health);
-        this._health = health;
-        this.updateStats();
-    }
+	@Input('attack') set attack(attack: number) {
+		this.logger.debug('[card-stats] setting attack', attack);
+		this._attack = attack;
+		this.updateStats();
+	}
 
-    @Input('damage') set damage(damage: number) {
-        this.logger.debug('[card-stats] setting damage', damage);
-        this._damage = damage;
-        this.updateStats();
-    }
+	@Input('health') set health(health: number) {
+		this.logger.debug('[card-stats] setting health', health);
+		this._health = health;
+		this.updateStats();
+	}
 
-    @Input('armor') set armor(armor: number) {
-        this.logger.debug('[card-stats] setting armor', armor);
-        this._armor = armor;
-        this.updateStats();
-    }
+	@Input('damage') set damage(damage: number) {
+		this.logger.debug('[card-stats] setting damage', damage);
+		this._damage = damage;
+		this.updateStats();
+	}
 
-    private updateStats() {
-        this.attackClass = undefined;
-        this.healthClass = undefined;
-        this.hasStats = undefined;
+	@Input('armor') set armor(armor: number) {
+		this.logger.debug('[card-stats] setting armor', armor);
+		this._armor = armor;
+		this.updateStats();
+	}
 
-        if (!this._cardId) {
-            return;
-        }
-        const originalCard = this.cards.getCard(this._cardId);
+	private updateStats() {
+		this.attackClass = undefined;
+		this.healthClass = undefined;
+		this.hasStats = undefined;
 
-        if (this._attack == null) {
-            this._attack = originalCard.attack;
-        }
-        if (this._health == null) {
-            this._health = originalCard.health;
-        }
-        if (this._damage == null) {
-            this._damage = 0;
-        }
-        if (this._armor == null) {
-            this._armor = originalCard.armor;
-        }
-        this.hasStats = originalCard.attack || originalCard.health || originalCard.durability || originalCard.armor;
+		if (!this._cardId) {
+			return;
+		}
+		const originalCard = this.cards.getCard(this._cardId);
 
-        this.healthLeft = this._health - this._damage;
-        this.updateAttackClass(originalCard);
-        this.updateHealthClass(originalCard);
-    }
+		if (this._attack == null) {
+			this._attack = originalCard.attack;
+		}
+		if (this._health == null) {
+			this._health = originalCard.health;
+		}
+		if (this._damage == null) {
+			this._damage = 0;
+		}
+		if (this._armor == null) {
+			this._armor = originalCard.armor;
+		}
+		this.hasStats = originalCard.attack || originalCard.health || originalCard.durability || originalCard.armor;
 
-    private updateAttackClass(originalCard) {
-        this.attackClass = 'attack';
-        if (this._attack > originalCard.attack) {
-            this.attackClass += ' buff';
-        }
-        else if (this._attack < originalCard.attack) {
-            this.attackClass += ' debuff';
-        }
-    }
+		this.healthLeft = this._health - this._damage;
+		this.updateAttackClass(originalCard);
+		this.updateHealthClass(originalCard);
+	}
 
-    private updateHealthClass(originalCard) {
-        this.healthClass = 'health';
-        if (this._damage > 0) {
-            this.healthClass += ' damaged';
-        }
-    }
+	private updateAttackClass(originalCard) {
+		this.attackClass = 'attack';
+		if (this._attack > originalCard.attack) {
+			this.attackClass += ' buff';
+		} else if (this._attack < originalCard.attack) {
+			this.attackClass += ' debuff';
+		}
+	}
+
+	private updateHealthClass(originalCard) {
+		this.healthClass = 'health';
+		if (this._damage > 0) {
+			this.healthClass += ' damaged';
+		}
+	}
 }

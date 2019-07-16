@@ -17,12 +17,12 @@ import { NGXLogger } from 'ngx-logger';
 })
 export class CardRaceComponent {
 
-    _race: string;
+	_race: string;
 
-    constructor(private logger: NGXLogger) { }
+	constructor(private logger: NGXLogger) { }
 
-    @Input('race') set race(value: string) {
-        this.logger.debug('[card-race] setting race', value);
-        this._race = value;
-    }
+	@Input('race') set race(value: string) {
+		this.logger.debug('[card-race] setting race', value);
+		this._race = value;
+	}
 }

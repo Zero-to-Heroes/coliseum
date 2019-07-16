@@ -22,58 +22,57 @@ import { CardType } from '../../../models/enums/card-type';
 })
 export class CardCostComponent {
 
-    _cost: number;
-    costClass: string;
-    _cardType: string;
-    fontSizeRatio: number;
-    
-    private _cardId: string;
+	_cost: number;
+	costClass: string;
+	_cardType: string;
+	fontSizeRatio: number;
 
-    constructor(
-            private cards: AllCardsService, 
-            private logger: NGXLogger,
-            private cdr: ChangeDetectorRef) { 
-    }
+	private _cardId: string;
 
-    @Input('cardId') set cardId(cardId: string) {
-        this.logger.debug('[card-cost] setting cardId', cardId);
-        this._cardId = cardId;
-        this.updateCost();
-    }
+	constructor(
+			private cards: AllCardsService,
+			private logger: NGXLogger,
+			private cdr: ChangeDetectorRef) {
+	}
 
-    @Input('cost') set cost(cost: number) {
-        this.logger.debug('[card-cost] setting cost', cost);
-        this._cost = cost;
-        this.costClass = undefined;
-        this.updateCost();
-    }
-    
-    @Input('cardType') set cardType(cardType: CardType) {
-        this.logger.debug('[card-text] setting cardType', cardType);
-        this._cardType = CardType[cardType].toLowerCase();
-        this.fontSizeRatio = this._cardType === CardType[CardType.HERO_POWER].toLowerCase() ? 0.6 : 0.8;
-        this.updateCost();
-    }
+	@Input('cardId') set cardId(cardId: string) {
+		this.logger.debug('[card-cost] setting cardId', cardId);
+		this._cardId = cardId;
+		this.updateCost();
+	}
 
-    private updateCost() {
-        if (!this._cardId) {
-            return;
-        }
-        const originalCard = this.cards.getCard(this._cardId);
-        const originalCost: number = originalCard.cost;
-        
-        if (this._cost == null) {
-            this._cost = originalCost;
-        }
+	@Input('cost') set cost(cost: number) {
+		this.logger.debug('[card-cost] setting cost', cost);
+		this._cost = cost;
+		this.costClass = undefined;
+		this.updateCost();
+	}
 
-        if (this._cost < originalCost) {
-            this.costClass = 'lower-cost';
-        }
-        else if (this._cost > originalCost) {
-            this.costClass = 'higher-cost';
-        }
-        if (!(<ViewRef>this.cdr).destroyed) {
-            this.cdr.detectChanges();
-        }
-    }
+	@Input('cardType') set cardType(cardType: CardType) {
+		this.logger.debug('[card-text] setting cardType', cardType);
+		this._cardType = CardType[cardType].toLowerCase();
+		this.fontSizeRatio = this._cardType === CardType[CardType.HERO_POWER].toLowerCase() ? 0.6 : 0.8;
+		this.updateCost();
+	}
+
+	private updateCost() {
+		if (!this._cardId) {
+			return;
+		}
+		const originalCard = this.cards.getCard(this._cardId);
+		const originalCost: number = originalCard.cost;
+
+		if (this._cost == null) {
+			this._cost = originalCost;
+		}
+
+		if (this._cost < originalCost) {
+			this.costClass = 'lower-cost';
+		} else if (this._cost > originalCost) {
+			this.costClass = 'higher-cost';
+		}
+		if (!(<ViewRef>this.cdr).destroyed) {
+			this.cdr.detectChanges();
+		}
+	}
 }

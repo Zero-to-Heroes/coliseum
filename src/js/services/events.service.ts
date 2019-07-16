@@ -29,6 +29,6 @@ export class Events {
 	on(key: any): Observable<BroadcastEvent> {
 		return this._eventBus.asObservable().pipe(
 			filter(event => event.key === key),
-			map(event => event),);
+			map(event => event), );
 	}
 }

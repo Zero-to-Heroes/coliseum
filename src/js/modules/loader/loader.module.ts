@@ -8,19 +8,19 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 @NgModule({
 	bootstrap: [ReplayLoaderComponent],
 	imports: [
-        BrowserModule,
-        HttpClientModule,
-		LoggerModule.forRoot({ 
+		BrowserModule,
+		HttpClientModule,
+		LoggerModule.forRoot({
 			level: NgxLoggerLevel.WARN
-        }),
+		}),
 	],
 	declarations: [
 		ReplayLoaderComponent,
-    ],
+	],
 	providers: [
-        Location, 
-        { provide: LocationStrategy, useClass: PathLocationStrategy },
-        HttpClient,
+		Location,
+		{ provide: LocationStrategy, useClass: PathLocationStrategy },
+		HttpClient,
 	],
 	entryComponents: [
 		ReplayLoaderComponent

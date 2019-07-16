@@ -13,9 +13,9 @@ import { NGXLogger } from 'ngx-logger';
 })
 export class OverlayTickedComponent {
 
-    image: string;
+	image: string;
 
-    constructor(private logger: NGXLogger) { 
-        console.warn('missing discover pick icon');
-    }
+	constructor(private logger: NGXLogger) {
+		console.warn('missing discover pick icon');
+	}
 }

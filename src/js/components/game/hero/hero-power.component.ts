@@ -6,10 +6,10 @@ import { NGXLogger } from 'ngx-logger';
 @Component({
 	selector: 'hero-power',
 	styleUrls: [
-        '../../../../css/components/game/hero/hero-power.component.scss'
-    ],
+		'../../../../css/components/game/hero/hero-power.component.scss'
+	],
 	template: `
-        <div class="hero-power" 
+        <div class="hero-power"
                 [ngClass]="{ 'highlight': _option }"
                 cardTooltip [tooltipEntity]="entity"
                 [attr.data-entity-id]="entityId">
@@ -22,25 +22,25 @@ import { NGXLogger } from 'ngx-logger';
 })
 export class HeroPowerComponent {
 
-    entity: Entity;
-    entityId: number;
-    cardId: string;
-    cost: number;
-    exhausted: boolean;
-    _option: boolean;
-    
-    constructor(private logger: NGXLogger) {}
+	entity: Entity;
+	entityId: number;
+	cardId: string;
+	cost: number;
+	exhausted: boolean;
+	_option: boolean;
 
-    @Input('heroPower') set heroPower(heroPower: Entity) {
-        this.logger.debug('[hero-power] setting new heroPower', heroPower, heroPower.tags.toJS());
-        this.entity = heroPower;
-        this.entityId = heroPower.id;
-        this.cardId = heroPower.cardID;
-        this.exhausted = heroPower.getTag(GameTag.EXHAUSTED) === 1 || heroPower.getTag(GameTag.HERO_POWER_DISABLED) === 1;
+	constructor(private logger: NGXLogger) {}
+
+	@Input('heroPower') set heroPower(heroPower: Entity) {
+		this.logger.debug('[hero-power] setting new heroPower', heroPower, heroPower.tags.toJS());
+		this.entity = heroPower;
+		this.entityId = heroPower.id;
+		this.cardId = heroPower.cardID;
+		this.exhausted = heroPower.getTag(GameTag.EXHAUSTED) === 1 || heroPower.getTag(GameTag.HERO_POWER_DISABLED) === 1;
 		this.cost = heroPower.getTag(GameTag.COST);
-    }
-    
-	@Input("option") set option(value: boolean) {
+	}
+
+	@Input('option') set option(value: boolean) {
 		this._option = value;
 	}
 }

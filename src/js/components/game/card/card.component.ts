@@ -12,7 +12,7 @@ import { AllCardsService } from '../../../services/all-cards.service';
 		'../../../../css/components/game/card/card.component.scss'
 	],
 	template: `
-        <div class="card" 
+        <div class="card"
                 [ngClass]="{ 'highlight': _option }"
                 cardResize
                 cardTooltip [tooltipEntity]="_entity" [hasTooltip]="_hasTooltip"
@@ -26,16 +26,16 @@ import { AllCardsService } from '../../../services/all-cards.service';
                     [controller]="_controller"
                     [cardType]="cardType">
             </card-text>
-            <card-race *ngIf="race" 
+            <card-race *ngIf="race"
                     [race]="race">
             </card-race>
             <card-cost *ngIf="cardId"
                     [cardType]="cardType"
-                    [cardId]="cardId" 
+                    [cardId]="cardId"
                     [cost]="cost">
             </card-cost>
 			<card-stats *ngIf="cardId"
-					[cardId]="cardId" 
+					[cardId]="cardId"
 					[attack]="attack"
 					[health]="health"
 					[damage]="damage"
@@ -44,7 +44,7 @@ import { AllCardsService } from '../../../services/all-cards.service';
             </card-stats>
             <overlay-crossed *ngIf="_crossed"></overlay-crossed>
             <overlay-ticked *ngIf="_ticked"></overlay-ticked>
-            <card-enchantments *ngIf="_enchantments && _enchantments.length > 0" 
+            <card-enchantments *ngIf="_enchantments && _enchantments.length > 0"
                     [enchantments]="_enchantments">
             </card-enchantments>
 		</div>
@@ -53,12 +53,12 @@ import { AllCardsService } from '../../../services/all-cards.service';
 })
 export class CardComponent {
 
-    _entity: Entity;
-    _controller: Entity;
-    _option: boolean;
-    _crossed: boolean;
-    _ticked: boolean;
-    _enchantments: ReadonlyArray<Entity>;
+	_entity: Entity;
+	_controller: Entity;
+	_option: boolean;
+	_crossed: boolean;
+	_ticked: boolean;
+	_enchantments: ReadonlyArray<Entity>;
 
 	cardId: string;
 	cardType: CardType;
@@ -70,68 +70,68 @@ export class CardComponent {
 	damage: number;
 	durability: number;
 	armor: number;
-    cost: number;
-    race: string;
+	cost: number;
+	race: string;
 
-    _forbiddenTargetSource: boolean = false;
-	_hasTooltip: boolean = true;
+	_forbiddenTargetSource = false;
+	_hasTooltip = true;
 
 	constructor(
-            private cards: AllCardsService, 
-            private logger: NGXLogger) { 
-    }
+			private cards: AllCardsService,
+			private logger: NGXLogger) {
+	}
 
-    @Input('entity') set entity(entity: Entity) {
+	@Input('entity') set entity(entity: Entity) {
 		this.logger.debug('[card] setting entity', entity);
 		this._entity = entity;
-        this.cardId = entity.cardID;
-        if (this.cardId) {
-            this.premium = entity.getTag(GameTag.PREMIUM) == 1;
-            this.attack = entity.getTag(GameTag.ATK);
-            this.health = entity.getTag(GameTag.HEALTH);
-            this.damage = entity.getTag(GameTag.DAMAGE);
-            this.durability = entity.getTag(GameTag.DURABILITY);
-            this.armor = entity.getTag(GameTag.ARMOR);
-            this.cost = entity.getTag(GameTag.COST);
-            this.originalCard = this.cards.getCard(this.cardId);
-            this.race = this.originalCard.race ? this.originalCard.race.toLowerCase() : undefined;
-            this.cardType = CardType[this.originalCard.type.toUpperCase() as string];
-            this.cardClass = CardClass[this.originalCard.playerClass.toUpperCase() as string];
-        }
-    }
+		this.cardId = entity.cardID;
+		if (this.cardId) {
+			this.premium = entity.getTag(GameTag.PREMIUM) === 1;
+			this.attack = entity.getTag(GameTag.ATK);
+			this.health = entity.getTag(GameTag.HEALTH);
+			this.damage = entity.getTag(GameTag.DAMAGE);
+			this.durability = entity.getTag(GameTag.DURABILITY);
+			this.armor = entity.getTag(GameTag.ARMOR);
+			this.cost = entity.getTag(GameTag.COST);
+			this.originalCard = this.cards.getCard(this.cardId);
+			this.race = this.originalCard.race ? this.originalCard.race.toLowerCase() : undefined;
+			this.cardType = CardType[this.originalCard.type.toUpperCase() as string];
+			this.cardClass = CardClass[this.originalCard.playerClass.toUpperCase() as string];
+		}
+	}
 
-    @Input('controller') set controller(value: Entity) {
+	@Input('controller') set controller(value: Entity) {
 		this.logger.debug('[card] setting controller', value);
-        this._controller = value;
-    }
+		this._controller = value;
+	}
 
-	@Input("hasTooltip") set hasTooltip(hasTooltip: boolean) {
+	@Input('hasTooltip') set hasTooltip(hasTooltip: boolean) {
 		this._hasTooltip = hasTooltip;
-    }
-    
-	@Input("forbiddenTargetSource") set forbiddenTargetSource(value: boolean) {
+	}
+
+	@Input('forbiddenTargetSource') set forbiddenTargetSource(value: boolean) {
 		this._forbiddenTargetSource = value;
 	}
-    
-	@Input("option") set option(value: boolean) {
+
+	@Input('option') set option(value: boolean) {
 		this._option = value;
 	}
 
-	@Input("crossed") set crossed(value: boolean) {
-        this._crossed = value;
-        if (value) {
-            this.logger.debug('[card] marking card as crossed', this._entity);
-        }
-    }
+	@Input('crossed') set crossed(value: boolean) {
+		this._crossed = value;
+		if (value) {
+			this.logger.debug('[card] marking card as crossed', this._entity);
+		}
+	}
 
-	@Input("ticked") set ticked(value: boolean) {
-        this._ticked = value;
-        if (value) {
-            this.logger.debug('[card] marking card as ticked', this._entity);
-        }
-    }
-    
-	@Input("enchantments") set enchantments(value: ReadonlyArray<Entity>) {
+	@Input('ticked') set ticked(value: boolean) {
+		this._ticked = value;
+		if (value) {
+			this.logger.debug('[card] marking card as ticked', this._entity);
+		}
+	}
+
+	@Input('enchantments') set enchantments(value: ReadonlyArray<Entity>) {
 		this._enchantments = value;
 	}
 }

@@ -14,7 +14,7 @@ import { NGXLogger } from 'ngx-logger';
 })
 export class OverlayCrossedComponent {
 
-    image: string;
+	image: string;
 
-    constructor(private cards: AllCardsService, private logger: NGXLogger) { }
+	constructor(private cards: AllCardsService, private logger: NGXLogger) { }
 }

@@ -1,4 +1,4 @@
 export interface HasTargets {
-    readonly originId: number;
-    readonly targetIds: ReadonlyArray<number>;
+	readonly originId: number;
+	readonly targetIds: ReadonlyArray<number>;
 }

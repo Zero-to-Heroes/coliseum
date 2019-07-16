@@ -1,12 +1,12 @@
-import { HistoryItem } from "./history-item";
-import { EnrichedTag } from "../parser/enriched-tag";
+import { HistoryItem } from './history-item';
+import { EnrichedTag } from '../parser/enriched-tag';
 
 export class OptionsHistoryItem extends HistoryItem {
 
-    readonly tag: EnrichedTag;
+	readonly tag: EnrichedTag;
 
-    constructor(tag: EnrichedTag, timestamp: number, index: number) {
-        super(timestamp, index);
-        this.tag = tag;
-    }
+	constructor(tag: EnrichedTag, timestamp: number, index: number) {
+		super(timestamp, index);
+		this.tag = tag;
+	}
 }

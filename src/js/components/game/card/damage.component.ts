@@ -19,26 +19,25 @@ import { NGXLogger } from 'ngx-logger';
 })
 export class DamageComponent {
 
-    image: string;
-    prefix: string;
-    _amount: number;
+	image: string;
+	prefix: string;
+	_amount: number;
 
-    constructor(
-            private elRef: ElementRef, 
-            private logger: NGXLogger,
-            private cdr: ChangeDetectorRef) { 
-    }
+	constructor(
+			private elRef: ElementRef,
+			private logger: NGXLogger,
+			private cdr: ChangeDetectorRef) {
+	}
 
-    @Input('amount') set amount(value: number) {
-        this.logger.debug('[damage] setting amount', value);
-        this._amount = Math.abs(value);
-        if (value >= 0) {
-            this.prefix = '-';
-            this.image = 'https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/icon_damage.png';
-        }
-        else {
-            this.prefix = '+';
-            this.image = 'https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/icon_heal.png';
-        }
-    }
+	@Input('amount') set amount(value: number) {
+		this.logger.debug('[damage] setting amount', value);
+		this._amount = Math.abs(value);
+		if (value >= 0) {
+			this.prefix = '-';
+			this.image = 'https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/icon_damage.png';
+		} else {
+			this.prefix = '+';
+			this.image = 'https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/icon_heal.png';
+		}
+	}
 }

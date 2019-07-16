@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Ng2FittextModule } from "ng2-fittext";
+import { Ng2FittextModule } from 'ng2-fittext';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 
 import { AppComponent } from '../../components/app.component';
@@ -40,7 +40,7 @@ import { XmlParserService } from '../../services/parser/xml-parser.service';
 import { HeroPowerCostComponent } from '../../components/game/hero/hero-power-cost.component';
 import { HeroStatsComponent } from '../../components/game/hero/hero-stats.component';
 import { ManaTrayComponent } from '../../components/game/manatray/mana-tray.component';
-import { TooltipsComponent, Tooltip } from '../../components/tooltips.component';
+import { TooltipsComponent, TooltipComponent } from '../../components/tooltips.component';
 import { BoardCardFrameComponent } from '../../components/game/board/board-card-frame.component';
 import { BoardCardStatsComponent } from '../../components/game/board/board-card-stats.component';
 import { NarratorService } from '../../services/parser/gamepipeline/narrator.service';
@@ -90,8 +90,8 @@ console.log('environment is', process.env.NODE_ENV);
 		BrowserModule,
 		BrowserAnimationsModule,
 		Ng2FittextModule,
-        LoggerModule.forRoot({ level: NgxLoggerLevel.WARN }),
-        // LoggerModule.forRoot({ level: NgxLoggerLevel.DEBUG }),
+		LoggerModule.forRoot({ level: NgxLoggerLevel.WARN }),
+		// LoggerModule.forRoot({ level: NgxLoggerLevel.DEBUG }),
 	],
 	declarations: [
 		AppComponent,
@@ -106,35 +106,35 @@ console.log('environment is', process.env.NODE_ENV);
 		CardOnBoardComponent,
 		BoardCardFrameComponent,
 		BoardCardStatsComponent,
-        DamageComponent,
-        SleepingComponent,
-        PowerIndicatorComponent,
-        CardOnBoardOverlaysComponent,
-        CardEnchantmentsComponent,
-        CardEnchantmentComponent,
-		
+		DamageComponent,
+		SleepingComponent,
+		PowerIndicatorComponent,
+		CardOnBoardOverlaysComponent,
+		CardEnchantmentsComponent,
+		CardEnchantmentComponent,
+
 		TooltipsComponent,
-		Tooltip,
+		TooltipComponent,
 
 		HeroComponent,
-        HeroCardComponent,
-        HeroOverlaysComponent,
+		HeroCardComponent,
+		HeroOverlaysComponent,
 		HeroArtComponent,
 		HeroStatsComponent,
 		HeroFrameComponent,
 		HeroPowerComponent,
 		HeroPowerArtComponent,
 		HeroPowerCostComponent,
-        HeroPowerFrameComponent,
-        
-		WeaponComponent,
-        WeaponArtComponent,
-        WeaponFrameComponent,
-        WeaponStatsComponent,
+		HeroPowerFrameComponent,
 
-        SecretsComponent,
-        SecretComponent,
-        QuestComponent,
+		WeaponComponent,
+		WeaponArtComponent,
+		WeaponFrameComponent,
+		WeaponStatsComponent,
+
+		SecretsComponent,
+		SecretComponent,
+		QuestComponent,
 
 		CardComponent,
 		CardArtComponent,
@@ -144,47 +144,47 @@ console.log('environment is', process.env.NODE_ENV);
 		CardTextComponent,
 		CardRaceComponent,
 		CardStatsComponent,
-        CardCostComponent,
-        OverlayCrossedComponent,
-        OverlayTickedComponent,
-        
-        DeckComponent,        
-        PlayerNameComponent,
-        EndGameComponent,
-        
-        MulliganComponent,
-        BurnComponent,
-        DiscoverComponent,
-        ActiveSpellComponent,
-        SecretRevealedComponent,
-        FatigueComponent,
-        QuestCompletedComponent,
-        QuestTooltipComponent,
-        
-        TargetZoneComponent,
+		CardCostComponent,
+		OverlayCrossedComponent,
+		OverlayTickedComponent,
 
-        CardTooltipDirective,
-        CardResizeDirective,
-        CardElementResizeDirective,
-    ],
+		DeckComponent,
+		PlayerNameComponent,
+		EndGameComponent,
+
+		MulliganComponent,
+		BurnComponent,
+		DiscoverComponent,
+		ActiveSpellComponent,
+		SecretRevealedComponent,
+		FatigueComponent,
+		QuestCompletedComponent,
+		QuestTooltipComponent,
+
+		TargetZoneComponent,
+
+		CardTooltipDirective,
+		CardResizeDirective,
+		CardElementResizeDirective,
+	],
 	providers: [
-        Location, 
-        { provide: LocationStrategy, useClass: PathLocationStrategy },
+		Location,
+		{ provide: LocationStrategy, useClass: PathLocationStrategy },
 
-        ActionParserService,
-        ActivePlayerParserService,
-        ActiveSpellParserService,
+		ActionParserService,
+		ActivePlayerParserService,
+		ActiveSpellParserService,
 		AllCardsService,
 		Events,
 		GameInitializerService,
 		GameParserService,
 		GamePopulationService,
-        GameStateParserService,
-        MulliganParserService,
-        EndGameParserService,
+		GameStateParserService,
+		MulliganParserService,
+		EndGameParserService,
 		NarratorService,
-        StateProcessorService,
-        TargetsParserService,
+		StateProcessorService,
+		TargetsParserService,
 		TurnParserService,
 		XmlParserService
 	],
@@ -193,5 +193,5 @@ console.log('environment is', process.env.NODE_ENV);
 	]
 })
 export class AppModule {
-    ngDoBootstrap() {}
+	ngDoBootstrap() {}
  }

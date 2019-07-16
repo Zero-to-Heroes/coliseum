@@ -7,8 +7,8 @@ import { GameTag } from '../../../models/enums/game-tags';
 @Component({
 	selector: 'quest-tooltip',
 	styleUrls: [
-        '../../../../css/components/game/overlay/quest-tooltip.component.scss'
-    ],
+		'../../../../css/components/game/overlay/quest-tooltip.component.scss'
+	],
 	template: `
         <div class="quest-tooltip" cardElementResize [fontSizeRatio]="0.10">
             <card class="entity" [entity]="_quest" [hasTooltip]="false"></card>
@@ -23,56 +23,56 @@ import { GameTag } from '../../../models/enums/game-tags';
 })
 export class QuestTooltipComponent {
 
-    _quest: Entity;
-    _reward: Entity;
-    progress: string;
-    
-    constructor(private logger: NGXLogger) {}
+	_quest: Entity;
+	_reward: Entity;
+	progress: string;
 
-    @Input('quest') set quest(value: Entity) {
-        this.logger.debug('[quest-tooltip] setting quest', value);
-        this._quest = value;
-        if (!value) {
-            return;
-        }
-        this._reward = this.getReward(value.cardID);
-        this.progress = this.buildProgress(value);
-    }
+	constructor(private logger: NGXLogger) {}
 
-    private buildProgress(quest: Entity): string {
-        return `${quest.getTag(GameTag.QUEST_PROGRESS) || 0}/${quest.getTag(GameTag.QUEST_PROGRESS_TOTAL)}`;
-    }
+	@Input('quest') set quest(value: Entity) {
+		this.logger.debug('[quest-tooltip] setting quest', value);
+		this._quest = value;
+		if (!value) {
+			return;
+		}
+		this._reward = this.getReward(value.cardID);
+		this.progress = this.buildProgress(value);
+	}
 
-    private getReward(questId: string): Entity {
-        const rewardId = this.getRewardId(questId);
-        return Object.assign(new Entity(), {
-            cardID: rewardId,
-            id: rewardId,
-            tags: Map.of()
-        });        
-    }
+	private buildProgress(quest: Entity): string {
+		return `${quest.getTag(GameTag.QUEST_PROGRESS) || 0}/${quest.getTag(GameTag.QUEST_PROGRESS_TOTAL)}`;
+	}
 
-    private getRewardId(questId: string): string {
-        switch (questId) {
-            case 'UNG_940': // Awaken the Makers
-                return 'UNG_940t8'
-            case 'UNG_934': // Fire Plume's Heart
-                return 'UNG_934t1'
-            case 'UNG_116': // Jungle Giants
-                return 'UNG_116t'
-            case 'UNG_829': // Lakkari Sacrifice
-                return 'UNG_829t2'
-            case 'UNG_028': // Open the Waygate
-                return 'UNG_028t'
-            case 'UNG_067': // The Caverns Below
-                return 'UNG_067t1'
-            case 'UNG_954': // The Last Kaleidosaur
-                return 'UNG_954t1'
-            case 'UNG_920': // The Marsh Queen
-                return 'UNG_920t1'
-            case 'UNG_942': // Unite the Murlocs
-                return 'UNG_942t'
-        }
-        this.logger.error('Invalid quest', questId);
-    }
+	private getReward(questId: string): Entity {
+		const rewardId = this.getRewardId(questId);
+		return Object.assign(new Entity(), {
+			cardID: rewardId,
+			id: rewardId,
+			tags: Map.of()
+		});
+	}
+
+	private getRewardId(questId: string): string {
+		switch (questId) {
+			case 'UNG_940': // Awaken the Makers
+				return 'UNG_940t8';
+			case 'UNG_934': // Fire Plume's Heart
+				return 'UNG_934t1';
+			case 'UNG_116': // Jungle Giants
+				return 'UNG_116t';
+			case 'UNG_829': // Lakkari Sacrifice
+				return 'UNG_829t2';
+			case 'UNG_028': // Open the Waygate
+				return 'UNG_028t';
+			case 'UNG_067': // The Caverns Below
+				return 'UNG_067t1';
+			case 'UNG_954': // The Last Kaleidosaur
+				return 'UNG_954t1';
+			case 'UNG_920': // The Marsh Queen
+				return 'UNG_920t1';
+			case 'UNG_942': // Unite the Murlocs
+				return 'UNG_942t';
+		}
+		this.logger.error('Invalid quest', questId);
+	}
 }

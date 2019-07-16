@@ -5,13 +5,13 @@ import { NGXLogger } from 'ngx-logger';
 @Component({
 	selector: 'hero',
 	styleUrls: [
-        '../../../../css/components/game/hero/hero.component.scss'
-    ],
+		'../../../../css/components/game/hero/hero.component.scss'
+	],
 	template: `
         <div class="hero">
             <weapon [weapon]="_weapon" *ngIf="_weapon"></weapon>
-            <hero-card 
-                    [hero]="_hero" 
+            <hero-card
+                    [hero]="_hero"
                     [secrets]="_secrets"
                     [option]="isOption(_hero)">
             </hero-card>
@@ -22,40 +22,40 @@ import { NGXLogger } from 'ngx-logger';
 })
 export class HeroComponent {
 
-    _hero: Entity;
-    _heroPower: Entity;
-    _weapon: Entity;
-    _options: ReadonlyArray<number>;
-    _secrets: ReadonlyArray<Entity>;
+	_hero: Entity;
+	_heroPower: Entity;
+	_weapon: Entity;
+	_options: ReadonlyArray<number>;
+	_secrets: ReadonlyArray<Entity>;
 
-    constructor(private logger: NGXLogger) {}
+	constructor(private logger: NGXLogger) {}
 
-    @Input('hero') set hero(hero: Entity) {
-        this.logger.debug('[hero] setting hero', hero, hero.tags.toJS());
-        this._hero = hero;
-    }
+	@Input('hero') set hero(hero: Entity) {
+		this.logger.debug('[hero] setting hero', hero, hero.tags.toJS());
+		this._hero = hero;
+	}
 
-    @Input('heroPower') set heroPower(heroPower: Entity) {
-        this.logger.debug('[hero] setting new heroPower', heroPower);
-        this._heroPower = heroPower;
-    }
+	@Input('heroPower') set heroPower(heroPower: Entity) {
+		this.logger.debug('[hero] setting new heroPower', heroPower);
+		this._heroPower = heroPower;
+	}
 
-    @Input('weapon') set weapon(weapon: Entity) {
-        this.logger.debug('[hero] setting new weapon', weapon);
-        this._weapon = weapon;
-    }
+	@Input('weapon') set weapon(weapon: Entity) {
+		this.logger.debug('[hero] setting new weapon', weapon);
+		this._weapon = weapon;
+	}
 
-    @Input('options') set options(value: ReadonlyArray<number>) {
-        this.logger.debug('[hero] setting options', value);
-        this._options = value;
-    }
+	@Input('options') set options(value: ReadonlyArray<number>) {
+		this.logger.debug('[hero] setting options', value);
+		this._options = value;
+	}
 
-    @Input('secrets') set secrets(value: ReadonlyArray<Entity>) {
-        this.logger.debug('[hero] setting secrets', value);
-        this._secrets = value;
-    }
+	@Input('secrets') set secrets(value: ReadonlyArray<Entity>) {
+		this.logger.debug('[hero] setting secrets', value);
+		this._secrets = value;
+	}
 
-    isOption(entity: Entity): boolean {
-        return this._options.indexOf(entity.id) !== -1;
-    }
+	isOption(entity: Entity): boolean {
+		return this._options.indexOf(entity.id) !== -1;
+	}
 }

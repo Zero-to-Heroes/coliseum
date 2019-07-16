@@ -6,8 +6,8 @@ import { Map } from 'immutable';
 @Component({
 	selector: 'discover',
 	styleUrls: [
-        '../../../../css/components/game/overlay/discover.component.scss'
-    ],
+		'../../../../css/components/game/overlay/discover.component.scss'
+	],
 	template: `
         <div class="discover">
             <li *ngFor="let entity of discoverCards; let i = index; trackBy: trackByFn">
@@ -19,41 +19,41 @@ import { Map } from 'immutable';
 })
 export class DiscoverComponent {
 
-    _entities: Map<number, Entity>;
-    _choices: ReadonlyArray<number>;
-    _chosen: ReadonlyArray<number>;
+	_entities: Map<number, Entity>;
+	_choices: ReadonlyArray<number>;
+	_chosen: ReadonlyArray<number>;
 
-    discoverCards: ReadonlyArray<Entity>
-    
-    constructor(private logger: NGXLogger) {}
+	discoverCards: ReadonlyArray<Entity>;
 
-    @Input('entities') set entities(entities: Map<number, Entity>) {
-        this.logger.debug('[discover] setting new entities', entities.toJS());
-        this._entities = entities;
-        this.updateEntityGroups();
-    }
+	constructor(private logger: NGXLogger) {}
 
-    @Input('choices') set choices(value: ReadonlyArray<number>) {
-        this.logger.debug('[discover] setting choices', value);
-        this._choices = value;
-        this.updateEntityGroups();
-    }
+	@Input('entities') set entities(entities: Map<number, Entity>) {
+		this.logger.debug('[discover] setting new entities', entities.toJS());
+		this._entities = entities;
+		this.updateEntityGroups();
+	}
 
-    @Input('chosen') set chosen(value: ReadonlyArray<number>) {
-        this.logger.debug('[discover] setting chosen', value);
-        this._chosen = value;
-    }
-	
+	@Input('choices') set choices(value: ReadonlyArray<number>) {
+		this.logger.debug('[discover] setting choices', value);
+		this._choices = value;
+		this.updateEntityGroups();
+	}
+
+	@Input('chosen') set chosen(value: ReadonlyArray<number>) {
+		this.logger.debug('[discover] setting chosen', value);
+		this._chosen = value;
+	}
+
 	trackByFn(index, item: Entity) {
 		return item.id;
 	}
 
-    private updateEntityGroups() {
-        if (!this._entities || !this._choices) {
-            this.logger.debug('[discover] entities not initialized yet');
-            return;
-        }
-        this.discoverCards = this._entities.toArray()
-                .filter(entity => this._choices.indexOf(entity.id) !== -1);
-    }
+	private updateEntityGroups() {
+		if (!this._entities || !this._choices) {
+			this.logger.debug('[discover] entities not initialized yet');
+			return;
+		}
+		this.discoverCards = this._entities.toArray()
+				.filter(entity => this._choices.indexOf(entity.id) !== -1);
+	}
 }

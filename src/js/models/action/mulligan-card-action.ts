@@ -1,61 +1,60 @@
-import { Action } from "./action";
-import { Map } from "immutable";
-import { Entity } from "../game/entity";
-import { ActionHelper } from "../../services/parser/action/action-helper";
+import { Action } from './action';
+import { Map } from 'immutable';
+import { Entity } from '../game/entity';
+import { ActionHelper } from '../../services/parser/action/action-helper';
 import { uniq } from 'lodash';
-import { AllCardsService } from "../../services/all-cards.service";
+import { AllCardsService } from '../../services/all-cards.service';
 
 export class MulliganCardAction extends Action {
-    readonly playerMulligan: ReadonlyArray<number>;
-    readonly opponentMulligan: ReadonlyArray<number>;
+	readonly playerMulligan: ReadonlyArray<number>;
+	readonly opponentMulligan: ReadonlyArray<number>;
 
-    readonly allCards: AllCardsService;
+	readonly allCards: AllCardsService;
 
-    constructor(allCards: AllCardsService) {
-        super();
-        this.allCards = allCards;
-    }
-    
-    public static create(newAction, allCards: AllCardsService): MulliganCardAction {
-        return Object.assign(new MulliganCardAction(allCards), newAction);
-    }
+	constructor(allCards: AllCardsService) {
+		super();
+		this.allCards = allCards;
+	}
 
-    public update(entities: Map<number, Entity>): MulliganCardAction {
-        return Object.assign(new MulliganCardAction(this.allCards), this, { entities: entities });
-    }
+	public static create(newAction, allCards: AllCardsService): MulliganCardAction {
+		return Object.assign(new MulliganCardAction(allCards), newAction);
+	}
 
-    public enrichWithText(): MulliganCardAction {
-        let textRaw = this.buildMulliganText(this.playerMulligan) + '\n' + this.buildMulliganText(this.opponentMulligan);
-        return Object.assign(new MulliganCardAction(this.allCards), this, { textRaw: textRaw });                
-    }
+	public update(entities: Map<number, Entity>): MulliganCardAction {
+		return Object.assign(new MulliganCardAction(this.allCards), this, { entities: entities });
+	}
 
-    private buildMulliganText(cards: ReadonlyArray<number>): string {
-        if (!cards) {
-            return '';
-        }
-        const ownerNames: string[] = uniq(cards
-                .map((entityId) => ActionHelper.getOwner(this.entities, entityId))
-                .map((playerEntity) => playerEntity.name));
-        if (ownerNames.length !== 1) {
-            throw new Error('Invalid grouping of cards ' + ownerNames + ', ' + cards);
-        }
-        const ownerName = ownerNames[0];
-        const mulliganedCards = cards
-                .map((entityId) => ActionHelper.getCardId(this.entities, entityId))
-                .map((cardId) => this.allCards.getCard(cardId));
-        let mulliganInfo = '';
-        // We don't have the mulligan info, so we just display the amount of cards being mulliganed
-        if (mulliganedCards.some((card) => !card)) {
-            mulliganInfo = `${mulliganedCards.length} cards`;
-        }
-        else {
-            mulliganInfo = mulliganedCards.map((card) => card.name).join(', ');
-        }
-        const textRaw = `\t${ownerName} mulligans ${mulliganInfo}`;
-        return textRaw;
-    }
+	public enrichWithText(): MulliganCardAction {
+		const textRaw = this.buildMulliganText(this.playerMulligan) + '\n' + this.buildMulliganText(this.opponentMulligan);
+		return Object.assign(new MulliganCardAction(this.allCards), this, { textRaw: textRaw });
+	}
 
-    protected getInstance(): Action {
-        return new MulliganCardAction(this.allCards);
-    }
+	private buildMulliganText(cards: ReadonlyArray<number>): string {
+		if (!cards) {
+			return '';
+		}
+		const ownerNames: string[] = uniq(cards
+				.map((entityId) => ActionHelper.getOwner(this.entities, entityId))
+				.map((playerEntity) => playerEntity.name));
+		if (ownerNames.length !== 1) {
+			throw new Error('Invalid grouping of cards ' + ownerNames + ', ' + cards);
+		}
+		const ownerName = ownerNames[0];
+		const mulliganedCards = cards
+				.map((entityId) => ActionHelper.getCardId(this.entities, entityId))
+				.map((cardId) => this.allCards.getCard(cardId));
+		let mulliganInfo = '';
+		// We don't have the mulligan info, so we just display the amount of cards being mulliganed
+		if (mulliganedCards.some((card) => !card)) {
+			mulliganInfo = `${mulliganedCards.length} cards`;
+		} else {
+			mulliganInfo = mulliganedCards.map((card) => card.name).join(', ');
+		}
+		const textRaw = `\t${ownerName} mulligans ${mulliganInfo}`;
+		return textRaw;
+	}
+
+	protected getInstance(): Action {
+		return new MulliganCardAction(this.allCards);
+	}
 }

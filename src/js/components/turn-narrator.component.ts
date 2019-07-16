@@ -14,12 +14,12 @@ import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 })
 export class TurnNarratorComponent {
 
-    _text: string;
+	_text: string;
 
-    @Input("text") set text(text:string) {
-        if (!text) {
-            return;
-        }
-        this._text = text.replace('\n', '<br/>');
-    };
+	@Input('text') set text(text: string) {
+		if (!text) {
+			return;
+		}
+		this._text = text.replace('\n', '<br/>');
+	}
 }

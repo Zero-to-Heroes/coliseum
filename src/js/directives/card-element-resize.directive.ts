@@ -1,42 +1,42 @@
-import { Directive, ElementRef, Input, ViewRef, ChangeDetectorRef } from '@angular/core';
+import { Directive, ElementRef, Input, ViewRef, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 
 @Directive({
   selector: '[cardElementResize]'
 })
-export class CardElementResizeDirective {
+export class CardElementResizeDirective implements AfterViewInit {
 
-    @Input() fontSizeRatio: number;
-    @Input() timeout: number = 0;
-    
-    constructor(private elRef: ElementRef, private cdr: ChangeDetectorRef) {
-        document.addEventListener(
-            'card-resize',
-            () => this.resizeText(),
-            true);
-    }
+	@Input() fontSizeRatio: number;
+	@Input() timeout = 0;
 
-    ngAfterViewInit() {
-        this.elRef.nativeElement.style.opacity = 0;
-        if (!(<ViewRef>this.cdr).destroyed) {
-            this.cdr.detectChanges();
-        }
-        setTimeout(() => this.resizeText(), this.timeout);
-    }
+	constructor(private elRef: ElementRef, private cdr: ChangeDetectorRef) {
+		document.addEventListener(
+			'card-resize',
+			() => this.resizeText(),
+			true);
+	}
 
-    private resizeText() {
-        const el = this.elRef.nativeElement;
-        if (!el) {
-            setTimeout(() => this.resizeText());
-            return; 
-        }
-        const fontSize = this.fontSizeRatio * el.getBoundingClientRect().width;
-        const textEls = this.elRef.nativeElement.querySelectorAll("[resizeTarget]");
-        for (let textEl of textEls) {
-            textEl.style.fontSize = fontSize + 'px';
-            this.elRef.nativeElement.style.opacity = 1;
-            if (!(<ViewRef>this.cdr).destroyed) {
-                this.cdr.detectChanges();
-            }
-        }
-    }
+	ngAfterViewInit() {
+		this.elRef.nativeElement.style.opacity = 0;
+		if (!(<ViewRef>this.cdr).destroyed) {
+			this.cdr.detectChanges();
+		}
+		setTimeout(() => this.resizeText(), this.timeout);
+	}
+
+	private resizeText() {
+		const el = this.elRef.nativeElement;
+		if (!el) {
+			setTimeout(() => this.resizeText());
+			return;
+		}
+		const fontSize = this.fontSizeRatio * el.getBoundingClientRect().width;
+		const textEls = this.elRef.nativeElement.querySelectorAll('[resizeTarget]');
+		for (const textEl of textEls) {
+			textEl.style.fontSize = fontSize + 'px';
+			this.elRef.nativeElement.style.opacity = 1;
+			if (!(<ViewRef>this.cdr).destroyed) {
+				this.cdr.detectChanges();
+			}
+		}
+	}
 }

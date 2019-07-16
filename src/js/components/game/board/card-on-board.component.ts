@@ -12,19 +12,19 @@ import { NGXLogger } from 'ngx-logger';
 		'../../../../css/components/game/board/card-on-board.component.scss'
 	],
 	template: `
-        <div class="card-on-board" 
+        <div class="card-on-board"
                 cardResize
                 cardTooltip [tooltipEntity]="_entity" [tooltipEnchantments]="_enchantments"
                 [attr.data-entity-id]="_entity.id">
             <div class="main-card" [ngClass]="{ 'highlight': _option }">
                 <card-art [cardId]="cardId" [cardType]="cardType"></card-art>
-                <board-card-frame 
-                        [taunt]="taunt" 
+                <board-card-frame
+                        [taunt]="taunt"
                         [hideStats]="hideStats"
                         [premium]="premium">
                 </board-card-frame>
                 <board-card-stats *ngIf="!hideStats"
-                        [cardId]="cardId" 
+                        [cardId]="cardId"
                         [attack]="attack"
                         [health]="health"
                         [damage]="damage">
@@ -40,9 +40,9 @@ import { NGXLogger } from 'ngx-logger';
 })
 export class CardOnBoardComponent {
 
-    _entity: Entity;
-    _enchantments: ReadonlyArray<Entity>;
-    _option: boolean;
+	_entity: Entity;
+	_enchantments: ReadonlyArray<Entity>;
+	_option: boolean;
 
 	cardId: string;
 	cardType: CardType;
@@ -56,17 +56,17 @@ export class CardOnBoardComponent {
 	armor: number;
 	cost: number;
 	taunt: boolean;
-    shownDamage: number;
-    hideStats: boolean;
-    sleeping: boolean;
+	shownDamage: number;
+	hideStats: boolean;
+	sleeping: boolean;
 
 	constructor(
 		private cards: AllCardsService,
 		private logger: NGXLogger) { }
 
-    @Input('entity') set entity(entity: Entity) {
+	@Input('entity') set entity(entity: Entity) {
 		this.logger.debug('[card-on-board] setting entity', entity.id, entity, entity.tags.toJS());
-		
+
 		this._entity = entity;
 
 		this.cardId = entity.cardID;
@@ -74,7 +74,7 @@ export class CardOnBoardComponent {
 		this.cardType = CardType[this.originalCard.type.toUpperCase() as string];
 		this.cardClass = CardClass[this.originalCard.playerClass.toUpperCase() as string];
 
-		this.premium = entity.getTag(GameTag.PREMIUM) == 1;
+		this.premium = entity.getTag(GameTag.PREMIUM) === 1;
 		this.attack = entity.getTag(GameTag.ATK);
 		this.health = entity.getTag(GameTag.HEALTH);
 		this.damage = entity.getTag(GameTag.DAMAGE);
@@ -82,21 +82,21 @@ export class CardOnBoardComponent {
 		this.armor = entity.getTag(GameTag.ARMOR);
 		this.cost = entity.getTag(GameTag.COST);
 
-		this.taunt = entity.getTag(GameTag.TAUNT) == 1;
+		this.taunt = entity.getTag(GameTag.TAUNT) === 1;
 
-        this.shownDamage = entity.damageForThisAction;
-        
-        this.hideStats = entity.getTag(GameTag.HIDE_STATS) === 1;
-        this.sleeping = entity.getTag(GameTag.EXHAUSTED) === 1 
-                && entity.getTag(GameTag.JUST_PLAYED) === 1
-                && entity.getTag(GameTag.CHARGE) !== 1;
-    }
-    
-	@Input("option") set option(value: boolean) {
+		this.shownDamage = entity.damageForThisAction;
+
+		this.hideStats = entity.getTag(GameTag.HIDE_STATS) === 1;
+		this.sleeping = entity.getTag(GameTag.EXHAUSTED) === 1
+				&& entity.getTag(GameTag.JUST_PLAYED) === 1
+				&& entity.getTag(GameTag.CHARGE) !== 1;
+	}
+
+	@Input('option') set option(value: boolean) {
 		this._option = value;
 	}
-    
-	@Input("enchantments") set enchantments(value: ReadonlyArray<Entity>) {
+
+	@Input('enchantments') set enchantments(value: ReadonlyArray<Entity>) {
 		this.logger.debug('[card-on-board] setting enchantments', value);
 		this._enchantments = value;
 	}

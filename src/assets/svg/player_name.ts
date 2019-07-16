@@ -1,7 +1,8 @@
 export const playerName = `
     <svg viewBox="0 0 249 95" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g>
-            <path d="M229 38H182.086H172.337L145 65.5L155.045 72.6105C157.241 74.1651 159.865 75 162.556 75H229L207.066 58.0678L229 38Z" fill="url(#paint0_linear)"/>
+            <path d="M229 38H182.086H172.337L145 65.5L155.045 72.6105C157.241 74.1651 159.865 75 162.556 75H229L207.066 58.0678L229 38Z"
+                    fill="url(#paint0_linear)"/>
             <g filter="url(#filter1_d)">
                 <path d="M0 20H197C198.105 20 199 20.8954 199 22V67C199 68.1046 198.105 69 197 69H0V20Z" fill="#FFB948"/>
             </g>

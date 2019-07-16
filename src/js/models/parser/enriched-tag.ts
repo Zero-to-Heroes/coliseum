@@ -5,12 +5,12 @@ import { Option } from './option';
 import { MetaData } from './metadata';
 
 export interface EnrichedTag extends Tag {
-    index?: number;
-    showEntities?: ReadonlyArray<EntityDefinition>;
-    fullEntities?: ReadonlyArray<EntityDefinition>;
-    hideEntities?: ReadonlyArray<number>;
-    tags?: ReadonlyArray<EntityTag>;
-    options?: ReadonlyArray<Option>;
-    meta?: ReadonlyArray<MetaData>;
-    parentIndex?: number;
+	index?: number;
+	showEntities?: ReadonlyArray<EntityDefinition>;
+	fullEntities?: ReadonlyArray<EntityDefinition>;
+	hideEntities?: ReadonlyArray<number>;
+	tags?: ReadonlyArray<EntityTag>;
+	options?: ReadonlyArray<Option>;
+	meta?: ReadonlyArray<MetaData>;
+	parentIndex?: number;
 }
