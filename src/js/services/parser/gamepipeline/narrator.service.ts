@@ -15,7 +15,15 @@ export class NarratorService {
         for (let i = 0; i < numberOfTurns; i++) {
             // this.logger.debug('getting turn', i, game.turns.toJS());
             const turn = game.turns.get(i);
-            const enrichedActions = turn.actions.map((action) => action.enrichWithText());
+            const enrichedActions = turn.actions
+                .map((action) => {
+                    try {
+                        return action.enrichWithText();
+                    }
+                    catch (e) {
+                        this.logger.error('Could not enrich action with text', e, action);
+                        return action;
+                    }});
             const enrichedTurn = turn.update({ actions: enrichedActions });
             turnsWithActions = turnsWithActions.set(i, enrichedTurn);
         }

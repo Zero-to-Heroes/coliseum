@@ -6,6 +6,11 @@ import allCards from './cards.json';
 export class AllCardsService {
 
 	public getCard(id: string): any {
-		return allCards.filter((card) => card.id == id)[0];
+        const candidates = allCards.filter((card) => card.id == id);
+        if (!candidates || candidates.length === 0) {
+            console.info('Could not find card for id', id);
+            return {};
+        }
+        return candidates[0];
 	}
 }
