@@ -43,7 +43,7 @@ export class Tooltip {
 })
 export class TooltipsComponent implements AfterViewInit {
 
-    @ViewChild('tooltips', { read: ViewContainerRef }) tooltips: ViewContainerRef;
+    @ViewChild('tooltips', { read: ViewContainerRef, static: false }) tooltips: ViewContainerRef;
     private tooltip: ComponentRef<any>;
 
     private tooltipHeight: number = undefined;
