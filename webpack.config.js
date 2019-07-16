@@ -4,6 +4,7 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const DefinePlugin = require("webpack").DefinePlugin;
 const AngularCompilerPlugin = webpack.AngularCompilerPlugin;
+const TSLintPlugin = require('tslint-webpack-plugin');
 
 var path = require("path");
 
@@ -77,7 +78,14 @@ module.exports = function(env, argv) {
 		plugins: [
 			new DefinePlugin({
 				'process.env.APP_VERSION': JSON.stringify(env.appversion),
-			}),
+            }),
+            
+            new TSLintPlugin({
+                files: ['./src/**/*.ts'],
+                project: './tsconfig.json',
+                config: './tslint.json',
+                warningsAsError: true
+            }),
 			
 			new AngularCompilerPlugin({
 				tsConfigPath: "./tsconfig.json",
