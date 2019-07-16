@@ -7,8 +7,6 @@ import { Game } from '../models/game/game';
 import { GameParserService } from '../services/parser/game-parser.service';
 import { Events } from '../services/events.service';
 import { NGXLogger } from 'ngx-logger';
-import { GameTag } from '../models/enums/game-tags';
-import { PlayerEntity } from '../models/game/player-entity';
 import { PlayState } from '../models/enums/playstate';
 import { DiscoverAction } from '../models/action/discover-action';
 import { SecretRevealedAction } from '../models/action/secret-revealed-action';
@@ -83,10 +81,11 @@ export class AppComponent {
 			private cdr: ChangeDetectorRef,
             private logger: NGXLogger,
 			private zone: NgZone) {
-		window['coliseum'] = {
+        const existingColiseum = window['coliseum'] || {};
+		window['coliseum'] = Object.assign(existingColiseum, {
 			zone: this.zone,
 			component: this
-		};
+		});
     }
 
 	public loadReplay(replayXml: string) {
