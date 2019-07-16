@@ -1,9 +1,7 @@
 {
-    "defaultSeverity": "error",
-    "extends": [
-        "tslint:recommended"
-    ],
-    "jsRules": {},
-    "rules": {},
-    "rulesDirectory": []
-}
+    "extends": ["tslint-angular"],
+    "rules": {
+      "directive-selector": [true, "attribute", "foo", "camelCase"],
+      "component-selector": [true, "element", "foo", "kebab-case"]
+    }
+  }

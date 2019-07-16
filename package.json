@@ -2,6 +2,7 @@
     "name": "Coliseum",
     "version": "0.0.1",
     "scripts": {
+        "lint": "./node_modules/.bin/tslint -p tsconfig.json -c tslint.json",
         "dev": "rimraf dist && webpack --watch --config webpack.config.js --env.appversion=%npm_package_version% --env.development --progress --profile --bail --colors",
         "build": "rimraf dist && webpack --config webpack.config.js --env.appversion=%npm_package_version% --env.production --progress --profile --bail --colors"
     },
