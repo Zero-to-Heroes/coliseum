@@ -20,7 +20,7 @@ module.exports = function(env, argv) {
 		mode: env.production ? 'production' : 'development',
 		
 		entry: {
-			app: "./src/js/modules/app/main.ts",
+			coliseum: "./src/js/modules/app/main.ts",
 			loader: "./src/js/modules/loader/main.ts",
 		},
 		
@@ -89,7 +89,7 @@ module.exports = function(env, argv) {
 			}),
 			
 			new MiniCssExtractPlugin({
-				filename: "app.css"
+				filename: "coliseum.css"
 			}),
 			
 			new CopyWebpackPlugin([
