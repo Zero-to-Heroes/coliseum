@@ -149,14 +149,6 @@ button {
 	display: none !important;
 }
 
-[type='range'] {
-	background-color: transparent;
-	
-	&, &::-webkit-slider-thumb {
-		-webkit-appearance: none;
-	}
-}
-
 .ignored-wrapper {
 	display: contents;
 }

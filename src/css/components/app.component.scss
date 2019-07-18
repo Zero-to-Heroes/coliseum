@@ -15,7 +15,7 @@
     game {
         position: absolute;
         top: 0;
-        bottom: 90px;
+        bottom: 110px;
         left: 0;
         right: 0;
     }
@@ -27,7 +27,11 @@
         bottom: 0;
         right: 0;
         pointer-events: none;
-    }
+	}
+	
+	seeker {
+		height: 20px;
+	}
 
     turn-narrator {
 		height: 50px;

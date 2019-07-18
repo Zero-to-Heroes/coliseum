@@ -102,7 +102,7 @@ export class CardTextComponent {
 				.replace(/^\[x\]/, '');
 		// E.g. Fatespinner
 		if (this._entity.getTag(GameTag.HIDDEN_CHOICE) && description.indexOf('@') !== -1) {
-			console.log('hidden choice', this._entity.tags.toJS(), description);
+			// console.log('hidden choice', this._entity.tags.toJS(), description);
 			description = description.split('@')[this._entity.getTag(GameTag.HIDDEN_CHOICE)];
 		}
 		// Damage placeholder, influenced by spell damage

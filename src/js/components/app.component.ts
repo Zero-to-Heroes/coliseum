@@ -14,6 +14,8 @@ import { CardBurnAction } from '../models/action/card-burn-action';
 import { FatigueDamageAction } from '../models/action/fatigue-damage-action';
 import { QuestCompletedAction } from '../models/action/quest-completed-action';
 import { ReplayOptions } from '../models/replay-options';
+import { Turn } from '../models/game/turn';
+import { Action } from '../models/action/action';
 
 @Component({
 	styleUrls: [
@@ -44,6 +46,11 @@ import { ReplayOptions } from '../models/replay-options';
 					[showHiddenCards]="showHiddenCards"
 					[crossed]="crossed">
 			</game>
+			<seeker *ngIf="totalTime > 0"
+					[totalTime]="totalTime"
+					[currentTime]="currentTime"
+					(seek)="onSeek($event)">
+			</seeker>
 			<turn-narrator [text]="text"></turn-narrator>
 			<controls
 					[reviewId]="reviewId"
@@ -83,6 +90,9 @@ export class AppComponent {
 	isEndGame: boolean;
 	endGameStatus: PlayState;
 
+	totalTime: number;
+	currentTime = 0;
+
 	private currentActionInTurn = 0;
 	private currentTurn = 0;
 
@@ -105,6 +115,7 @@ export class AppComponent {
 	public loadReplay(replayXml: string, options?: ReplayOptions) {
 		this.game = this.gameParser.parse(replayXml);
 		this.logger.info('[app] Converted game');
+		this.totalTime = this.buildTotalTime();
 		const turn = parseInt(this.getSearchParam('turn')) || 0;
 		const action = parseInt(this.getSearchParam('action')) || 0;
 		this.reviewId = (options && options.reviewId) || this.getSearchParam('reviewId');
@@ -144,6 +155,25 @@ export class AppComponent {
 		}
 	}
 
+	onSeek(targetTimestamp: number) {
+		let lastActionIndex: number;
+		let lastTurnIndex: number;
+		for (let turnIndex = 0; turnIndex < this.game.turns.size - 1; turnIndex++) {
+			const turn = this.game.turns.get(turnIndex);
+			for (let actionIndex = 0; actionIndex < turn.actions.length - 1; actionIndex++) {
+				const action = turn.actions[actionIndex];
+				if (action.timestamp > targetTimestamp) {
+					break;
+				}
+				lastActionIndex = actionIndex;
+				lastTurnIndex = turnIndex;
+			}
+		}
+		this.currentTurn = lastTurnIndex;
+		this.currentActionInTurn = lastActionIndex;
+		this.populateInfo();
+	}
+
 	private populateInfo() {
 		if (!this.game) {
 			return;
@@ -165,12 +195,32 @@ export class AppComponent {
 		this.isMulligan = this.computeMulligan();
 		this.isEndGame = this.computeEndGame();
 		this.endGameStatus = this.computeEndGameStatus();
+		this.currentTime = this.computeCurrentTime();
 		this.updateUrlQueryString();
 		this.logger.debug('[app] setting turn', this.turnString);
 		this.logger.info('[app] Considering action', this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn]);
 		if (!(<ViewRef>this.cdr).destroyed) {
 			this.cdr.detectChanges();
 		}
+	}
+
+	private buildTotalTime() {
+		if (!this.game) {
+			return;
+		}
+		const lastTurn: Turn = this.game.turns.last();
+		for (let i = lastTurn.actions.length - 1; i >= 0; i--) {
+			const lastAction = lastTurn.actions[lastTurn.actions.length - i];
+			if (lastAction.timestamp) {
+				return lastAction.timestamp;
+			}
+		}
+		return 0;
+	}
+
+	private computeCurrentTime() {
+		const currentTime = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].timestamp;
+		return currentTime;
 	}
 
 	private computeActiveSpell(): number {
