@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, HostListener, Output, 
+import { Component, ChangeDetectionStrategy, HostListener, Output,
 	EventEmitter, Input, ViewRef, ChangeDetectorRef, OnInit } from '@angular/core';
 import { Key } from 'ts-keycode-enum';
 
@@ -79,22 +79,22 @@ import { Key } from 'ts-keycode-enum';
 
 				<div class="player-controls-content player-controls-content-right">
 					<div class="player-control-group hint-tooltip-container">
-						<button class="gs-icon btn-gs-icon player-control" 
+						<button class="gs-icon btn-gs-icon player-control"
 								[ngClass]="{ 'toggled': currentSpeed === 1}"
 								(click)="changeSpeed(1)">
 							<span class="player-control-text">1<sub>x</sub></span>
 						</button>
-						<button class="gs-icon btn-gs-icon player-control" 
+						<button class="gs-icon btn-gs-icon player-control"
 								[ngClass]="{ 'toggled': currentSpeed === 2}"
 								(click)="changeSpeed(2)">
 							<span class="player-control-text">2<sub>x</sub></span>
 						</button>
-						<button class="gs-icon btn-gs-icon player-control" 
+						<button class="gs-icon btn-gs-icon player-control"
 								[ngClass]="{ 'toggled': currentSpeed === 4}"
 								(click)="changeSpeed(4)">
 							<span class="player-control-text">4<sub>x</sub></span>
 						</button>
-						<button class="gs-icon btn-gs-icon player-control" 
+						<button class="gs-icon btn-gs-icon player-control"
 								[ngClass]="{ 'toggled': currentSpeed === 8}"
 								(click)="changeSpeed(8)">
 							<span class="player-control-text">8<sub>x</sub></span>
@@ -104,15 +104,32 @@ import { Key } from 'ts-keycode-enum';
 						</div>
 					</div>
 					<div class="gs-icon-divider"></div>
-					<button class="gs-icon btn-gs-icon player-control toggle-icons hint-tooltip-container">
-						<svg>
-							<use xlink:href="/Files/assets/svg/player-controls.svg#player-controls-hide-hidden" />
-						</svg>
-						<svg>
-							<use xlink:href="/Files/assets/svg/player-controls.svg#player-controls-show-hidden" />
+					<button class="gs-icon btn-gs-icon player-control toggle-icons hint-tooltip-container"
+							*ngIf="!showingHiddenCards"
+							(click)="toggleShowHiddenCards()">
+						<svg viewBox="0 0 30 30">
+							<line x1="12.5" y1="19.5" x2="17.5" y2="19.5" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round"/>
+							<line x1="12.5" y1="17.5" x2="17.5" y2="17.5" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round"/>
+							<line x1="12.5" y1="15.5" x2="17.5" y2="15.5" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round"/>
+							<polyline points="9.5 7.92 3.72 9.58 7.58 23.04 9.5 22.48" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round"/>
+							<polyline points="20.5 7.92 26.28 9.58 22.43 23.04 20.5 22.48" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round"/>
+							<rect x="9.5" y="6.5" width="11" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round"/>
 						</svg>
 						<div class="hint-tooltip hint-tooltip-top hint-tooltip-aligned-right dark-theme">
 							<span>Show hidden cards<br><kbd>Ctrl</kbd> + <kbd>H</kbd></span>
+						</div>
+					</button>
+					<button class="gs-icon btn-gs-icon player-control toggle-icons hint-tooltip-container"
+							*ngIf="showingHiddenCards"
+							(click)="toggleShowHiddenCards()">
+						<svg viewBox="0 0 30 30">
+							<polyline points="9.5 7.92 3.72 9.58 7.58 23.04 9.5 22.48" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round"/>
+							<polyline points="20.5 7.92 26.28 9.58 22.43 23.04 20.5 22.48" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round"/>
+							<rect x="9.5" y="6.5" width="11" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round"/>
+							<line x1="4.5" y1="25.5" x2="25.5" y2="4.5" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-miterlimit="10"/>
+						</svg>
+						<div class="hint-tooltip hint-tooltip-top hint-tooltip-aligned-right dark-theme">
+							<span>Hide hidden cards<br><kbd>Ctrl</kbd> + <kbd>H</kbd></span>
 						</div>
 					</button>
 				</div>
@@ -128,9 +145,11 @@ export class ControlsComponent implements OnInit {
 	@Output() nextTurn = new EventEmitter<void>();
 	@Output() previousAction = new EventEmitter<void>();
 	@Output() previousTurn = new EventEmitter<void>();
+	@Output() showHiddenCards = new EventEmitter<boolean>();
 
 	isPlaying = false;
 	currentSpeed = 1;
+	showingHiddenCards = false;
 
 	constructor(private cdr: ChangeDetectorRef) { }
 
@@ -151,10 +170,10 @@ export class ControlsComponent implements OnInit {
 				this.togglePlayPause();
 				break;
 			case Key.UpArrow:
-				event.ctrlKey && this.increaseCurrentSpeed();
+				if (event.ctrlKey) { this.increaseCurrentSpeed(); }
 				break;
 			case Key.DownArrow:
-					event.ctrlKey && this.decreaseCurrentSpeed();
+				if (event.ctrlKey) { this.decreaseCurrentSpeed(); }
 				break;
 		}
 	}
@@ -187,6 +206,11 @@ export class ControlsComponent implements OnInit {
 		if (!(<ViewRef>this.cdr).destroyed) {
 			this.cdr.detectChanges();
 		}
+	}
+
+	toggleShowHiddenCards() {
+		this.showingHiddenCards = !this.showingHiddenCards;
+		this.showHiddenCards.next(this.showingHiddenCards);
 	}
 
 	private startPlayingControl() {
