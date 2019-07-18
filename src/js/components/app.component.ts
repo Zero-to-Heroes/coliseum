@@ -13,6 +13,7 @@ import { SecretRevealedAction } from '../models/action/secret-revealed-action';
 import { CardBurnAction } from '../models/action/card-burn-action';
 import { FatigueDamageAction } from '../models/action/fatigue-damage-action';
 import { QuestCompletedAction } from '../models/action/quest-completed-action';
+import { ReplayOptions } from '../models/replay-options';
 
 @Component({
 	styleUrls: [
@@ -101,12 +102,12 @@ export class AppComponent {
 		console.log('new coliseum', window['coliseum']);
 	}
 
-	public loadReplay(replayXml: string) {
+	public loadReplay(replayXml: string, options?: ReplayOptions) {
 		this.game = this.gameParser.parse(replayXml);
 		this.logger.info('[app] Converted game');
 		const turn = parseInt(this.getSearchParam('turn')) || 0;
 		const action = parseInt(this.getSearchParam('action')) || 0;
-		this.reviewId = this.getSearchParam('reviewId');
+		this.reviewId = (options && options.reviewId) || this.getSearchParam('reviewId');
 		this.currentTurn = turn <= 0
 				? 0
 				: (turn >= this.game.turns.size

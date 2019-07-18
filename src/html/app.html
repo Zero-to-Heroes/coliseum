@@ -35,7 +35,9 @@
 				success: function(response) {
                     const replayAsString = new XMLSerializer().serializeToString(response);
 					window.coliseum.zone.run(() => {
-						window.coliseum.component.loadReplay(replayAsString);
+						window.coliseum.component.loadReplay(replayAsString, {
+							reviewId: 'fakeReviewId'
+						});
 					})
 				}
 			})
