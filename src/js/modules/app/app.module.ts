@@ -81,6 +81,7 @@ import { HeroOverlaysComponent } from '../../components/game/hero/hero-overlays.
 import { QuestComponent } from '../../components/game/hero/quest.component';
 import { QuestTooltipComponent } from '../../components/game/overlay/quest-tooltip.component';
 import { QuestCompletedComponent } from '../../components/game/overlay/quest-completed.component';
+import { ControlsComponent } from '../../components/controls.component';
 
 console.log('version is ' + process.env.APP_VERSION);
 console.log('environment is', process.env.NODE_ENV);
@@ -160,6 +161,8 @@ console.log('environment is', process.env.NODE_ENV);
 		FatigueComponent,
 		QuestCompletedComponent,
 		QuestTooltipComponent,
+
+		ControlsComponent,
 
 		TargetZoneComponent,
 

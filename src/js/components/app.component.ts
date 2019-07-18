@@ -20,29 +20,35 @@ import { QuestCompletedAction } from '../models/action/quest-completed-action';
 	],
 	template: `
 		<div class="coliseum wide">
-            <game *ngIf="game"
-                    [turn]="turnString"
-                    [playerId]="game.players[0].playerId"
-                    [opponentId]="game.players[1].playerId"
-                    [playerName]="game.players[0].name"
-                    [opponentName]="game.players[1].name"
-                    [activePlayer]="activePlayer"
-                    [activeSpell]="activeSpell"
-                    [isMulligan]="isMulligan"
-                    [isEndGame]="isEndGame"
-                    [endGameStatus]="endGameStatus"
-                    [entities]="entities"
-                    [targets]="targets"
-                    [secretRevealed]="secretRevealed"
-                    [questCompleted]="questCompleted"
-                    [discovers]="discovers"
-                    [burned]="burned"
-                    [fatigue]="fatigue"
-                    [chosen]="chosen"
-                    [options]="options"
-                    [crossed]="crossed">
-            </game>
+			<game *ngIf="game"
+					[turn]="turnString"
+					[playerId]="game.players[0].playerId"
+					[opponentId]="game.players[1].playerId"
+					[playerName]="game.players[0].name"
+					[opponentName]="game.players[1].name"
+					[activePlayer]="activePlayer"
+					[activeSpell]="activeSpell"
+					[isMulligan]="isMulligan"
+					[isEndGame]="isEndGame"
+					[endGameStatus]="endGameStatus"
+					[entities]="entities"
+					[targets]="targets"
+					[secretRevealed]="secretRevealed"
+					[questCompleted]="questCompleted"
+					[discovers]="discovers"
+					[burned]="burned"
+					[fatigue]="fatigue"
+					[chosen]="chosen"
+					[options]="options"
+					[crossed]="crossed">
+			</game>
 			<turn-narrator [text]="text"></turn-narrator>
+			<controls
+					(nextAction)="onNextAction()"
+					(nextTurn)="onNextTurn()"
+					(previousAction)="onPreviousAction()"
+					(previousTurn)="onPreviousTurn()">
+			</controls>
 			<tooltips></tooltips>
 		</div>
 	`,
@@ -81,11 +87,14 @@ export class AppComponent {
 			private cdr: ChangeDetectorRef,
 			private logger: NGXLogger,
 			private zone: NgZone) {
+		console.log('building coliseum app component');
 		const existingColiseum = window['coliseum'] || {};
+		console.log('existing', existingColiseum);
 		window['coliseum'] = Object.assign(existingColiseum, {
 			zone: this.zone,
 			component: this
 		});
+		console.log('new coliseum', window['coliseum']);
 	}
 
 	public loadReplay(replayXml: string) {
@@ -107,23 +116,20 @@ export class AppComponent {
 		this.populateInfo();
 	}
 
-	@HostListener('document:keyup', ['$event'])
-	onKeyPressHandler(event: KeyboardEvent) {
-		switch (event.which) {
-			case Key.RightArrow:
-				this.moveCursorToNextAction();
-				break;
-			case Key.LeftArrow:
-				this.moveCursorToPreviousAction();
-				break;
-			case Key.UpArrow:
-				this.moveCursorToNextTurn();
-				break;
-			case Key.DownArrow:
-				this.moveCursorToPreviousTurn();
-				break;
-		}
-		this.populateInfo();
+	onNextAction() {
+		this.moveCursorToNextAction();
+	}
+
+	onNextTurn() {
+		this.moveCursorToNextTurn();
+	}
+
+	onPreviousAction() {
+		this.moveCursorToPreviousAction();
+	}
+
+	onPreviousTurn() {
+		this.moveCursorToPreviousTurn();
 	}
 
 	private populateInfo() {
@@ -259,6 +265,7 @@ export class AppComponent {
 			this.currentActionInTurn = 0;
 			this.currentTurn++;
 		}
+		this.populateInfo();
 	}
 
 	private moveCursorToPreviousAction() {
@@ -270,6 +277,7 @@ export class AppComponent {
 			this.currentTurn--;
 			this.currentActionInTurn = this.game.turns.get(this.currentTurn).actions.length - 1;
 		}
+		this.populateInfo();
 	}
 
 	private moveCursorToNextTurn() {
@@ -278,6 +286,7 @@ export class AppComponent {
 		}
 		this.currentActionInTurn = 0;
 		this.currentTurn++;
+		this.populateInfo();
 	}
 
 	private moveCursorToPreviousTurn() {
@@ -286,7 +295,7 @@ export class AppComponent {
 		}
 		this.currentActionInTurn = 0;
 		this.currentTurn--;
-
+		this.populateInfo();
 	}
 
 	private getSearchParam(name: string): string {
