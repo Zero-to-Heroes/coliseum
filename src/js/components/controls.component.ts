@@ -116,7 +116,7 @@ import { Key } from 'ts-keycode-enum';
 							<rect x="9.5" y="6.5" width="11" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round"/>
 						</svg>
 						<div class="hint-tooltip hint-tooltip-top hint-tooltip-aligned-right dark-theme">
-							<span>Show hidden cards<br><kbd>Ctrl</kbd> + <kbd>H</kbd></span>
+							<span>Show hidden cards<br><kbd>H</kbd></span>
 						</div>
 					</button>
 					<button class="gs-icon btn-gs-icon player-control toggle-icons hint-tooltip-container"
@@ -129,7 +129,7 @@ import { Key } from 'ts-keycode-enum';
 							<line x1="4.5" y1="25.5" x2="25.5" y2="4.5" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-miterlimit="10"/>
 						</svg>
 						<div class="hint-tooltip hint-tooltip-top hint-tooltip-aligned-right dark-theme">
-							<span>Hide hidden cards<br><kbd>Ctrl</kbd> + <kbd>H</kbd></span>
+							<span>Hide hidden cards<br><kbd>H</kbd></span>
 						</div>
 					</button>
 				</div>
@@ -174,6 +174,9 @@ export class ControlsComponent implements OnInit {
 				break;
 			case Key.DownArrow:
 				if (event.ctrlKey) { this.decreaseCurrentSpeed(); }
+				break;
+			case Key.H:
+				this.toggleShowHiddenCards();
 				break;
 		}
 	}
