@@ -40,6 +40,7 @@ import { QuestCompletedAction } from '../models/action/quest-completed-action';
 					[fatigue]="fatigue"
 					[chosen]="chosen"
 					[options]="options"
+					[showHiddenCards]="showHiddenCards"
 					[crossed]="crossed">
 			</game>
 			<turn-narrator [text]="text"></turn-narrator>
@@ -48,7 +49,8 @@ import { QuestCompletedAction } from '../models/action/quest-completed-action';
 					(nextAction)="onNextAction()"
 					(nextTurn)="onNextTurn()"
 					(previousAction)="onPreviousAction()"
-					(previousTurn)="onPreviousTurn()">
+					(previousTurn)="onPreviousTurn()"
+					(showHiddenCards)="onShowHiddenCards($event)">
 			</controls>
 			<tooltips></tooltips>
 		</div>
@@ -74,6 +76,7 @@ export class AppComponent {
 	options: ReadonlyArray<number>;
 	secretRevealed: number;
 	questCompleted: number;
+	showHiddenCards = false;
 
 	isMulligan: boolean;
 	isEndGame: boolean;
@@ -131,6 +134,13 @@ export class AppComponent {
 
 	onPreviousTurn() {
 		this.moveCursorToPreviousTurn();
+	}
+
+	onShowHiddenCards(event) {
+		this.showHiddenCards = event;
+		if (!(<ViewRef>this.cdr).destroyed) {
+			this.cdr.detectChanges();
+		}
 	}
 
 	private populateInfo() {

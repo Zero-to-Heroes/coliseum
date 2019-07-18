@@ -15,7 +15,7 @@ import { AllCardsService } from '../../../services/all-cards.service';
         <div class="card"
                 [ngClass]="{ 'highlight': _option }"
                 cardResize
-                cardTooltip [tooltipEntity]="_entity" [hasTooltip]="_hasTooltip"
+                cardTooltip [tooltipEntity]="_entity" [hasTooltip]="_showCard && _hasTooltip"
                 [attr.data-entity-id]="!forbiddenTargetSource && _entity.id">
 			<card-art [cardId]="cardId" [cardType]="cardType"></card-art>
 			<card-frame [cardId]="cardId" [premium]="premium" *ngIf="cardId"></card-frame>
@@ -54,6 +54,7 @@ import { AllCardsService } from '../../../services/all-cards.service';
 export class CardComponent {
 
 	_entity: Entity;
+	_showCard = true;
 	_controller: Entity;
 	_option: boolean;
 	_crossed: boolean;
@@ -84,20 +85,12 @@ export class CardComponent {
 	@Input('entity') set entity(entity: Entity) {
 		this.logger.debug('[card] setting entity', entity);
 		this._entity = entity;
-		this.cardId = entity.cardID;
-		if (this.cardId) {
-			this.premium = entity.getTag(GameTag.PREMIUM) === 1;
-			this.attack = entity.getTag(GameTag.ATK);
-			this.health = entity.getTag(GameTag.HEALTH);
-			this.damage = entity.getTag(GameTag.DAMAGE);
-			this.durability = entity.getTag(GameTag.DURABILITY);
-			this.armor = entity.getTag(GameTag.ARMOR);
-			this.cost = entity.getTag(GameTag.COST);
-			this.originalCard = this.cards.getCard(this.cardId);
-			this.race = this.originalCard.race ? this.originalCard.race.toLowerCase() : undefined;
-			this.cardType = CardType[this.originalCard.type.toUpperCase() as string];
-			this.cardClass = CardClass[this.originalCard.playerClass.toUpperCase() as string];
-		}
+		this.updateEntityGroups();
+	}
+
+	@Input('showCard') set showCard(value: boolean) {
+		this._showCard = value;
+		this.updateEntityGroups();
 	}
 
 	@Input('controller') set controller(value: Entity) {
@@ -133,5 +126,37 @@ export class CardComponent {
 
 	@Input('enchantments') set enchantments(value: ReadonlyArray<Entity>) {
 		this._enchantments = value;
+	}
+
+	private updateEntityGroups() {
+		if (!this._showCard) {
+			this.cardId = undefined;
+			this.premium = undefined;
+			this.attack = undefined;
+			this.health = undefined;
+			this.damage = undefined;
+			this.durability = undefined;
+			this.armor = undefined;
+			this.cost = undefined;
+			this.originalCard = undefined;
+			this.race = undefined;
+			this.cardType = undefined;
+			this.cardClass = undefined;
+			return;
+		}
+		this.cardId = this._entity.cardID;
+		if (this.cardId) {
+			this.premium = this._entity.getTag(GameTag.PREMIUM) === 1;
+			this.attack = this._entity.getTag(GameTag.ATK);
+			this.health = this._entity.getTag(GameTag.HEALTH);
+			this.damage = this._entity.getTag(GameTag.DAMAGE);
+			this.durability = this._entity.getTag(GameTag.DURABILITY);
+			this.armor = this._entity.getTag(GameTag.ARMOR);
+			this.cost = this._entity.getTag(GameTag.COST);
+			this.originalCard = this.cards.getCard(this.cardId);
+			this.race = this.originalCard.race ? this.originalCard.race.toLowerCase() : undefined;
+			this.cardType = CardType[this.originalCard.type.toUpperCase() as string];
+			this.cardClass = CardClass[this.originalCard.playerClass.toUpperCase() as string];
+		}
 	}
 }

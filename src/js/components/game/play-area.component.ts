@@ -13,7 +13,7 @@ import { NGXLogger } from 'ngx-logger';
 	],
 	template: `
         <div class="play-area" [ngClass]="{ 'mulligan': _isMulligan }">
-            <hand [entities]="hand" [options]="handOptions" [controller]="playerEntity"></hand>
+            <hand [entities]="hand" [showCards]="_showCards" [options]="handOptions" [controller]="playerEntity"></hand>
             <hero
                     [hero]="hero"
                     [heroPower]="heroPower"
@@ -43,6 +43,7 @@ export class PlayAreaComponent {
 	_isMulligan: string;
 	_entities: Map<number, Entity>;
 	_playerId: number;
+	_showCards = true;
 
 	hand: ReadonlyArray<Entity>;
 	handOptions: ReadonlyArray<number>;
@@ -76,6 +77,11 @@ export class PlayAreaComponent {
 		this.logger.debug('[play-area] setting new entities', entities.toJS());
 		this._entities = entities;
 		this.updateEntityGroups();
+	}
+
+	@Input('showCards') set showCards(value: boolean) {
+		this.logger.debug('[mulligan] setting showCards', value);
+		this._showCards = value;
 	}
 
 	@Input('options') set options(value: ReadonlyArray<number>) {

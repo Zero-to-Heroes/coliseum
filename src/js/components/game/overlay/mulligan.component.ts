@@ -13,7 +13,11 @@ import { Zone } from '../../../models/enums/zone';
 	template: `
         <div class="mulligan">
             <li *ngFor="let entity of mulliganCards; let i = index; trackBy: trackByFn">
-                <card [entity]="entity" [hasTooltip]="false" [crossed]="_crossed.indexOf(entity.id) !== -1"></card>
+				<card [entity]="entity"
+						[showCard]="_showCards"
+						[hasTooltip]="false"
+						[crossed]="_crossed.indexOf(entity.id) !== -1">
+				</card>
             </li>
 		</div>
 	`,
@@ -24,6 +28,7 @@ export class MulliganComponent {
 	_entities: Map<number, Entity>;
 	_playerId: number;
 	_crossed: ReadonlyArray<number>;
+	_showCards = true;
 
 	mulliganCards: ReadonlyArray<Entity>;
 
@@ -43,6 +48,11 @@ export class MulliganComponent {
 		this.logger.debug('[mulligan] setting playerId', playerId);
 		this._playerId = playerId;
 		this.updateEntityGroups();
+	}
+
+	@Input('showCards') set showCards(value: boolean) {
+		this.logger.debug('[mulligan] setting showCards', value);
+		this._showCards = value;
 	}
 
 	trackByFn(index, item: Entity) {

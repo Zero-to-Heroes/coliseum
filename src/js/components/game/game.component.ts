@@ -18,7 +18,8 @@ import { Events } from '../../services/events.service';
                 <play-area class="top"
                         [mulligan]="_isMulligan"
                         [entities]="_entities"
-                        [options]="_options"
+						[options]="_options"
+						[showCards]="_showHiddenCards"
                         [playerId]="_opponentId">
                 </play-area>
                 <play-area class="bottom"
@@ -55,6 +56,7 @@ import { Events } from '../../services/events.service';
                 <mulligan *ngIf="_isMulligan" class="top"
                         [entities]="_entities"
                         [crossed]="_crossed"
+						[showCards]="_showHiddenCards"
                         [playerId]="_opponentId">
                 </mulligan>
                 <mulligan *ngIf="_isMulligan" class="bottom"
@@ -98,6 +100,7 @@ export class GameComponent implements AfterViewInit {
 	_activeSpellController: Entity;
 	_targets: ReadonlyArray<[number, number]> = [];
 	_options: ReadonlyArray<number> = [];
+	_showHiddenCards: boolean;
 
 	_quest: Entity;
 	isOverlay: boolean;
@@ -223,6 +226,11 @@ export class GameComponent implements AfterViewInit {
 		this.logger.debug('[game] setting isEndGame', value);
 		this._isEndGame = value;
 		this.updateOverlay();
+	}
+
+	@Input('showHiddenCards') set showHiddenCards(value: boolean) {
+		this.logger.debug('[game] setting showHiddenCards', value);
+		this._showHiddenCards = value;
 	}
 
 	@Input('endGameStatus') set endGameStatus(value: PlayState) {

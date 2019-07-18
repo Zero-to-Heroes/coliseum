@@ -11,7 +11,11 @@ import { NGXLogger } from 'ngx-logger';
 		<ul class="hand">
 			<li *ngFor="let entity of _entities; let i = index; trackBy: trackByFn"
 					[style.marginLeft.%]="i !== 0 ? marginLeft : 0">
-				<card [entity]="entity" [option]="isOption(entity)" [controller]="_controller"></card>
+				<card [entity]="entity"
+						[showCard]="_showCards"
+						[option]="isOption(entity)"
+						[controller]="_controller">
+				</card>
 			</li>
 		</ul>
 	`,
@@ -23,6 +27,7 @@ export class HandComponent {
 	_options: ReadonlyArray<number>;
 	_controller: Entity;
 	marginLeft: number;
+	_showCards = true;
 
 	constructor(private logger: NGXLogger) {
 	}
@@ -46,6 +51,11 @@ export class HandComponent {
 			default:
 				this.marginLeft = -1;
 		}
+	}
+
+	@Input('showCards') set showCards(value: boolean) {
+		this.logger.debug('[mulligan] setting showCards', value);
+		this._showCards = value;
 	}
 
 	@Input('options') set options(value: ReadonlyArray<number>) {
