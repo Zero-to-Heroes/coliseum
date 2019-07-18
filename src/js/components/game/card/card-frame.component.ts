@@ -36,7 +36,7 @@ export class CardFrameComponent {
 	}
 
 	private updateImage() {
-		if (!this._cardId || this._premium === undefined) {
+		if (!this._cardId) {
 			return;
 		}
 		const originalCard = this.cards.getCard(this._cardId);
