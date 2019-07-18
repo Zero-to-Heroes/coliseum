@@ -15,7 +15,7 @@
     game {
         position: absolute;
         top: 0;
-        bottom: 64px;
+        bottom: 90px;
         left: 0;
         right: 0;
     }
@@ -30,7 +30,10 @@
     }
 
     turn-narrator {
-        height: 24px;
+		height: 50px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 	
 	controls {
