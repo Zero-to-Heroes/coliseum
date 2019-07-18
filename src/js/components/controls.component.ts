@@ -1,4 +1,5 @@
-import { Component, ChangeDetectionStrategy, HostListener, Output, EventEmitter, ViewEncapsulation, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, HostListener, Output, 
+	EventEmitter, Input, ViewRef, ChangeDetectorRef, OnInit } from '@angular/core';
 import { Key } from 'ts-keycode-enum';
 
 @Component({
@@ -44,13 +45,13 @@ import { Key } from 'ts-keycode-enum';
 						</div>
 					</button>
 					<button class="gs-icon toggle-icons player-control-main player-control-play hint-tooltip-container">
-						<svg viewBox="0 0 40 40">
+						<svg viewBox="0 0 40 40" *ngIf="!isPlaying">
 							<polygon points="13,9 31,20 13,31" fill="currentcolor"/>
 						</svg>
-						<!--<svg viewBox="0 0 40 40">
+						<svg viewBox="0 0 40 40" *ngIf="isPlaying">
 							<rect x="13" y="10" width="5" height="20" fill="currentcolor"/>/>
 							<rect x="22" y="10" width="5" height="20" fill="currentcolor"/>/>
-						</svg>-->
+						</svg>
 						<div class="hint-tooltip hint-tooltip-top dark-theme">
 							<span>Play/Pause<br><kbd>Spacebar</kbd></span>
 						</div>
@@ -111,7 +112,7 @@ import { Key } from 'ts-keycode-enum';
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ControlsComponent {
+export class ControlsComponent implements OnInit {
 
 	@Input() reviewId;
 	@Output() nextAction = new EventEmitter<void>();
@@ -119,7 +120,14 @@ export class ControlsComponent {
 	@Output() previousAction = new EventEmitter<void>();
 	@Output() previousTurn = new EventEmitter<void>();
 
-	constructor() { }
+	isPlaying = false;
+	currentSpeed = 1;
+
+	constructor(private cdr: ChangeDetectorRef) { }
+
+	ngOnInit() {
+		this.startPlayingControl();
+	}
 
 	@HostListener('document:keyup', ['$event'])
 	onKeyPressHandler(event: KeyboardEvent) {
@@ -129,6 +137,9 @@ export class ControlsComponent {
 				break;
 			case Key.LeftArrow:
 				event.ctrlKey ? this.goPreviousTurn() : this.goPreviousAction();
+				break;
+			case Key.Space:
+				this.togglePlayPause();
 				break;
 			case Key.UpArrow:
 				break;
@@ -151,5 +162,20 @@ export class ControlsComponent {
 
 	goNextTurn() {
 		this.nextTurn.next();
+	}
+
+	togglePlayPause() {
+		this.isPlaying = !this.isPlaying;
+		if (!(<ViewRef>this.cdr).destroyed) {
+			this.cdr.detectChanges();
+		}
+	}
+
+	private startPlayingControl() {
+		const nextTick = (1.0 / this.currentSpeed) * 1000;
+		setTimeout(() => this.startPlayingControl(), nextTick);
+		if (this.isPlaying) {
+			this.goNextAction();
+		}
 	}
 }
