@@ -115,8 +115,18 @@ body {
 	overflow: hidden;
 }
 
+a:link,
+a:visited,
+a:hover,
+a:focus,
+a:active {
+	text-decoration: none;
+}
+
+a { color: inherit; }
+
 strong {
-	font-family: "KlavikaWebBasicBold";
+	font-family: "KlavikaWebBasicMedium";
 }
 
 img {
@@ -207,8 +217,6 @@ button {
 .toggle-icons {
 	svg {
 		position: absolute;
-		top: 0;
-		left: 0;
 		opacity: 0;
 	}
 	
@@ -219,6 +227,23 @@ button {
 .toggle-icons.toggled {
 	svg:nth-of-type(1) { opacity: 0; }
 	svg:nth-of-type(2) { opacity: 1; }
+}
+
+kbd {
+	font-family: inherit;
+	padding: 3px 0;
+	display: inline-flex;
+	align-items: center;
+	
+	&:before {
+		content: "[";
+		padding-right: 3px;
+	}
+	
+	&:after {
+		content: "]";
+		padding-left: 3px;
+	}
 }
 
 .player-controls {
@@ -350,15 +375,6 @@ button {
 		display: inline-flex;
 		align-items: center;
 		
-		&:before {
-			content: "[";
-			padding-right: 3px;
-		}
-		
-		&:after {
-			content: "]";
-			padding-left: 3px;
-		}
 		color: var(--foreground-third);
 	}
 }

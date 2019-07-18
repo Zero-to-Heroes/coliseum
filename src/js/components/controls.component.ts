@@ -13,8 +13,9 @@ import { Key } from 'ts-keycode-enum';
 						class="player-controls-content player-controls-content-left"
 						[style.opacity]="reviewId ? 1 : 0">
 					<span class="gs-icon">
-						<svg>
-							<use xlink:href="assets/svg/share-icons.svg#share-uploaded" />
+						<svg viewBox="0 0 30 30">
+							<path d="M24.49,13.1a.34.34,0,0,0,0-.1,5.5,5.5,0,0,0-8.15-4.82A6.49,6.49,0,0,0,5.5,13a.34.34,0,0,0,0,.1A5.5,5.5,0,0,0,8,23.5H22a5.5,5.5,0,0,0,2.49-10.4Z" fill="none" stroke="currentcolor" stroke-linejoin="round"/>
+							<polyline points="11.5,16.5 14.5,19.5 18.5,13.5" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round"/>
 						</svg>
 					</span>
 					<p class="player-controls-content-note">
