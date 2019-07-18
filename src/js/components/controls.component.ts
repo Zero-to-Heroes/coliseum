@@ -20,8 +20,8 @@ import { Key } from 'ts-keycode-enum';
 						</svg>
 					</span>
 					<p class="player-controls-content-note">
-						<a target="_blank" href="https://www.zerotoheroes.com/r/hearthstone/{{reviewId}}">View online</a>
-						| <a target="_blank" href="http://replays.firestoneapp.com/?reviewId={{reviewId}}">Discuss</a>
+						<a target="_blank" href="http://replays.firestoneapp.com/?reviewId={{reviewId}}">View online</a>
+						| <a target="_blank" href="https://www.zerotoheroes.com/r/hearthstone/{{reviewId}}">Discuss</a>
 					</p>
 				</div>
 
