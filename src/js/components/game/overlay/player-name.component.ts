@@ -9,7 +9,7 @@ import { playerName } from '../../../../assets/svg/player_name';
 		'../../../../css/components/game/overlay/player-name.component.scss'
 	],
 	template: `
-        <div class="player-name" [ngClass]="{'active': _active}" cardElementResize [fontSizeRatio]="0.08">
+        <div class="player-name" [ngClass]="{'active': _active}" cardElementResize [fontSizeRatio]="0.08" [keepOpacity]="true">
             <div class="background" [innerHTML]="svg"></div>
             <div class="text" resizeTarget><span>{{_name}}</span></div>
 		</div>

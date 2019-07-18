@@ -7,6 +7,7 @@ export class CardElementResizeDirective implements AfterViewInit {
 
 	@Input() fontSizeRatio: number;
 	@Input() timeout = 0;
+	@Input() keepOpacity = false;
 
 	constructor(private elRef: ElementRef, private cdr: ChangeDetectorRef) {
 		document.addEventListener(
@@ -33,7 +34,11 @@ export class CardElementResizeDirective implements AfterViewInit {
 		const textEls = this.elRef.nativeElement.querySelectorAll('[resizeTarget]');
 		for (const textEl of textEls) {
 			textEl.style.fontSize = fontSize + 'px';
-			this.elRef.nativeElement.style.opacity = 1;
+			if (!this.keepOpacity) {
+				this.elRef.nativeElement.style.opacity = 1;
+			} else {
+				this.elRef.nativeElement.style.removeProperty('opacity');
+			}
 			if (!(<ViewRef>this.cdr).destroyed) {
 				this.cdr.detectChanges();
 			}
