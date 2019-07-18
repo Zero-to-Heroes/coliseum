@@ -44,7 +44,8 @@ import { Key } from 'ts-keycode-enum';
 							<span>Previous action<br><kbd>🡨</kbd></span>
 						</div>
 					</button>
-					<button class="gs-icon toggle-icons player-control-main player-control-play hint-tooltip-container">
+					<button class="gs-icon toggle-icons player-control-main player-control-play hint-tooltip-container"
+							(click)="togglePlayPause()">
 						<svg viewBox="0 0 40 40" *ngIf="!isPlaying">
 							<polygon points="13,9 31,20 13,31" fill="currentcolor"/>
 						</svg>
@@ -78,20 +79,28 @@ import { Key } from 'ts-keycode-enum';
 
 				<div class="player-controls-content player-controls-content-right">
 					<div class="player-control-group hint-tooltip-container">
-						<button class="gs-icon btn-gs-icon player-control toggled">
+						<button class="gs-icon btn-gs-icon player-control" 
+								[ngClass]="{ 'toggled': currentSpeed === 1}"
+								(click)="changeSpeed(1)">
 							<span class="player-control-text">1<sub>x</sub></span>
 						</button>
-						<button class="gs-icon btn-gs-icon player-control">
+						<button class="gs-icon btn-gs-icon player-control" 
+								[ngClass]="{ 'toggled': currentSpeed === 2}"
+								(click)="changeSpeed(2)">
 							<span class="player-control-text">2<sub>x</sub></span>
 						</button>
-						<button class="gs-icon btn-gs-icon player-control">
+						<button class="gs-icon btn-gs-icon player-control" 
+								[ngClass]="{ 'toggled': currentSpeed === 4}"
+								(click)="changeSpeed(4)">
 							<span class="player-control-text">4<sub>x</sub></span>
 						</button>
-						<button class="gs-icon btn-gs-icon player-control">
+						<button class="gs-icon btn-gs-icon player-control" 
+								[ngClass]="{ 'toggled': currentSpeed === 8}"
+								(click)="changeSpeed(8)">
 							<span class="player-control-text">8<sub>x</sub></span>
 						</button>
 						<div class="hint-tooltip hint-tooltip-top dark-theme">
-							<span>Playback speed<br><kbd>Ctrl</kbd> + <kbd>&#129129; / &#129131;</kbd></span>
+							<span>Playback speed<br><kbd>Ctrl</kbd> + <kbd>🡩 / 🡫</kbd></span>
 						</div>
 					</div>
 					<div class="gs-icon-divider"></div>
@@ -142,8 +151,10 @@ export class ControlsComponent implements OnInit {
 				this.togglePlayPause();
 				break;
 			case Key.UpArrow:
+				event.ctrlKey && this.increaseCurrentSpeed();
 				break;
 			case Key.DownArrow:
+					event.ctrlKey && this.decreaseCurrentSpeed();
 				break;
 		}
 	}
@@ -171,11 +182,38 @@ export class ControlsComponent implements OnInit {
 		}
 	}
 
+	changeSpeed(newSpeed: number) {
+		this.currentSpeed = newSpeed;
+		if (!(<ViewRef>this.cdr).destroyed) {
+			this.cdr.detectChanges();
+		}
+	}
+
 	private startPlayingControl() {
-		const nextTick = (1.0 / this.currentSpeed) * 1000;
+		const nextTick = (2.0 / this.currentSpeed) * 1000;
 		setTimeout(() => this.startPlayingControl(), nextTick);
 		if (this.isPlaying) {
 			this.goNextAction();
+		}
+	}
+
+	private increaseCurrentSpeed() {
+		if (this.currentSpeed === 8) {
+			return;
+		}
+		this.currentSpeed *= 2;
+		if (!(<ViewRef>this.cdr).destroyed) {
+			this.cdr.detectChanges();
+		}
+	}
+
+	private decreaseCurrentSpeed() {
+		if (this.currentSpeed === 1) {
+			return;
+		}
+		this.currentSpeed /= 2;
+		if (!(<ViewRef>this.cdr).destroyed) {
+			this.cdr.detectChanges();
 		}
 	}
 }
