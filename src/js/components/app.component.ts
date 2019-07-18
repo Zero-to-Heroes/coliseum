@@ -44,6 +44,7 @@ import { QuestCompletedAction } from '../models/action/quest-completed-action';
 			</game>
 			<turn-narrator [text]="text"></turn-narrator>
 			<controls
+					[reviewId]="reviewId"
 					(nextAction)="onNextAction()"
 					(nextTurn)="onNextTurn()"
 					(previousAction)="onPreviousAction()"
