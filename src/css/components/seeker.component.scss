@@ -103,6 +103,7 @@ $transparent-btn-foreground-selected: rgba(white, .9);
 
 [type='range'] {
 	background-color: transparent;
+	opacity: 0;
 	
 	&, 
 	&::-webkit-slider-thumb, 
