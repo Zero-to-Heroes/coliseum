@@ -11,7 +11,7 @@ import { NGXLogger } from 'ngx-logger';
 		'../../../../css/components/game/card/card-cost-colors.scss',
 	],
 	template: `
-        <div class="hero-power-cost {{costClass}}">
+        <div class="hero-power-cost {{costClass}}" [ngClass]="{ 'premium': _premium }">
             <div class="cost">{{_cost}}</div>
         </div>
 	`,
@@ -21,6 +21,7 @@ export class HeroPowerCostComponent implements AfterViewInit {
 
 	_cost: number;
 	costClass: string;
+	_premium: boolean;
 
 	private _cardId: string;
 
@@ -41,6 +42,11 @@ export class HeroPowerCostComponent implements AfterViewInit {
 		this.logger.debug('[hero-power-cost] setting cost', cost);
 		this._cost = cost;
 		this.updateCost();
+	}
+
+	@Input('premium') set premium(premium: boolean) {
+		this.logger.debug('[hero-power-cost] setting premium', premium);
+		this._premium = premium || undefined;
 	}
 
 	@HostListener('window:resize', ['$event'])

@@ -19,6 +19,11 @@
     display: flex;
     align-content: center;
     justify-content: center;
+		
+	&.premium {
+		top: 6%;
+		left: 2%;
+	}
     
     .cost {
         font-family: 'Passion One';
@@ -26,6 +31,6 @@
         font-weight: bold;
         text-shadow: $text-shadow;
         position: relative;        
-        top: 17%;
+		top: 17%;
     }
 }

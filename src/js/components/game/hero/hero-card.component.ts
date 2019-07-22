@@ -15,7 +15,7 @@ import { NGXLogger } from 'ngx-logger';
                 [attr.data-entity-id]="entityId"
                 [attr.data-player-entity-id]="playerEntityId">
             <hero-art [cardId]="cardId"></hero-art>
-            <hero-frame></hero-frame>
+            <hero-frame [premium]="premium"></hero-frame>
             <hero-overlays [entity]="_entity"></hero-overlays>
             <secrets [secrets]="_secrets" *ngIf="_secrets && _secrets.length > 0"></secrets>
 			<hero-stats
@@ -44,6 +44,7 @@ export class HeroCardComponent {
 	damage: number;
 	armor: number;
 	shownDamage: number;
+	premium: boolean;
 	_option: boolean;
 	_secrets: ReadonlyArray<Entity>;
 
@@ -60,6 +61,8 @@ export class HeroCardComponent {
 		this.health = hero.getTag(GameTag.HEALTH);
 		this.damage = hero.getTag(GameTag.DAMAGE);
 		this.armor = hero.getTag(GameTag.ARMOR);
+		this.premium = hero.getTag(GameTag.PREMIUM) === 1;
+		console.log('hero-card is premium', this.premium, hero.getTag(GameTag.PREMIUM));
 
 		this.shownDamage = hero.damageForThisAction;
 	}
