@@ -93,8 +93,8 @@ console.log('environment is', process.env.NODE_ENV);
 		BrowserModule,
 		BrowserAnimationsModule,
 		Ng2FittextModule,
-		LoggerModule.forRoot({ level: NgxLoggerLevel.WARN }),
-		// LoggerModule.forRoot({ level: NgxLoggerLevel.DEBUG }),
+		// LoggerModule.forRoot({ level: NgxLoggerLevel.WARN }),
+		LoggerModule.forRoot({ level: NgxLoggerLevel.DEBUG }),
 	],
 	declarations: [
 		AppComponent,
