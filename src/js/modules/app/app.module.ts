@@ -83,6 +83,7 @@ import { QuestTooltipComponent } from '../../components/game/overlay/quest-toolt
 import { QuestCompletedComponent } from '../../components/game/overlay/quest-completed.component';
 import { ControlsComponent } from '../../components/controls.component';
 import { SeekerComponent } from '../../components/seeker.component';
+import { OverlayBurnedComponent } from '../../components/game/card/overlay-burned.component';
 
 console.log('version is ' + process.env.APP_VERSION);
 console.log('environment is', process.env.NODE_ENV);
@@ -149,6 +150,7 @@ console.log('environment is', process.env.NODE_ENV);
 		CardCostComponent,
 		OverlayCrossedComponent,
 		OverlayTickedComponent,
+		OverlayBurnedComponent,
 
 		DeckComponent,
 		PlayerNameComponent,

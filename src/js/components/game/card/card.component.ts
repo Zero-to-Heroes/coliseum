@@ -43,6 +43,7 @@ import { AllCardsService } from '../../../services/all-cards.service';
 					[armor]="armor">
             </card-stats>
             <overlay-crossed *ngIf="_crossed"></overlay-crossed>
+            <overlay-burned *ngIf="_burned"></overlay-burned>
             <overlay-ticked *ngIf="_ticked"></overlay-ticked>
             <card-enchantments *ngIf="_enchantments && _enchantments.length > 0"
                     [enchantments]="_enchantments">
@@ -58,6 +59,7 @@ export class CardComponent {
 	_controller: Entity;
 	_option: boolean;
 	_crossed: boolean;
+	_burned: boolean;
 	_ticked: boolean;
 	_enchantments: ReadonlyArray<Entity>;
 
@@ -114,6 +116,13 @@ export class CardComponent {
 		this._crossed = value;
 		if (value) {
 			this.logger.debug('[card] marking card as crossed', this._entity);
+		}
+	}
+
+	@Input('burned') set burned(value: boolean) {
+		this._burned = value;
+		if (value) {
+			this.logger.debug('[card] marking card as burned', this._entity);
 		}
 	}
 

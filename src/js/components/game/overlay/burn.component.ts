@@ -11,7 +11,7 @@ import { Map } from 'immutable';
 	template: `
         <div class="burn">
             <li *ngFor="let entity of burnedCards; let i = index; trackBy: trackByFn">
-                <card [entity]="entity" [hasTooltip]="false" [crossed]="true"></card>
+                <card [entity]="entity" [hasTooltip]="false" [burned]="true"></card>
             </li>
 		</div>
 	`,
