@@ -6,7 +6,7 @@ See https://replays.firestoneapp.com. You can also access it from any review on 
 
 # Screenshots
 
-See the [imgur album](https://imgur.com/a/yEWwjOT)
+See the [imgur album](https://imgur.com/a/2K3asZ9)
 
 ![mulligan](https://i.imgur.com/fPsi8gR.jpg)
 ![spell](https://i.imgur.com/yfOek19.png)
