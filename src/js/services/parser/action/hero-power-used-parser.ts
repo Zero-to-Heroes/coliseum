@@ -11,7 +11,6 @@ import { CardType } from '../../../models/enums/card-type';
 import { HeroPowerUsedAction } from '../../../models/action/hero-power-used-action';
 
 export class HeroPowerUsedParser implements Parser {
-
 	constructor(private allCards: AllCardsService) {}
 
 	public applies(item: HistoryItem): boolean {
@@ -19,27 +18,31 @@ export class HeroPowerUsedParser implements Parser {
 	}
 
 	public parse(
-			item: ActionHistoryItem,
-			currentTurn: number,
-			entitiesBeforeAction: Map<number, Entity>,
-			history: ReadonlyArray<HistoryItem>): Action[] {
+		item: ActionHistoryItem,
+		currentTurn: number,
+		entitiesBeforeAction: Map<number, Entity>,
+		history: readonly HistoryItem[],
+	): Action[] {
 		if (parseInt(item.node.attributes.type) !== BlockType.PLAY) {
 			return;
 		}
 
 		const entity = entitiesBeforeAction.get(parseInt(item.node.attributes.entity));
 		if (entity.getTag(GameTag.CARDTYPE) === CardType.HERO_POWER) {
-			return [HeroPowerUsedAction.create(
-				{
-					timestamp: item.timestamp,
-					index: item.index,
-					entityId: entity.id,
-				},
-				this.allCards)];
+			return [
+				HeroPowerUsedAction.create(
+					{
+						timestamp: item.timestamp,
+						index: item.index,
+						entityId: entity.id,
+					},
+					this.allCards,
+				),
+			];
 		}
 	}
 
-	public reduce(actions: ReadonlyArray<Action>): ReadonlyArray<Action> {
+	public reduce(actions: readonly Action[]): readonly Action[] {
 		return actions;
 	}
 }

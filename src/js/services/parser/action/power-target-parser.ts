@@ -20,7 +20,6 @@ import { NGXLogger } from 'ngx-logger';
 import { MetadataHistoryItem } from '../../../models/history/metadata-history-item';
 
 export class PowerTargetParser implements Parser {
-
 	constructor(private allCards: AllCardsService, private logger: NGXLogger) {}
 
 	public applies(item: HistoryItem): boolean {
@@ -28,18 +27,20 @@ export class PowerTargetParser implements Parser {
 	}
 
 	public parse(
-			item: MetadataHistoryItem,
-			currentTurn: number,
-			entitiesBeforeAction: Map<number, Entity>,
-			history: ReadonlyArray<HistoryItem>): Action[] {
+		item: MetadataHistoryItem,
+		currentTurn: number,
+		entitiesBeforeAction: Map<number, Entity>,
+		history: readonly HistoryItem[],
+	): Action[] {
 		const meta = item.meta;
 		const parentAction = history
-				.filter(historyItem => historyItem instanceof ActionHistoryItem)
-				.filter(historyItem => historyItem.index === item.meta.parentIndex)
-				.map(historyItem => historyItem as ActionHistoryItem)
-				[0];
-		if (parseInt(parentAction.node.attributes.type) !== BlockType.POWER
-				&& parseInt(parentAction.node.attributes.type) !== BlockType.TRIGGER) {
+			.filter(historyItem => historyItem instanceof ActionHistoryItem)
+			.filter(historyItem => historyItem.index === item.meta.parentIndex)
+			.map(historyItem => historyItem as ActionHistoryItem)[0];
+		if (
+			parseInt(parentAction.node.attributes.type) !== BlockType.POWER &&
+			parseInt(parentAction.node.attributes.type) !== BlockType.TRIGGER
+		) {
 			return;
 		}
 		// TODO: hard-code Malchezaar?
@@ -51,16 +52,12 @@ export class PowerTargetParser implements Parser {
 		}
 		if (meta.info) {
 			return meta.info
-					.map((info) => this.buildPowerActions(entitiesBeforeAction, parentAction, meta, info))
-					.reduce((a, b) => a.concat(b), []);
+				.map(info => this.buildPowerActions(entitiesBeforeAction, parentAction, meta, info))
+				.reduce((a, b) => a.concat(b), []);
 		}
 	}
 
-	private buildPowerActions(
-			entities: Map<number, Entity>,
-			item: ActionHistoryItem,
-			meta: MetaData,
-			info: Info): PowerTargetAction[] {
+	private buildPowerActions(entities: Map<number, Entity>, item: ActionHistoryItem, meta: MetaData, info: Info): PowerTargetAction[] {
 		const entityId = parseInt(item.node.attributes.entity);
 		// Prevent a spell from targeting itself
 		if (entityId === info.entity && entities.get(entityId).getTag(GameTag.CARDTYPE) === CardType.SPELL) {
@@ -73,21 +70,24 @@ export class PowerTargetParser implements Parser {
 		if (!target) {
 			return [];
 		}
-		return [PowerTargetAction.create(
-			{
-				timestamp: item.timestamp,
-				index: meta.index,
-				originId: entityId,
-				targetIds: [target]
-			},
-			this.allCards)];
+		return [
+			PowerTargetAction.create(
+				{
+					timestamp: item.timestamp,
+					index: meta.index,
+					originId: entityId,
+					targetIds: [target],
+				},
+				this.allCards,
+			),
+		];
 	}
 
-	public reduce(actions: ReadonlyArray<Action>): ReadonlyArray<Action> {
+	public reduce(actions: readonly Action[]): readonly Action[] {
 		return ActionHelper.combineActions<Action>(
 			actions,
 			(previous, current) => this.shouldMergeActions(previous, current),
-			(previous, current) => this.mergeActions(previous, current)
+			(previous, current) => this.mergeActions(previous, current),
 		);
 	}
 
@@ -99,12 +99,11 @@ export class PowerTargetParser implements Parser {
 			return previousAction.originId === currentAction.originId;
 		}
 		// Spells that target would trigger twice otherwise
-		if ((previousAction instanceof CardTargetAction)) {
+		if (previousAction instanceof CardTargetAction) {
 			return previousAction.originId === currentAction.originId;
 		}
 		if (previousAction instanceof AttachingEnchantmentAction) {
-			if (previousAction.originId === currentAction.originId
-						&& isEqual(previousAction.targetIds, currentAction.targetIds)) {
+			if (previousAction.originId === currentAction.originId && isEqual(previousAction.targetIds, currentAction.targetIds)) {
 				return true;
 			}
 		}
@@ -120,7 +119,7 @@ export class PowerTargetParser implements Parser {
 			return ActionHelper.mergeIntoFirstAction(previousAction, currentAction, {
 				entities: currentAction.entities,
 				originId: currentAction.originId,
-				targetIds: uniq([...uniq(previousAction.targetIds || []), ...uniq(currentAction.targetIds || [])]) as ReadonlyArray<number>,
+				targetIds: uniq([...uniq(previousAction.targetIds || []), ...uniq(currentAction.targetIds || [])]) as readonly number[],
 			} as PowerTargetAction);
 		} else if (previousAction instanceof AttachingEnchantmentAction) {
 			return previousAction;

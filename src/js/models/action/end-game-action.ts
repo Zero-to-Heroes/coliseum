@@ -5,7 +5,7 @@ import { PlayState } from '../enums/playstate';
 import { ActionHelper } from '../../services/parser/action/action-helper';
 
 export class EndGameAction extends Action {
-	readonly winStatus: ReadonlyArray<[number, number]>;
+	readonly winStatus: readonly [number, number][];
 	readonly entityId: number;
 	readonly opponentId: number;
 
@@ -27,9 +27,7 @@ export class EndGameAction extends Action {
 		}
 		let winText = '';
 		for (const status of this.winStatus) {
-			if (status[1] !== PlayState.CONCEDED
-						&& status[1] !== PlayState.TIED
-						&& status[0] === this.entityId) {
+			if (status[1] !== PlayState.CONCEDED && status[1] !== PlayState.TIED && status[0] === this.entityId) {
 				const name = ActionHelper.getOwner(this.entities, this.entityId).name;
 				const statusString = status[1] === PlayState.WON ? 'won' : 'lost';
 				winText = `${name} ${statusString}!`;

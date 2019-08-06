@@ -4,8 +4,8 @@ import { Entity } from '../game/entity';
 import { AllCardsService } from '../../services/all-cards.service';
 
 export class MulliganCardChoiceAction extends Action {
-	readonly playerMulligan: ReadonlyArray<number>;
-	readonly opponentMulligan: ReadonlyArray<number>;
+	readonly playerMulligan: readonly number[];
+	readonly opponentMulligan: readonly number[];
 
 	readonly allCards: AllCardsService;
 

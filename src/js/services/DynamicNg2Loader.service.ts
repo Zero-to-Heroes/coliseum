@@ -1,8 +1,6 @@
 import { ApplicationRef, ComponentFactoryResolver, NgZone, Injector, Type, ComponentRef } from '@angular/core';
-import { NGXLogger } from 'ngx-logger';
 
 export class DynamicNg2Loader {
-
 	private appRef: ApplicationRef;
 	private componentFactoryResolver: ComponentFactoryResolver;
 	private zone: NgZone;

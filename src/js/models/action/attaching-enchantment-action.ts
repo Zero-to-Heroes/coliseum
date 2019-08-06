@@ -9,7 +9,7 @@ import { ActionHelper } from '../../services/parser/action/action-helper';
 export class AttachingEnchantmentAction extends Action implements HasTargets {
 	readonly originId: number;
 	readonly enchantmentCardId: string;
-	readonly targetIds: ReadonlyArray<number>;
+	readonly targetIds: readonly number[];
 
 	readonly allCards: AllCardsService;
 
@@ -31,12 +31,14 @@ export class AttachingEnchantmentAction extends Action implements HasTargets {
 		const creatorCard = this.allCards.getCard(creatorCardId);
 		const enchantmentCard = this.allCards.getCard(this.enchantmentCardId);
 		const targetCardNames = this.targetIds
-				.map((targetId) => this.entities.get(targetId))
-				.map((targetEntity) => targetEntity.cardID
-						? this.allCards.getCard(targetEntity.cardID ).name
-						// Enchantments sometimes target the player itself, not the hero
-						: (targetEntity as PlayerEntity).name)
-				.join(', ');
+			.map(targetId => this.entities.get(targetId))
+			.map(targetEntity =>
+				targetEntity.cardID
+					? this.allCards.getCard(targetEntity.cardID).name
+					: // Enchantments sometimes target the player itself, not the hero
+					  (targetEntity as PlayerEntity).name,
+			)
+			.join(', ');
 		const textRaw = `\t${creatorCard.name} enchants ${targetCardNames} with ${enchantmentCard.name}`;
 		return Object.assign(new AttachingEnchantmentAction(this.allCards), this, { textRaw: textRaw });
 	}

@@ -12,20 +12,22 @@ import { Zone } from '../../../models/enums/zone';
 import { SecretPlayedFromHandAction } from '../../../models/action/secret-played-from-hand-action';
 
 export class SecretPlayedFromHandParser implements Parser {
-
 	constructor(private allCards: AllCardsService) {}
 
 	public applies(item: HistoryItem): boolean {
-		return item instanceof ActionHistoryItem
-				&& parseInt(item.node.attributes.type) === BlockType.PLAY
-				&& (item.node.tags && item.node.tags.length > 0);
+		return (
+			item instanceof ActionHistoryItem &&
+			parseInt(item.node.attributes.type) === BlockType.PLAY &&
+			(item.node.tags && item.node.tags.length > 0)
+		);
 	}
 
 	public parse(
-			item: ActionHistoryItem,
-			currentTurn: number,
-			entitiesBeforeAction: Map<number, Entity>,
-			history: ReadonlyArray<HistoryItem>): Action[] {
+		item: ActionHistoryItem,
+		currentTurn: number,
+		entitiesBeforeAction: Map<number, Entity>,
+		history: readonly HistoryItem[],
+	): Action[] {
 		let playedCardId = -1;
 		let isSecret = false;
 		for (const tag of item.node.tags) {
@@ -38,9 +40,7 @@ export class SecretPlayedFromHandParser implements Parser {
 				isSecret = true;
 			}
 		}
-		if (!isSecret
-				&& entitiesBeforeAction.get(playedCardId)
-				&& entitiesBeforeAction.get(playedCardId).getTag(GameTag.SECRET) === 1) {
+		if (!isSecret && entitiesBeforeAction.get(playedCardId) && entitiesBeforeAction.get(playedCardId).getTag(GameTag.SECRET) === 1) {
 			isSecret = true;
 		}
 
@@ -48,16 +48,19 @@ export class SecretPlayedFromHandParser implements Parser {
 			return;
 		}
 
-		return [SecretPlayedFromHandAction.create(
-			{
-				timestamp: item.timestamp,
-				index: item.index,
-				entityId: playedCardId,
-			},
-			this.allCards)];
+		return [
+			SecretPlayedFromHandAction.create(
+				{
+					timestamp: item.timestamp,
+					index: item.index,
+					entityId: playedCardId,
+				},
+				this.allCards,
+			),
+		];
 	}
 
-	public reduce(actions: ReadonlyArray<Action>): ReadonlyArray<Action> {
+	public reduce(actions: readonly Action[]): readonly Action[] {
 		return actions;
 	}
 }

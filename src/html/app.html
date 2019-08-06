@@ -2,14 +2,15 @@
 <html>
 	<head>
 		<title>Coliseum</title>
-		<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-		<link href="https://fonts.googleapis.com/css?family=Passion+One:400,600,700" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css?family=Raleway:400,600,700" rel="stylesheet">
-        <!-- Not needed for the angular app, but needed for this HTML scaffholding -->
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" ></script>
+		<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+		<link href="https://fonts.googleapis.com/css?family=Passion+One:400,600,700" rel="stylesheet" />
+		<link href="https://fonts.googleapis.com/css?family=Raleway:400,600,700" rel="stylesheet" />
+		<!-- Not needed for the angular app, but needed for this HTML scaffholding -->
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 		<style>
-			html, body {
+			html,
+			body {
 				margin: 0;
 				height: 100%;
 			}
@@ -33,14 +34,14 @@
 				url: 'replay.xml',
 				dataType: 'xml',
 				success: function(response) {
-                    const replayAsString = new XMLSerializer().serializeToString(response);
+					const replayAsString = new XMLSerializer().serializeToString(response);
 					window.coliseum.zone.run(() => {
 						window.coliseum.component.loadReplay(replayAsString, {
-							reviewId: 'fakeReviewId'
+							reviewId: 'fakeReviewId',
 						});
-					})
-				}
-			})
+					});
+				},
+			});
 		</script>
 	</body>
 </html>

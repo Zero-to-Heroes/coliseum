@@ -8,40 +8,33 @@ import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'card-on-board',
-	styleUrls: [
-		'../../../../css/components/game/board/card-on-board.component.scss'
-	],
+	styleUrls: ['../../../../css/components/game/board/card-on-board.component.scss'],
 	template: `
-        <div class="card-on-board"
-                cardResize
-                cardTooltip [tooltipEntity]="_entity" [tooltipEnchantments]="_enchantments"
-                [attr.data-entity-id]="_entity.id">
-            <div class="main-card" [ngClass]="{ 'highlight': _option }">
-                <card-art [cardId]="cardId" [cardType]="cardType"></card-art>
-                <board-card-frame
-                        [taunt]="taunt"
-                        [hideStats]="hideStats"
-                        [premium]="premium">
-                </board-card-frame>
-                <board-card-stats *ngIf="!hideStats"
-                        [cardId]="cardId"
-                        [attack]="attack"
-                        [health]="health"
-                        [damage]="damage">
-                </board-card-stats>
-            </div>
-            <damage *ngIf="shownDamage" [amount]="shownDamage"></damage>
-            <sleeping *ngIf="sleeping"></sleeping>
-            <power-indicator [entity]="_entity"></power-indicator>
-            <card-on-board-overlays [entity]="_entity"></card-on-board-overlays>
+		<div
+			class="card-on-board"
+			cardResize
+			cardTooltip
+			[tooltipEntity]="_entity"
+			[tooltipEnchantments]="_enchantments"
+			[attr.data-entity-id]="_entity.id"
+		>
+			<div class="main-card" [ngClass]="{ 'highlight': _option }">
+				<card-art [cardId]="cardId" [cardType]="cardType"></card-art>
+				<board-card-frame [taunt]="taunt" [hideStats]="hideStats" [premium]="premium"> </board-card-frame>
+				<board-card-stats *ngIf="!hideStats" [cardId]="cardId" [attack]="attack" [health]="health" [damage]="damage">
+				</board-card-stats>
+			</div>
+			<damage *ngIf="shownDamage" [amount]="shownDamage"></damage>
+			<sleeping *ngIf="sleeping"></sleeping>
+			<power-indicator [entity]="_entity"></power-indicator>
+			<card-on-board-overlays [entity]="_entity"></card-on-board-overlays>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardOnBoardComponent {
-
 	_entity: Entity;
-	_enchantments: ReadonlyArray<Entity>;
+	_enchantments: readonly Entity[];
 	_option: boolean;
 
 	cardId: string;
@@ -60,9 +53,7 @@ export class CardOnBoardComponent {
 	hideStats: boolean;
 	sleeping: boolean;
 
-	constructor(
-		private cards: AllCardsService,
-		private logger: NGXLogger) { }
+	constructor(private cards: AllCardsService, private logger: NGXLogger) {}
 
 	@Input('entity') set entity(entity: Entity) {
 		this.logger.debug('[card-on-board] setting entity', entity.id, entity, entity.tags.toJS());
@@ -87,16 +78,15 @@ export class CardOnBoardComponent {
 		this.shownDamage = entity.damageForThisAction;
 
 		this.hideStats = entity.getTag(GameTag.HIDE_STATS) === 1;
-		this.sleeping = entity.getTag(GameTag.EXHAUSTED) === 1
-				&& entity.getTag(GameTag.JUST_PLAYED) === 1
-				&& entity.getTag(GameTag.CHARGE) !== 1;
+		this.sleeping =
+			entity.getTag(GameTag.EXHAUSTED) === 1 && entity.getTag(GameTag.JUST_PLAYED) === 1 && entity.getTag(GameTag.CHARGE) !== 1;
 	}
 
 	@Input('option') set option(value: boolean) {
 		this._option = value;
 	}
 
-	@Input('enchantments') set enchantments(value: ReadonlyArray<Entity>) {
+	@Input('enchantments') set enchantments(value: readonly Entity[]) {
 		this.logger.debug('[card-on-board] setting enchantments', value);
 		this._enchantments = value;
 	}

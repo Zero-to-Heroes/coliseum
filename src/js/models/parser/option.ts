@@ -1,5 +1,3 @@
-import { EnrichedTag } from './enriched-tag';
-
 export interface Option {
 	readonly entity: number;
 	readonly optionIndex: number;

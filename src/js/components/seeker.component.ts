@@ -4,23 +4,18 @@ import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 
 @Component({
 	selector: 'seeker',
-	styleUrls: [
-		'../../css/components/seeker.component.scss',
-	],
+	styleUrls: ['../../css/components/seeker.component.scss'],
 	template: `
 		<div class="player-seeker-container light-theme">
-			<input #seeker type="range" min="0" max="100" step="0.1" value="0"
-					class="player-seeker"
-					(input)="onInput(seeker.value)">
+			<input #seeker type="range" min="0" max="100" step="0.1" value="0" class="player-seeker" (input)="onInput(seeker.value)" />
 			<span class="player-seeker-track" [style.background]="background">
 				<span class="player-seeker-thumb" [style.left.%]="progress"></span>
 			</span>
 		</div>
 	`,
-	changeDetection: ChangeDetectionStrategy.OnPush
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SeekerComponent {
-
 	@Output() seek = new EventEmitter<number>();
 
 	progress: number;
@@ -29,7 +24,7 @@ export class SeekerComponent {
 	private _totalTime = 0;
 	private _currentTime = 0;
 
-	constructor(private logger: NGXLogger, private sanitizer: DomSanitizer) { }
+	constructor(private logger: NGXLogger, private sanitizer: DomSanitizer) {}
 
 	@Input('totalTime') set totalTime(value: number) {
 		this.logger.debug('[seeker] setting totalTime', value);
@@ -51,9 +46,7 @@ export class SeekerComponent {
 		if (!this._totalTime) {
 			this.progress = undefined;
 		}
-		this.progress = this._totalTime
-				? 100 * (this._currentTime / this._totalTime)
-				: undefined;
+		this.progress = this._totalTime ? 100 * (this._currentTime / this._totalTime) : undefined;
 		const backgroundProperty = `linear-gradient(to right, currentcolor ${this.progress}%, var(--background-third) 0)`;
 		this.background = this.sanitizer.bypassSecurityTrustStyle(backgroundProperty);
 	}

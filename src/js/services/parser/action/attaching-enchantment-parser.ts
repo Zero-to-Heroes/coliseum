@@ -14,20 +14,18 @@ import { CardTargetAction } from '../../../models/action/card-target-action';
 import { PowerTargetAction } from '../../../models/action/power-target-action';
 
 export class AttachingEnchantmentParser implements Parser {
-
 	constructor(private allCards: AllCardsService) {}
 
 	public applies(item: HistoryItem): boolean {
-		return item instanceof TagChangeHistoryItem
-				&& item.tag.tag === GameTag.ZONE
-				&& item.tag.value === Zone.PLAY;
+		return item instanceof TagChangeHistoryItem && item.tag.tag === GameTag.ZONE && item.tag.value === Zone.PLAY;
 	}
 
 	public parse(
-			item: TagChangeHistoryItem,
-			currentTurn: number,
-			entitiesBeforeAction: Map<number, Entity>,
-			history: ReadonlyArray<HistoryItem>): Action[] {
+		item: TagChangeHistoryItem,
+		currentTurn: number,
+		entitiesBeforeAction: Map<number, Entity>,
+		history: readonly HistoryItem[],
+	): Action[] {
 		const entityId = item.tag.entity;
 		const entity = entitiesBeforeAction.get(entityId);
 		const attachedToEntityId = entity.getTag(GameTag.ATTACHED);
@@ -36,24 +34,27 @@ export class AttachingEnchantmentParser implements Parser {
 		}
 		const creatorId = entity.getTag(GameTag.CREATOR);
 
-		return [AttachingEnchantmentAction.create(
-			{
-				timestamp: item.timestamp,
-				index: item.index,
-				originId: creatorId,
-				// Enchantments with the same name are duplicated so we have a 1-1 mapping
-				// with the card that is enchanted
-				enchantmentCardId: entity.cardID,
-				targetIds: [attachedToEntityId],
-			},
-			this.allCards)];
+		return [
+			AttachingEnchantmentAction.create(
+				{
+					timestamp: item.timestamp,
+					index: item.index,
+					originId: creatorId,
+					// Enchantments with the same name are duplicated so we have a 1-1 mapping
+					// with the card that is enchanted
+					enchantmentCardId: entity.cardID,
+					targetIds: [attachedToEntityId],
+				},
+				this.allCards,
+			),
+		];
 	}
 
-	public reduce(actions: ReadonlyArray<Action>): ReadonlyArray<Action> {
+	public reduce(actions: readonly Action[]): readonly Action[] {
 		return ActionHelper.combineActions<AttachingEnchantmentAction>(
 			actions,
 			(previous, current) => this.shouldMergeActions(previous, current),
-			(previous, current) => this.mergeActions(previous, current)
+			(previous, current) => this.mergeActions(previous, current),
 		);
 	}
 
@@ -65,11 +66,12 @@ export class AttachingEnchantmentParser implements Parser {
 				return true;
 			}
 		}
-		if ((previousAction instanceof CardTargetAction || previousAction instanceof PowerTargetAction)
-				&& currentAction instanceof AttachingEnchantmentAction) {
+		if (
+			(previousAction instanceof CardTargetAction || previousAction instanceof PowerTargetAction) &&
+			currentAction instanceof AttachingEnchantmentAction
+		) {
 			// console.log('merging enchantment into target?', previousAction, currentAction);
-			if (previousAction.originId === currentAction.originId
-						&& isEqual(previousAction.targetIds, currentAction.targetIds)) {
+			if (previousAction.originId === currentAction.originId && isEqual(previousAction.targetIds, currentAction.targetIds)) {
 				// console.log('merging enchantment into target', previousAction, currentAction);
 				return true;
 			}
@@ -78,9 +80,11 @@ export class AttachingEnchantmentParser implements Parser {
 	}
 
 	private mergeActions(
-			previousAction: AttachingEnchantmentAction | CardTargetAction | PowerTargetAction,
-			currentAction: AttachingEnchantmentAction): AttachingEnchantmentAction {
-		const targetIds = previousAction instanceof AttachingEnchantmentAction
+		previousAction: AttachingEnchantmentAction | CardTargetAction | PowerTargetAction,
+		currentAction: AttachingEnchantmentAction,
+	): AttachingEnchantmentAction {
+		const targetIds =
+			previousAction instanceof AttachingEnchantmentAction
 				? uniq([...uniq(previousAction.targetIds || []), ...uniq(currentAction.targetIds || [])])
 				: uniq(currentAction.targetIds || []);
 		return AttachingEnchantmentAction.create(
@@ -92,6 +96,7 @@ export class AttachingEnchantmentParser implements Parser {
 				enchantmentCardId: currentAction.enchantmentCardId,
 				targetIds: targetIds,
 			},
-			this.allCards);
+			this.allCards,
+		);
 	}
 }

@@ -4,29 +4,22 @@ import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'hero',
-	styleUrls: [
-		'../../../../css/components/game/hero/hero.component.scss'
-	],
+	styleUrls: ['../../../../css/components/game/hero/hero.component.scss'],
 	template: `
-        <div class="hero">
-            <weapon [weapon]="_weapon" *ngIf="_weapon"></weapon>
-            <hero-card
-                    [hero]="_hero"
-                    [secrets]="_secrets"
-                    [option]="isOption(_hero)">
-            </hero-card>
-            <hero-power [heroPower]="_heroPower" [option]="isOption(_heroPower)"></hero-power>
+		<div class="hero">
+			<weapon [weapon]="_weapon" *ngIf="_weapon"></weapon>
+			<hero-card [hero]="_hero" [secrets]="_secrets" [option]="isOption(_hero)"> </hero-card>
+			<hero-power [heroPower]="_heroPower" [option]="isOption(_heroPower)"></hero-power>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeroComponent {
-
 	_hero: Entity;
 	_heroPower: Entity;
 	_weapon: Entity;
-	_options: ReadonlyArray<number>;
-	_secrets: ReadonlyArray<Entity>;
+	_options: readonly number[];
+	_secrets: readonly Entity[];
 
 	constructor(private logger: NGXLogger) {}
 
@@ -45,12 +38,12 @@ export class HeroComponent {
 		this._weapon = weapon;
 	}
 
-	@Input('options') set options(value: ReadonlyArray<number>) {
+	@Input('options') set options(value: readonly number[]) {
 		this.logger.debug('[hero] setting options', value);
 		this._options = value;
 	}
 
-	@Input('secrets') set secrets(value: ReadonlyArray<Entity>) {
+	@Input('secrets') set secrets(value: readonly Entity[]) {
 		this.logger.debug('[hero] setting secrets', value);
 		this._secrets = value;
 	}

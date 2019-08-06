@@ -6,12 +6,11 @@ import { Entity } from '../../../models/game/entity';
 import { Map } from 'immutable';
 import { DiscoverAction } from '../../../models/action/discover-action';
 import { ChosenEntityHistoryItem } from '../../../models/history/chosen-entities-history-item';
-import { DiscoveryPickAction as DiscoveryPickAction } from '../../../models/action/discovery-pick-action';
+import { DiscoveryPickAction } from '../../../models/action/discovery-pick-action';
 import { ActionHelper } from './action-helper';
 import { NGXLogger } from 'ngx-logger';
 
 export class DiscoveryPickParser implements Parser {
-
 	constructor(private allCards: AllCardsService, private logger: NGXLogger) {}
 
 	public applies(item: HistoryItem): boolean {
@@ -19,25 +18,29 @@ export class DiscoveryPickParser implements Parser {
 	}
 
 	public parse(
-			item: ChosenEntityHistoryItem,
-			currentTurn: number,
-			entitiesBeforeAction: Map<number, Entity>,
-			history: ReadonlyArray<HistoryItem>): Action[] {
-		return [DiscoveryPickAction.create(
-			{
-				timestamp: item.timestamp,
-				index: item.index,
-				owner: item.tag.playerID,
-				choice: item.tag.cards[0]
-			},
-			this.allCards)];
+		item: ChosenEntityHistoryItem,
+		currentTurn: number,
+		entitiesBeforeAction: Map<number, Entity>,
+		history: readonly HistoryItem[],
+	): Action[] {
+		return [
+			DiscoveryPickAction.create(
+				{
+					timestamp: item.timestamp,
+					index: item.index,
+					owner: item.tag.playerID,
+					choice: item.tag.cards[0],
+				},
+				this.allCards,
+			),
+		];
 	}
 
-	public reduce(actions: ReadonlyArray<Action>): ReadonlyArray<Action> {
+	public reduce(actions: readonly Action[]): readonly Action[] {
 		return ActionHelper.combineActions<Action>(
 			actions,
 			(previous, current) => this.shouldMergeActions(previous, current),
-			(previous, current) => this.mergeActions(previous, current)
+			(previous, current) => this.mergeActions(previous, current),
 		);
 	}
 
@@ -55,7 +58,7 @@ export class DiscoveryPickParser implements Parser {
 	private mergeActions(previousAction: Action, currentAction: Action): Action {
 		if (previousAction instanceof DiscoverAction && currentAction instanceof DiscoveryPickAction) {
 			return previousAction.updateAction<DiscoverAction>({
-				chosen: [currentAction.choice] as ReadonlyArray<number>
+				chosen: [currentAction.choice] as readonly number[],
 			} as DiscoverAction);
 		}
 		return previousAction;

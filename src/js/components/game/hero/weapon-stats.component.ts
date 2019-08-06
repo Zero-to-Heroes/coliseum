@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { AllCardsService } from '../../../services/all-cards.service';
 import { NGXLogger } from 'ngx-logger';
 
@@ -10,19 +10,22 @@ import { NGXLogger } from 'ngx-logger';
 		'../../../../css/components/game/card/card-stats-colors.scss',
 	],
 	template: `
-        <div class="weapon-stats" cardElementResize [fontSizeRatio]="0.15">
-            <div class="stat {{attackClass}}" resizeTarget>
-                <div class="stat-value"><span>{{_attack}}</span></div>
-            </div>
-            <div class="stat {{durabilityClass}}" resizeTarget>
-                <div class="stat-value"><span>{{durabilityLeft}}</span></div>
-            </div>
-        </div>
+		<div class="weapon-stats" cardElementResize [fontSizeRatio]="0.15">
+			<div class="stat {{ attackClass }}" resizeTarget>
+				<div class="stat-value">
+					<span>{{ _attack }}</span>
+				</div>
+			</div>
+			<div class="stat {{ durabilityClass }}" resizeTarget>
+				<div class="stat-value">
+					<span>{{ durabilityLeft }}</span>
+				</div>
+			</div>
+		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WeaponStatsComponent {
-
 	attackClass: string;
 	durabilityClass: string;
 
@@ -33,8 +36,7 @@ export class WeaponStatsComponent {
 	private _durability: number;
 	private _damage: number;
 
-	constructor(private cards: AllCardsService, private logger: NGXLogger) {
-	}
+	constructor(private cards: AllCardsService, private logger: NGXLogger) {}
 
 	@Input('cardId') set cardId(cardId: string) {
 		this.logger.debug('[weapon-stats] setting cardId', cardId);

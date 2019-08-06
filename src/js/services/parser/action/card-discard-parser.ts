@@ -13,20 +13,18 @@ import { NGXLogger } from 'ngx-logger';
 import { CardDiscardAction } from '../../../models/action/card-discard-action';
 
 export class CardDiscardParser implements Parser {
-
 	constructor(private allCards: AllCardsService, private logger: NGXLogger) {}
 
 	public applies(item: HistoryItem): boolean {
-		return item instanceof TagChangeHistoryItem
-				&& item.tag.tag === GameTag.ZONE
-				&& item.tag.value === Zone.SETASIDE;
+		return item instanceof TagChangeHistoryItem && item.tag.tag === GameTag.ZONE && item.tag.value === Zone.SETASIDE;
 	}
 
 	public parse(
-			item: TagChangeHistoryItem,
-			currentTurn: number,
-			entitiesBeforeAction: Map<number, Entity>,
-			history: ReadonlyArray<HistoryItem>): Action[] {
+		item: TagChangeHistoryItem,
+		currentTurn: number,
+		entitiesBeforeAction: Map<number, Entity>,
+		history: readonly HistoryItem[],
+	): Action[] {
 		if (currentTurn === 0) {
 			return;
 		}
@@ -37,24 +35,27 @@ export class CardDiscardParser implements Parser {
 			if (!controller) {
 				this.logger.error('[card-discard-parser] empty controller', item, entitiesBeforeAction.get(item.tag.entity));
 			}
-			return [CardDiscardAction.create(
-				{
-					timestamp: item.timestamp,
-					index: item.index,
-					controller: controller,
-					data: [item.tag.entity],
-				},
-				this.allCards)];
+			return [
+				CardDiscardAction.create(
+					{
+						timestamp: item.timestamp,
+						index: item.index,
+						controller: controller,
+						data: [item.tag.entity],
+					},
+					this.allCards,
+				),
+			];
 		}
 
 		return [];
 	}
 
-	public reduce(actions: ReadonlyArray<Action>): ReadonlyArray<Action> {
+	public reduce(actions: readonly Action[]): readonly Action[] {
 		return ActionHelper.combineActions<CardDiscardAction>(
 			actions,
 			(previous, current) => this.shouldMergeActions(previous, current),
-			(previous, current) => this.mergeActions(previous, current)
+			(previous, current) => this.mergeActions(previous, current),
 		);
 	}
 
@@ -77,6 +78,7 @@ export class CardDiscardParser implements Parser {
 				controller: currentAction.controller,
 				data: uniq([...uniq(previousAction.data || []), ...uniq(currentAction.data || [])]),
 			},
-			this.allCards);
+			this.allCards,
+		);
 	}
 }

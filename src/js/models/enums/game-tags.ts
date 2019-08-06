@@ -486,5 +486,5 @@ export enum GameTag {
 	SQUELCH_LIFETIME_EFFECTS = 1350,
 
 	// Not sure what this is, it seems to indicate that a temporary effect (shadow madness, corruption) is active?,
-	_333 = 333
+	_333 = 333,
 }

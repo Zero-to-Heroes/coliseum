@@ -6,8 +6,8 @@ import { uniq } from 'lodash';
 import { AllCardsService } from '../../services/all-cards.service';
 
 export class MulliganCardAction extends Action {
-	readonly playerMulligan: ReadonlyArray<number>;
-	readonly opponentMulligan: ReadonlyArray<number>;
+	readonly playerMulligan: readonly number[];
+	readonly opponentMulligan: readonly number[];
 
 	readonly allCards: AllCardsService;
 
@@ -29,26 +29,26 @@ export class MulliganCardAction extends Action {
 		return Object.assign(new MulliganCardAction(this.allCards), this, { textRaw: textRaw });
 	}
 
-	private buildMulliganText(cards: ReadonlyArray<number>): string {
+	private buildMulliganText(cards: readonly number[]): string {
 		if (!cards) {
 			return '';
 		}
-		const ownerNames: string[] = uniq(cards
-				.map((entityId) => ActionHelper.getOwner(this.entities, entityId))
-				.map((playerEntity) => playerEntity.name));
+		const ownerNames: string[] = uniq(
+			cards.map(entityId => ActionHelper.getOwner(this.entities, entityId)).map(playerEntity => playerEntity.name),
+		);
 		if (ownerNames.length !== 1) {
 			throw new Error('Invalid grouping of cards ' + ownerNames + ', ' + cards);
 		}
 		const ownerName = ownerNames[0];
 		const mulliganedCards = cards
-				.map((entityId) => ActionHelper.getCardId(this.entities, entityId))
-				.map((cardId) => this.allCards.getCard(cardId));
+			.map(entityId => ActionHelper.getCardId(this.entities, entityId))
+			.map(cardId => this.allCards.getCard(cardId));
 		let mulliganInfo = '';
 		// We don't have the mulligan info, so we just display the amount of cards being mulliganed
-		if (mulliganedCards.some((card) => !card)) {
+		if (mulliganedCards.some(card => !card)) {
 			mulliganInfo = `${mulliganedCards.length} cards`;
 		} else {
-			mulliganInfo = mulliganedCards.map((card) => card.name).join(', ');
+			mulliganInfo = mulliganedCards.map(card => card.name).join(', ');
 		}
 		const textRaw = `\t${ownerName} mulligans ${mulliganInfo}`;
 		return textRaw;

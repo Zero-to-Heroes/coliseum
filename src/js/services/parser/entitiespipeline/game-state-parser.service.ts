@@ -10,8 +10,7 @@ import { FullEntityHistoryItem } from '../../../models/history/full-entity-histo
 
 @Injectable()
 export class GameStateParserService {
-
-	public populateEntitiesUntilMulliganState(history: ReadonlyArray<HistoryItem>, entities: Map<number, Entity>): Map<number, Entity> {
+	public populateEntitiesUntilMulliganState(history: readonly HistoryItem[], entities: Map<number, Entity>): Map<number, Entity> {
 		for (const item of history) {
 			if (item instanceof TagChangeHistoryItem) {
 				const tagChange: TagChangeHistoryItem = item as TagChangeHistoryItem;
@@ -20,8 +19,10 @@ export class GameStateParserService {
 					break;
 				}
 				// For some solo modes (like puzzles) there is no mulligan, so we based ourselves on the STEP = READY tag
-				if (tagChange.tag.tag === GameTag.STEP
-						&& (tagChange.tag.value === Step.MAIN_READY || tagChange.tag.value === Step.BEGIN_MULLIGAN)) {
+				if (
+					tagChange.tag.tag === GameTag.STEP &&
+					(tagChange.tag.value === Step.MAIN_READY || tagChange.tag.value === Step.BEGIN_MULLIGAN)
+				) {
 					break;
 				}
 				entities = this.updateWithTagChange(tagChange, entities);
@@ -35,25 +36,19 @@ export class GameStateParserService {
 	}
 
 	private updateWithTagChange(historyItem: TagChangeHistoryItem, entities: Map<number, Entity>): Map<number, Entity> {
-		const entity: Entity = entities
-				.get(historyItem.tag.entity)
-				.updateTag(historyItem.tag.tag, historyItem.tag.value);
+		const entity: Entity = entities.get(historyItem.tag.entity).updateTag(historyItem.tag.tag, historyItem.tag.value);
 		return entities.set(entity.id, entity);
 	}
 
 	private updateWithShowEntity(historyItem: ShowEntityHistoryItem, entities: Map<number, Entity>): Map<number, Entity> {
 		// No default creation - if the entity is not registered yet, it's a bug
-		const entity: Entity = entities
-				.get(historyItem.entityDefintion.id)
-				.update(historyItem.entityDefintion);
+		const entity: Entity = entities.get(historyItem.entityDefintion.id).update(historyItem.entityDefintion);
 		return entities.set(entity.id, entity);
 	}
 
 	private updateWithFullEntity(historyItem: FullEntityHistoryItem, entities: Map<number, Entity>): Map<number, Entity> {
 		// No default creation - if the entity is not registered yet, it's a bug
-		const entity: Entity = entities
-				.get(historyItem.entityDefintion.id)
-				.update(historyItem.entityDefintion);
+		const entity: Entity = entities.get(historyItem.entityDefintion.id).update(historyItem.entityDefintion);
 		return entities.set(entity.id, entity);
 	}
 }

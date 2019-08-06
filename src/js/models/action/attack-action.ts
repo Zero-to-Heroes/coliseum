@@ -29,12 +29,12 @@ export class AttackAction extends Action implements HasTarget {
 		let damageText = '';
 		if (this.damages) {
 			damageText = this.damages
-					.map((amount, entityId) => {
-						const entityCardId = ActionHelper.getCardId(this.entities, entityId);
-						const entityCard = this.allCards.getCard(entityCardId);
-						return `${entityCard.name} takes ${amount} damage`;
-					})
-					.join(', ');
+				.map((amount, entityId) => {
+					const entityCardId = ActionHelper.getCardId(this.entities, entityId);
+					const entityCard = this.allCards.getCard(entityCardId);
+					return `${entityCard.name} takes ${amount} damage`;
+				})
+				.join(', ');
 		}
 		const textRaw = `\t${originCard.name} attacks ${targetCard.name}. ${damageText}`;
 		return Object.assign(new AttackAction(this.allCards), this, { textRaw: textRaw });

@@ -7,27 +7,23 @@ import { CardClass } from '../../models/enums/card-class';
 
 @Component({
 	selector: 'secret-revealed',
-	styleUrls: [
-		'../../../css/components/game/secret-revealed.component.scss'
-	],
+	styleUrls: ['../../../css/components/game/secret-revealed.component.scss'],
 	template: `
-        <div class="secret-revealed" cardElementResize [fontSizeRatio]="0.1">
-            <img class="splash" src="{{splashImage}}">
-            <div class="banner">
-                <img src="{{bannerImage}}">
-                <div class="text" resizeTarget><span>Secret!</span></div>
-            </div>
+		<div class="secret-revealed" cardElementResize [fontSizeRatio]="0.1">
+			<img class="splash" src="{{ splashImage }}" />
+			<div class="banner">
+				<img src="{{ bannerImage }}" />
+				<div class="text" resizeTarget><span>Secret!</span></div>
+			</div>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SecretRevealedComponent {
-
 	splashImage: string;
 	bannerImage: string;
 
-	constructor(private logger: NGXLogger, private cards: AllCardsService) {
-	}
+	constructor(private logger: NGXLogger, private cards: AllCardsService) {}
 
 	@Input('entity') set entity(value: Entity) {
 		this.logger.debug('[secret-revealed] setting new entity', value);
@@ -73,7 +69,7 @@ export class SecretRevealedComponent {
 			case 'MAGE':
 				return 'mage';
 			case 'PALADIN':
-					return 'paladin';
+				return 'paladin';
 			case 'ROGUE':
 				return 'rogue';
 			default:

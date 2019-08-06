@@ -6,8 +6,7 @@ import { uniq } from 'lodash';
 import { AllCardsService } from '../../services/all-cards.service';
 
 export class CardDiscardAction extends Action {
-
-	readonly data: ReadonlyArray<number>;
+	readonly data: readonly number[];
 	readonly controller: number;
 
 	constructor(private allCards: AllCardsService) {
@@ -23,30 +22,32 @@ export class CardDiscardAction extends Action {
 	}
 
 	public enrichWithText(): CardDiscardAction {
-		const playerEntity = this.data.map((entityId) => ActionHelper.getOwner(this.entities, entityId));
+		const playerEntity = this.data.map(entityId => ActionHelper.getOwner(this.entities, entityId));
 		if (!playerEntity || playerEntity.length === 0) {
 			console.error('[discard-action] could not find player owner', this.data);
 		}
-		const ownerNames: string[] = uniq(this.data
-				.map((entityId) => ActionHelper.getOwner(this.entities, entityId))
-				.map((entity) => {
+		const ownerNames: string[] = uniq(
+			this.data
+				.map(entityId => ActionHelper.getOwner(this.entities, entityId))
+				.map(entity => {
 					if (!entity) {
 						console.error('[discard-action] no player entity', entity, this.data, this.entities.get(this.data[0]).tags.toJS());
 					}
 					return entity.name;
-				}));
+				}),
+		);
 		if (ownerNames.length !== 1) {
 			throw new Error('[discard-action] Invalid grouping of cards ' + ownerNames + ', ' + this.data);
 		}
 		const ownerName = ownerNames[0];
 		const discardedCards = this.data
-				.map((entityId) => ActionHelper.getCardId(this.entities, entityId))
-				.map((cardId) => this.allCards.getCard(cardId));
+			.map(entityId => ActionHelper.getCardId(this.entities, entityId))
+			.map(cardId => this.allCards.getCard(cardId));
 		let discardInfo = '';
-		if (discardedCards.some((card) => !card || !card.name)) {
+		if (discardedCards.some(card => !card || !card.name)) {
 			discardInfo = `${discardedCards.length} cards`;
 		} else {
-			discardInfo = discardedCards.map((card) => card.name).join(', ');
+			discardInfo = discardedCards.map(card => card.name).join(', ');
 		}
 
 		const textRaw = `\t${ownerName} discards ` + discardInfo;

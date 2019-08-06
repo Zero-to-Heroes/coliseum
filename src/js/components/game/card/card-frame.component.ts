@@ -6,22 +6,19 @@ import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'card-frame',
-	styleUrls: [
-		'../../../../css/components/game/card/card-frame.component.scss'
-	],
+	styleUrls: ['../../../../css/components/game/card/card-frame.component.scss'],
 	template: `
-        <img src="{{image}}" class="card-frame" />
+		<img src="{{ image }}" class="card-frame" />
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardFrameComponent {
-
 	image: string;
 
 	private _cardId: string;
 	private _premium: boolean = undefined;
 
-	constructor(private cards: AllCardsService, private logger: NGXLogger) { }
+	constructor(private cards: AllCardsService, private logger: NGXLogger) {}
 
 	@Input('cardId') set cardId(cardId: string) {
 		this.logger.debug('[card-frame] setting cardId', cardId);
@@ -54,11 +51,7 @@ export class CardFrameComponent {
 
 	private buildFrame(cardClass: CardClass, cardType: CardType, premium: boolean): string {
 		const strType = '-' + CardType[cardType].toLowerCase();
-		const strClass = cardType === CardType.HERO_POWER
-				? ''
-				: (premium
-						? '-premium'
-						: '-' + CardClass[cardClass].toLowerCase());
+		const strClass = cardType === CardType.HERO_POWER ? '' : premium ? '-premium' : '-' + CardClass[cardClass].toLowerCase();
 		return `frame${strType}${strClass}`;
 	}
 }

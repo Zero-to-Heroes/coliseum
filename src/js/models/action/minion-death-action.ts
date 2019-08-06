@@ -5,7 +5,7 @@ import { AllCardsService } from '../../services/all-cards.service';
 import { ActionHelper } from '../../services/parser/action/action-helper';
 
 export class MinionDeathAction extends Action {
-	readonly deadMinions: ReadonlyArray<number>;
+	readonly deadMinions: readonly number[];
 
 	readonly allCards: AllCardsService;
 
@@ -24,10 +24,10 @@ export class MinionDeathAction extends Action {
 
 	public enrichWithText(): MinionDeathAction {
 		const deadMinionNames = this.deadMinions
-				.map((entityId) => ActionHelper.getCardId(this.entities, entityId))
-				.map((cardId) => this.allCards.getCard(cardId))
-				.map((card) => card.name)
-				.join(', ');
+			.map(entityId => ActionHelper.getCardId(this.entities, entityId))
+			.map(cardId => this.allCards.getCard(cardId))
+			.map(card => card.name)
+			.join(', ');
 		const textRaw = `\t${deadMinionNames} die`;
 		return Object.assign(new MinionDeathAction(this.allCards), this, { textRaw: textRaw });
 	}

@@ -10,24 +10,27 @@ import { NGXLogger } from 'ngx-logger';
 		'../../../../css/components/game/card/card-stats-colors.scss',
 	],
 	template: `
-        <div class="card-stats" *ngIf="hasStats" cardElementResize [fontSizeRatio]="0.2">
-            <div class="stat {{attackClass}}">
-                <img class="stat-icon" src="https://static.zerotoheroes.com/hearthstone/asset/manastorm/attack.png" />
-                <div class="stat-value" resizeTarget><span>{{_attack}}</span></div>
-            </div>
-            <div class="stat {{healthClass}}">
-                <img class="stat-icon" src="https://static.zerotoheroes.com/hearthstone/asset/manastorm/health_new.png" />
-                <div class="stat-value" resizeTarget><span>{{healthLeft}}</span></div>
-            </div>
-            <div class="stat armor">
-                <span resizeTarget>{{_armor}}</span>
-            </div>
-        </div>
+		<div class="card-stats" *ngIf="hasStats" cardElementResize [fontSizeRatio]="0.2">
+			<div class="stat {{ attackClass }}">
+				<img class="stat-icon" src="https://static.zerotoheroes.com/hearthstone/asset/manastorm/attack.png" />
+				<div class="stat-value" resizeTarget>
+					<span>{{ _attack }}</span>
+				</div>
+			</div>
+			<div class="stat {{ healthClass }}">
+				<img class="stat-icon" src="https://static.zerotoheroes.com/hearthstone/asset/manastorm/health_new.png" />
+				<div class="stat-value" resizeTarget>
+					<span>{{ healthLeft }}</span>
+				</div>
+			</div>
+			<div class="stat armor">
+				<span resizeTarget>{{ _armor }}</span>
+			</div>
+		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardStatsComponent {
-
 	hasStats: boolean;
 
 	attackClass: string;
@@ -42,7 +45,7 @@ export class CardStatsComponent {
 	private _damage: number;
 	private _durability: number;
 
-	constructor(private cards: AllCardsService, private logger: NGXLogger) { }
+	constructor(private cards: AllCardsService, private logger: NGXLogger) {}
 
 	@Input('cardId') set cardId(cardId: string) {
 		this.logger.debug('[card-stats] setting cardId', cardId);
@@ -107,7 +110,7 @@ export class CardStatsComponent {
 		}
 		this.hasStats = originalCard.attack || originalCard.health || originalCard.durability || originalCard.armor;
 
-		this.healthLeft = (this._health || this._durability) - (this._damage);
+		this.healthLeft = (this._health || this._durability) - this._damage;
 		this.updateAttackClass(originalCard);
 		this.updateHealthClass(originalCard);
 	}

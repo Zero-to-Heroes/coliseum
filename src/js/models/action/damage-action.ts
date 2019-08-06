@@ -18,7 +18,9 @@ export class DamageAction extends Action {
 	}
 
 	public enrichWithText(): DamageAction {
-		const textRaw = '\t' + this.damages
+		const textRaw =
+			'\t' +
+			this.damages
 				.map((amount, entityId) => {
 					const entityCardId = ActionHelper.getCardId(this.entities, entityId);
 					const entityCard = this.allCards.getCard(entityCardId);

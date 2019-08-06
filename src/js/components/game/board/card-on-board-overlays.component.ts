@@ -5,22 +5,18 @@ import { GameTag } from '../../../models/enums/game-tags';
 
 @Component({
 	selector: 'card-on-board-overlays',
-	styleUrls: [
-		'../../../../css/global/text.scss',
-		'../../../../css/components/game/board/card-on-board-overlays.component.scss',
-	],
+	styleUrls: ['../../../../css/global/text.scss', '../../../../css/components/game/board/card-on-board-overlays.component.scss'],
 	template: `
-        <div class="card-on-board-overlays" *ngIf="overlays.length > 0">
-            <img *ngFor="let overlay of overlays" class="overlay {{overlay[0]}}" src="{{overlay[1]}}" />
-        </div>
+		<div class="card-on-board-overlays" *ngIf="overlays.length > 0">
+			<img *ngFor="let overlay of overlays" class="overlay {{ overlay[0] }}" src="{{ overlay[1] }}" />
+		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardOnBoardOverlaysComponent {
-
 	overlays: string[][];
 
-	constructor(private logger: NGXLogger) { }
+	constructor(private logger: NGXLogger) {}
 
 	@Input('entity') set entity(value: Entity) {
 		this.logger.debug('[card-on-board-overlays] setting entity', value);
@@ -40,8 +36,7 @@ export class CardOnBoardOverlaysComponent {
 		if (value.getTag(GameTag.STEALTH) === 1) {
 			this.pushOverlay('minion_stealth');
 		}
-		if (value.getTag(GameTag.CANT_BE_TARGETED_BY_ABILITIES) === 1
-				&& value.getTag(GameTag.CANT_BE_TARGETED_BY_HERO_POWERS) === 1) {
+		if (value.getTag(GameTag.CANT_BE_TARGETED_BY_ABILITIES) === 1 && value.getTag(GameTag.CANT_BE_TARGETED_BY_HERO_POWERS) === 1) {
 			this.pushOverlay('minion_elusive'); // missing
 		}
 		if (value.getTag(GameTag.WINDFURY) === 1) {

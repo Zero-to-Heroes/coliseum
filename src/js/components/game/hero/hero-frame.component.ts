@@ -3,20 +3,17 @@ import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'hero-frame',
-	styleUrls: [
-		'../../../../css/components/game/hero/hero-frame.component.scss'
-	],
+	styleUrls: ['../../../../css/components/game/hero/hero-frame.component.scss'],
 	template: `
-        <img src="{{image}}" class="hero-frame" />
+		<img src="{{ image }}" class="hero-frame" />
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeroFrameComponent {
-
 	image: string;
 	_premium = false;
 
-	constructor(private logger: NGXLogger) { }
+	constructor(private logger: NGXLogger) {}
 
 	@Input('premium') set premium(premium: boolean) {
 		this.logger.debug('[hero-frame] setting premium', premium);

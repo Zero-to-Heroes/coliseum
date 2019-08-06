@@ -12,35 +12,39 @@ import { PlayerEntity } from '../../../models/game/player-entity';
 import { ActionHelper } from './action-helper';
 
 export class EndGameParser implements Parser {
-
-	constructor(private logger: NGXLogger) { }
+	constructor(private logger: NGXLogger) {}
 
 	public applies(item: HistoryItem): boolean {
-		return item instanceof TagChangeHistoryItem
-				&& item.tag.tag === GameTag.PLAYSTATE
-				&& [PlayState.LOST, PlayState.WON, PlayState.TIED, PlayState.CONCEDED].indexOf(item.tag.value) !== -1;
+		return (
+			item instanceof TagChangeHistoryItem &&
+			item.tag.tag === GameTag.PLAYSTATE &&
+			[PlayState.LOST, PlayState.WON, PlayState.TIED, PlayState.CONCEDED].indexOf(item.tag.value) !== -1
+		);
 	}
 
 	public parse(
-			item: TagChangeHistoryItem,
-			currentTurn: number,
-			entitiesBeforeAction: Map<number, Entity>,
-			history: ReadonlyArray<HistoryItem>,
-			players: ReadonlyArray<PlayerEntity>): Action[] {
-		return [EndGameAction.create({
-			timestamp: item.timestamp,
-			index: item.index,
-			entityId: players[0].id,
-			opponentId: players[1].id,
-			winStatus: [[item.tag.entity, item.tag.value]],
-		})];
+		item: TagChangeHistoryItem,
+		currentTurn: number,
+		entitiesBeforeAction: Map<number, Entity>,
+		history: readonly HistoryItem[],
+		players: readonly PlayerEntity[],
+	): Action[] {
+		return [
+			EndGameAction.create({
+				timestamp: item.timestamp,
+				index: item.index,
+				entityId: players[0].id,
+				opponentId: players[1].id,
+				winStatus: [[item.tag.entity, item.tag.value]],
+			}),
+		];
 	}
 
-	public reduce(actions: ReadonlyArray<Action>): ReadonlyArray<Action> {
+	public reduce(actions: readonly Action[]): readonly Action[] {
 		return ActionHelper.combineActions<EndGameAction>(
 			actions,
 			(previous, current) => this.shouldMergeActions(previous, current),
-			(previous, current) => this.mergeActions(previous, current)
+			(previous, current) => this.mergeActions(previous, current),
 		);
 	}
 
@@ -50,8 +54,7 @@ export class EndGameParser implements Parser {
 	}
 
 	private mergeActions(previousAction: EndGameAction, currentAction: EndGameAction): EndGameAction {
-		const winStatus: ReadonlyArray<[number, number]> =
-				[...(previousAction.winStatus || []), ...(currentAction.winStatus || [])];
+		const winStatus: readonly [number, number][] = [...(previousAction.winStatus || []), ...(currentAction.winStatus || [])];
 		return previousAction.updateAction<EndGameAction>({
 			winStatus: winStatus,
 		} as EndGameAction);

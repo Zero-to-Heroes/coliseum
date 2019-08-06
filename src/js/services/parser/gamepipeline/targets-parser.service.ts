@@ -9,9 +9,7 @@ import { HasTargets } from '../../../models/action/has-targets';
 
 @Injectable()
 export class TargetsParserService {
-
-	constructor(private logger: NGXLogger, private allCards: AllCardsService) {
-	}
+	constructor(private logger: NGXLogger, private allCards: AllCardsService) {}
 
 	public parseTargets(game: Game): Game {
 		let turns = game.turns;
@@ -31,17 +29,19 @@ export class TargetsParserService {
 			const newAction = this.enrichAction(turn.actions[i], previousAction);
 			newActions.push(newAction);
 		}
-		return turn.update({ actions: newActions as ReadonlyArray<Action> } as Turn);
+		return turn.update({ actions: newActions as readonly Action[] } as Turn);
 	}
 
 	private enrichAction(action: Action, previousAction: Action): Action {
 		if (this.hasTarget(action)) {
-			const targetPair: ReadonlyArray<[number, number]> = [[action.originId, action.targetId]];
-			return action.updateAction( { targets: targetPair } as Action);
+			const targetPair: readonly [number, number][] = [[action.originId, action.targetId]];
+			return action.updateAction({ targets: targetPair } as Action);
 		} else if (this.hasTargets(action)) {
-			const targetPairs = action.targetIds
-					.map(targetId => [action.originId, targetId] as [number, number]) as ReadonlyArray<[number, number]>;
-			return action.updateAction( { targets: targetPairs } as Action);
+			const targetPairs = action.targetIds.map(targetId => [action.originId, targetId] as [number, number]) as readonly [
+				number,
+				number,
+			][];
+			return action.updateAction({ targets: targetPairs } as Action);
 		}
 		return action;
 	}

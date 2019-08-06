@@ -7,7 +7,7 @@ import { ActionHelper } from '../../services/parser/action/action-helper';
 
 export class CardTargetAction extends Action implements HasTargets {
 	readonly originId: number;
-	readonly targetIds: ReadonlyArray<number>;
+	readonly targetIds: readonly number[];
 
 	readonly allCards: AllCardsService;
 
@@ -26,13 +26,12 @@ export class CardTargetAction extends Action implements HasTargets {
 
 	public enrichWithText(): CardTargetAction {
 		const originCardId = ActionHelper.getCardId(this.entities, this.originId);
-		const targetCardIds = this.targetIds
-				.map((entityId) => ActionHelper.getCardId(this.entities, entityId));
+		const targetCardIds = this.targetIds.map(entityId => ActionHelper.getCardId(this.entities, entityId));
 		const originCardName = this.allCards.getCard(originCardId).name;
 		const targetCardNames = targetCardIds
-				.map((cardId) => this.allCards.getCard(cardId))
-				.map((card) => card.name)
-				.join(', ');
+			.map(cardId => this.allCards.getCard(cardId))
+			.map(card => card.name)
+			.join(', ');
 		const textRaw = `\t${originCardName} targets ${targetCardNames}`;
 		return Object.assign(new CardTargetAction(this.allCards), this, { textRaw: textRaw });
 	}

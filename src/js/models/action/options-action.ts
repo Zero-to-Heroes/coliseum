@@ -4,7 +4,7 @@ import { Entity } from '../game/entity';
 import { AllCardsService } from '../../services/all-cards.service';
 
 export class OptionsAction extends Action {
-	readonly options: ReadonlyArray<number>;
+	readonly options: readonly number[];
 
 	constructor(private allCards: AllCardsService) {
 		super();

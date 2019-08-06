@@ -3,18 +3,15 @@ import { Events } from '../services/events.service';
 import { Entity } from '../models/game/entity';
 
 @Directive({
-  selector: '[cardTooltip]'
+	selector: '[cardTooltip]',
 })
 export class CardTooltipDirective {
-
 	@Input() tooltipEntity: Entity;
 	@Input() tooltipControllerEntity: Entity;
-	@Input() tooltipEnchantments: ReadonlyArray<Entity>;
+	@Input() tooltipEnchantments: readonly Entity[];
 	@Input() hasTooltip = true;
 
-	constructor(private el: ElementRef, private events: Events) {
-
-	}
+	constructor(private el: ElementRef, private events: Events) {}
 
 	@HostListener('mouseenter')
 	onMouseEnter() {
@@ -31,13 +28,7 @@ export class CardTooltipDirective {
 		}
 		// TODO: compute this once at component init + after each resize, instead of every time
 		// TODO: move the logic away to tooltips component, so it can take care of auto positioning
-		this.events.broadcast(
-			Events.SHOW_TOOLTIP,
-			this.tooltipEntity,
-			this.tooltipControllerEntity,
-			x,
-			y,
-			this.tooltipEnchantments);
+		this.events.broadcast(Events.SHOW_TOOLTIP, this.tooltipEntity, this.tooltipControllerEntity, x, y, this.tooltipEnchantments);
 	}
 
 	@HostListener('mouseleave')

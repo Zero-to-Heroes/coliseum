@@ -11,10 +11,9 @@ import { NGXLogger } from 'ngx-logger';
 
 @Injectable()
 export class StateProcessorService {
+	constructor(private logger: NGXLogger) {}
 
-	constructor(private logger: NGXLogger) { }
-
-	private readonly USEFUL_TAGS: ReadonlyArray<GameTag> = [
+	private readonly USEFUL_TAGS: readonly GameTag[] = [
 		GameTag.TAG_SCRIPT_DATA_NUM_1,
 		GameTag.TAG_SCRIPT_DATA_NUM_2,
 		GameTag.PREMIUM,
@@ -80,10 +79,11 @@ export class StateProcessorService {
 	];
 
 	public applyHistoryUntilNow(
-			previousStateEntities: Map<number, Entity>,
-			history: ReadonlyArray<HistoryItem>,
-			previousProcessedItem: HistoryItem,
-			item: HistoryItem): Map<number, Entity> {
+		previousStateEntities: Map<number, Entity>,
+		history: readonly HistoryItem[],
+		previousProcessedItem: HistoryItem,
+		item: HistoryItem,
+	): Map<number, Entity> {
 		const startIndex = history.indexOf(previousProcessedItem);
 		const stopIndex = history.indexOf(item);
 		const futureHistory = history.slice(startIndex, stopIndex);
@@ -106,17 +106,16 @@ export class StateProcessorService {
 		// TODO: options, choices, chosen entities
 	}
 
-	private updateWithEntity(historyItem: ShowEntityHistoryItem | FullEntityHistoryItem, entities: Map<number, Entity>): Map<number, Entity> {
-		const entity: Entity = entities
-				.get(historyItem.entityDefintion.id)
-				.update(historyItem.entityDefintion);
+	private updateWithEntity(
+		historyItem: ShowEntityHistoryItem | FullEntityHistoryItem,
+		entities: Map<number, Entity>,
+	): Map<number, Entity> {
+		const entity: Entity = entities.get(historyItem.entityDefintion.id).update(historyItem.entityDefintion);
 		return entities.set(entity.id, entity);
 	}
 
 	private updateWithChangeEntity(historyItem: ChangeEntityHistoryItem, entities: Map<number, Entity>): Map<number, Entity> {
-		const entity: Entity = entities
-				.get(historyItem.entityDefintion.id)
-				.update(historyItem.entityDefintion);
+		const entity: Entity = entities.get(historyItem.entityDefintion.id).update(historyItem.entityDefintion);
 		return entities.set(entity.id, entity);
 	}
 
@@ -128,9 +127,7 @@ export class StateProcessorService {
 			return entities;
 		}
 		// No default creation - if the entity is not registered yet, it's a bug
-		const entity: Entity = entities
-				.get(historyItem.tag.entity)
-				.updateTag(historyItem.tag.tag, historyItem.tag.value);
+		const entity: Entity = entities.get(historyItem.tag.entity).updateTag(historyItem.tag.tag, historyItem.tag.value);
 		return entities.set(entity.id, entity);
 	}
 }

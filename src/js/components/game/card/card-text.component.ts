@@ -8,25 +8,23 @@ import { GameTag } from '../../../models/enums/game-tags';
 
 @Component({
 	selector: 'card-text',
-	styleUrls: [
-		'../../../../css/global/text.scss',
-		'../../../../css/components/game/card/card-text.component.scss'
-	],
+	styleUrls: ['../../../../css/global/text.scss', '../../../../css/components/game/card/card-text.component.scss'],
 	template: `
-        <div class="card-text {{_cardType}}" [ngClass]="{ 'premium': premium }" *ngIf="text">
-            <div class="text"
-                    [fittext]="true"
-                    [minFontSize]="2"
-                    [useMaxFontSize]="true"
-                    [activateOnResize]="false"
-                    [modelToWatch]="dirtyFlag"
-                    [innerHTML]="text"></div>
-        </div>
+		<div class="card-text {{ _cardType }}" [ngClass]="{ 'premium': premium }" *ngIf="text">
+			<div
+				class="text"
+				[fittext]="true"
+				[minFontSize]="2"
+				[useMaxFontSize]="true"
+				[activateOnResize]="false"
+				[modelToWatch]="dirtyFlag"
+				[innerHTML]="text"
+			></div>
+		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardTextComponent {
-
 	private readonly CARD_IDS_TO_FIX = [
 		'DAL_357t', // Spirit of Lucentbark
 		'DALA_BOSS_07p', // Take Flight!
@@ -55,22 +53,19 @@ export class CardTextComponent {
 	private _controller: Entity;
 
 	constructor(
-			private cards: AllCardsService,
-			private domSanitizer: DomSanitizer,
-			private logger: NGXLogger,
-			private cdr: ChangeDetectorRef) {
-		document.addEventListener(
-			'card-resize',
-			(event) => this.resizeText(),
-			true);
-		}
+		private cards: AllCardsService,
+		private domSanitizer: DomSanitizer,
+		private logger: NGXLogger,
+		private cdr: ChangeDetectorRef,
+	) {
+		document.addEventListener('card-resize', event => this.resizeText(), true);
+	}
 
 	@Input('entity') set entity(value: Entity) {
 		this.logger.debug('[card-text] setting entity', value.tags.toJS());
 		this._entity = value;
 		this.updateText();
 	}
-
 
 	@Input('controller') set controller(value: Entity) {
 		this.logger.debug('[card-text] setting controller', value && value.tags.toJS());
@@ -86,20 +81,19 @@ export class CardTextComponent {
 		this.text = undefined;
 		const originalCard = this.cards.getCard(cardId);
 		if (!originalCard.text) {
-			if (!(<ViewRef>this.cdr).destroyed) {
+			if (!(this.cdr as ViewRef).destroyed) {
 				this.cdr.detectChanges();
 			}
 			return;
 		}
 
 		// There are a few cards whose text is truncated in the json cards export
-		const originalText = this.CARD_IDS_TO_FIX.indexOf(cardId) !== -1
-				? originalCard.text + ' @' + originalCard.collectionText
-				: originalCard.text;
+		const originalText =
+			this.CARD_IDS_TO_FIX.indexOf(cardId) !== -1 ? originalCard.text + ' @' + originalCard.collectionText : originalCard.text;
 		let description: string = originalText
-				.replace('\n', '<br/>')
-				.replace(/\u00a0/g, ' ')
-				.replace(/^\[x\]/, '');
+			.replace('\n', '<br/>')
+			.replace(/\u00a0/g, ' ')
+			.replace(/^\[x\]/, '');
 		// E.g. Fatespinner
 		if (this._entity.getTag(GameTag.HIDDEN_CHOICE) && description.indexOf('@') !== -1) {
 			// console.log('hidden choice', this._entity.tags.toJS(), description);
@@ -122,16 +116,16 @@ export class CardTextComponent {
 		}
 
 		description = description
-				// Now replace the value, if relevant
-				.replace('@', `${this._entity.getTag(GameTag.TAG_SCRIPT_DATA_NUM_1)}`)
-				.replace(/\$(\d+)/g, this.modifier(damageBonus, doubleDamage))
-				.replace(/\#(\d+)/g, this.modifier(damageBonus, doubleDamage));
+			// Now replace the value, if relevant
+			.replace('@', `${this._entity.getTag(GameTag.TAG_SCRIPT_DATA_NUM_1)}`)
+			.replace(/\$(\d+)/g, this.modifier(damageBonus, doubleDamage))
+			.replace(/\#(\d+)/g, this.modifier(damageBonus, doubleDamage));
 		this.text = this.domSanitizer.bypassSecurityTrustHtml(description);
 
 		// Text is not the same color for premium cards
 		this.premium = this._entity.getTag(GameTag.PREMIUM) === 1;
 
-		if (!(<ViewRef>this.cdr).destroyed) {
+		if (!(this.cdr as ViewRef).destroyed) {
 			this.cdr.detectChanges();
 		}
 	}
@@ -143,7 +137,7 @@ export class CardTextComponent {
 
 	private resizeText() {
 		this.dirtyFlag = !this.dirtyFlag;
-		if (!(<ViewRef>this.cdr).destroyed) {
+		if (!(this.cdr as ViewRef).destroyed) {
 			this.cdr.detectChanges();
 		}
 	}

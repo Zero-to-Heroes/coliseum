@@ -5,9 +5,7 @@ import { Turn } from '../../../models/game/turn';
 
 @Injectable()
 export class NarratorService {
-
-	constructor(private logger: NGXLogger) {
-	}
+	constructor(private logger: NGXLogger) {}
 
 	public populateActionText(game: Game) {
 		let turnsWithActions = game.turns;
@@ -15,14 +13,14 @@ export class NarratorService {
 		for (let i = 0; i < numberOfTurns; i++) {
 			// this.logger.debug('getting turn', i, game.turns.toJS());
 			const turn = game.turns.get(i);
-			const enrichedActions = turn.actions
-				.map((action) => {
-					try {
-						return action.enrichWithText();
-					} catch (e) {
-						this.logger.error('Could not enrich action with text', e, action);
-						return action;
-					}});
+			const enrichedActions = turn.actions.map(action => {
+				try {
+					return action.enrichWithText();
+				} catch (e) {
+					this.logger.error('Could not enrich action with text', e, action);
+					return action;
+				}
+			});
 			const enrichedTurn = turn.update({ actions: enrichedActions });
 			turnsWithActions = turnsWithActions.set(i, enrichedTurn);
 		}
@@ -30,13 +28,12 @@ export class NarratorService {
 	}
 
 	public createGameStory(game: Game): Game {
-		const allActions = game.turns.toArray()
+		const allActions = game.turns
+			.toArray()
 			.sort((a: Turn, b: Turn) => a.index - b.index)
-			.map((turn) => turn.actions)
+			.map(turn => turn.actions)
 			.reduce((a, b) => a.concat(b), []);
-		const fullStoryRaw: string = allActions
-			.map((action) => action.textRaw)
-			.join('\n');
+		const fullStoryRaw: string = allActions.map(action => action.textRaw).join('\n');
 		return Game.createGame(game, { fullStoryRaw: '\n' + fullStoryRaw });
 	}
 }

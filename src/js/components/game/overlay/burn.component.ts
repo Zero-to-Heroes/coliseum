@@ -5,24 +5,21 @@ import { Map } from 'immutable';
 
 @Component({
 	selector: 'burn',
-	styleUrls: [
-		'../../../../css/components/game/overlay/burn.component.scss'
-	],
+	styleUrls: ['../../../../css/components/game/overlay/burn.component.scss'],
 	template: `
-        <div class="burn">
-            <li *ngFor="let entity of burnedCards; let i = index; trackBy: trackByFn">
-                <card [entity]="entity" [hasTooltip]="false" [burned]="true"></card>
-            </li>
+		<div class="burn">
+			<li *ngFor="let entity of burnedCards; let i = index; trackBy: trackByFn">
+				<card [entity]="entity" [hasTooltip]="false" [burned]="true"></card>
+			</li>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BurnComponent {
-
 	_entities: Map<number, Entity>;
-	_burned: ReadonlyArray<number>;
+	_burned: readonly number[];
 
-	burnedCards: ReadonlyArray<Entity>;
+	burnedCards: readonly Entity[];
 
 	constructor(private logger: NGXLogger) {}
 
@@ -32,7 +29,7 @@ export class BurnComponent {
 		this.updateEntityGroups();
 	}
 
-	@Input('burned') set burned(value: ReadonlyArray<number>) {
+	@Input('burned') set burned(value: readonly number[]) {
 		this.logger.debug('[burn] setting burned', value);
 		this._burned = value;
 		this.updateEntityGroups();
@@ -47,7 +44,6 @@ export class BurnComponent {
 			this.logger.debug('[burn] entities not initialized yet');
 			return;
 		}
-		this.burnedCards = this._entities.toArray()
-				.filter(entity => this._burned.indexOf(entity.id) !== -1);
+		this.burnedCards = this._entities.toArray().filter(entity => this._burned.indexOf(entity.id) !== -1);
 	}
 }

@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, ChangeDetectorRef, AfterViewInit, ElementRef, ViewRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, ChangeDetectorRef, ElementRef, ViewRef } from '@angular/core';
 import { AllCardsService } from '../../../services/all-cards.service';
 import { NGXLogger } from 'ngx-logger';
 
@@ -10,19 +10,22 @@ import { NGXLogger } from 'ngx-logger';
 		'../../../../css/components/game/card/card-stats-colors.scss',
 	],
 	template: `
-        <div class="card-stats" *ngIf="hasStats" cardElementResize [fontSizeRatio]="0.2">
-            <div class="stat {{attackClass}}">
-                <div class="stat-value" resizeTarget><span>{{_attack}}</span></div>
-            </div>
-            <div class="stat {{healthClass}}">
-                <div class="stat-value" resizeTarget><span>{{healthLeft}}</span></div>
-            </div>
-        </div>
+		<div class="card-stats" *ngIf="hasStats" cardElementResize [fontSizeRatio]="0.2">
+			<div class="stat {{ attackClass }}">
+				<div class="stat-value" resizeTarget>
+					<span>{{ _attack }}</span>
+				</div>
+			</div>
+			<div class="stat {{ healthClass }}">
+				<div class="stat-value" resizeTarget>
+					<span>{{ healthLeft }}</span>
+				</div>
+			</div>
+		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BoardCardStatsComponent {
-
 	hasStats: boolean;
 
 	attackClass: string;
@@ -35,12 +38,7 @@ export class BoardCardStatsComponent {
 	private _health: number;
 	private _damage: number;
 
-	constructor(
-		private cards: AllCardsService,
-		private cdr: ChangeDetectorRef,
-		private elRef: ElementRef,
-		private logger: NGXLogger) {
-	}
+	constructor(private cards: AllCardsService, private cdr: ChangeDetectorRef, private elRef: ElementRef, private logger: NGXLogger) {}
 
 	@Input('cardId') set cardId(cardId: string) {
 		this.logger.debug('[board-card-stats] setting cardId', cardId);
@@ -87,10 +85,10 @@ export class BoardCardStatsComponent {
 		}
 		this.hasStats = originalCard.attack || originalCard.health || originalCard.durability || originalCard.armor;
 
-		this.healthLeft = this._health - (this._damage);
+		this.healthLeft = this._health - this._damage;
 		this.updateAttackClass(originalCard);
 		this.updateHealthClass(originalCard);
-		if (!(<ViewRef>this.cdr).destroyed) {
+		if (!(this.cdr as ViewRef).destroyed) {
 			this.cdr.detectChanges();
 		}
 	}
@@ -123,7 +121,7 @@ export class BoardCardStatsComponent {
 		const fontSize = 0.2 * el.getBoundingClientRect().width;
 		const textEl = this.elRef.nativeElement.querySelector('.card-stats');
 		textEl.style.fontSize = fontSize + 'px';
-		if (!(<ViewRef>this.cdr).destroyed) {
+		if (!(this.cdr as ViewRef).destroyed) {
 			this.cdr.detectChanges();
 		}
 	}

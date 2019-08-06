@@ -1,7 +1,6 @@
-import { Component, ChangeDetectionStrategy, NgZone, ChangeDetectorRef, HostListener, ViewRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, NgZone, ChangeDetectorRef, ViewRef } from '@angular/core';
 
 import { Map } from 'immutable';
-import { Key } from 'ts-keycode-enum';
 import { Entity } from '../models/game/entity';
 import { Game } from '../models/game/game';
 import { GameParserService } from '../services/parser/game-parser.service';
@@ -15,50 +14,46 @@ import { FatigueDamageAction } from '../models/action/fatigue-damage-action';
 import { QuestCompletedAction } from '../models/action/quest-completed-action';
 import { ReplayOptions } from '../models/replay-options';
 import { Turn } from '../models/game/turn';
-import { Action } from '../models/action/action';
 
 @Component({
-	styleUrls: [
-		'../../css/components/app.component.scss'
-	],
+	styleUrls: ['../../css/components/app.component.scss'],
 	template: `
 		<div class="coliseum wide">
-			<game *ngIf="game"
-					[turn]="turnString"
-					[playerId]="game.players[0].playerId"
-					[opponentId]="game.players[1].playerId"
-					[playerName]="game.players[0].name"
-					[opponentName]="game.players[1].name"
-					[activePlayer]="activePlayer"
-					[activeSpell]="activeSpell"
-					[isMulligan]="isMulligan"
-					[isEndGame]="isEndGame"
-					[endGameStatus]="endGameStatus"
-					[entities]="entities"
-					[targets]="targets"
-					[secretRevealed]="secretRevealed"
-					[questCompleted]="questCompleted"
-					[discovers]="discovers"
-					[burned]="burned"
-					[fatigue]="fatigue"
-					[chosen]="chosen"
-					[options]="options"
-					[showHiddenCards]="showHiddenCards"
-					[crossed]="crossed">
+			<game
+				*ngIf="game"
+				[turn]="turnString"
+				[playerId]="game.players[0].playerId"
+				[opponentId]="game.players[1].playerId"
+				[playerName]="game.players[0].name"
+				[opponentName]="game.players[1].name"
+				[activePlayer]="activePlayer"
+				[activeSpell]="activeSpell"
+				[isMulligan]="isMulligan"
+				[isEndGame]="isEndGame"
+				[endGameStatus]="endGameStatus"
+				[entities]="entities"
+				[targets]="targets"
+				[secretRevealed]="secretRevealed"
+				[questCompleted]="questCompleted"
+				[discovers]="discovers"
+				[burned]="burned"
+				[fatigue]="fatigue"
+				[chosen]="chosen"
+				[options]="options"
+				[showHiddenCards]="showHiddenCards"
+				[crossed]="crossed"
+			>
 			</game>
-			<seeker *ngIf="totalTime > 0"
-					[totalTime]="totalTime"
-					[currentTime]="currentTime"
-					(seek)="onSeek($event)">
-			</seeker>
+			<seeker *ngIf="totalTime > 0" [totalTime]="totalTime" [currentTime]="currentTime" (seek)="onSeek($event)"> </seeker>
 			<turn-narrator [text]="text"></turn-narrator>
 			<controls
-					[reviewId]="reviewId"
-					(nextAction)="onNextAction()"
-					(nextTurn)="onNextTurn()"
-					(previousAction)="onPreviousAction()"
-					(previousTurn)="onPreviousTurn()"
-					(showHiddenCards)="onShowHiddenCards($event)">
+				[reviewId]="reviewId"
+				(nextAction)="onNextAction()"
+				(nextTurn)="onNextTurn()"
+				(previousAction)="onPreviousAction()"
+				(previousTurn)="onPreviousTurn()"
+				(showHiddenCards)="onShowHiddenCards($event)"
+			>
 			</controls>
 			<tooltips></tooltips>
 		</div>
@@ -66,22 +61,21 @@ import { Action } from '../models/action/action';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
-
 	reviewId: string;
 
 	game: Game;
 	entities: Map<number, Entity>;
-	crossed: ReadonlyArray<number>;
+	crossed: readonly number[];
 	text: string;
 	turnString: string;
 	activePlayer: number;
 	activeSpell: number;
-	discovers: ReadonlyArray<number>;
-	chosen: ReadonlyArray<number>;
-	burned: ReadonlyArray<number>;
+	discovers: readonly number[];
+	chosen: readonly number[];
+	burned: readonly number[];
 	fatigue: number;
-	targets: ReadonlyArray<[number, number]>;
-	options: ReadonlyArray<number>;
+	targets: readonly [number, number][];
+	options: readonly number[];
 	secretRevealed: number;
 	questCompleted: number;
 	showHiddenCards = false;
@@ -97,17 +91,18 @@ export class AppComponent {
 	private currentTurn = 0;
 
 	constructor(
-			private gameParser: GameParserService,
-			private events: Events,
-			private cdr: ChangeDetectorRef,
-			private logger: NGXLogger,
-			private zone: NgZone) {
+		private gameParser: GameParserService,
+		private events: Events,
+		private cdr: ChangeDetectorRef,
+		private logger: NGXLogger,
+		private zone: NgZone,
+	) {
 		console.log('building coliseum app component');
 		const existingColiseum = window['coliseum'] || {};
 		console.log('existing', existingColiseum);
 		window['coliseum'] = Object.assign(existingColiseum, {
 			zone: this.zone,
-			component: this
+			component: this,
 		});
 		console.log('new coliseum', window['coliseum']);
 	}
@@ -119,16 +114,13 @@ export class AppComponent {
 		const turn = parseInt(this.getSearchParam('turn')) || 0;
 		const action = parseInt(this.getSearchParam('action')) || 0;
 		this.reviewId = (options && options.reviewId) || this.getSearchParam('reviewId');
-		this.currentTurn = turn <= 0
+		this.currentTurn = turn <= 0 ? 0 : turn >= this.game.turns.size ? this.game.turns.size - 1 : turn;
+		this.currentActionInTurn =
+			action <= 0
 				? 0
-				: (turn >= this.game.turns.size
-						? this.game.turns.size - 1
-						: turn);
-		this.currentActionInTurn = action <= 0
-				? 0
-				: (action >= this.game.turns.get(this.currentTurn).actions.length
-						? this.game.turns.get(this.currentTurn).actions.length - 1
-						: action);
+				: action >= this.game.turns.get(this.currentTurn).actions.length
+				? this.game.turns.get(this.currentTurn).actions.length - 1
+				: action;
 		this.populateInfo();
 	}
 
@@ -150,7 +142,7 @@ export class AppComponent {
 
 	onShowHiddenCards(event) {
 		this.showHiddenCards = event;
-		if (!(<ViewRef>this.cdr).destroyed) {
+		if (!(this.cdr as ViewRef).destroyed) {
 			this.cdr.detectChanges();
 		}
 	}
@@ -199,7 +191,7 @@ export class AppComponent {
 		this.updateUrlQueryString();
 		this.logger.debug('[app] setting turn', this.turnString);
 		this.logger.info('[app] Considering action', this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn]);
-		if (!(<ViewRef>this.cdr).destroyed) {
+		if (!(this.cdr as ViewRef).destroyed) {
 			this.cdr.detectChanges();
 		}
 	}
@@ -239,11 +231,11 @@ export class AppComponent {
 		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].endGameStatus;
 	}
 
-	private computeOptions(): ReadonlyArray<number> {
+	private computeOptions(): readonly number[] {
 		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].options;
 	}
 
-	private computeBurned(): ReadonlyArray<number> {
+	private computeBurned(): readonly number[] {
 		const action = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn];
 		if (action instanceof CardBurnAction) {
 			return action.burnedCardIds;
@@ -251,7 +243,7 @@ export class AppComponent {
 		return null;
 	}
 
-	private computeDiscovers(): ReadonlyArray<number> {
+	private computeDiscovers(): readonly number[] {
 		const action = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn];
 		if (action instanceof DiscoverAction) {
 			return action.choices;
@@ -259,7 +251,7 @@ export class AppComponent {
 		return null;
 	}
 
-	private computeChosen(): ReadonlyArray<number> {
+	private computeChosen(): readonly number[] {
 		const action = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn];
 		if (action instanceof DiscoverAction) {
 			return action.chosen;
@@ -299,7 +291,7 @@ export class AppComponent {
 		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].entities;
 	}
 
-	private computeCrossed(): ReadonlyArray<number> {
+	private computeCrossed(): readonly number[] {
 		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].crossedEntities;
 	}
 
@@ -308,18 +300,18 @@ export class AppComponent {
 	}
 
 	private computeTurnString(): string {
-		return this.game.turns.get(this.currentTurn).turn === 'mulligan'
-				? 'Mulligan'
-				: `Turn${this.game.turns.get(this.currentTurn).turn}`;
+		return this.game.turns.get(this.currentTurn).turn === 'mulligan' ? 'Mulligan' : `Turn${this.game.turns.get(this.currentTurn).turn}`;
 	}
 
-	private computeTargets(): ReadonlyArray<[number, number]> {
+	private computeTargets(): readonly [number, number][] {
 		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].targets;
 	}
 
 	private moveCursorToNextAction() {
-		if (this.currentActionInTurn >= this.game.turns.get(this.currentTurn).actions.length - 1
-				&& this.currentTurn >= this.game.turns.size - 1) {
+		if (
+			this.currentActionInTurn >= this.game.turns.get(this.currentTurn).actions.length - 1 &&
+			this.currentTurn >= this.game.turns.size - 1
+		) {
 			return;
 		}
 		this.currentActionInTurn++;
@@ -364,10 +356,9 @@ export class AppComponent {
 		const searchString = window.location.search.substring(1);
 		const searchParams = searchString.split('&');
 		return searchParams
-				.filter(param => param.indexOf('=') !== -1)
-				.filter(param => param.split('=')[0] === name)
-				.map(param => param.split('=')[1])
-				[0];
+			.filter(param => param.indexOf('=') !== -1)
+			.filter(param => param.split('=')[0] === name)
+			.map(param => param.split('=')[1])[0];
 	}
 
 	private updateUrlQueryString() {

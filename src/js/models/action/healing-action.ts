@@ -5,7 +5,6 @@ import { AllCardsService } from '../../services/all-cards.service';
 import { ActionHelper } from '../../services/parser/action/action-helper';
 
 export class HealingAction extends Action {
-
 	constructor(private allCards: AllCardsService) {
 		super();
 	}
@@ -19,7 +18,9 @@ export class HealingAction extends Action {
 	}
 
 	public enrichWithText(): HealingAction {
-		const textRaw = '\t' + this.damages
+		const textRaw =
+			'\t' +
+			this.damages
 				.map((amount, entityId) => {
 					const entityCardId = ActionHelper.getCardId(this.entities, entityId);
 					const entityCard = this.allCards.getCard(entityCardId);

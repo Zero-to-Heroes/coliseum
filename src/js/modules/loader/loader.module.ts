@@ -11,20 +11,11 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 		BrowserModule,
 		HttpClientModule,
 		LoggerModule.forRoot({
-			level: NgxLoggerLevel.WARN
+			level: NgxLoggerLevel.WARN,
 		}),
 	],
-	declarations: [
-		ReplayLoaderComponent,
-	],
-	providers: [
-		Location,
-		{ provide: LocationStrategy, useClass: PathLocationStrategy },
-		HttpClient,
-	],
-	entryComponents: [
-		ReplayLoaderComponent
-	]
+	declarations: [ReplayLoaderComponent],
+	providers: [Location, { provide: LocationStrategy, useClass: PathLocationStrategy }, HttpClient],
+	entryComponents: [ReplayLoaderComponent],
 })
-export class LoaderModule {
- }
+export class LoaderModule {}

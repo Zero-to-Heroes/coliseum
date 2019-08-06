@@ -5,27 +5,17 @@ import { GameTag } from '../../../models/enums/game-tags';
 
 @Component({
 	selector: 'weapon',
-	styleUrls: [
-		'../../../../css/components/game/hero/weapon.component.scss'
-	],
+	styleUrls: ['../../../../css/components/game/hero/weapon.component.scss'],
 	template: `
-        <div class="weapon"
-                cardTooltip [tooltipEntity]="_weapon"
-                [attr.data-entity-id]="entityId">
-            <weapon-art [cardId]="cardId" *ngIf="!exhausted"></weapon-art>
-            <weapon-frame [exhausted]="exhausted"></weapon-frame>
-			<weapon-stats
-                    [cardId]="cardId"
-                    [attack]="attack"
-					[durability]="durability"
-					[damage]="damage">
-            </weapon-stats>
+		<div class="weapon" cardTooltip [tooltipEntity]="_weapon" [attr.data-entity-id]="entityId">
+			<weapon-art [cardId]="cardId" *ngIf="!exhausted"></weapon-art>
+			<weapon-frame [exhausted]="exhausted"></weapon-frame>
+			<weapon-stats [cardId]="cardId" [attack]="attack" [durability]="durability" [damage]="damage"> </weapon-stats>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WeaponComponent {
-
 	entityId: number;
 	cardId: string;
 	attack: number;

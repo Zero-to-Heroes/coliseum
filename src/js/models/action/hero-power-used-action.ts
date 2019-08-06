@@ -4,7 +4,6 @@ import { Entity } from '../game/entity';
 import { ActionHelper } from '../../services/parser/action/action-helper';
 import { AllCardsService } from '../../services/all-cards.service';
 
-
 export class HeroPowerUsedAction extends Action {
 	readonly entityId: number;
 

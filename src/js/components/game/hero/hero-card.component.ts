@@ -6,32 +6,25 @@ import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'hero-card',
-	styleUrls: [
-		'../../../../css/components/game/hero/hero-card.component.scss'
-	],
+	styleUrls: ['../../../../css/components/game/hero/hero-card.component.scss'],
 	template: `
-        <div class="hero-card"
-                [ngClass]="{ 'highlight': _option }"
-                [attr.data-entity-id]="entityId"
-                [attr.data-player-entity-id]="playerEntityId">
-            <hero-art [cardId]="cardId"></hero-art>
-            <hero-frame [premium]="premium"></hero-frame>
-            <hero-overlays [entity]="_entity"></hero-overlays>
-            <secrets [secrets]="_secrets" *ngIf="_secrets && _secrets.length > 0"></secrets>
-			<hero-stats
-					[cardId]="cardId"
-					[attack]="attack"
-					[health]="health"
-					[damage]="damage"
-                    [armor]="armor">
-            </hero-stats>
-            <damage *ngIf="shownDamage" [amount]="shownDamage"></damage>
+		<div
+			class="hero-card"
+			[ngClass]="{ 'highlight': _option }"
+			[attr.data-entity-id]="entityId"
+			[attr.data-player-entity-id]="playerEntityId"
+		>
+			<hero-art [cardId]="cardId"></hero-art>
+			<hero-frame [premium]="premium"></hero-frame>
+			<hero-overlays [entity]="_entity"></hero-overlays>
+			<secrets [secrets]="_secrets" *ngIf="_secrets && _secrets.length > 0"></secrets>
+			<hero-stats [cardId]="cardId" [attack]="attack" [health]="health" [damage]="damage" [armor]="armor"> </hero-stats>
+			<damage *ngIf="shownDamage" [amount]="shownDamage"></damage>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeroCardComponent {
-
 	_entity: Entity;
 	// Some actions use the player id instead of the entity id when describing targets
 	// so having both of them makes us able to ignore these discrepancies
@@ -46,9 +39,9 @@ export class HeroCardComponent {
 	shownDamage: number;
 	premium: boolean;
 	_option: boolean;
-	_secrets: ReadonlyArray<Entity>;
+	_secrets: readonly Entity[];
 
-	constructor(private logger: NGXLogger) { }
+	constructor(private logger: NGXLogger) {}
 
 	@Input('hero') set hero(hero: Entity) {
 		this.logger.debug('[hero-card] setting hero', hero, hero.tags.toJS());
@@ -71,7 +64,7 @@ export class HeroCardComponent {
 		this._option = value;
 	}
 
-	@Input('secrets') set secrets(value: ReadonlyArray<Entity>) {
+	@Input('secrets') set secrets(value: readonly Entity[]) {
 		this.logger.debug('[hero-card] setting secrets', value);
 		this._secrets = value;
 	}

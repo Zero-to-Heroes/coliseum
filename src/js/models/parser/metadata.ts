@@ -1,4 +1,3 @@
-import { EnrichedTag } from './enriched-tag';
 import { Info } from './info';
 
 export interface MetaData {
@@ -7,5 +6,5 @@ export interface MetaData {
 	readonly parentIndex: number;
 	readonly ts: number;
 	readonly index: number;
-	readonly info: ReadonlyArray<Info>;
+	readonly info: readonly Info[];
 }

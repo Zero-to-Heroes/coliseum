@@ -5,23 +5,19 @@ import { GameTag } from '../../../models/enums/game-tags';
 
 @Component({
 	selector: 'power-indicator',
-	styleUrls: [
-		'../../../../css/global/text.scss',
-		'../../../../css/components/game/board/power-indicator.component.scss',
-	],
+	styleUrls: ['../../../../css/global/text.scss', '../../../../css/components/game/board/power-indicator.component.scss'],
 	template: `
-        <div class="power-indicator {{effect}}" *ngIf="effect">
-            <img class="icon" src="{{effectImage}}" />
-        </div>
+		<div class="power-indicator {{ effect }}" *ngIf="effect">
+			<img class="icon" src="{{ effectImage }}" />
+		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PowerIndicatorComponent {
-
 	effect: string;
 	effectImage: string;
 
-	constructor(private logger: NGXLogger) { }
+	constructor(private logger: NGXLogger) {}
 
 	@Input('entity') set entity(value: Entity) {
 		this.logger.debug('[power-indicator] setting entity', value);

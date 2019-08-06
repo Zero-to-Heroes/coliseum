@@ -5,28 +5,23 @@ import { playerName } from '../../../../assets/svg/player_name';
 
 @Component({
 	selector: 'player-name',
-	styleUrls: [
-		'../../../../css/components/game/overlay/player-name.component.scss'
-	],
+	styleUrls: ['../../../../css/components/game/overlay/player-name.component.scss'],
 	template: `
-        <div class="player-name" [ngClass]="{'active': _active}" cardElementResize [fontSizeRatio]="0.08" [keepOpacity]="true">
-            <div class="background" [innerHTML]="svg"></div>
-            <div class="text" resizeTarget><span>{{_name}}</span></div>
+		<div class="player-name" [ngClass]="{ 'active': _active }" cardElementResize [fontSizeRatio]="0.08" [keepOpacity]="true">
+			<div class="background" [innerHTML]="svg"></div>
+			<div class="text" resizeTarget>
+				<span>{{ _name }}</span>
+			</div>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlayerNameComponent {
-
 	_name: string;
 	_active: boolean;
 	svg: SafeHtml;
 
-	constructor(
-			private logger: NGXLogger,
-			private domSanitizer: DomSanitizer,
-			private cdr: ChangeDetectorRef,
-			private elRef: ElementRef) {
+	constructor(private logger: NGXLogger, private domSanitizer: DomSanitizer, private cdr: ChangeDetectorRef, private elRef: ElementRef) {
 		this.svg = this.domSanitizer.bypassSecurityTrustHtml(playerName);
 	}
 
@@ -54,7 +49,7 @@ export class PlayerNameComponent {
 		const fontSize = 0.17 * el.getBoundingClientRect().height;
 		const textEl = this.elRef.nativeElement.querySelector('.text');
 		textEl.style.fontSize = fontSize + 'px';
-		if (!(<ViewRef>this.cdr).destroyed) {
+		if (!(this.cdr as ViewRef).destroyed) {
 			this.cdr.detectChanges();
 		}
 	}

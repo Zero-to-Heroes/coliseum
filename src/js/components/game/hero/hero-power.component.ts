@@ -5,23 +5,17 @@ import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'hero-power',
-	styleUrls: [
-		'../../../../css/components/game/hero/hero-power.component.scss'
-	],
+	styleUrls: ['../../../../css/components/game/hero/hero-power.component.scss'],
 	template: `
-        <div class="hero-power"
-                [ngClass]="{ 'highlight': _option }"
-                cardTooltip [tooltipEntity]="entity"
-                [attr.data-entity-id]="entityId">
-            <hero-power-art [cardId]="cardId" *ngIf="!exhausted"></hero-power-art>
-            <hero-power-frame [exhausted]="exhausted" [premium]="premium"></hero-power-frame>
+		<div class="hero-power" [ngClass]="{ 'highlight': _option }" cardTooltip [tooltipEntity]="entity" [attr.data-entity-id]="entityId">
+			<hero-power-art [cardId]="cardId" *ngIf="!exhausted"></hero-power-art>
+			<hero-power-frame [exhausted]="exhausted" [premium]="premium"></hero-power-frame>
 			<hero-power-cost [cardId]="cardId" [cost]="cost" *ngIf="!exhausted"></hero-power-cost>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeroPowerComponent {
-
 	entity: Entity;
 	entityId: number;
 	cardId: string;

@@ -13,10 +13,8 @@ import { ActionHelper } from './action-helper';
 import { NGXLogger } from 'ngx-logger';
 import { HealingAction } from '../../../models/action/healing-action';
 import { PowerTargetAction } from '../../../models/action/power-target-action';
-import { Damage } from '../../../models/action/damage';
 
 export class DamageParser implements Parser {
-
 	constructor(private allCards: AllCardsService, private logger: NGXLogger) {}
 
 	public applies(item: HistoryItem): boolean {
@@ -24,44 +22,50 @@ export class DamageParser implements Parser {
 	}
 
 	public parse(
-			item: TagChangeHistoryItem,
-			currentTurn: number,
-			entitiesBeforeAction: Map<number, Entity>,
-			history: ReadonlyArray<HistoryItem>): Action[] {
+		item: TagChangeHistoryItem,
+		currentTurn: number,
+		entitiesBeforeAction: Map<number, Entity>,
+		history: readonly HistoryItem[],
+	): Action[] {
 		const entity = entitiesBeforeAction.get(item.tag.entity);
 		// Damage is reset to 0 after an entity dies, and we don't want to show this
 		if (entity.getTag(GameTag.ZONE) !== Zone.PLAY) {
 			return [];
 		}
 		const previousDamageTag = entity.getTag(GameTag.DAMAGE);
-		const previousDamage = (!previousDamageTag || previousDamageTag === -1) ? 0 : previousDamageTag;
+		const previousDamage = !previousDamageTag || previousDamageTag === -1 ? 0 : previousDamageTag;
 		const damageTaken = item.tag.value - previousDamage;
 		if (damageTaken > 0) {
-			return [DamageAction.create(
-				{
-					timestamp: item.timestamp,
-					index: item.index,
-					damages: Map.of(item.tag.entity, damageTaken)
-				} as Action,
-				this.allCards)];
-		} else
-		if (damageTaken < 0) {
-			return [HealingAction.create(
-				{
-					timestamp: item.timestamp,
-					index: item.index,
-					damages: Map.of(item.tag.entity, damageTaken)
-				},
-				this.allCards)];
+			return [
+				DamageAction.create(
+					{
+						timestamp: item.timestamp,
+						index: item.index,
+						damages: Map.of(item.tag.entity, damageTaken),
+					} as Action,
+					this.allCards,
+				),
+			];
+		} else if (damageTaken < 0) {
+			return [
+				HealingAction.create(
+					{
+						timestamp: item.timestamp,
+						index: item.index,
+						damages: Map.of(item.tag.entity, damageTaken),
+					},
+					this.allCards,
+				),
+			];
 		}
 		return [];
 	}
 
-	public reduce(actions: ReadonlyArray<Action>): ReadonlyArray<Action> {
+	public reduce(actions: readonly Action[]): readonly Action[] {
 		return ActionHelper.combineActions<Action>(
 			actions,
 			(previous, current) => this.shouldMergeActions(previous, current),
-			(previous, current) => this.mergeActions(previous, current)
+			(previous, current) => this.mergeActions(previous, current),
 		);
 	}
 
@@ -69,9 +73,11 @@ export class DamageParser implements Parser {
 		if (!(currentAction instanceof DamageAction)) {
 			return false;
 		}
-		return previousAction instanceof DamageAction // Merge all damages into a single action
-				|| previousAction instanceof AttackAction // Add damage to the attack causing the damage
-				|| previousAction instanceof PowerTargetAction; // Add damages to the power causing the damage
+		return (
+			previousAction instanceof DamageAction || // Merge all damages into a single action
+			previousAction instanceof AttackAction || // Add damage to the attack causing the damage
+			previousAction instanceof PowerTargetAction
+		); // Add damages to the power causing the damage
 	}
 
 	private mergeActions(previousAction: Action, currentAction: Action): Action {

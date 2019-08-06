@@ -8,52 +8,43 @@ import { AllCardsService } from '../../../services/all-cards.service';
 
 @Component({
 	selector: 'card',
-	styleUrls: [
-		'../../../../css/components/game/card/card.component.scss'
-	],
+	styleUrls: ['../../../../css/components/game/card/card.component.scss'],
 	template: `
-        <div class="card"
-                [ngClass]="{ 'highlight': _option }"
-                cardResize
-                cardTooltip [tooltipEntity]="_entity" [hasTooltip]="_showCard && _hasTooltip"
-                [attr.data-entity-id]="!forbiddenTargetSource && _entity.id">
+		<div
+			class="card"
+			[ngClass]="{ 'highlight': _option }"
+			cardResize
+			cardTooltip
+			[tooltipEntity]="_entity"
+			[hasTooltip]="_showCard && _hasTooltip"
+			[attr.data-entity-id]="!forbiddenTargetSource && _entity.id"
+		>
 			<card-art [cardId]="cardId" [cardType]="cardType"></card-art>
 			<card-frame [cardId]="cardId" [premium]="premium" *ngIf="cardId"></card-frame>
 			<card-rarity [cardId]="cardId" *ngIf="cardId"></card-rarity>
 			<card-name [cardId]="cardId" *ngIf="cardId"></card-name>
-            <card-text *ngIf="cardId"
-                    [entity]="_entity"
-                    [controller]="_controller"
-                    [cardType]="cardType">
-            </card-text>
-            <card-race *ngIf="race"
-                    [race]="race">
-            </card-race>
-            <card-cost *ngIf="cardId"
-                    [cardType]="cardType"
-                    [cardId]="cardId"
-                    [cost]="cost">
-            </card-cost>
-			<card-stats *ngIf="cardId"
-					[cardId]="cardId"
-					[attack]="attack"
-					[health]="health"
-					[damage]="damage"
-					[durability]="durability"
-					[armor]="armor">
-            </card-stats>
-            <overlay-crossed *ngIf="_crossed"></overlay-crossed>
-            <overlay-burned *ngIf="_burned"></overlay-burned>
-            <overlay-ticked *ngIf="_ticked"></overlay-ticked>
-            <card-enchantments *ngIf="_enchantments && _enchantments.length > 0"
-                    [enchantments]="_enchantments">
-            </card-enchantments>
+			<card-text *ngIf="cardId" [entity]="_entity" [controller]="_controller" [cardType]="cardType"> </card-text>
+			<card-race *ngIf="race" [race]="race"> </card-race>
+			<card-cost *ngIf="cardId" [cardType]="cardType" [cardId]="cardId" [cost]="cost"> </card-cost>
+			<card-stats
+				*ngIf="cardId"
+				[cardId]="cardId"
+				[attack]="attack"
+				[health]="health"
+				[damage]="damage"
+				[durability]="durability"
+				[armor]="armor"
+			>
+			</card-stats>
+			<overlay-crossed *ngIf="_crossed"></overlay-crossed>
+			<overlay-burned *ngIf="_burned"></overlay-burned>
+			<overlay-ticked *ngIf="_ticked"></overlay-ticked>
+			<card-enchantments *ngIf="_enchantments && _enchantments.length > 0" [enchantments]="_enchantments"> </card-enchantments>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardComponent {
-
 	_entity: Entity;
 	_showCard = true;
 	_controller: Entity;
@@ -61,7 +52,7 @@ export class CardComponent {
 	_crossed: boolean;
 	_burned: boolean;
 	_ticked: boolean;
-	_enchantments: ReadonlyArray<Entity>;
+	_enchantments: readonly Entity[];
 
 	cardId: string;
 	cardType: CardType;
@@ -79,10 +70,7 @@ export class CardComponent {
 	_forbiddenTargetSource = false;
 	_hasTooltip = true;
 
-	constructor(
-			private cards: AllCardsService,
-			private logger: NGXLogger) {
-	}
+	constructor(private cards: AllCardsService, private logger: NGXLogger) {}
 
 	@Input('entity') set entity(entity: Entity) {
 		this.logger.debug('[card] setting entity', entity);
@@ -133,7 +121,7 @@ export class CardComponent {
 		}
 	}
 
-	@Input('enchantments') set enchantments(value: ReadonlyArray<Entity>) {
+	@Input('enchantments') set enchantments(value: readonly Entity[]) {
 		this._enchantments = value;
 	}
 

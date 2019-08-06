@@ -1,5 +1,13 @@
-import { Component, ChangeDetectionStrategy, Input, AfterViewInit,
-	HostListener, ElementRef, ChangeDetectorRef, ViewRef } from '@angular/core';
+import {
+	Component,
+	ChangeDetectionStrategy,
+	Input,
+	AfterViewInit,
+	HostListener,
+	ElementRef,
+	ChangeDetectorRef,
+	ViewRef,
+} from '@angular/core';
 import { AllCardsService } from '../../../services/all-cards.service';
 import { NGXLogger } from 'ngx-logger';
 
@@ -11,26 +19,20 @@ import { NGXLogger } from 'ngx-logger';
 		'../../../../css/components/game/card/card-cost-colors.scss',
 	],
 	template: `
-        <div class="hero-power-cost {{costClass}}" [ngClass]="{ 'premium': _premium }">
-            <div class="cost">{{_cost}}</div>
-        </div>
+		<div class="hero-power-cost {{ costClass }}" [ngClass]="{ 'premium': _premium }">
+			<div class="cost">{{ _cost }}</div>
+		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeroPowerCostComponent implements AfterViewInit {
-
 	_cost: number;
 	costClass: string;
 	_premium: boolean;
 
 	private _cardId: string;
 
-	constructor(
-			private cards: AllCardsService,
-			private elRef: ElementRef,
-			private logger: NGXLogger,
-			private cdr: ChangeDetectorRef) {
-	}
+	constructor(private cards: AllCardsService, private elRef: ElementRef, private logger: NGXLogger, private cdr: ChangeDetectorRef) {}
 
 	@Input('cardId') set cardId(cardId: string) {
 		this.logger.debug('[hero-power-cost] setting cardId', cardId);
@@ -75,7 +77,7 @@ export class HeroPowerCostComponent implements AfterViewInit {
 		} else if (this._cost > originalCost) {
 			this.costClass = 'higher-cost';
 		}
-		if (!(<ViewRef>this.cdr).destroyed) {
+		if (!(this.cdr as ViewRef).destroyed) {
 			this.cdr.detectChanges();
 		}
 	}
@@ -89,7 +91,7 @@ export class HeroPowerCostComponent implements AfterViewInit {
 		const fontSize = 0.8 * el.getBoundingClientRect().width;
 		const textEl = this.elRef.nativeElement.querySelector('.cost');
 		textEl.style.fontSize = fontSize + 'px';
-		if (!(<ViewRef>this.cdr).destroyed) {
+		if (!(this.cdr as ViewRef).destroyed) {
 			this.cdr.detectChanges();
 		}
 	}

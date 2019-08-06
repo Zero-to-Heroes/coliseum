@@ -7,13 +7,10 @@ import { Action } from '../../../models/action/action';
 
 @Injectable()
 export class MulliganParserService {
-
-	constructor(private logger: NGXLogger, private allCards: AllCardsService) {
-	}
+	constructor(private logger: NGXLogger, private allCards: AllCardsService) {}
 
 	public affectMulligan(game: Game): Game {
 		let turns = game.turns;
-		const numberOfTurns = turns.size;
 		const mulliganTurn = game.turns.get(0);
 		const enrichedMulligan = this.enrichTurn(mulliganTurn);
 		turns = turns.set(0, enrichedMulligan);
@@ -27,7 +24,7 @@ export class MulliganParserService {
 			const newAction = this.enrichAction(turn.actions[i], previousAction);
 			newActions.push(newAction);
 		}
-		return turn.update({ actions: newActions as ReadonlyArray<Action> } as Turn);
+		return turn.update({ actions: newActions as readonly Action[] } as Turn);
 	}
 
 	private enrichAction(action: Action, previousAction: Action): Action {

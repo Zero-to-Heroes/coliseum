@@ -6,23 +6,20 @@ import { GameTag } from '../../../models/enums/game-tags';
 
 @Component({
 	selector: 'quest-tooltip',
-	styleUrls: [
-		'../../../../css/components/game/overlay/quest-tooltip.component.scss'
-	],
+	styleUrls: ['../../../../css/components/game/overlay/quest-tooltip.component.scss'],
 	template: `
-        <div class="quest-tooltip" cardElementResize [fontSizeRatio]="0.10">
-            <card class="entity" [entity]="_quest" [hasTooltip]="false"></card>
-            <div class="progress">
-                <img class="arrow" src="https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/secrets/quest_info_arrow.png">
-                <div class="number" resizeTarget>{{progress}}</div>
-            </div>
-            <card class="reward" [entity]="_reward" [hasTooltip]="false"></card>
+		<div class="quest-tooltip" cardElementResize [fontSizeRatio]="0.1">
+			<card class="entity" [entity]="_quest" [hasTooltip]="false"></card>
+			<div class="progress">
+				<img class="arrow" src="https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/secrets/quest_info_arrow.png" />
+				<div class="number" resizeTarget>{{ progress }}</div>
+			</div>
+			<card class="reward" [entity]="_reward" [hasTooltip]="false"></card>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QuestTooltipComponent {
-
 	_quest: Entity;
 	_reward: Entity;
 	progress: string;
@@ -48,7 +45,7 @@ export class QuestTooltipComponent {
 		return Object.assign(new Entity(), {
 			cardID: rewardId,
 			id: rewardId,
-			tags: Map.of()
+			tags: Map.of(),
 		});
 	}
 

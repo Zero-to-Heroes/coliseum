@@ -11,7 +11,6 @@ import { ActionHelper } from './action-helper';
 import { GameTag } from '../../../models/enums/game-tags';
 
 export class AttackParser implements Parser {
-
 	constructor(private allCards: AllCardsService) {}
 
 	public applies(item: HistoryItem): boolean {
@@ -19,10 +18,11 @@ export class AttackParser implements Parser {
 	}
 
 	public parse(
-			item: ActionHistoryItem,
-			currentTurn: number,
-			entitiesBeforeAction: Map<number, Entity>,
-			history: ReadonlyArray<HistoryItem>): Action[] {
+		item: ActionHistoryItem,
+		currentTurn: number,
+		entitiesBeforeAction: Map<number, Entity>,
+		history: readonly HistoryItem[],
+	): Action[] {
 		if (parseInt(item.node.attributes.type) !== BlockType.ATTACK) {
 			return;
 		}
@@ -31,17 +31,20 @@ export class AttackParser implements Parser {
 			console.warn('Could not parse target entity id', item);
 			target = ActionHelper.getTag(item.node.tags, GameTag.PROPOSED_DEFENDER);
 		}
-		return [AttackAction.create(
-			{
-				timestamp: item.timestamp,
-				index: item.index,
-				originId: parseInt(item.node.attributes.entity),
-				targetId: target
-			},
-			this.allCards)];
+		return [
+			AttackAction.create(
+				{
+					timestamp: item.timestamp,
+					index: item.index,
+					originId: parseInt(item.node.attributes.entity),
+					targetId: target,
+				},
+				this.allCards,
+			),
+		];
 	}
 
-	public reduce(actions: ReadonlyArray<Action>): ReadonlyArray<Action> {
+	public reduce(actions: readonly Action[]): readonly Action[] {
 		return actions;
 	}
 }

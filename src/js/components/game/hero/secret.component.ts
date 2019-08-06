@@ -7,21 +7,16 @@ import { AllCardsService } from '../../../services/all-cards.service';
 
 @Component({
 	selector: 'secret',
-	styleUrls: [
-		'../../../../css/components/game/hero/secret.component.scss'
-	],
+	styleUrls: ['../../../../css/components/game/hero/secret.component.scss'],
 	template: `
-        <div class="secret"
-                cardTooltip [tooltipEntity]="_entity"
-                [attr.data-entity-id]="entityId">
-            <img class="secret-image" src="{{image}}">
-            <img class="question-mark" src="{{markImage}}">
+		<div class="secret" cardTooltip [tooltipEntity]="_entity" [attr.data-entity-id]="entityId">
+			<img class="secret-image" src="{{ image }}" />
+			<img class="question-mark" src="{{ markImage }}" />
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SecretComponent {
-
 	_entity: Entity;
 	entityId: number;
 	image: string;
@@ -70,7 +65,7 @@ export class SecretComponent {
 			case 'MAGE':
 				return this.getImage('secret_mage');
 			case 'PALADIN':
-					return this.getImage('secret_paladin');
+				return this.getImage('secret_paladin');
 			case 'ROGUE':
 				return this.getImage('secret_rogue');
 			default:

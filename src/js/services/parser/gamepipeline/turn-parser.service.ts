@@ -13,10 +13,9 @@ import { Step } from '../../../models/enums/step';
 
 @Injectable()
 export class TurnParserService {
+	constructor(private logger: NGXLogger) {}
 
-	constructor(private logger: NGXLogger) { }
-
-	public createTurns(game: Game, history: ReadonlyArray<HistoryItem>): Game {
+	public createTurns(game: Game, history: readonly HistoryItem[]): Game {
 		let turns: Map<number, Turn> = Map<number, Turn>();
 		let turnNumber = 0;
 		for (const item of history) {
@@ -37,46 +36,45 @@ export class TurnParserService {
 	private parseTurn(currentTurnNumber: number, item: TagChangeHistoryItem, turns: Map<number, Turn>): ActionTurn {
 		const itemIndex = (item as TagChangeHistoryItem).tag.index;
 		// Turn 1 is mulligan in the log, while for us mulligan is turn 0
-		let turn: ActionTurn = turns.get(
-			currentTurnNumber,
-			Object.assign(new ActionTurn(), {
-				turn: `${currentTurnNumber}`,
-				timestamp: item.timestamp,
-				index: itemIndex,
-				activePlayer: undefined,
-				actions: [],
-			}) as ActionTurn) as ActionTurn;
+		let turn: ActionTurn = turns.get(currentTurnNumber, Object.assign(new ActionTurn(), {
+			turn: `${currentTurnNumber}`,
+			timestamp: item.timestamp,
+			index: itemIndex,
+			activePlayer: undefined,
+			actions: [],
+		}) as ActionTurn) as ActionTurn;
 		turn = Object.assign(new ActionTurn(), turn, { index: Math.max(turn.index, itemIndex) });
 		return turn;
 	}
 
 	private parseMulliganTurn(item: TagChangeHistoryItem, turns: Map<number, Turn>): MulliganTurn {
 		const itemIndex = (item as TagChangeHistoryItem).tag.index;
-		let mulliganTurn: MulliganTurn = turns.get(
-			0,
-			Object.assign(new MulliganTurn(), {
-				turn: 'mulligan',
-				timestamp: item.timestamp,
-				index: itemIndex,
-				actions: [],
-			}) as MulliganTurn) as MulliganTurn;
+		let mulliganTurn: MulliganTurn = turns.get(0, Object.assign(new MulliganTurn(), {
+			turn: 'mulligan',
+			timestamp: item.timestamp,
+			index: itemIndex,
+			actions: [],
+		}) as MulliganTurn) as MulliganTurn;
 		mulliganTurn = Object.assign(new MulliganTurn(), mulliganTurn, { index: Math.max(mulliganTurn.index, itemIndex) });
 		return mulliganTurn;
 	}
 
 	private isMulligan(item: HistoryItem, game: Game) {
-		return item instanceof TagChangeHistoryItem
-				&& item.tag.tag === GameTag.MULLIGAN_STATE
-				&& item.tag.value === 1
-				&& this.isPlayerEntity(item.tag.entity, game);
+		return (
+			item instanceof TagChangeHistoryItem &&
+			item.tag.tag === GameTag.MULLIGAN_STATE &&
+			item.tag.value === 1 &&
+			this.isPlayerEntity(item.tag.entity, game)
+		);
 	}
 
 	private isStartOfTurn(item: HistoryItem, game: Game) {
-		return item instanceof TagChangeHistoryItem
-				&& this.isGameEntity(item.tag.entity, game)
-				&& item.tag.tag === GameTag.STEP
-				&& item.tag.value === Step.MAIN_READY;
-
+		return (
+			item instanceof TagChangeHistoryItem &&
+			this.isGameEntity(item.tag.entity, game) &&
+			item.tag.tag === GameTag.STEP &&
+			item.tag.value === Step.MAIN_READY
+		);
 	}
 
 	private isPlayerEntity(entityId: number, game: Game) {

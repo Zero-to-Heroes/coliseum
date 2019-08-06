@@ -6,7 +6,7 @@ import { uniq } from 'lodash';
 import { AllCardsService } from '../../services/all-cards.service';
 
 export class CardDrawAction extends Action {
-	readonly data: ReadonlyArray<number>;
+	readonly data: readonly number[];
 	readonly controller: number;
 
 	readonly allCards: AllCardsService;
@@ -25,31 +25,38 @@ export class CardDrawAction extends Action {
 	}
 
 	public enrichWithText(): CardDrawAction {
-		const playerEntity = this.data.map((entityId) => ActionHelper.getOwner(this.entities, entityId));
+		const playerEntity = this.data.map(entityId => ActionHelper.getOwner(this.entities, entityId));
 		if (!playerEntity || playerEntity.length === 0) {
 			console.error('[card-draw-action] could not find player owner', this.data);
 		}
-		const ownerNames: string[] = uniq(this.data
-				.map((entityId) => ActionHelper.getOwner(this.entities, entityId))
-				.map((entity) => {
+		const ownerNames: string[] = uniq(
+			this.data
+				.map(entityId => ActionHelper.getOwner(this.entities, entityId))
+				.map(entity => {
 					if (!entity) {
-						console.error('[card-draw-action] no player entity', entity, this.data, this.entities.get(this.data[0]).tags.toJS());
+						console.error(
+							'[card-draw-action] no player entity',
+							entity,
+							this.data,
+							this.entities.get(this.data[0]).tags.toJS(),
+						);
 					}
 					return entity.name;
-				}));
+				}),
+		);
 		if (ownerNames.length !== 1) {
 			throw new Error('[card-draw-action] Invalid grouping of cards ' + ownerNames + ', ' + this.data);
 		}
 		const ownerName = ownerNames[0];
 		const drawnCards = this.data
-				.map((entityId) => ActionHelper.getCardId(this.entities, entityId))
-				.map((cardId) => this.allCards.getCard(cardId));
+			.map(entityId => ActionHelper.getCardId(this.entities, entityId))
+			.map(cardId => this.allCards.getCard(cardId));
 		let drawInfo = '';
 		// We don't have the mulligan info, so we just display the amount of cards being mulliganed
-		if (drawnCards.some((card) => !card)) {
+		if (drawnCards.some(card => !card)) {
 			drawInfo = `${drawnCards.length} cards`;
 		} else {
-			drawInfo = drawnCards.map((card) => card.name).join(', ');
+			drawInfo = drawnCards.map(card => card.name).join(', ');
 		}
 
 		const textRaw = `\t${ownerName} draws ` + drawInfo;

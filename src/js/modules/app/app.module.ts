@@ -193,12 +193,10 @@ console.log('environment is', process.env.NODE_ENV);
 		StateProcessorService,
 		TargetsParserService,
 		TurnParserService,
-		XmlParserService
+		XmlParserService,
 	],
-	entryComponents: [
-		AppComponent
-	]
+	entryComponents: [AppComponent],
 })
 export class AppModule {
 	ngDoBootstrap() {}
- }
+}

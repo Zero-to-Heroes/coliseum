@@ -3,8 +3,7 @@ import { Map } from 'immutable';
 import { GameTag } from '../enums/game-tags';
 
 export class Entity {
-
-	constructor() { }
+	constructor() {}
 
 	readonly id: number;
 	readonly cardID: string;
@@ -13,11 +12,9 @@ export class Entity {
 
 	public static create(base: Entity, newAttributes?: EntityDefinition): Entity {
 		// Merge tags
-		const newTags: Map<string, number> = (newAttributes && newAttributes.tags)
-				? newAttributes.tags
-				: Map();
+		const newTags: Map<string, number> = newAttributes && newAttributes.tags ? newAttributes.tags : Map();
 		const tags: Map<string, number> = (base.tags || Map()).merge(newTags);
-		const newEntity: Entity = Object.assign(new Entity(), {...base, ...newAttributes, tags});
+		const newEntity: Entity = Object.assign(new Entity(), { ...base, ...newAttributes, tags });
 		return newEntity;
 	}
 
@@ -32,9 +29,10 @@ export class Entity {
 	public isRevealed(): boolean {
 		// There are many tags that are set only when ShowEntity triggers. This is only
 		// one of the possible choices
-		const revealed = (this.getTag(GameTag.COST) && this.getTag(GameTag.COST) !== -1)
-				// For some reasons it happens that the cost is not always set?
-				|| (this.getTag(GameTag.CARDTYPE) && this.getTag(GameTag.CARDTYPE) !== -1);
+		const revealed =
+			(this.getTag(GameTag.COST) && this.getTag(GameTag.COST) !== -1) ||
+			// For some reasons it happens that the cost is not always set?
+			(this.getTag(GameTag.CARDTYPE) && this.getTag(GameTag.CARDTYPE) !== -1);
 		// console.log('revealed', revealed, this.id, this.cardID, this.tags.toJS());
 		return revealed;
 	}
@@ -45,11 +43,11 @@ export class Entity {
 
 	public updateDamage(damage: number): Entity {
 		const base: Entity = this;
-		return Object.assign(new Entity(), {...base, damageForThisAction: damage});
+		return Object.assign(new Entity(), { ...base, damageForThisAction: damage });
 	}
 
 	public update(definition: EntityDefinition): Entity {
-		const newAttributes: any = { };
+		const newAttributes: any = {};
 		if (definition.cardID) {
 			newAttributes.cardID = definition.cardID;
 		}
@@ -66,9 +64,8 @@ export class Entity {
 	}
 
 	public updateTag(tag: GameTag, value: number): Entity {
-		const newTags: Map<string, number> = this.tags
-				.set(GameTag[tag], value);
+		const newTags: Map<string, number> = this.tags.set(GameTag[tag], value);
 		const base: Entity = this;
-		return Object.assign(new Entity(), {...base, tags: newTags});
+		return Object.assign(new Entity(), { ...base, tags: newTags });
 	}
 }

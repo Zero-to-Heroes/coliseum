@@ -19,13 +19,9 @@ import { SecretRevealedAction } from '../../../models/action/secret-revealed-act
 
 @Injectable()
 export class ActiveSpellParserService {
+	private readonly ACTIONS_THAT_RESET_ACTIVE_SPELL = [typeof StartTurnAction];
 
-	private readonly ACTIONS_THAT_RESET_ACTIVE_SPELL = [
-		typeof StartTurnAction,
-	];
-
-	constructor(private logger: NGXLogger, private allCards: AllCardsService) {
-	}
+	constructor(private logger: NGXLogger, private allCards: AllCardsService) {}
 
 	public parseActiveSpell(game: Game): Game {
 		let turns = game.turns;
@@ -45,7 +41,7 @@ export class ActiveSpellParserService {
 			const newAction = this.enrichAction(turn.actions[i], previousAction);
 			newActions.push(newAction);
 		}
-		return turn.update({ actions: newActions as ReadonlyArray<Action> } as Turn);
+		return turn.update({ actions: newActions as readonly Action[] } as Turn);
 	}
 
 	private enrichAction(action: Action, previousAction: Action): Action {
@@ -56,23 +52,29 @@ export class ActiveSpellParserService {
 
 		// By default, don't show any active spell
 		let activeSpell;
-		if (action instanceof CardPlayedFromHandAction
-				&& action.entities.get(action.entityId).getTag(GameTag.CARDTYPE) === CardType.SPELL) {
+		if (
+			action instanceof CardPlayedFromHandAction &&
+			action.entities.get(action.entityId).getTag(GameTag.CARDTYPE) === CardType.SPELL
+		) {
 			activeSpell = action.entityId;
-		} else if (action instanceof PowerTargetAction
-				&& action.entities.get(action.originId).getTag(GameTag.CARDTYPE) === CardType.SPELL) {
+		} else if (
+			action instanceof PowerTargetAction &&
+			action.entities.get(action.originId).getTag(GameTag.CARDTYPE) === CardType.SPELL
+		) {
 			activeSpell = action.originId;
-		} else if (action instanceof AttachingEnchantmentAction
-				&& action.entities.get(action.originId).getTag(GameTag.CARDTYPE) === CardType.SPELL) {
+		} else if (
+			action instanceof AttachingEnchantmentAction &&
+			action.entities.get(action.originId).getTag(GameTag.CARDTYPE) === CardType.SPELL
+		) {
 			activeSpell = action.originId;
-		} else if (action instanceof CardTargetAction
-				&& action.entities.get(action.originId).getTag(GameTag.CARDTYPE) === CardType.SPELL) {
+		} else if (action instanceof CardTargetAction && action.entities.get(action.originId).getTag(GameTag.CARDTYPE) === CardType.SPELL) {
 			activeSpell = action.originId;
-		} else if (action instanceof SummonAction
-				&& action.entities.get(action.origin).getTag(GameTag.CARDTYPE) === CardType.SPELL) {
+		} else if (action instanceof SummonAction && action.entities.get(action.origin).getTag(GameTag.CARDTYPE) === CardType.SPELL) {
 			activeSpell = action.origin;
-		} else if (action instanceof SecretRevealedAction
-				&& action.entities.get(action.entityId).getTag(GameTag.CARDTYPE) === CardType.SPELL) {
+		} else if (
+			action instanceof SecretRevealedAction &&
+			action.entities.get(action.entityId).getTag(GameTag.CARDTYPE) === CardType.SPELL
+		) {
 			activeSpell = action.entityId;
 		} else if (action instanceof AttachingEnchantmentAction && previousAction && previousAction.activeSpell) {
 			activeSpell = previousAction.activeSpell;

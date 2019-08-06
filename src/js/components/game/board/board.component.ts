@@ -5,41 +5,34 @@ import { GameTag } from '../../../models/enums/game-tags';
 
 @Component({
 	selector: 'board',
-	styleUrls: [
-		'../../../../css/components/game/board/board.component.scss'
-	],
+	styleUrls: ['../../../../css/components/game/board/board.component.scss'],
 	template: `
 		<ul class="board">
 			<li *ngFor="let entity of _entities; trackBy: trackByFn">
-                <card-on-board
-                        [entity]="entity"
-                        [enchantments]="buildEnchantments(entity)"
-                        [option]="isOption(entity)">
-                </card-on-board>
+				<card-on-board [entity]="entity" [enchantments]="buildEnchantments(entity)" [option]="isOption(entity)"> </card-on-board>
 			</li>
 		</ul>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BoardComponent {
+	_entities: readonly Entity[];
+	_enchantmentCandidates: readonly Entity[];
+	_options: readonly number[];
 
-	_entities: ReadonlyArray<Entity>;
-	_enchantmentCandidates: ReadonlyArray<Entity>;
-	_options: ReadonlyArray<number>;
+	constructor(private logger: NGXLogger) {}
 
-	constructor(private logger: NGXLogger) { }
-
-	@Input('entities') set entities(entities: ReadonlyArray<Entity>) {
+	@Input('entities') set entities(entities: readonly Entity[]) {
 		this.logger.debug('[board] setting new entities', entities);
 		this._entities = entities;
 	}
 
-	@Input('enchantmentCandidates') set enchantmentCandidates(value: ReadonlyArray<Entity>) {
+	@Input('enchantmentCandidates') set enchantmentCandidates(value: readonly Entity[]) {
 		this.logger.debug('[board] setting enchantmentCandidates', value);
 		this._enchantmentCandidates = value;
 	}
 
-	@Input('options') set options(value: ReadonlyArray<number>) {
+	@Input('options') set options(value: readonly number[]) {
 		this.logger.debug('[board] setting options', value);
 		this._options = value;
 	}
@@ -52,11 +45,10 @@ export class BoardComponent {
 		return item.id;
 	}
 
-	buildEnchantments(entity: Entity): ReadonlyArray<Entity> {
+	buildEnchantments(entity: Entity): readonly Entity[] {
 		if (!this._enchantmentCandidates) {
 			return [];
 		}
-		return this._enchantmentCandidates
-				.filter(e => e.getTag(GameTag.ATTACHED) === entity.id);
+		return this._enchantmentCandidates.filter(e => e.getTag(GameTag.ATTACHED) === entity.id);
 	}
 }

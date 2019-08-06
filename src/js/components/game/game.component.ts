@@ -8,87 +8,54 @@ import { Events } from '../../services/events.service';
 
 @Component({
 	selector: 'game',
-	styleUrls: [
-		'../../../css/components/game/game.component.scss'
-	],
+	styleUrls: ['../../../css/components/game/game.component.scss'],
 	template: `
-        <div class="game"
-                [ngClass]="{ 'in-overlay': isOverlay, 'mulligan': _isMulligan, 'quest': _quest }">
-            <div class="play-areas">
-                <play-area class="top"
-                        [mulligan]="_isMulligan"
-                        [entities]="_entities"
-						[options]="_options"
-						[showCards]="_showHiddenCards"
-                        [playerId]="_opponentId">
-                </play-area>
-                <play-area class="bottom"
-                        [mulligan]="_isMulligan"
-                        [entities]="_entities"
-                        [options]="_options"
-                        [playerId]="_playerId">
-                </play-area>
-            </div>
-            <player-name class="player-name top"
-                    [name]="_opponentName"
-                    [active]="_opponentId === _activePlayer">
-            </player-name>
-            <player-name class="player-name bottom"
-                    [name]="_playerName"
-                    [active]="_playerId === _activePlayer">
-            </player-name>
-            <active-spell class="active-spell"
-                    *ngIf="_activeSpell"
-                    [entity]="_activeSpell"
-                    [controller]="_activeSpellController">
-            </active-spell>
-            <secret-revealed class="secret-revealed"
-                    *ngIf="_secretRevealed"
-                    [entity]="_secretRevealed">
-            </secret-revealed>
-            <quest-tooltip *ngIf="_quest" [quest]="_quest"></quest-tooltip>
-            <quest-completed *ngIf="_questCompleted" [quest]="_questCompleted"></quest-completed>
-            <target-zone *ngIf="_targets"
-                    [targets]="_targets"
-                    [active]="_playerId === _activePlayer">
-            </target-zone>
-            <div class="overlays" *ngIf="isOverlay">
-                <mulligan *ngIf="_isMulligan" class="top"
-                        [entities]="_entities"
-                        [crossed]="_crossed"
-						[showCards]="_showHiddenCards"
-                        [playerId]="_opponentId">
-                </mulligan>
-                <mulligan *ngIf="_isMulligan" class="bottom"
-                        [entities]="_entities"
-                        [crossed]="_crossed"
-                        [playerId]="_playerId">
-                </mulligan>
-                <end-game *ngIf="_isEndGame"
-                        [status]="_endGameStatus"
-                        [entities]="_entities"
-                        [playerId]="_playerId">
-                </end-game>
-                <discover *ngIf="_discovers"
-                        [entities]="_entities"
-                        [choices]="_discovers"
-                        [chosen]="_chosen">
-                </discover>
-                <burn *ngIf="_burned"
-                        [entities]="_entities"
-                        [burned]="_burned">
-                </burn>
-                <fatigue *ngIf="_fatigue" [fatigue]="_fatigue"></fatigue>
-            </div>
+		<div class="game" [ngClass]="{ 'in-overlay': isOverlay, 'mulligan': _isMulligan, 'quest': _quest }">
+			<div class="play-areas">
+				<play-area
+					class="top"
+					[mulligan]="_isMulligan"
+					[entities]="_entities"
+					[options]="_options"
+					[showCards]="_showHiddenCards"
+					[playerId]="_opponentId"
+				>
+				</play-area>
+				<play-area class="bottom" [mulligan]="_isMulligan" [entities]="_entities" [options]="_options" [playerId]="_playerId">
+				</play-area>
+			</div>
+			<player-name class="player-name top" [name]="_opponentName" [active]="_opponentId === _activePlayer"> </player-name>
+			<player-name class="player-name bottom" [name]="_playerName" [active]="_playerId === _activePlayer"> </player-name>
+			<active-spell class="active-spell" *ngIf="_activeSpell" [entity]="_activeSpell" [controller]="_activeSpellController">
+			</active-spell>
+			<secret-revealed class="secret-revealed" *ngIf="_secretRevealed" [entity]="_secretRevealed"> </secret-revealed>
+			<quest-tooltip *ngIf="_quest" [quest]="_quest"></quest-tooltip>
+			<quest-completed *ngIf="_questCompleted" [quest]="_questCompleted"></quest-completed>
+			<target-zone *ngIf="_targets" [targets]="_targets" [active]="_playerId === _activePlayer"> </target-zone>
+			<div class="overlays" *ngIf="isOverlay">
+				<mulligan
+					*ngIf="_isMulligan"
+					class="top"
+					[entities]="_entities"
+					[crossed]="_crossed"
+					[showCards]="_showHiddenCards"
+					[playerId]="_opponentId"
+				>
+				</mulligan>
+				<mulligan *ngIf="_isMulligan" class="bottom" [entities]="_entities" [crossed]="_crossed" [playerId]="_playerId"> </mulligan>
+				<end-game *ngIf="_isEndGame" [status]="_endGameStatus" [entities]="_entities" [playerId]="_playerId"> </end-game>
+				<discover *ngIf="_discovers" [entities]="_entities" [choices]="_discovers" [chosen]="_chosen"> </discover>
+				<burn *ngIf="_burned" [entities]="_entities" [burned]="_burned"> </burn>
+				<fatigue *ngIf="_fatigue" [fatigue]="_fatigue"></fatigue>
+			</div>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GameComponent implements AfterViewInit {
-
 	_turn: string;
 	_entities: Map<number, Entity>;
-	_crossed: ReadonlyArray<number> = [];
+	_crossed: readonly number[] = [];
 	_playerId: number;
 	_opponentId: number;
 	_playerName: string;
@@ -98,16 +65,16 @@ export class GameComponent implements AfterViewInit {
 	_questCompleted: Entity;
 	_activeSpell: Entity;
 	_activeSpellController: Entity;
-	_targets: ReadonlyArray<[number, number]> = [];
-	_options: ReadonlyArray<number> = [];
+	_targets: readonly [number, number][] = [];
+	_options: readonly number[] = [];
 	_showHiddenCards: boolean;
 
 	_quest: Entity;
 	isOverlay: boolean;
 	_fatigue: number;
-	_discovers: ReadonlyArray<number>;
-	_burned: ReadonlyArray<number>;
-	_chosen: ReadonlyArray<number>;
+	_discovers: readonly number[];
+	_burned: readonly number[];
+	_chosen: readonly number[];
 	_isMulligan: boolean;
 	_isEndGame: boolean;
 	_endGameStatus: PlayState;
@@ -116,18 +83,18 @@ export class GameComponent implements AfterViewInit {
 	private secretRevealedId: number;
 	private questCompletedId: number;
 
-	constructor(private logger: NGXLogger, private events: Events, private cdr: ChangeDetectorRef) { }
+	constructor(private logger: NGXLogger, private events: Events, private cdr: ChangeDetectorRef) {}
 
 	ngAfterViewInit() {
 		this.events.on(Events.SHOW_QUEST_TOOLTIP).subscribe(data => {
 			this._quest = data.data[0];
-			if (!(<ViewRef>this.cdr).destroyed) {
+			if (!(this.cdr as ViewRef).destroyed) {
 				this.cdr.detectChanges();
 			}
 		});
 		this.events.on(Events.HIDE_QUEST_TOOLTIP).subscribe(data => {
 			this._quest = undefined;
-			if (!(<ViewRef>this.cdr).destroyed) {
+			if (!(this.cdr as ViewRef).destroyed) {
 				this.cdr.detectChanges();
 			}
 		});
@@ -146,7 +113,7 @@ export class GameComponent implements AfterViewInit {
 		this.updateQuestCompleted();
 	}
 
-	@Input('crossed') set crossed(value: ReadonlyArray<number>) {
+	@Input('crossed') set crossed(value: readonly number[]) {
 		this._crossed = value;
 	}
 
@@ -193,13 +160,13 @@ export class GameComponent implements AfterViewInit {
 		this.updateQuestCompleted();
 	}
 
-	@Input('discovers') set discovers(value: ReadonlyArray<number>) {
+	@Input('discovers') set discovers(value: readonly number[]) {
 		this.logger.debug('[game] setting discovers', value);
 		this._discovers = value;
 		this.updateOverlay();
 	}
 
-	@Input('burned') set burned(value: ReadonlyArray<number>) {
+	@Input('burned') set burned(value: readonly number[]) {
 		this.logger.debug('[game] setting burned', value);
 		this._burned = value;
 		this.updateOverlay();
@@ -211,7 +178,7 @@ export class GameComponent implements AfterViewInit {
 		this.updateOverlay();
 	}
 
-	@Input('chosen') set chosen(value: ReadonlyArray<number>) {
+	@Input('chosen') set chosen(value: readonly number[]) {
 		this.logger.debug('[game] setting chosen', value);
 		this._chosen = value;
 	}
@@ -239,27 +206,28 @@ export class GameComponent implements AfterViewInit {
 		this.updateOverlay();
 	}
 
-	@Input('targets') set targets(value: ReadonlyArray<[number, number]>) {
+	@Input('targets') set targets(value: readonly [number, number][]) {
 		this.logger.debug('[game] setting targets', value);
 		this._targets = value;
 	}
 
-	@Input('options') set options(value: ReadonlyArray<number>) {
+	@Input('options') set options(value: readonly number[]) {
 		this.logger.debug('[game] setting options', value);
 		this._options = value;
 	}
 
 	private updateOverlay() {
-		this.isOverlay = this._isMulligan
-				|| this._isEndGame
-				|| (this._discovers && this._discovers.length > 0)
-				|| (this._burned && this._burned.length > 0)
-				|| this._fatigue > 0;
+		this.isOverlay =
+			this._isMulligan ||
+			this._isEndGame ||
+			(this._discovers && this._discovers.length > 0) ||
+			(this._burned && this._burned.length > 0) ||
+			this._fatigue > 0;
 	}
 
 	private updateActiveSpell() {
 		this._activeSpell = this._entities && this.activeSpellId && this._entities.get(this.activeSpellId);
-		this._activeSpellController = this._entities.find((entity) => entity.getTag(GameTag.PLAYER_ID) === this._playerId);
+		this._activeSpellController = this._entities.find(entity => entity.getTag(GameTag.PLAYER_ID) === this._playerId);
 	}
 
 	private updateSecretRevealed() {

@@ -16,15 +16,12 @@ import { NGXLogger } from 'ngx-logger';
 
 @Injectable()
 export class GamePopulationService {
-
 	// Map of entityId - entity definition
 	private entities: Map<number, Entity>;
 
-	constructor(private allCards: AllCardsService, private logger: NGXLogger) {
+	constructor(private allCards: AllCardsService, private logger: NGXLogger) {}
 
-	}
-
-	public populateInitialEntities(history: ReadonlyArray<HistoryItem>): Map<number, Entity> {
+	public populateInitialEntities(history: readonly HistoryItem[]): Map<number, Entity> {
 		this.entities = Map();
 		this.initializeEntities(history);
 		this.completeMissingInformation(history);
@@ -32,7 +29,7 @@ export class GamePopulationService {
 		return this.entities;
 	}
 
-	private initializeEntities(history: ReadonlyArray<HistoryItem>) {
+	private initializeEntities(history: readonly HistoryItem[]) {
 		for (const item of history) {
 			if (item instanceof PlayerHistoryItem) {
 				this.initializePlayer(item);
@@ -48,23 +45,20 @@ export class GamePopulationService {
 
 	private initializePlayer(historyItem: PlayerHistoryItem) {
 		// Remove the battle tag if present
-		const playerName = historyItem.entityDefintion.name.indexOf('#') !== -1
+		const playerName =
+			historyItem.entityDefintion.name.indexOf('#') !== -1
 				? historyItem.entityDefintion.name.split('#')[0]
 				: historyItem.entityDefintion.name;
-		const entity: PlayerEntity = PlayerEntity
-				.create({
-					id: historyItem.entityDefintion.id,
-					playerId: historyItem.entityDefintion.playerID,
-					name: playerName,
-				} as PlayerEntity)
-				.update(historyItem.entityDefintion);
+		const entity: PlayerEntity = PlayerEntity.create({
+			id: historyItem.entityDefintion.id,
+			playerId: historyItem.entityDefintion.playerID,
+			name: playerName,
+		} as PlayerEntity).update(historyItem.entityDefintion);
 		this.entities = this.entities.set(entity.id, entity);
 	}
 
 	private initializeGame(historyItem: GameHistoryItem) {
-		const entity: Entity = Entity
-				.create({ id: historyItem.entityDefintion.id } as Entity)
-				.update(historyItem.entityDefintion);
+		const entity: Entity = Entity.create({ id: historyItem.entityDefintion.id } as Entity).update(historyItem.entityDefintion);
 		this.entities = this.entities.set(entity.id, entity);
 	}
 
@@ -78,8 +72,8 @@ export class GamePopulationService {
 			newAttributes.cardID = historyItem.entityDefintion.cardID;
 		}
 		const entity: Entity = this.entities
-				.get(historyItem.entityDefintion.id, Entity.create({ id: historyItem.entityDefintion.id } as Entity))
-				.update(newAttributes as EntityDefinition);
+			.get(historyItem.entityDefintion.id, Entity.create({ id: historyItem.entityDefintion.id } as Entity))
+			.update(newAttributes as EntityDefinition);
 		this.entities = this.entities.set(entity.id, entity);
 	}
 
@@ -90,12 +84,12 @@ export class GamePopulationService {
 			newAttributes.cardID = historyItem.entityDefintion.cardID;
 		}
 		const entity: Entity = this.entities
-				.get(historyItem.entityDefintion.id, Entity.create({ id: historyItem.entityDefintion.id } as Entity))
-				.update(newAttributes as EntityDefinition);
+			.get(historyItem.entityDefintion.id, Entity.create({ id: historyItem.entityDefintion.id } as Entity))
+			.update(newAttributes as EntityDefinition);
 		this.entities = this.entities.set(entity.id, entity);
 	}
 
-	private completeMissingInformation(history: ReadonlyArray<HistoryItem>) {
+	private completeMissingInformation(history: readonly HistoryItem[]) {
 		for (const item of history) {
 			if (item instanceof TagChangeHistoryItem) {
 				this.addTagInformation(item);
@@ -108,19 +102,13 @@ export class GamePopulationService {
 
 	private addTagInformation(item: TagChangeHistoryItem) {
 		if (item.tag.tag === GameTag.SECRET && item.tag.value === 1) {
-			const entity: Entity = this.entities
-					.get(item.tag.entity)
-					.update({ tags: fromJS({ [GameTag[item.tag.tag]]: 1}) });
+			const entity: Entity = this.entities.get(item.tag.entity).update({ tags: fromJS({ [GameTag[item.tag.tag]]: 1 }) });
 			this.entities = this.entities.set(entity.id, entity);
 		} else if (item.tag.tag === GameTag.QUEST && item.tag.value === 1) {
-			const entity: Entity = this.entities
-					.get(item.tag.entity)
-					.update({ tags: fromJS({ [GameTag[item.tag.tag]]: 1}) });
+			const entity: Entity = this.entities.get(item.tag.entity).update({ tags: fromJS({ [GameTag[item.tag.tag]]: 1 }) });
 			this.entities = this.entities.set(entity.id, entity);
 		} else if (item.tag.tag === GameTag.PARENT_CARD) {
-			const entity: Entity = this.entities
-					.get(item.tag.entity)
-					.update({ tags: fromJS({ [GameTag[item.tag.tag]]: item.tag.value}) });
+			const entity: Entity = this.entities.get(item.tag.entity).update({ tags: fromJS({ [GameTag[item.tag.tag]]: item.tag.value }) });
 			this.entities = this.entities.set(entity.id, entity);
 		}
 	}
@@ -128,33 +116,33 @@ export class GamePopulationService {
 	private addEntityInformation(item: ShowEntityHistoryItem) {
 		if (item.entityDefintion.tags.get(GameTag[GameTag.SECRET]) === 1) {
 			const entity: Entity = this.entities
-					.get(item.entityDefintion.id)
-					.update({ tags: Map<string, number>().set(GameTag[GameTag.SECRET], 1) });
+				.get(item.entityDefintion.id)
+				.update({ tags: Map<string, number>().set(GameTag[GameTag.SECRET], 1) });
 			this.entities = this.entities.set(entity.id, entity);
 		}
 		const newTags: Map<string, number> = Map<string, number>()
-				.set(GameTag[GameTag.CREATOR], item.entityDefintion.tags.get(GameTag[GameTag.CREATOR]))
-				.set(GameTag[GameTag.TAG_SCRIPT_DATA_NUM_1], item.entityDefintion.tags.get(GameTag[GameTag.TAG_SCRIPT_DATA_NUM_1]))
-				.set(GameTag[GameTag.TAG_SCRIPT_DATA_NUM_2], item.entityDefintion.tags.get(GameTag[GameTag.TAG_SCRIPT_DATA_NUM_2]));
-		const finalEntity: Entity = this.entities
-				.get(item.entityDefintion.id)
-				.update({ tags: newTags });
+			.set(GameTag[GameTag.CREATOR], item.entityDefintion.tags.get(GameTag[GameTag.CREATOR]))
+			.set(GameTag[GameTag.TAG_SCRIPT_DATA_NUM_1], item.entityDefintion.tags.get(GameTag[GameTag.TAG_SCRIPT_DATA_NUM_1]))
+			.set(GameTag[GameTag.TAG_SCRIPT_DATA_NUM_2], item.entityDefintion.tags.get(GameTag[GameTag.TAG_SCRIPT_DATA_NUM_2]));
+		const finalEntity: Entity = this.entities.get(item.entityDefintion.id).update({ tags: newTags });
 		this.entities = this.entities.set(finalEntity.id, finalEntity);
 	}
 
 	private addBasicData() {
-		this.entities = this.entities.map((value: Entity) => {
-			const card = this.allCards.getCard(value.cardID);
-			let newTags = Map<string, number>();
-			if (card) {
-				if (card.type === 'Spell' && !value.getTag(GameTag.CARDTYPE)) {
-					newTags = value.tags.set(GameTag[GameTag.CARDTYPE], CardType.SPELL);
+		this.entities = this.entities
+			.map((value: Entity) => {
+				const card = this.allCards.getCard(value.cardID);
+				let newTags = Map<string, number>();
+				if (card) {
+					if (card.type === 'Spell' && !value.getTag(GameTag.CARDTYPE)) {
+						newTags = value.tags.set(GameTag[GameTag.CARDTYPE], CardType.SPELL);
+					}
+					if (card.type === 'Enchantment' && !value.getTag(GameTag.CARDTYPE)) {
+						newTags = value.tags.set(GameTag[GameTag.CARDTYPE], CardType.ENCHANTMENT);
+					}
 				}
-				if (card.type === 'Enchantment' && !value.getTag(GameTag.CARDTYPE)) {
-					newTags = value.tags.set(GameTag[GameTag.CARDTYPE], CardType.ENCHANTMENT);
-				}
-			}
-			return value.update({ tags: newTags });
-		}).toMap();
+				return value.update({ tags: newTags });
+			})
+			.toMap();
 	}
 }

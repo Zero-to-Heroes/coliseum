@@ -11,17 +11,16 @@ import { CardType } from '../../../models/enums/card-type';
 		'../../../../css/components/game/card/card-cost-colors.scss',
 	],
 	template: `
-        <div class="card-cost {{costClass}} {{_cardType}}" cardElementResize [fontSizeRatio]="fontSizeRatio">
-            <img class="mana-icon" src="https://static.zerotoheroes.com/hearthstone/asset/manastorm/mana.png" />
-            <div class="cost">
-                <div resizeTarget>{{_cost}}</div>
-            </div>
-        </div>
+		<div class="card-cost {{ costClass }} {{ _cardType }}" cardElementResize [fontSizeRatio]="fontSizeRatio">
+			<img class="mana-icon" src="https://static.zerotoheroes.com/hearthstone/asset/manastorm/mana.png" />
+			<div class="cost">
+				<div resizeTarget>{{ _cost }}</div>
+			</div>
+		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardCostComponent {
-
 	_cost: number;
 	costClass: string;
 	_cardType: string;
@@ -29,11 +28,7 @@ export class CardCostComponent {
 
 	private _cardId: string;
 
-	constructor(
-			private cards: AllCardsService,
-			private logger: NGXLogger,
-			private cdr: ChangeDetectorRef) {
-	}
+	constructor(private cards: AllCardsService, private logger: NGXLogger, private cdr: ChangeDetectorRef) {}
 
 	@Input('cardId') set cardId(cardId: string) {
 		this.logger.debug('[card-cost] setting cardId', cardId);
@@ -71,7 +66,7 @@ export class CardCostComponent {
 		} else if (this._cost > originalCost) {
 			this.costClass = 'higher-cost';
 		}
-		if (!(<ViewRef>this.cdr).destroyed) {
+		if (!(this.cdr as ViewRef).destroyed) {
 			this.cdr.detectChanges();
 		}
 	}

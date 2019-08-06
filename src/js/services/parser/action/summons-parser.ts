@@ -15,7 +15,6 @@ import { ActionHelper } from './action-helper';
 import { uniq } from 'lodash';
 
 export class SummonsParser implements Parser {
-
 	constructor(private allCards: AllCardsService) {}
 
 	public applies(item: HistoryItem): boolean {
@@ -23,16 +22,16 @@ export class SummonsParser implements Parser {
 	}
 
 	public parse(
-			item: ActionHistoryItem,
-			currentTurn: number,
-			entitiesBeforeAction: Map<number, Entity>,
-			history: ReadonlyArray<HistoryItem>): Action[] {
-		if (parseInt(item.node.attributes.type) !== BlockType.TRIGGER
-				&& parseInt(item.node.attributes.type) !== BlockType.POWER) {
+		item: ActionHistoryItem,
+		currentTurn: number,
+		entitiesBeforeAction: Map<number, Entity>,
+		history: readonly HistoryItem[],
+	): Action[] {
+		if (parseInt(item.node.attributes.type) !== BlockType.TRIGGER && parseInt(item.node.attributes.type) !== BlockType.POWER) {
 			return;
 		}
 
-		let entities: ReadonlyArray<EntityDefinition>;
+		let entities: readonly EntityDefinition[];
 		if (item.node.fullEntities && item.node.fullEntities.length > 0) {
 			entities = item.node.fullEntities;
 		} else if (item.node.showEntities && item.node.showEntities.length > 0) {
@@ -43,25 +42,26 @@ export class SummonsParser implements Parser {
 		}
 
 		return entities
-				.filter((entity) => entity.tags.get(GameTag[GameTag.ZONE]) === Zone.PLAY)
-				.filter((entity) => entity.tags.get(GameTag[GameTag.CARDTYPE]) === CardType.MINION)
-				.map((entity) => {
-					return SummonAction.create(
-						{
-							timestamp: item.timestamp,
-							index: entity.index,
-							entityIds: [entity.id],
-							origin: parseInt(item.node.attributes.entity)
-						},
-						this.allCards);
-				});
+			.filter(entity => entity.tags.get(GameTag[GameTag.ZONE]) === Zone.PLAY)
+			.filter(entity => entity.tags.get(GameTag[GameTag.CARDTYPE]) === CardType.MINION)
+			.map(entity => {
+				return SummonAction.create(
+					{
+						timestamp: item.timestamp,
+						index: entity.index,
+						entityIds: [entity.id],
+						origin: parseInt(item.node.attributes.entity),
+					},
+					this.allCards,
+				);
+			});
 	}
 
-	public reduce(actions: ReadonlyArray<Action>): ReadonlyArray<Action> {
+	public reduce(actions: readonly Action[]): readonly Action[] {
 		return ActionHelper.combineActions<SummonAction>(
 			actions,
 			(previous, current) => this.shouldMergeActions(previous, current),
-			(previous, current) => this.mergeActions(previous, current)
+			(previous, current) => this.mergeActions(previous, current),
 		);
 	}
 
@@ -82,8 +82,9 @@ export class SummonsParser implements Parser {
 				index: previousAction.index,
 				entities: currentAction.entities,
 				origin: currentAction.origin,
-				entityIds: uniq([...uniq(previousAction.entityIds || []), ...uniq(currentAction.entityIds || [])])
+				entityIds: uniq([...uniq(previousAction.entityIds || []), ...uniq(currentAction.entityIds || [])]),
 			},
-			this.allCards);
+			this.allCards,
+		);
 	}
 }

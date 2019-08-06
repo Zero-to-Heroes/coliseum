@@ -37,11 +37,9 @@ import { QuestCompletedParser } from '../action/quest-completed-parser';
 
 @Injectable()
 export class ActionParserService {
-
 	private currentTurn = 0;
 
-	constructor(private logger: NGXLogger, private allCards: AllCardsService, private stateProcessorService: StateProcessorService) {
-	}
+	constructor(private logger: NGXLogger, private allCards: AllCardsService, private stateProcessorService: StateProcessorService) {}
 
 	private registerActionParsers(): Parser[] {
 		return [
@@ -72,9 +70,9 @@ export class ActionParserService {
 		];
 	}
 
-	public parseActions(game: Game, history: ReadonlyArray<HistoryItem>): Game {
+	public parseActions(game: Game, history: readonly HistoryItem[]): Game {
 		this.currentTurn = 0;
-		let actionsForTurn: ReadonlyArray<Action> = [];
+		let actionsForTurn: readonly Action[] = [];
 		let previousStateEntities: Map<number, Entity> = game.entities;
 		let previousProcessedItem: HistoryItem = history[0];
 		let turns: Map<number, Turn> = Map<number, Turn>();
@@ -82,12 +80,16 @@ export class ActionParserService {
 		const actionParsers: Parser[] = this.registerActionParsers();
 
 		for (const item of history) {
-			actionParsers.forEach((parser) => {
+			actionParsers.forEach(parser => {
 				if (parser.applies(item)) {
 					// When we perform an action, we want to show the result of the state updates until the next action is
 					// played.
 					previousStateEntities = this.stateProcessorService.applyHistoryUntilNow(
-						previousStateEntities, history, previousProcessedItem, item);
+						previousStateEntities,
+						history,
+						previousProcessedItem,
+						item,
+					);
 					const actions: Action[] = parser.parse(item, this.currentTurn, previousStateEntities, history, game.players);
 					if (actions && actions.length > 0) {
 						actionsForTurn = this.fillMissingEntities(actionsForTurn, previousStateEntities);
@@ -104,7 +106,11 @@ export class ActionParserService {
 				const lastAction = actionsForTurn[actionsForTurn.length - 1];
 				actionsForTurn = actionsForTurn.slice(0, actionsForTurn.length - 1);
 				previousStateEntities = this.stateProcessorService.applyHistoryUntilNow(
-					previousStateEntities, history, previousProcessedItem, item);
+					previousStateEntities,
+					history,
+					previousProcessedItem,
+					item,
+				);
 				actionsForTurn = this.fillMissingEntities(actionsForTurn, previousStateEntities);
 				// Sort actions based on their index (so that actions that were created from the same
 				// parent action can have a custom order)
@@ -114,7 +120,7 @@ export class ActionParserService {
 				// action that draws two cards
 				actionsForTurn = this.reduceActions(actionParsers, actionsForTurn);
 				actionsForTurn = this.addDamageToEntities(actionsForTurn, previousStateEntities);
-				const turnWithNewActions = updatedTurn.update({actions: actionsForTurn});
+				const turnWithNewActions = updatedTurn.update({ actions: actionsForTurn });
 				turns = turns.set(turnWithNewActions.turn === 'mulligan' ? 0 : parseInt(turnWithNewActions.turn), turnWithNewActions);
 				actionsForTurn = [lastAction];
 				previousProcessedItem = item;
@@ -122,7 +128,11 @@ export class ActionParserService {
 		}
 
 		previousStateEntities = this.stateProcessorService.applyHistoryUntilNow(
-			previousStateEntities, history, previousProcessedItem, history[history.length - 1]);
+			previousStateEntities,
+			history,
+			previousProcessedItem,
+			history[history.length - 1],
+		);
 		actionsForTurn = this.fillMissingEntities(actionsForTurn, previousStateEntities);
 		// Sort actions based on their index (so that actions that were created from the same
 		// parent action can have a custom order)
@@ -133,7 +143,7 @@ export class ActionParserService {
 		actionsForTurn = this.reduceActions(actionParsers, actionsForTurn);
 		actionsForTurn = this.addDamageToEntities(actionsForTurn, previousStateEntities);
 		try {
-			const turnWithNewActions = game.turns.get(this.currentTurn).update({actions: actionsForTurn});
+			const turnWithNewActions = game.turns.get(this.currentTurn).update({ actions: actionsForTurn });
 			turns = turns.set(turnWithNewActions.turn === 'mulligan' ? 0 : parseInt(turnWithNewActions.turn), turnWithNewActions);
 			actionsForTurn = [];
 		} catch (e) {
@@ -141,13 +151,10 @@ export class ActionParserService {
 			this.logger.warn(this.currentTurn, turns.toJS(), actionsForTurn);
 		}
 
-
 		return Game.createGame(game, { turns: turns });
 	}
 
-	private fillMissingEntities(
-			actionsForTurn: ReadonlyArray<Action>,
-			previousStateEntities: Map<number, Entity>): ReadonlyArray<Action> {
+	private fillMissingEntities(actionsForTurn: readonly Action[], previousStateEntities: Map<number, Entity>): readonly Action[] {
 		const newActionsForTurn = [];
 		for (let i = 0; i < actionsForTurn.length; i++) {
 			if (actionsForTurn[i].entities) {
@@ -159,20 +166,16 @@ export class ActionParserService {
 		return newActionsForTurn;
 	}
 
-	private addDamageToEntities(
-		actionsForTurn: ReadonlyArray<Action>,
-		previousStateEntities: Map<number, Entity>): ReadonlyArray<Action> {
-			const newActionsForTurn = [];
-			for (let i = 0; i < actionsForTurn.length; i++) {
-				const newEntities = actionsForTurn[i].entities
-						? actionsForTurn[i].entities
-						: previousStateEntities;
-				const entitiesAfterDamageUpdate: Map<number, Entity> = this.isDamageAction(actionsForTurn[i])
-						? newEntities.map((entity) => this.updateDamageForEntity(actionsForTurn[i], entity)).toMap()
-						: newEntities;
-				newActionsForTurn.push(actionsForTurn[i].update(entitiesAfterDamageUpdate));
-			}
-			return newActionsForTurn;
+	private addDamageToEntities(actionsForTurn: readonly Action[], previousStateEntities: Map<number, Entity>): readonly Action[] {
+		const newActionsForTurn = [];
+		for (let i = 0; i < actionsForTurn.length; i++) {
+			const newEntities = actionsForTurn[i].entities ? actionsForTurn[i].entities : previousStateEntities;
+			const entitiesAfterDamageUpdate: Map<number, Entity> = this.isDamageAction(actionsForTurn[i])
+				? newEntities.map(entity => this.updateDamageForEntity(actionsForTurn[i], entity)).toMap()
+				: newEntities;
+			newActionsForTurn.push(actionsForTurn[i].update(entitiesAfterDamageUpdate));
+		}
+		return newActionsForTurn;
 	}
 
 	private isDamageAction(action: Action): boolean {
@@ -185,10 +188,12 @@ export class ActionParserService {
 		return damage ? entity.updateDamage(damage) : entity;
 	}
 
-	private updateCurrentTurn(item: HistoryItem, game: Game, actions: ReadonlyArray<Action>): Turn {
-		if (actions.length > 1
-				&& actions[actions.length - 1] instanceof StartTurnAction
-				&& !(actions[actions.length - 1] as StartTurnAction).isStartOfMulligan) {
+	private updateCurrentTurn(item: HistoryItem, game: Game, actions: readonly Action[]): Turn {
+		if (
+			actions.length > 1 &&
+			actions[actions.length - 1] instanceof StartTurnAction &&
+			!(actions[actions.length - 1] as StartTurnAction).isStartOfMulligan
+		) {
 			const turnToUpdate: Turn = game.turns.get(this.currentTurn);
 			this.currentTurn++;
 			return turnToUpdate;
@@ -196,7 +201,7 @@ export class ActionParserService {
 		return null;
 	}
 
-	private reduceActions(actionParsers: Parser[], actionsForTurn: ReadonlyArray<Action>): ReadonlyArray<Action> {
+	private reduceActions(actionParsers: Parser[], actionsForTurn: readonly Action[]): readonly Action[] {
 		let reducedActions = actionsForTurn;
 		for (const parser of actionParsers) {
 			reducedActions = parser.reduce(reducedActions);
@@ -211,13 +216,13 @@ export class ActionParserService {
 		return reducedActions;
 	}
 
-	private sortActions<T>(array: ReadonlyArray<T>, sortingFunction: (a: T, b: T) => number): ReadonlyArray<T> {
+	private sortActions<T>(array: readonly T[], sortingFunction: (a: T, b: T) => number): readonly T[] {
 		const intermediate: T[] = [...array];
 		intermediate.sort(sortingFunction);
-		return intermediate as ReadonlyArray<T>;
+		return intermediate as readonly T[];
 	}
 
-	private areEqual(actions1: ReadonlyArray<Action>, actions2: ReadonlyArray<Action>): boolean {
+	private areEqual(actions1: readonly Action[], actions2: readonly Action[]): boolean {
 		if (actions1.length !== actions2.length) {
 			return false;
 		}

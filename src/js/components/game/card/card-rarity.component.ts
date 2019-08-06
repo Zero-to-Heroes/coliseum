@@ -5,19 +5,16 @@ import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'card-rarity',
-	styleUrls: [
-		'../../../../css/components/game/card/card-rarity.component.scss'
-	],
+	styleUrls: ['../../../../css/components/game/card/card-rarity.component.scss'],
 	template: `
-        <img *ngIf="image" src="{{image}}" class="card-rarity" />
+		<img *ngIf="image" src="{{ image }}" class="card-rarity" />
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardRarityComponent {
-
 	image: string;
 
-	constructor(private cards: AllCardsService, private logger: NGXLogger) { }
+	constructor(private cards: AllCardsService, private logger: NGXLogger) {}
 
 	@Input('cardId') set cardId(cardId: string) {
 		this.logger.debug('[card-rarity] setting cardId', cardId);

@@ -1,13 +1,10 @@
 import { Directive, ElementRef, HostListener, ViewRef, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 
 @Directive({
-  selector: '[cardResize]'
+	selector: '[cardResize]',
 })
 export class CardResizeDirective implements AfterViewInit {
-
-	constructor(private el: ElementRef, private cdr: ChangeDetectorRef) {
-
-	}
+	constructor(private el: ElementRef, private cdr: ChangeDetectorRef) {}
 
 	ngAfterViewInit() {
 		// We use opacity to avoid flickering
@@ -22,17 +19,17 @@ export class CardResizeDirective implements AfterViewInit {
 
 	private resize() {
 		const el = this.el.nativeElement;
-		const width = 120.0 / 187 * el.getBoundingClientRect().height;
+		const width = (120.0 / 187) * el.getBoundingClientRect().height;
 		const textEl = this.el.nativeElement;
 		textEl.style.width = width + 'px';
-		if (!(<ViewRef>this.cdr).destroyed) {
+		if (!(this.cdr as ViewRef).destroyed) {
 			this.cdr.detectChanges();
 		}
 		setTimeout(() => {
 			el.dispatchEvent(new Event('card-resize', { bubbles: false }));
 			setTimeout(() => {
 				this.el.nativeElement.style.opacity = 1;
-				if (!(<ViewRef>this.cdr).destroyed) {
+				if (!(this.cdr as ViewRef).destroyed) {
 					this.cdr.detectChanges();
 				}
 			});

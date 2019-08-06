@@ -4,28 +4,19 @@ import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'active-spell',
-	styleUrls: [
-		'../../../css/components/game/active-spell.component.scss'
-	],
+	styleUrls: ['../../../css/components/game/active-spell.component.scss'],
 	template: `
 		<div class="active-spell">
-            <card class="active-spell"
-                    *ngIf="_entity"
-                    [hasTooltip]="false"
-                    [controller]="_controller"
-                    [entity]="_entity">
-            </card>
+			<card class="active-spell" *ngIf="_entity" [hasTooltip]="false" [controller]="_controller" [entity]="_entity"> </card>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ActiveSpellComponent {
-
 	_entity: Entity;
 	_controller: Entity;
 
-	constructor(private logger: NGXLogger) {
-	}
+	constructor(private logger: NGXLogger) {}
 
 	@Input('entity') set entity(value: Entity) {
 		this.logger.debug('[active-spell] setting new entity', value);

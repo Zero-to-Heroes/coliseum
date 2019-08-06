@@ -5,19 +5,17 @@ import { GameTag } from '../../../models/enums/game-tags';
 import { Action } from '../../../models/action/action';
 import { isEqual } from 'lodash';
 import { EntityTag } from '../../../models/parser/entity-tag';
-import { Damage } from '../../../models/action/damage';
 
 export class ActionHelper {
-
 	public static getOwner(entities: Map<number, Entity>, entityId: number): PlayerEntity {
 		const ownerId = entityId;
 		let owner = entities.get(ownerId);
 		if (!(owner instanceof PlayerEntity)) {
 			const controllerId = entities.get(entityId).getTag(GameTag.CONTROLLER);
 			owner = entities
-					.filter((entity: Entity) => entity instanceof PlayerEntity)
-					.filter((entity: PlayerEntity) => entity.playerId === controllerId)
-					.first();
+				.filter((entity: Entity) => entity instanceof PlayerEntity)
+				.filter((entity: PlayerEntity) => entity.playerId === controllerId)
+				.first();
 		}
 		return owner as PlayerEntity;
 	}
@@ -36,13 +34,14 @@ export class ActionHelper {
 		return entities.get(heroEntityId).cardID;
 	}
 
-	public static combineActions<T extends Action> (
-			actions: ReadonlyArray<Action>,
-			shouldMerge: (a: Action, b: Action) => boolean,
-			combiner: (a: T, b: T) => T,
-			shouldSwap?: (a: Action, b: Action) => boolean): ReadonlyArray<Action> {
+	public static combineActions<T extends Action>(
+		actions: readonly Action[],
+		shouldMerge: (a: Action, b: Action) => boolean,
+		combiner: (a: T, b: T) => T,
+		shouldSwap?: (a: Action, b: Action) => boolean,
+	): readonly Action[] {
 		let previousResult = actions;
-		let result: ReadonlyArray<Action> = ActionHelper.doCombine(previousResult, shouldMerge, combiner, shouldSwap);
+		let result: readonly Action[] = ActionHelper.doCombine(previousResult, shouldMerge, combiner, shouldSwap);
 		while (!isEqual(result, previousResult)) {
 			previousResult = result;
 			result = ActionHelper.doCombine(previousResult, shouldMerge, combiner);
@@ -50,7 +49,7 @@ export class ActionHelper {
 		return result;
 	}
 
-	public static getTag(tags: ReadonlyArray<EntityTag>, name: GameTag): number {
+	public static getTag(tags: readonly EntityTag[], name: GameTag): number {
 		const defender = tags.find(tag => tag.tag === name);
 		return defender ? defender.value : 0;
 	}
@@ -65,10 +64,11 @@ export class ActionHelper {
 	}
 
 	private static doCombine<T extends Action>(
-			actions: ReadonlyArray<Action>,
-			shouldMerge: (a: Action, b: Action) => boolean,
-			combiner: (a: T, b: T) => T,
-			shouldSwap?: (a: Action, b: Action) => boolean): ReadonlyArray<Action> {
+		actions: readonly Action[],
+		shouldMerge: (a: Action, b: Action) => boolean,
+		combiner: (a: T, b: T) => T,
+		shouldSwap?: (a: Action, b: Action) => boolean,
+	): readonly Action[] {
 		const result: Action[] = [];
 		let previousAction: Action;
 		// console.log('considering actions to merge', actions);

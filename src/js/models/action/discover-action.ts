@@ -6,11 +6,10 @@ import { PlayerEntity } from '../game/player-entity';
 import { ActionHelper } from '../../services/parser/action/action-helper';
 
 export class DiscoverAction extends Action {
-
 	readonly origin: number;
 	readonly ownerId: number;
-	readonly choices: ReadonlyArray<number>;
-	readonly chosen: ReadonlyArray<number>;
+	readonly choices: readonly number[];
+	readonly chosen: readonly number[];
 
 	readonly allCards: AllCardsService;
 
@@ -31,25 +30,26 @@ export class DiscoverAction extends Action {
 		const owner = this.entities.get(this.ownerId) as PlayerEntity;
 
 		const offeredCards = this.choices
-				.map((entityId) => ActionHelper.getCardId(this.entities, entityId))
-				.map((cardId) => this.allCards.getCard(cardId));
+			.map(entityId => ActionHelper.getCardId(this.entities, entityId))
+			.map(cardId => this.allCards.getCard(cardId));
 		let offerInfo = '';
 		// We don't have the mulligan info, so we just display the amount of cards being mulliganed
-		if (offeredCards.some((card) => !card)) {
+		if (offeredCards.some(card => !card)) {
 			offerInfo = `${offeredCards.length} cards`;
 		} else {
-			offerInfo = offeredCards.map((card) => card.name).join(', ');
+			offerInfo = offeredCards.map(card => card.name).join(', ');
 		}
 
-		const chosenCards = this.chosen && this.chosen.length > 0 && this.chosen
-				.map((entityId) => ActionHelper.getCardId(this.entities, entityId))
-				.map((cardId) => this.allCards.getCard(cardId));
+		const chosenCards =
+			this.chosen &&
+			this.chosen.length > 0 &&
+			this.chosen.map(entityId => ActionHelper.getCardId(this.entities, entityId)).map(cardId => this.allCards.getCard(cardId));
 		let choiceInfo;
 		// We don't have the mulligan info, so we just display the amount of cards being mulliganed
-		if (chosenCards.some((card) => !card)) {
+		if (chosenCards.some(card => !card)) {
 			choiceInfo = `${chosenCards.length} cards`;
 		} else {
-			choiceInfo = chosenCards.map((card) => card.name).join(', ');
+			choiceInfo = chosenCards.map(card => card.name).join(', ');
 		}
 		const chosenText = choiceInfo && ` and picks ${choiceInfo}`;
 		const textRaw = `\t${owner.name} discovers ${offerInfo}${chosenText}`;

@@ -10,7 +10,8 @@ export interface Parser {
 		item: HistoryItem,
 		currentTurn: number,
 		entitiesBeforeAction: Map<number, Entity>,
-		history: ReadonlyArray<HistoryItem>,
-		players?: ReadonlyArray<PlayerEntity>): Action[];
-	reduce(actions: ReadonlyArray<Action>): ReadonlyArray<Action>;
+		history: readonly HistoryItem[],
+		players?: readonly PlayerEntity[],
+	): Action[];
+	reduce(actions: readonly Action[]): readonly Action[];
 }

@@ -2,7 +2,6 @@ import { Action } from './action';
 import { Map } from 'immutable';
 import { Entity } from '../game/entity';
 import { AllCardsService } from '../../services/all-cards.service';
-import { uniq } from 'lodash';
 import { ActionHelper } from '../../services/parser/action/action-helper';
 
 export class FatigueDamageAction extends Action {

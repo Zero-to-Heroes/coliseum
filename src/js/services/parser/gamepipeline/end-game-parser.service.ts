@@ -9,9 +9,7 @@ import { PlayState } from '../../../models/enums/playstate';
 
 @Injectable()
 export class EndGameParserService {
-
-	constructor(private logger: NGXLogger, private allCards: AllCardsService) {
-	}
+	constructor(private logger: NGXLogger, private allCards: AllCardsService) {}
 
 	public parseEndGame(game: Game): Game {
 		let turns = game.turns;
@@ -31,14 +29,11 @@ export class EndGameParserService {
 		}
 		const newEndGame = this.enrichAction(turn.actions[turn.actions.length - 1] as EndGameAction);
 		newActions.push(newEndGame);
-		return turn.update({ actions: newActions as ReadonlyArray<Action> } as Turn);
+		return turn.update({ actions: newActions as readonly Action[] } as Turn);
 	}
 
 	private enrichAction(action: EndGameAction): EndGameAction {
-		const status: PlayState = action.winStatus
-				.filter(st => st[0] === action.entityId)
-				.map(st => st[1])
-				[0];
+		const status: PlayState = action.winStatus.filter(st => st[0] === action.entityId).map(st => st[1])[0];
 		return action.updateAction<EndGameAction>({
 			isEndGame: true,
 			endGameStatus: status,

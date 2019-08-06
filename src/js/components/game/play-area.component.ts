@@ -8,55 +8,43 @@ import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'play-area',
-	styleUrls: [
-		'../../../css/components/game/play-area.component.scss'
-	],
+	styleUrls: ['../../../css/components/game/play-area.component.scss'],
 	template: `
-        <div class="play-area" [ngClass]="{ 'mulligan': _isMulligan }">
-            <hand [entities]="hand" [showCards]="_showCards" [options]="handOptions" [controller]="playerEntity"></hand>
-            <hero
-                    [hero]="hero"
-                    [heroPower]="heroPower"
-                    [weapon]="weapon"
-                    [secrets]="secrets"
-                    [options]="heroOptions">
-            </hero>
-            <board
-                    [entities]="board"
-                    [enchantmentCandidates]="enchantmentCandidates"
-                    [options]="boardOptions">
-            </board>
-            <mana-tray
-                    [total]="totalCrystals"
-                    [available]="availableCrystals"
-                    [empty]="emptyCrystals"
-                    [locked]="lockedCrystals"
-                    [futureLocked]="futureLockedCrystals">
-            </mana-tray>
-            <deck [deck]="deck"></deck>
+		<div class="play-area" [ngClass]="{ 'mulligan': _isMulligan }">
+			<hand [entities]="hand" [showCards]="_showCards" [options]="handOptions" [controller]="playerEntity"></hand>
+			<hero [hero]="hero" [heroPower]="heroPower" [weapon]="weapon" [secrets]="secrets" [options]="heroOptions"> </hero>
+			<board [entities]="board" [enchantmentCandidates]="enchantmentCandidates" [options]="boardOptions"> </board>
+			<mana-tray
+				[total]="totalCrystals"
+				[available]="availableCrystals"
+				[empty]="emptyCrystals"
+				[locked]="lockedCrystals"
+				[futureLocked]="futureLockedCrystals"
+			>
+			</mana-tray>
+			<deck [deck]="deck"></deck>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlayAreaComponent {
-
 	_isMulligan: string;
 	_entities: Map<number, Entity>;
 	_playerId: number;
 	_showCards = true;
 
-	hand: ReadonlyArray<Entity>;
-	handOptions: ReadonlyArray<number>;
-	board: ReadonlyArray<Entity>;
-	enchantmentCandidates: ReadonlyArray<Entity>;
-	boardOptions: ReadonlyArray<number>;
-	deck: ReadonlyArray<Entity>;
+	hand: readonly Entity[];
+	handOptions: readonly number[];
+	board: readonly Entity[];
+	enchantmentCandidates: readonly Entity[];
+	boardOptions: readonly number[];
+	deck: readonly Entity[];
 	playerEntity: Entity;
 	hero: Entity;
-	heroOptions: ReadonlyArray<number>;
+	heroOptions: readonly number[];
 	heroPower: Entity;
 	weapon: Entity;
-	secrets: ReadonlyArray<Entity>;
+	secrets: readonly Entity[];
 
 	totalCrystals: number;
 	availableCrystals: number;
@@ -64,7 +52,7 @@ export class PlayAreaComponent {
 	lockedCrystals: number;
 	futureLockedCrystals: number;
 
-	private _options: ReadonlyArray<number>;
+	private _options: readonly number[];
 
 	constructor(private logger: NGXLogger) {}
 
@@ -84,7 +72,7 @@ export class PlayAreaComponent {
 		this._showCards = value;
 	}
 
-	@Input('options') set options(value: ReadonlyArray<number>) {
+	@Input('options') set options(value: readonly number[]) {
 		this.logger.debug('[play-area] setting options', value);
 		this._options = value;
 		this.updateEntityGroups();
@@ -97,12 +85,12 @@ export class PlayAreaComponent {
 	}
 
 	private updateEntityGroups() {
-		if (!this._entities || ! this._playerId) {
+		if (!this._entities || !this._playerId) {
 			this.logger.debug('[play-area] entities not initialized yet');
 			return;
 		}
 
-		this.playerEntity = this._entities.find((entity) => entity.getTag(GameTag.PLAYER_ID) === this._playerId);
+		this.playerEntity = this._entities.find(entity => entity.getTag(GameTag.PLAYER_ID) === this._playerId);
 		this.hand = this.getHandEntities(this._playerId);
 		this.handOptions = this.getOptions(this.hand, this._options);
 		this.board = this.getBoardEntities(this._playerId);
@@ -123,32 +111,35 @@ export class PlayAreaComponent {
 		this.logger.debug('[play-area] play-area entities updated', this.hand);
 	}
 
-	private getHandEntities(playerId: number): ReadonlyArray<Entity> {
-		return this._entities.toArray()
-				.filter((entity) => entity.getTag(GameTag.CONTROLLER) === playerId)
-				.filter((entity) => entity.getTag(GameTag.ZONE) === Zone.HAND)
-				.sort((a, b) => a.getTag(GameTag.ZONE_POSITION) - b.getTag(GameTag.ZONE_POSITION));
+	private getHandEntities(playerId: number): readonly Entity[] {
+		return this._entities
+			.toArray()
+			.filter(entity => entity.getTag(GameTag.CONTROLLER) === playerId)
+			.filter(entity => entity.getTag(GameTag.ZONE) === Zone.HAND)
+			.sort((a, b) => a.getTag(GameTag.ZONE_POSITION) - b.getTag(GameTag.ZONE_POSITION));
 	}
 
-	private getDeckEntities(playerId: number): ReadonlyArray<Entity> {
-		return this._entities.toArray()
-				.filter((entity) => entity.getTag(GameTag.CONTROLLER) === playerId)
-				.filter((entity) => entity.getTag(GameTag.ZONE) === Zone.DECK);
+	private getDeckEntities(playerId: number): readonly Entity[] {
+		return this._entities
+			.toArray()
+			.filter(entity => entity.getTag(GameTag.CONTROLLER) === playerId)
+			.filter(entity => entity.getTag(GameTag.ZONE) === Zone.DECK);
 	}
 
-	private getBoardEntities(playerId: number): ReadonlyArray<Entity> {
-		return this._entities.toArray()
-				.filter((entity) => entity.getTag(GameTag.CONTROLLER) === playerId)
-				.filter((entity) => entity.getTag(GameTag.ZONE) === Zone.PLAY)
-				.filter((entity) => entity.getTag(GameTag.CARDTYPE) === CardType.MINION)
-				.sort((a, b) => a.getTag(GameTag.ZONE_POSITION) - b.getTag(GameTag.ZONE_POSITION));
+	private getBoardEntities(playerId: number): readonly Entity[] {
+		return this._entities
+			.toArray()
+			.filter(entity => entity.getTag(GameTag.CONTROLLER) === playerId)
+			.filter(entity => entity.getTag(GameTag.ZONE) === Zone.PLAY)
+			.filter(entity => entity.getTag(GameTag.CARDTYPE) === CardType.MINION)
+			.sort((a, b) => a.getTag(GameTag.ZONE_POSITION) - b.getTag(GameTag.ZONE_POSITION));
 	}
 
-	private getEnchantmentCandidates(board: ReadonlyArray<Entity>, entities: ReadonlyArray<Entity>): ReadonlyArray<Entity> {
+	private getEnchantmentCandidates(board: readonly Entity[], entities: readonly Entity[]): readonly Entity[] {
 		const boardIds = board.map(entity => entity.id);
 		return entities
-				.filter(entity => entity.zone() === Zone.PLAY)
-				.filter(entity => boardIds.indexOf(entity.getTag(GameTag.ATTACHED)) !== -1);
+			.filter(entity => entity.zone() === Zone.PLAY)
+			.filter(entity => boardIds.indexOf(entity.getTag(GameTag.ATTACHED)) !== -1);
 	}
 
 	private getHeroEntity(playerEntity: Entity): Entity {
@@ -157,34 +148,34 @@ export class PlayAreaComponent {
 	}
 
 	private getHeroPowerEntity(playerId: number): Entity {
-		const heroPower = this._entities.toArray()
-				.filter((entity) => entity.getTag(GameTag.CARDTYPE) === CardType.HERO_POWER)
-				.filter((entity) => entity.getTag(GameTag.ZONE) === Zone.PLAY)
-				.filter((entity) => entity.getTag(GameTag.CONTROLLER) === playerId)
-				[0];
+		const heroPower = this._entities
+			.toArray()
+			.filter(entity => entity.getTag(GameTag.CARDTYPE) === CardType.HERO_POWER)
+			.filter(entity => entity.getTag(GameTag.ZONE) === Zone.PLAY)
+			.filter(entity => entity.getTag(GameTag.CONTROLLER) === playerId)[0];
 		return heroPower;
 	}
 
 	private getWeaponEntity(playerId: number): Entity {
-		return this._entities.toArray()
-				.filter((entity) => entity.getTag(GameTag.CARDTYPE) === CardType.WEAPON)
-				.filter((entity) => entity.getTag(GameTag.ZONE) === Zone.PLAY)
-				.filter((entity) => entity.getTag(GameTag.CONTROLLER) === playerId)
-				[0];
+		return this._entities
+			.toArray()
+			.filter(entity => entity.getTag(GameTag.CARDTYPE) === CardType.WEAPON)
+			.filter(entity => entity.getTag(GameTag.ZONE) === Zone.PLAY)
+			.filter(entity => entity.getTag(GameTag.CONTROLLER) === playerId)[0];
 	}
 
-	private getSecretEntities(playerId: number): ReadonlyArray<Entity> {
-		return this._entities.toArray()
-				.filter((entity) => entity.getTag(GameTag.CONTROLLER) === playerId)
-				.filter((entity) => entity.getTag(GameTag.ZONE) === Zone.SECRET)
-				.sort((a, b) => a.getTag(GameTag.ZONE_POSITION) - b.getTag(GameTag.ZONE_POSITION));
+	private getSecretEntities(playerId: number): readonly Entity[] {
+		return this._entities
+			.toArray()
+			.filter(entity => entity.getTag(GameTag.CONTROLLER) === playerId)
+			.filter(entity => entity.getTag(GameTag.ZONE) === Zone.SECRET)
+			.sort((a, b) => a.getTag(GameTag.ZONE_POSITION) - b.getTag(GameTag.ZONE_POSITION));
 	}
 
-	private getOptions(zone: ReadonlyArray<Entity>, options: ReadonlyArray<number>): ReadonlyArray<number> {
+	private getOptions(zone: readonly Entity[], options: readonly number[]): readonly number[] {
 		return zone
-				.filter(entity => entity)
-				.map(entity => entity.id)
-				.filter(id => options.indexOf(id) !== -1);
+			.filter(entity => entity)
+			.map(entity => entity.id)
+			.filter(id => options.indexOf(id) !== -1);
 	}
-
 }

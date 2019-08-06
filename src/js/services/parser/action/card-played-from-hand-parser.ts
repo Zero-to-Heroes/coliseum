@@ -12,7 +12,6 @@ import { Zone } from '../../../models/enums/zone';
 import { CardPlayedFromHandAction } from '../../../models/action/card-played-from-hand-action';
 
 export class CardPlayedFromHandParser implements Parser {
-
 	constructor(private allCards: AllCardsService) {}
 
 	public applies(item: HistoryItem): boolean {
@@ -20,10 +19,11 @@ export class CardPlayedFromHandParser implements Parser {
 	}
 
 	public parse(
-			item: ActionHistoryItem,
-			currentTurn: number,
-			entitiesBeforeAction: Map<number, Entity>,
-			history: ReadonlyArray<HistoryItem>): Action[] {
+		item: ActionHistoryItem,
+		currentTurn: number,
+		entitiesBeforeAction: Map<number, Entity>,
+		history: readonly HistoryItem[],
+	): Action[] {
 		if (parseInt(item.node.attributes.type) !== BlockType.PLAY) {
 			return;
 		}
@@ -49,8 +49,10 @@ export class CardPlayedFromHandParser implements Parser {
 		// http://www.zerotoheroes.com/r/hearthstone/572de12ee4b0d4231295c49e/an-arena-game-going-5-0
 		if (playedCardId < 0 && item.node.showEntities) {
 			for (const showEntity of item.node.showEntities) {
-				if (showEntity.tags.get(GameTag[GameTag.ZONE]) === Zone.PLAY
-						&& showEntity.tags.get(GameTag[GameTag.CARDTYPE]) !== CardType.ENCHANTMENT) {
+				if (
+					showEntity.tags.get(GameTag[GameTag.ZONE]) === Zone.PLAY &&
+					showEntity.tags.get(GameTag[GameTag.CARDTYPE]) !== CardType.ENCHANTMENT
+				) {
 					playedCardId = showEntity.id;
 				}
 			}
@@ -60,16 +62,19 @@ export class CardPlayedFromHandParser implements Parser {
 			return;
 		}
 
-		return [CardPlayedFromHandAction.create(
-			{
-				timestamp: item.timestamp,
-				index: item.index,
-				entityId: playedCardId,
-			},
-			this.allCards)];
+		return [
+			CardPlayedFromHandAction.create(
+				{
+					timestamp: item.timestamp,
+					index: item.index,
+					entityId: playedCardId,
+				},
+				this.allCards,
+			),
+		];
 	}
 
-	public reduce(actions: ReadonlyArray<Action>): ReadonlyArray<Action> {
+	public reduce(actions: readonly Action[]): readonly Action[] {
 		return actions;
 	}
 }

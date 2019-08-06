@@ -7,5 +7,5 @@ export interface Choices {
 	readonly type: number;
 	readonly ts: number;
 	readonly index: number;
-	readonly cards: ReadonlyArray<number>;
+	readonly cards: readonly number[];
 }

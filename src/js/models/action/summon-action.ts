@@ -6,7 +6,7 @@ import { ActionHelper } from '../../services/parser/action/action-helper';
 
 export class SummonAction extends Action {
 	readonly origin: number;
-	readonly entityIds: ReadonlyArray<number>;
+	readonly entityIds: readonly number[];
 
 	readonly allCards: AllCardsService;
 
@@ -27,9 +27,9 @@ export class SummonAction extends Action {
 		const originCardId = ActionHelper.getCardId(this.entities, this.origin);
 		const originCardName = this.allCards.getCard(originCardId).name;
 		const summonCardNames = this.entityIds
-				.map((entityId) => ActionHelper.getCardId(this.entities, entityId))
-				.map((cardId) => this.allCards.getCard(cardId).name)
-				.join(', ');
+			.map(entityId => ActionHelper.getCardId(this.entities, entityId))
+			.map(cardId => this.allCards.getCard(cardId).name)
+			.join(', ');
 		const textRaw = `\t${originCardName} summons ${summonCardNames}`;
 		return Object.assign(new SummonAction(this.allCards), this, { textRaw: textRaw });
 	}

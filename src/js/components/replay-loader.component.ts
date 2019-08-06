@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, AfterViewInit } from '@angular/core';
-import { HttpClient, HttpHeaderResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 declare var $;
 
@@ -12,9 +12,7 @@ const REPLAY_API = 'https://s3-us-west-2.amazonaws.com/com.zerotoheroes.output/'
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ReplayLoaderComponent implements AfterViewInit {
-
-	constructor(private http: HttpClient) {
-	}
+	constructor(private http: HttpClient) {}
 
 	async ngAfterViewInit() {
 		const reviewId = this.getSearchParam('reviewId');
@@ -31,7 +29,7 @@ export class ReplayLoaderComponent implements AfterViewInit {
 						// console.log('init replay loading');
 						window['coliseum'].component.loadReplay(replayAsString);
 					});
-				}
+				},
 			});
 			return;
 		}
@@ -51,9 +49,8 @@ export class ReplayLoaderComponent implements AfterViewInit {
 		const searchString = window.location.search.substring(1);
 		const searchParams = searchString.split('&');
 		return searchParams
-				.filter(param => param.indexOf('=') !== -1)
-				.filter(param => param.split('=')[0] === name)
-				.map(param => param.split('=')[1])
-				[0];
+			.filter(param => param.indexOf('=') !== -1)
+			.filter(param => param.split('=')[0] === name)
+			.map(param => param.split('=')[1])[0];
 	}
 }

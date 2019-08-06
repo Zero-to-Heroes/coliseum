@@ -1,32 +1,36 @@
-import { Component, ChangeDetectionStrategy, Input, ElementRef,
-		ChangeDetectorRef, ViewRef, HostListener, AfterViewInit } from '@angular/core';
+import {
+	Component,
+	ChangeDetectionStrategy,
+	Input,
+	ElementRef,
+	ChangeDetectorRef,
+	ViewRef,
+	HostListener,
+	AfterViewInit,
+} from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
 import { Entity } from '../../../models/game/entity';
 
 @Component({
 	selector: 'deck',
-	styleUrls: [
-		'../../../../css/global/text.scss',
-		'../../../../css/components/game/deck/deck.component.scss',
-	],
+	styleUrls: ['../../../../css/global/text.scss', '../../../../css/components/game/deck/deck.component.scss'],
 	template: `
-        <div class="deck">
-            <img class="cardback-icon" src="https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/cardback.png" />
-            <div class="count">
-                <div class="text">{{numberOfCards}}</div>
-            </div>
-        </div>
+		<div class="deck">
+			<img class="cardback-icon" src="https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/cardback.png" />
+			<div class="count">
+				<div class="text">{{ numberOfCards }}</div>
+			</div>
+		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DeckComponent implements AfterViewInit {
-
-	_deck: ReadonlyArray<Entity>;
+	_deck: readonly Entity[];
 	numberOfCards: number;
 
-	constructor(private logger: NGXLogger, private elRef: ElementRef, private cdr: ChangeDetectorRef) {  }
+	constructor(private logger: NGXLogger, private elRef: ElementRef, private cdr: ChangeDetectorRef) {}
 
-	@Input('deck') set deck(value: ReadonlyArray<Entity>) {
+	@Input('deck') set deck(value: readonly Entity[]) {
 		this.logger.debug('[deck] setting deck', value);
 		this._deck = value;
 		this.numberOfCards = this._deck.length;
@@ -50,7 +54,7 @@ export class DeckComponent implements AfterViewInit {
 		const fontSize = 0.5 * el.getBoundingClientRect().width;
 		const textEl = this.elRef.nativeElement.querySelector('.count');
 		textEl.style.fontSize = fontSize + 'px';
-		if (!(<ViewRef>this.cdr).destroyed) {
+		if (!(this.cdr as ViewRef).destroyed) {
 			this.cdr.detectChanges();
 		}
 	}

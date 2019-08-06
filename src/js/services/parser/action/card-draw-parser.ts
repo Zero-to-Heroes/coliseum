@@ -15,7 +15,6 @@ import { NGXLogger } from 'ngx-logger';
 import { FullEntityHistoryItem } from '../../../models/history/full-entity-history-item';
 
 export class CardDrawParser implements Parser {
-
 	constructor(private allCards: AllCardsService, private logger: NGXLogger) {}
 
 	public applies(item: HistoryItem): boolean {
@@ -23,10 +22,11 @@ export class CardDrawParser implements Parser {
 	}
 
 	public parse(
-			item: TagChangeHistoryItem | FullEntityHistoryItem | ShowEntityHistoryItem,
-			currentTurn: number,
-			entitiesBeforeAction: Map<number, Entity>,
-			history: ReadonlyArray<HistoryItem>): Action[] {
+		item: TagChangeHistoryItem | FullEntityHistoryItem | ShowEntityHistoryItem,
+		currentTurn: number,
+		entitiesBeforeAction: Map<number, Entity>,
+		history: readonly HistoryItem[],
+	): Action[] {
 		if (currentTurn === 0) {
 			return;
 		}
@@ -34,41 +34,48 @@ export class CardDrawParser implements Parser {
 		// We typically get a TagChange when the card is hidden, so typically when our opponent draws a card
 		if (item instanceof TagChangeHistoryItem) {
 			const previousZone = entitiesBeforeAction.get(item.tag.entity).getTag(GameTag.ZONE);
-			if (item.tag.tag === GameTag.ZONE
-					&& item.tag.value === Zone.HAND
-					// SETASIDE is for discovery actions
-					&& (previousZone === Zone.DECK || previousZone === Zone.SETASIDE || !previousZone)) {
+			if (
+				item.tag.tag === GameTag.ZONE &&
+				item.tag.value === Zone.HAND &&
+				// SETASIDE is for discovery actions
+				(previousZone === Zone.DECK || previousZone === Zone.SETASIDE || !previousZone)
+			) {
 				const controller = entitiesBeforeAction.get(item.tag.entity).getTag(GameTag.CONTROLLER);
 				if (!controller) {
 					this.logger.error('[card-draw-parser] empty controller', item, entitiesBeforeAction.get(item.tag.entity));
 				}
-				return [CardDrawAction.create(
-					{
-						timestamp: item.timestamp,
-						index: item.index,
-						controller: controller,
-						data: [item.tag.entity],
-					},
-					this.allCards)];
+				return [
+					CardDrawAction.create(
+						{
+							timestamp: item.timestamp,
+							index: item.index,
+							controller: controller,
+							data: [item.tag.entity],
+						},
+						this.allCards,
+					),
+				];
 			}
 		}
 		// ShowEntity also happens, for instance when you draw a card with Life Tap
 		if (item instanceof ShowEntityHistoryItem) {
 			const previousZone = entitiesBeforeAction.get(item.entityDefintion.id).getTag(GameTag.ZONE);
-			if (item.entityDefintion.tags.get(GameTag[GameTag.ZONE]) === Zone.HAND
-					&& (previousZone === Zone.DECK || !previousZone)) {
+			if (item.entityDefintion.tags.get(GameTag[GameTag.ZONE]) === Zone.HAND && (previousZone === Zone.DECK || !previousZone)) {
 				const controller = entitiesBeforeAction.get(item.entityDefintion.id).getTag(GameTag.CONTROLLER);
 				if (!controller) {
 					this.logger.error('empty controller', item, entitiesBeforeAction.get(item.entityDefintion.id));
 				}
-				return [CardDrawAction.create(
-					{
-						timestamp: item.timestamp,
-						index: item.index,
-						controller: controller,
-						data: [item.entityDefintion.id],
-					},
-					this.allCards)];
+				return [
+					CardDrawAction.create(
+						{
+							timestamp: item.timestamp,
+							index: item.index,
+							controller: controller,
+							data: [item.entityDefintion.id],
+						},
+						this.allCards,
+					),
+				];
 			}
 		}
 		// Otherwise when we draw a card it's a ShowEntity or FullEntity
@@ -81,30 +88,34 @@ export class CardDrawParser implements Parser {
 			if (previousZone && previousZone !== Zone.DECK) {
 				return;
 			}
-			const controller = item.entityDefintion.tags.get(GameTag[GameTag.CONTROLLER])
-					|| entitiesBeforeAction.get(item.entityDefintion.id).getTag(GameTag.CONTROLLER);
+			const controller =
+				item.entityDefintion.tags.get(GameTag[GameTag.CONTROLLER]) ||
+				entitiesBeforeAction.get(item.entityDefintion.id).getTag(GameTag.CONTROLLER);
 			if (!controller) {
 				this.logger.error('[card-draw-parser] empty controller', item);
 				return [];
 			}
-			return [CardDrawAction.create(
-				{
-					timestamp: item.timestamp,
-					index: item.index,
-					controller: controller,
-					data: [item.entityDefintion.id],
-				},
-				this.allCards)];
+			return [
+				CardDrawAction.create(
+					{
+						timestamp: item.timestamp,
+						index: item.index,
+						controller: controller,
+						data: [item.entityDefintion.id],
+					},
+					this.allCards,
+				),
+			];
 		}
 
 		return [];
 	}
 
-	public reduce(actions: ReadonlyArray<Action>): ReadonlyArray<Action> {
+	public reduce(actions: readonly Action[]): readonly Action[] {
 		return ActionHelper.combineActions<CardDrawAction>(
 			actions,
 			(previous, current) => this.shouldMergeActions(previous, current),
-			(previous, current) => this.mergeActions(previous, current)
+			(previous, current) => this.mergeActions(previous, current),
 		);
 	}
 
@@ -127,6 +138,7 @@ export class CardDrawParser implements Parser {
 				controller: currentAction.controller,
 				data: uniq([...uniq(previousAction.data || []), ...uniq(currentAction.data || [])]),
 			},
-			this.allCards);
+			this.allCards,
+		);
 	}
 }

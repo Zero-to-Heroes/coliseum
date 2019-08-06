@@ -9,7 +9,6 @@ import { ChoiceType } from '../../../models/enums/choice-type';
 import { DiscoverAction } from '../../../models/action/discover-action';
 
 export class DiscoverParser implements Parser {
-
 	constructor(private allCards: AllCardsService) {}
 
 	public applies(item: HistoryItem): boolean {
@@ -17,25 +16,29 @@ export class DiscoverParser implements Parser {
 	}
 
 	public parse(
-			item: ChoicesHistoryItem,
-			currentTurn: number,
-			entitiesBeforeAction: Map<number, Entity>,
-			history: ReadonlyArray<HistoryItem>): Action[] {
+		item: ChoicesHistoryItem,
+		currentTurn: number,
+		entitiesBeforeAction: Map<number, Entity>,
+		history: readonly HistoryItem[],
+	): Action[] {
 		if (item.choices.type !== ChoiceType.GENERAL) {
 			return [];
 		}
-		return [DiscoverAction.create(
-			{
-				timestamp: item.timestamp,
-				index: item.index,
-				origin: item.choices.source,
-				ownerId: item.choices.playerID,
-				choices: item.choices.cards
-			},
-			this.allCards)];
+		return [
+			DiscoverAction.create(
+				{
+					timestamp: item.timestamp,
+					index: item.index,
+					origin: item.choices.source,
+					ownerId: item.choices.playerID,
+					choices: item.choices.cards,
+				},
+				this.allCards,
+			),
+		];
 	}
 
-	public reduce(actions: ReadonlyArray<Action>): ReadonlyArray<Action> {
+	public reduce(actions: readonly Action[]): readonly Action[] {
 		return actions;
 	}
 }

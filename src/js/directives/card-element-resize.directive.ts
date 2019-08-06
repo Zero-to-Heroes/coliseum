@@ -1,24 +1,20 @@
 import { Directive, ElementRef, Input, ViewRef, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 
 @Directive({
-  selector: '[cardElementResize]'
+	selector: '[cardElementResize]',
 })
 export class CardElementResizeDirective implements AfterViewInit {
-
 	@Input() fontSizeRatio: number;
 	@Input() timeout = 0;
 	@Input() keepOpacity = false;
 
 	constructor(private elRef: ElementRef, private cdr: ChangeDetectorRef) {
-		document.addEventListener(
-			'card-resize',
-			() => this.resizeText(),
-			true);
+		document.addEventListener('card-resize', () => this.resizeText(), true);
 	}
 
 	ngAfterViewInit() {
 		this.elRef.nativeElement.style.opacity = 0;
-		if (!(<ViewRef>this.cdr).destroyed) {
+		if (!(this.cdr as ViewRef).destroyed) {
 			this.cdr.detectChanges();
 		}
 		setTimeout(() => this.resizeText(), this.timeout);
@@ -39,7 +35,7 @@ export class CardElementResizeDirective implements AfterViewInit {
 			} else {
 				this.elRef.nativeElement.style.removeProperty('opacity');
 			}
-			if (!(<ViewRef>this.cdr).destroyed) {
+			if (!(this.cdr as ViewRef).destroyed) {
 				this.cdr.detectChanges();
 			}
 		}

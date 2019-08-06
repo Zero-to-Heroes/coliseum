@@ -3,16 +3,13 @@ import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'hero-power-art',
-	styleUrls: [
-		'../../../../css/components/game/hero/hero-power-art.component.scss'
-	],
+	styleUrls: ['../../../../css/components/game/hero/hero-power-art.component.scss'],
 	template: `
-        <img src="{{image}}" class="hero-power-art" />
+		<img src="{{ image }}" class="hero-power-art" />
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeroPowerArtComponent {
-
 	image: string;
 
 	constructor(private logger: NGXLogger) {}

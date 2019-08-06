@@ -5,33 +5,29 @@ import { AllCardsService } from '../../../services/all-cards.service';
 
 @Component({
 	selector: 'card-enchantment',
-	styleUrls: [
-		'../../../../css/global/text.scss',
-		'../../../../css/components/game/card/card-enchantment.component.scss',
-	],
+	styleUrls: ['../../../../css/global/text.scss', '../../../../css/components/game/card/card-enchantment.component.scss'],
 	template: `
-        <div class="card-enchantment" cardElementResize [fontSizeRatio]="0.1">
-            <div class="name" resizeTarget>{{name}}</div>
-            <div class="body">
-                <div class="image">
-                    <img class="art" src="{{art}}">
-                    <img class="ring" src="{{ringImage}}">
-                </div>
-                <div class="description" resizeTarget [innerHTML]="description"></div>
-            </div>
-        </div>
+		<div class="card-enchantment" cardElementResize [fontSizeRatio]="0.1">
+			<div class="name" resizeTarget>{{ name }}</div>
+			<div class="body">
+				<div class="image">
+					<img class="art" src="{{ art }}" />
+					<img class="ring" src="{{ ringImage }}" />
+				</div>
+				<div class="description" resizeTarget [innerHTML]="description"></div>
+			</div>
+		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardEnchantmentComponent {
-
 	_enchantment: Entity;
 	name: string;
 	art: string;
 	description: string;
 	ringImage = 'http://static.zerotoheroes.com/hearthstone/asset/coliseum/images/enchantments/enchantment-ring.png';
 
-	constructor(private logger: NGXLogger, private cards: AllCardsService) { }
+	constructor(private logger: NGXLogger, private cards: AllCardsService) {}
 
 	@Input('enchantment') set enchantment(value: Entity) {
 		this.logger.debug('[card-enchantment] setting enchantment', value);

@@ -5,33 +5,34 @@ import { GameTag } from '../../../models/enums/game-tags';
 
 @Component({
 	selector: 'secrets',
-	styleUrls: [
-		'../../../../css/components/game/hero/secrets.component.scss'
-	],
+	styleUrls: ['../../../../css/components/game/hero/secrets.component.scss'],
 	template: `
-        <div class="secrets">
-            <quest *ngFor="let entity of _quests; let i = index; trackBy: trackByFn"
-                    [entity]="entity"
-                    [style.left.%]="getLeft(i)"
-                    [style.top.%]="getTop(i)">
-            </quest>
-            <secret *ngFor="let entity of _secrets; let i = index; trackBy: trackByFn"
-                    [entity]="entity"
-                    [style.left.%]="getLeft(i + _quests.length)"
-                    [style.top.%]="getTop(i + _quests.length)">
-            </secret>
+		<div class="secrets">
+			<quest
+				*ngFor="let entity of _quests; let i = index; trackBy: trackByFn"
+				[entity]="entity"
+				[style.left.%]="getLeft(i)"
+				[style.top.%]="getTop(i)"
+			>
+			</quest>
+			<secret
+				*ngFor="let entity of _secrets; let i = index; trackBy: trackByFn"
+				[entity]="entity"
+				[style.left.%]="getLeft(i + _quests.length)"
+				[style.top.%]="getTop(i + _quests.length)"
+			>
+			</secret>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SecretsComponent {
+	_quests: readonly Entity[];
+	_secrets: readonly Entity[];
 
-	_quests: ReadonlyArray<Entity>;
-	_secrets: ReadonlyArray<Entity>;
+	constructor(private logger: NGXLogger) {}
 
-	constructor(private logger: NGXLogger) { }
-
-	@Input('secrets') set secrets(value: ReadonlyArray<Entity>) {
+	@Input('secrets') set secrets(value: readonly Entity[]) {
 		this.logger.debug('[secrets] setting secrets', value);
 		this._secrets = value.filter(entity => entity.getTag(GameTag.QUEST) !== 1) || [];
 		this._quests = value.filter(entity => entity.getTag(GameTag.QUEST) === 1) || [];
