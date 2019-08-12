@@ -1,14 +1,4 @@
-import {
-	Component,
-	ChangeDetectionStrategy,
-	HostListener,
-	Output,
-	EventEmitter,
-	Input,
-	ViewRef,
-	ChangeDetectorRef,
-	OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, HostListener, Input, OnInit, Output, ViewRef } from '@angular/core';
 import { Key } from 'ts-keycode-enum';
 
 @Component({
@@ -133,8 +123,8 @@ import { Key } from 'ts-keycode-enum';
 					</div>
 					<div class="gs-icon-divider"></div>
 					<button
-						class="gs-icon btn-gs-icon player-control toggle-icons hint-tooltip-container"
-						*ngIf="!showingHiddenCards"
+						class="gs-icon btn-gs-icon player-control toggle-icons hint-tooltip-container show"
+						*ngIf="showingHiddenCards"
 						(click)="toggleShowHiddenCards()"
 					>
 						<svg viewBox="0 0 30 30">
@@ -194,12 +184,12 @@ import { Key } from 'ts-keycode-enum';
 							/>
 						</svg>
 						<div class="hint-tooltip hint-tooltip-top hint-tooltip-aligned-right dark-theme">
-							<span>Show hidden cards<br /><kbd>H</kbd></span>
+							<span>Hide hidden cards<br /><kbd>H</kbd></span>
 						</div>
 					</button>
 					<button
 						class="gs-icon btn-gs-icon player-control toggle-icons hint-tooltip-container"
-						*ngIf="showingHiddenCards"
+						*ngIf="!showingHiddenCards"
 						(click)="toggleShowHiddenCards()"
 					>
 						<svg viewBox="0 0 30 30">
@@ -239,7 +229,7 @@ import { Key } from 'ts-keycode-enum';
 							/>
 						</svg>
 						<div class="hint-tooltip hint-tooltip-top hint-tooltip-aligned-right dark-theme">
-							<span>Hide hidden cards<br /><kbd>H</kbd></span>
+							<span>Show hidden cards<br /><kbd>H</kbd></span>
 						</div>
 					</button>
 				</div>

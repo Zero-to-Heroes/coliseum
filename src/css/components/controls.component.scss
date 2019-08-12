@@ -51,17 +51,17 @@ $dark-foreground-third: $gray168;
 $dark-foreground-forth: $gray130;
 
 // borders
-$transparent-border: rgba(white, .1);
+$transparent-border: rgba(white, 0.1);
 
 // gaps
 $grid-gap: 20px;
 
 // transparent buttons
-$transparent-btn-background-hover: rgba(white, .1);
-$transparent-btn-background-selected: rgba(white, .2);
+$transparent-btn-background-hover: rgba(white, 0.1);
+$transparent-btn-background-selected: rgba(white, 0.2);
 
-$transparent-btn-foreground: rgba(white, .4);
-$transparent-btn-foreground-selected: rgba(white, .9);
+$transparent-btn-foreground: rgba(white, 0.4);
+$transparent-btn-foreground-selected: rgba(white, 0.9);
 
 .light-theme {
 	--main-color: white;
@@ -69,7 +69,7 @@ $transparent-btn-foreground-selected: rgba(white, .9);
 	--background-secondary: #{$light-background-secondary};
 	--background-third: #{$light-background-third};
 	--background-forth: #{$light-background-forth};
-	
+
 	--foreground-main: #{$light-foreground-main};
 	--foreground-secondary: #{$light-foreground-secondary};
 	--foreground-third: #{$light-foreground-third};
@@ -83,7 +83,7 @@ $transparent-btn-foreground-selected: rgba(white, .9);
 	--background-secondary: #{$dark-background-secondary};
 	--background-third: #{$dark-background-third};
 	--background-forth: #{$dark-background-forth};
-	
+
 	--foreground-main: #{$dark-foreground-main};
 	--foreground-secondary: #{$dark-foreground-secondary};
 	--foreground-third: #{$dark-foreground-third};
@@ -97,10 +97,9 @@ $transparent-btn-foreground-selected: rgba(white, .9);
 	--background-main-hover: #{$dark-background-secondary};
 	--background-third: #{$dark-background-third};
 	--background-forth: #{$dark-background-forth};
-	
-	--text-main: #{rgba(white, .6)};
-}
 
+	--text-main: #{rgba(white, 0.6)};
+}
 
 * {
 	margin: 0;
@@ -123,10 +122,12 @@ a:active {
 	text-decoration: none;
 }
 
-a { color: inherit; }
+a {
+	color: inherit;
+}
 
 strong {
-	font-family: "KlavikaWebBasicMedium";
+	font-family: 'KlavikaWebBasicMedium';
 }
 
 img {
@@ -138,7 +139,7 @@ button {
 	border: none;
 	font-family: inherit;
 	background-color: transparent;
-	transition: .15s;
+	transition: 0.15s;
 }
 
 :focus {
@@ -163,7 +164,7 @@ button {
 	width: var(--size);
 	height: var(--size);
 	flex-shrink: 0;
-	
+
 	svg {
 		width: 100%;
 		height: 100%;
@@ -172,7 +173,7 @@ button {
 
 .btn-gs-icon {
 	color: var(--foreground-third);
-	
+
 	&:hover,
 	&.toggled {
 		color: var(--foreground-secondary);
@@ -194,11 +195,11 @@ button {
 .btn-round {
 	color: var(--foreground-third);
 	border-radius: 50%;
-	
+
 	&:hover,
 	&.active {
 		color: var(--foreground-secondary);
-		background-color: var(--background-secondary);    
+		background-color: var(--background-secondary);
 	}
 }
 
@@ -207,14 +208,22 @@ button {
 		position: absolute;
 		opacity: 0;
 	}
-	
-	svg:nth-of-type(1) { opacity: 1; }
-	svg:nth-of-type(2) { opacity: 0; }
+
+	svg:nth-of-type(1) {
+		opacity: 1;
+	}
+	svg:nth-of-type(2) {
+		opacity: 0;
+	}
 }
 
 .toggle-icons.toggled {
-	svg:nth-of-type(1) { opacity: 0; }
-	svg:nth-of-type(2) { opacity: 1; }
+	svg:nth-of-type(1) {
+		opacity: 0;
+	}
+	svg:nth-of-type(2) {
+		opacity: 1;
+	}
 }
 
 kbd {
@@ -222,14 +231,14 @@ kbd {
 	padding: 3px 0;
 	display: inline-flex;
 	align-items: center;
-	
+
 	&:before {
-		content: "[";
+		content: '[';
 		padding-right: 3px;
 	}
-	
+
 	&:after {
-		content: "]";
+		content: ']';
 		padding-left: 3px;
 	}
 }
@@ -251,13 +260,17 @@ kbd {
 	color: var(--foreground-third);
 	display: flex;
 	align-items: center;
-	
+
 	.player-controls-content-note {
 		font-size: 13px;
 	}
-	
-	a { padding: 0 3px; }
-	a:hover { color: var(--foreground-main); }
+
+	a {
+		padding: 0 3px;
+	}
+	a:hover {
+		color: var(--foreground-main);
+	}
 }
 
 .player-controls-content-left {
@@ -274,7 +287,7 @@ kbd {
 .player-control-main {
 	color: var(--foreground-secondary);
 	border-radius: 50%;
-	
+
 	&:hover {
 		background-color: var(--background-secondary);
 	}
@@ -295,7 +308,7 @@ kbd {
 .player-control-text {
 	font-size: 17px;
 	letter-spacing: 2px;
-	
+
 	sub {
 		transform: scaleX(1.3);
 		margin-right: -2px;
@@ -317,30 +330,28 @@ kbd {
 	width: var(--size);
 	height: var(--size);
 	flex-shrink: 0;
-	
+
 	svg {
 		width: 100%;
 		height: 100%;
 	}
 }
 
-
-
 // visibility
 .hint-tooltip-container {
 	position: relative;
-	
+
 	.hint-tooltip {
 		opacity: 0;
 		z-index: 1;
-		transition: .15s;
+		transition: 0.15s;
 	}
 }
 
 .hint-tooltip-container:hover {
 	.hint-tooltip {
 		opacity: 1;
-		transition-delay: .5s;
+		transition-delay: 0.5s;
 	}
 }
 
@@ -352,21 +363,21 @@ kbd {
 	pointer-events: none;
 	color: var(--hntt-color, $light-foreground-main); // default light theme
 	background-color: var(--hntt-bg-color, $light-background-main); // default light theme
-	filter: drop-shadow(0 0 3px rgba(black, .6));
-	
+	filter: drop-shadow(0 0 3px rgba(black, 0.6));
+
 	kbd {
 		font-family: inherit;
 		padding: 3px 0;
 		display: inline-flex;
 		align-items: center;
-		
+
 		color: var(--foreground-third);
 	}
 }
 
 // arrow
 .hint-tooltip:after {
-	content: "";
+	content: '';
 	position: absolute;
 	margin: auto;
 	background-color: inherit;
@@ -392,7 +403,7 @@ kbd {
 .hint-tooltip-right {
 	right: 0;
 	transform: translateX(100%);
-	
+
 	&:after {
 		left: -4px;
 		clip-path: polygon(0 50%, 100% 0, 100% 100%);
@@ -402,7 +413,7 @@ kbd {
 .hint-tooltip-left {
 	left: 0;
 	transform: translateX(-100%);
-	
+
 	&:after {
 		right: -4px;
 		clip-path: polygon(0 0, 100% 50%, 0 100%);
@@ -420,20 +431,20 @@ kbd {
 .hint-tooltip-top {
 	top: 0;
 	transform: translateY(-100%);
-	
+
 	&:after {
 		bottom: -4px;
-		clip-path: polygon(0 0, 100% 0, 50% 100%)
+		clip-path: polygon(0 0, 100% 0, 50% 100%);
 	}
 }
 
 .hint-tooltip-bottom {
 	bottom: 0;
 	transform: translateY(100%);
-	
+
 	&:after {
 		top: -4px;
-		clip-path: polygon(50% 0, 0 100%, 100% 100%)
+		clip-path: polygon(50% 0, 0 100%, 100% 100%);
 	}
 }
 
@@ -445,7 +456,7 @@ kbd {
 
 .hint-tooltip-aligned-right {
 	right: 0;
-	
+
 	&:after {
 		right: var(--hhtt-arrow-indent);
 		transform: translateX(50%);
@@ -454,7 +465,7 @@ kbd {
 
 .hint-tooltip-aligned-left {
 	left: 0;
-	
+
 	&:after {
 		left: var(--hhtt-arrow-indent);
 		transform: translateX(-50%);
@@ -475,4 +486,8 @@ kbd {
 
 .hint-tooltip.dark-theme {
 	filter: none;
+}
+
+.show {
+	background-color: var(--background-secondary);
 }
