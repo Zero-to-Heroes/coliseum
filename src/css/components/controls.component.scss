@@ -321,22 +321,6 @@ kbd {
 	justify-content: center;
 }
 
-.gs-icon {
-	--size: 40px;
-	position: relative;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: var(--size);
-	height: var(--size);
-	flex-shrink: 0;
-
-	svg {
-		width: 100%;
-		height: 100%;
-	}
-}
-
 // visibility
 .hint-tooltip-container {
 	position: relative;
