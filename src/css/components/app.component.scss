@@ -1,60 +1,60 @@
 .coliseum {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    user-select: none;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	user-select: none;
 	-moz-user-select: none;
-    
+
 	&::before {
-		content: "";
+		content: '';
 		padding-top: 120%;
 		position: relative;
 		display: block;
-    }
-
-    game {
-        position: absolute;
-        top: 0;
-        bottom: 110px;
-        left: 0;
-        right: 0;
-    }
-
-    tooltips {
-        position: absolute;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        right: 0;
-        pointer-events: none;
 	}
-	
+
+	game {
+		position: absolute;
+		top: 0;
+		bottom: 110px;
+		left: 0;
+		right: 0;
+	}
+
+	tooltips {
+		position: absolute;
+		left: 0;
+		top: 0;
+		bottom: 0;
+		right: 0;
+		pointer-events: none;
+	}
+
 	seeker {
 		height: 20px;
 	}
 
-    turn-narrator {
+	turn-narrator {
 		height: 50px;
 		display: flex;
 		align-items: flex-start;
 		justify-content: center;
 	}
-	
+
 	controls {
 		height: 40px;
 	}
-    
-    &.wide {
-        &::before {
-            padding-top: 56%;
-        }
-        ::ng-deep tooltips tooltip {
-            width: 15%;
-        }
-    }
 
-    ::ng-deep * {
-        user-select: none;
-        -moz-user-select: none;
-    }
+	&.wide {
+		&::before {
+			padding-top: 56%;
+		}
+		::ng-deep tooltips tooltip {
+			width: 15%;
+		}
+	}
+
+	::ng-deep * {
+		user-select: none;
+		-moz-user-select: none;
+	}
 }
