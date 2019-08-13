@@ -1,49 +1,56 @@
-import { Component, ChangeDetectionStrategy, NgZone, ChangeDetectorRef, ViewRef } from '@angular/core';
-
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, NgZone, ViewRef } from '@angular/core';
 import { Map } from 'immutable';
-import { Entity } from '../models/game/entity';
-import { Game } from '../models/game/game';
-import { GameParserService } from '../services/parser/game-parser.service';
-import { Events } from '../services/events.service';
 import { NGXLogger } from 'ngx-logger';
-import { PlayState } from '../models/enums/playstate';
-import { DiscoverAction } from '../models/action/discover-action';
-import { SecretRevealedAction } from '../models/action/secret-revealed-action';
 import { CardBurnAction } from '../models/action/card-burn-action';
+import { DiscoverAction } from '../models/action/discover-action';
 import { FatigueDamageAction } from '../models/action/fatigue-damage-action';
 import { QuestCompletedAction } from '../models/action/quest-completed-action';
-import { ReplayOptions } from '../models/replay-options';
+import { SecretRevealedAction } from '../models/action/secret-revealed-action';
+import { PlayState } from '../models/enums/playstate';
+import { Entity } from '../models/game/entity';
+import { Game } from '../models/game/game';
 import { Turn } from '../models/game/turn';
+import { ReplayOptions } from '../models/replay-options';
+import { Events } from '../services/events.service';
+import { GameParserService } from '../services/parser/game-parser.service';
 
 @Component({
 	styleUrls: ['../../css/components/app.component.scss'],
 	template: `
 		<div class="coliseum wide">
-			<game
-				*ngIf="game"
-				[turn]="turnString"
-				[playerId]="game.players[0].playerId"
-				[opponentId]="game.players[1].playerId"
-				[playerName]="game.players[0].name"
-				[opponentName]="game.players[1].name"
-				[activePlayer]="activePlayer"
-				[activeSpell]="activeSpell"
-				[isMulligan]="isMulligan"
-				[isEndGame]="isEndGame"
-				[endGameStatus]="endGameStatus"
-				[entities]="entities"
-				[targets]="targets"
-				[secretRevealed]="secretRevealed"
-				[questCompleted]="questCompleted"
-				[discovers]="discovers"
-				[burned]="burned"
-				[fatigue]="fatigue"
-				[chosen]="chosen"
-				[options]="options"
-				[showHiddenCards]="showHiddenCards"
-				[crossed]="crossed"
-			>
-			</game>
+			<section class="manastorm-player-wrapper">
+				<div class="manastorm-player">
+					<div class="aspect-ratio-wrapper ar-16x9">
+						<div class="aspect-ratio-inner">
+							<game
+								*ngIf="game"
+								[turn]="turnString"
+								[playerId]="game.players[0].playerId"
+								[opponentId]="game.players[1].playerId"
+								[playerName]="game.players[0].name"
+								[opponentName]="game.players[1].name"
+								[activePlayer]="activePlayer"
+								[activeSpell]="activeSpell"
+								[isMulligan]="isMulligan"
+								[isEndGame]="isEndGame"
+								[endGameStatus]="endGameStatus"
+								[entities]="entities"
+								[targets]="targets"
+								[secretRevealed]="secretRevealed"
+								[questCompleted]="questCompleted"
+								[discovers]="discovers"
+								[burned]="burned"
+								[fatigue]="fatigue"
+								[chosen]="chosen"
+								[options]="options"
+								[showHiddenCards]="showHiddenCards"
+								[crossed]="crossed"
+							>
+							</game>
+						</div>
+					</div>
+				</div>
+			</section>
 			<seeker *ngIf="totalTime > 0" [totalTime]="totalTime" [currentTime]="currentTime" (seek)="onSeek($event)"> </seeker>
 			<turn-narrator [text]="text"></turn-narrator>
 			<controls
