@@ -1,14 +1,22 @@
+import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Ng2FittextModule } from 'ng2-fittext';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
-
 import { AppComponent } from '../../components/app.component';
+import { ControlsComponent } from '../../components/controls.component';
+import { ActiveSpellComponent } from '../../components/game/active-spell.component';
+import { BoardCardFrameComponent } from '../../components/game/board/board-card-frame.component';
+import { BoardCardStatsComponent } from '../../components/game/board/board-card-stats.component';
 import { BoardComponent } from '../../components/game/board/board.component';
+import { CardOnBoardOverlaysComponent } from '../../components/game/board/card-on-board-overlays.component';
 import { CardOnBoardComponent } from '../../components/game/board/card-on-board.component';
+import { PowerIndicatorComponent } from '../../components/game/board/power-indicator.component';
+import { SleepingComponent } from '../../components/game/board/sleeping.component';
 import { CardArtComponent } from '../../components/game/card/card-art.component';
 import { CardCostComponent } from '../../components/game/card/card-cost.component';
+import { CardEnchantmentComponent } from '../../components/game/card/card-enchantment.component';
+import { CardEnchantmentsComponent } from '../../components/game/card/card-enchantments.component';
 import { CardFrameComponent } from '../../components/game/card/card-frame.component';
 import { CardNameComponent } from '../../components/game/card/card-name.component';
 import { CardRaceComponent } from '../../components/game/card/card-race.component';
@@ -16,86 +24,70 @@ import { CardRarityComponent } from '../../components/game/card/card-rarity.comp
 import { CardStatsComponent } from '../../components/game/card/card-stats.component';
 import { CardTextComponent } from '../../components/game/card/card-text.component';
 import { CardComponent } from '../../components/game/card/card.component';
+import { DamageComponent } from '../../components/game/card/damage.component';
+import { OverlayBurnedComponent } from '../../components/game/card/overlay-burned.component';
+import { OverlayCrossedComponent } from '../../components/game/card/overlay-crossed.component';
+import { OverlayTickedComponent } from '../../components/game/card/overlay-ticked.component';
+import { DeckComponent } from '../../components/game/deck/deck.component';
 import { GameComponent } from '../../components/game/game.component';
 import { HandComponent } from '../../components/game/hand.component';
 import { HeroArtComponent } from '../../components/game/hero/hero-art.component';
 import { HeroCardComponent } from '../../components/game/hero/hero-card.component';
 import { HeroFrameComponent } from '../../components/game/hero/hero-frame.component';
+import { HeroOverlaysComponent } from '../../components/game/hero/hero-overlays.component';
 import { HeroPowerArtComponent } from '../../components/game/hero/hero-power-art.component';
+import { HeroPowerCostComponent } from '../../components/game/hero/hero-power-cost.component';
 import { HeroPowerFrameComponent } from '../../components/game/hero/hero-power-frame.component';
 import { HeroPowerComponent } from '../../components/game/hero/hero-power.component';
-import { HeroComponent } from '../../components/game/hero/hero.component';
-import { WeaponComponent } from '../../components/game/hero/weapon.component';
-import { PlayAreaComponent } from '../../components/game/play-area.component';
-import { AllCardsService } from '../../services/all-cards.service';
-import { Events } from '../../services/events.service';
-import { ActionParserService } from '../../services/parser/gamepipeline/action-parser.service';
-import { GameInitializerService } from '../../services/parser/gamepipeline/game-initializer.service';
-import { GameParserService } from '../../services/parser/game-parser.service';
-import { GamePopulationService } from '../../services/parser/entitiespipeline/game-population.service';
-import { GameStateParserService } from '../../services/parser/entitiespipeline/game-state-parser.service';
-import { StateProcessorService } from '../../services/parser/state-processor.service';
-import { TurnParserService } from '../../services/parser/gamepipeline/turn-parser.service';
-import { XmlParserService } from '../../services/parser/xml-parser.service';
-import { HeroPowerCostComponent } from '../../components/game/hero/hero-power-cost.component';
 import { HeroStatsComponent } from '../../components/game/hero/hero-stats.component';
-import { ManaTrayComponent } from '../../components/game/manatray/mana-tray.component';
-import { TooltipsComponent, TooltipComponent } from '../../components/tooltips.component';
-import { BoardCardFrameComponent } from '../../components/game/board/board-card-frame.component';
-import { BoardCardStatsComponent } from '../../components/game/board/board-card-stats.component';
-import { NarratorService } from '../../services/parser/gamepipeline/narrator.service';
-import { TurnNarratorComponent } from '../../components/turn-narrator.component';
-import { MulliganComponent } from '../../components/game/overlay/mulligan.component';
-import { OverlayCrossedComponent } from '../../components/game/card/overlay-crossed.component';
-import { PlayerNameComponent } from '../../components/game/overlay/player-name.component';
-import { ActiveSpellParserService } from '../../services/parser/gamepipeline/active-spell-parser.service';
-import { ActiveSpellComponent } from '../../components/game/active-spell.component';
-import { MulliganParserService } from '../../services/parser/gamepipeline/mulligan-parser.service';
-import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
-import { TargetZoneComponent } from '../../components/game/target-zone.component';
-import { TargetsParserService } from '../../services/parser/gamepipeline/targets-parser.service';
-import { CardTooltipDirective } from '../../directives/card-tooltip.directive';
-import { CardResizeDirective } from '../../directives/card-resize.directive';
-import { DeckComponent } from '../../components/game/deck/deck.component';
-import { DamageComponent } from '../../components/game/card/damage.component';
-import { CardElementResizeDirective } from '../../directives/card-element-resize.directive';
+import { HeroComponent } from '../../components/game/hero/hero.component';
+import { QuestComponent } from '../../components/game/hero/quest.component';
+import { SecretComponent } from '../../components/game/hero/secret.component';
+import { SecretsComponent } from '../../components/game/hero/secrets.component';
 import { WeaponArtComponent } from '../../components/game/hero/weapon-art.component';
 import { WeaponFrameComponent } from '../../components/game/hero/weapon-frame.component';
 import { WeaponStatsComponent } from '../../components/game/hero/weapon-stats.component';
-import { EndGameParserService } from '../../services/parser/gamepipeline/end-game-parser.service';
-import { EndGameComponent } from '../../components/game/overlay/end-game.component';
-import { DiscoverComponent } from '../../components/game/overlay/discover.component';
-import { OverlayTickedComponent } from '../../components/game/card/overlay-ticked.component';
-import { SleepingComponent } from '../../components/game/board/sleeping.component';
-import { PowerIndicatorComponent } from '../../components/game/board/power-indicator.component';
-import { CardOnBoardOverlaysComponent } from '../../components/game/board/card-on-board-overlays.component';
-import { SecretsComponent } from '../../components/game/hero/secrets.component';
-import { SecretComponent } from '../../components/game/hero/secret.component';
-import { SecretRevealedComponent } from '../../components/game/secret-revealed.component';
-import { CardEnchantmentsComponent } from '../../components/game/card/card-enchantments.component';
-import { CardEnchantmentComponent } from '../../components/game/card/card-enchantment.component';
-import { ActivePlayerParserService } from '../../services/parser/gamepipeline/active-player-parser.service';
+import { WeaponComponent } from '../../components/game/hero/weapon.component';
+import { ManaTrayComponent } from '../../components/game/manatray/mana-tray.component';
 import { BurnComponent } from '../../components/game/overlay/burn.component';
+import { DiscoverComponent } from '../../components/game/overlay/discover.component';
+import { EndGameComponent } from '../../components/game/overlay/end-game.component';
 import { FatigueComponent } from '../../components/game/overlay/fatigue.component';
-import { HeroOverlaysComponent } from '../../components/game/hero/hero-overlays.component';
-import { QuestComponent } from '../../components/game/hero/quest.component';
-import { QuestTooltipComponent } from '../../components/game/overlay/quest-tooltip.component';
+import { MulliganComponent } from '../../components/game/overlay/mulligan.component';
+import { PlayerNameComponent } from '../../components/game/overlay/player-name.component';
 import { QuestCompletedComponent } from '../../components/game/overlay/quest-completed.component';
-import { ControlsComponent } from '../../components/controls.component';
+import { QuestTooltipComponent } from '../../components/game/overlay/quest-tooltip.component';
+import { PlayAreaComponent } from '../../components/game/play-area.component';
+import { SecretRevealedComponent } from '../../components/game/secret-revealed.component';
+import { TargetZoneComponent } from '../../components/game/target-zone.component';
 import { SeekerComponent } from '../../components/seeker.component';
-import { OverlayBurnedComponent } from '../../components/game/card/overlay-burned.component';
+import { TooltipComponent, TooltipsComponent } from '../../components/tooltips.component';
+import { TurnNarratorComponent } from '../../components/turn-narrator.component';
+import { CardElementResizeDirective } from '../../directives/card-element-resize.directive';
+import { CardResizeDirective } from '../../directives/card-resize.directive';
+import { CardTooltipDirective } from '../../directives/card-tooltip.directive';
+import { AllCardsService } from '../../services/all-cards.service';
+import { Events } from '../../services/events.service';
+import { GamePopulationService } from '../../services/parser/entitiespipeline/game-population.service';
+import { GameStateParserService } from '../../services/parser/entitiespipeline/game-state-parser.service';
+import { GameParserService } from '../../services/parser/game-parser.service';
+import { ActionParserService } from '../../services/parser/gamepipeline/action-parser.service';
+import { ActivePlayerParserService } from '../../services/parser/gamepipeline/active-player-parser.service';
+import { ActiveSpellParserService } from '../../services/parser/gamepipeline/active-spell-parser.service';
+import { EndGameParserService } from '../../services/parser/gamepipeline/end-game-parser.service';
+import { GameInitializerService } from '../../services/parser/gamepipeline/game-initializer.service';
+import { MulliganParserService } from '../../services/parser/gamepipeline/mulligan-parser.service';
+import { NarratorService } from '../../services/parser/gamepipeline/narrator.service';
+import { TargetsParserService } from '../../services/parser/gamepipeline/targets-parser.service';
+import { TurnParserService } from '../../services/parser/gamepipeline/turn-parser.service';
+import { StateProcessorService } from '../../services/parser/state-processor.service';
+import { XmlParserService } from '../../services/parser/xml-parser.service';
 
 console.log('version is ' + process.env.APP_VERSION);
 console.log('environment is', process.env.NODE_ENV);
 
 @NgModule({
-	imports: [
-		BrowserModule,
-		BrowserAnimationsModule,
-		Ng2FittextModule,
-		LoggerModule.forRoot({ level: NgxLoggerLevel.WARN }),
-		// LoggerModule.forRoot({ level: NgxLoggerLevel.DEBUG }),
-	],
+	imports: [BrowserModule, Ng2FittextModule, LoggerModule.forRoot({ level: NgxLoggerLevel.WARN })],
 	declarations: [
 		AppComponent,
 		GameComponent,
