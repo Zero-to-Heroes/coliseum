@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Map } from 'immutable';
-import * as _ from 'lodash';
+import flow from 'lodash-es/flow';
 import { NGXLogger } from 'ngx-logger';
 import { Entity } from '../../models/game/entity';
 import { Game } from '../../models/game/game';
@@ -53,7 +53,7 @@ export class GameParserService {
 	}
 
 	private createEntitiesPipeline(history: readonly HistoryItem[], start: number): Map<number, Entity> {
-		return _.flow(
+		return flow(
 			result => this.gamePopulationService.populateInitialEntities(result),
 			result => this.logPerf('Populating initial entities', start, result),
 			(result: Map<number, Entity>) => this.gameStateParser.populateEntitiesUntilMulliganState(history, result),
@@ -62,7 +62,7 @@ export class GameParserService {
 	}
 
 	private createGamePipeline(history: readonly HistoryItem[], entities: Map<number, Entity>, start: number): Game {
-		return _.flow(
+		return flow(
 			(hist, ent) => this.gameInitializer.initializeGameWithPlayers(hist, ent),
 			game => this.logPerf('initializeGameWithPlayers', start, game),
 			game => this.turnParser.createTurns(game, history),
@@ -88,7 +88,7 @@ export class GameParserService {
 	}
 
 	private logPerf<T>(what: string, start: number, result?: T): T {
-		this.logger.info('[perf] ', what, 'done after ', Date.now() - start, 'ms');
+		this.logger.debug('[perf] ', what, 'done after ', Date.now() - start, 'ms');
 		return result;
 	}
 }

@@ -1,17 +1,17 @@
-import { Parser } from './parser';
-import { HistoryItem } from '../../../models/history/history-item';
-import { Action } from '../../../models/action/action';
-import { AllCardsService } from '../../all-cards.service';
-import { Entity } from '../../../models/game/entity';
 import { Map } from 'immutable';
-import { ActionHelper } from './action-helper';
-import { GameTag } from '../../../models/enums/game-tags';
-import { MetadataHistoryItem } from '../../../models/history/metadata-history-item';
-import { MetaTags } from '../../../models/enums/meta-tags';
-import { CardBurnAction } from '../../../models/action/card-burn-action';
+import uniq from 'lodash-es/uniq';
 import { NGXLogger } from 'ngx-logger';
+import { Action } from '../../../models/action/action';
+import { CardBurnAction } from '../../../models/action/card-burn-action';
+import { GameTag } from '../../../models/enums/game-tags';
+import { MetaTags } from '../../../models/enums/meta-tags';
+import { Entity } from '../../../models/game/entity';
+import { HistoryItem } from '../../../models/history/history-item';
+import { MetadataHistoryItem } from '../../../models/history/metadata-history-item';
 import { Info } from '../../../models/parser/info';
-import { uniq } from 'lodash';
+import { AllCardsService } from '../../all-cards.service';
+import { ActionHelper } from './action-helper';
+import { Parser } from './parser';
 
 export class CardBurnParser implements Parser {
 	constructor(private allCards: AllCardsService, private logger: NGXLogger) {}

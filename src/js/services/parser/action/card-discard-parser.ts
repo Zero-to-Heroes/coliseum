@@ -1,16 +1,16 @@
-import { Parser } from './parser';
-import { HistoryItem } from '../../../models/history/history-item';
+import { Map } from 'immutable';
+import uniq from 'lodash-es/uniq';
+import { NGXLogger } from 'ngx-logger';
 import { Action } from '../../../models/action/action';
-import { TagChangeHistoryItem } from '../../../models/history/tag-change-history-item';
+import { CardDiscardAction } from '../../../models/action/card-discard-action';
 import { GameTag } from '../../../models/enums/game-tags';
 import { Zone } from '../../../models/enums/zone';
-import { AllCardsService } from '../../all-cards.service';
 import { Entity } from '../../../models/game/entity';
-import { Map } from 'immutable';
-import { uniq } from 'lodash';
+import { HistoryItem } from '../../../models/history/history-item';
+import { TagChangeHistoryItem } from '../../../models/history/tag-change-history-item';
+import { AllCardsService } from '../../all-cards.service';
 import { ActionHelper } from './action-helper';
-import { NGXLogger } from 'ngx-logger';
-import { CardDiscardAction } from '../../../models/action/card-discard-action';
+import { Parser } from './parser';
 
 export class CardDiscardParser implements Parser {
 	constructor(private allCards: AllCardsService, private logger: NGXLogger) {}

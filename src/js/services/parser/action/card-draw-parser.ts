@@ -1,18 +1,18 @@
-import { Parser } from './parser';
-import { HistoryItem } from '../../../models/history/history-item';
+import { Map } from 'immutable';
+import uniq from 'lodash-es/uniq';
+import { NGXLogger } from 'ngx-logger';
 import { Action } from '../../../models/action/action';
-import { TagChangeHistoryItem } from '../../../models/history/tag-change-history-item';
+import { CardDrawAction } from '../../../models/action/card-draw-action';
 import { GameTag } from '../../../models/enums/game-tags';
 import { Zone } from '../../../models/enums/zone';
-import { CardDrawAction } from '../../../models/action/card-draw-action';
-import { AllCardsService } from '../../all-cards.service';
 import { Entity } from '../../../models/game/entity';
-import { Map } from 'immutable';
-import { ShowEntityHistoryItem } from '../../../models/history/show-entity-history-item';
-import { uniq } from 'lodash';
-import { ActionHelper } from './action-helper';
-import { NGXLogger } from 'ngx-logger';
 import { FullEntityHistoryItem } from '../../../models/history/full-entity-history-item';
+import { HistoryItem } from '../../../models/history/history-item';
+import { ShowEntityHistoryItem } from '../../../models/history/show-entity-history-item';
+import { TagChangeHistoryItem } from '../../../models/history/tag-change-history-item';
+import { AllCardsService } from '../../all-cards.service';
+import { ActionHelper } from './action-helper';
+import { Parser } from './parser';
 
 export class CardDrawParser implements Parser {
 	constructor(private allCards: AllCardsService, private logger: NGXLogger) {}

@@ -1,16 +1,17 @@
-import { Parser } from './parser';
-import { HistoryItem } from '../../../models/history/history-item';
-import { ActionHistoryItem } from '../../../models/history/action-history-item';
+import { Map } from 'immutable';
+import isEqual from 'lodash-es/isEqual';
+import uniq from 'lodash-es/uniq';
+import { NGXLogger } from 'ngx-logger';
 import { Action } from '../../../models/action/action';
-import { AllCardsService } from '../../all-cards.service';
+import { AttachingEnchantmentAction } from '../../../models/action/attaching-enchantment-action';
+import { CardTargetAction } from '../../../models/action/card-target-action';
 import { BlockType } from '../../../models/enums/block-type';
 import { Entity } from '../../../models/game/entity';
-import { Map } from 'immutable';
-import { uniq, isEqual } from 'lodash';
+import { ActionHistoryItem } from '../../../models/history/action-history-item';
+import { HistoryItem } from '../../../models/history/history-item';
+import { AllCardsService } from '../../all-cards.service';
 import { ActionHelper } from './action-helper';
-import { CardTargetAction } from '../../../models/action/card-target-action';
-import { AttachingEnchantmentAction } from '../../../models/action/attaching-enchantment-action';
-import { NGXLogger } from 'ngx-logger';
+import { Parser } from './parser';
 
 export class CardTargetParser implements Parser {
 	constructor(private allCards: AllCardsService, private logger: NGXLogger) {}

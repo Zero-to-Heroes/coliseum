@@ -87,7 +87,7 @@ console.log('version is ' + process.env.APP_VERSION);
 console.log('environment is', process.env.NODE_ENV);
 
 @NgModule({
-	imports: [BrowserModule, Ng2FittextModule, LoggerModule.forRoot({ level: NgxLoggerLevel.DEBUG })],
+	imports: [BrowserModule, Ng2FittextModule, LoggerModule.forRoot({ level: NgxLoggerLevel.INFO })],
 	declarations: [
 		AppComponent,
 		GameComponent,

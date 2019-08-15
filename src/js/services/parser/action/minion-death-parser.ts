@@ -1,17 +1,17 @@
-import { Parser } from './parser';
-import { HistoryItem } from '../../../models/history/history-item';
-import { ActionHistoryItem } from '../../../models/history/action-history-item';
-import { Action } from '../../../models/action/action';
-import { AllCardsService } from '../../all-cards.service';
-import { BlockType } from '../../../models/enums/block-type';
-import { Entity } from '../../../models/game/entity';
 import { Map } from 'immutable';
-import { uniq } from 'lodash';
+import uniq from 'lodash-es/uniq';
+import { Action } from '../../../models/action/action';
+import { MinionDeathAction } from '../../../models/action/minion-death-action';
+import { BlockType } from '../../../models/enums/block-type';
 import { GameTag } from '../../../models/enums/game-tags';
 import { Zone } from '../../../models/enums/zone';
-import { MinionDeathAction } from '../../../models/action/minion-death-action';
+import { Entity } from '../../../models/game/entity';
+import { ActionHistoryItem } from '../../../models/history/action-history-item';
+import { HistoryItem } from '../../../models/history/history-item';
 import { TagChangeHistoryItem } from '../../../models/history/tag-change-history-item';
+import { AllCardsService } from '../../all-cards.service';
 import { ActionHelper } from './action-helper';
+import { Parser } from './parser';
 
 export class MinionDeathParser implements Parser {
 	constructor(private allCards: AllCardsService) {}

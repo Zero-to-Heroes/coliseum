@@ -1,23 +1,24 @@
-import { Parser } from './parser';
-import { HistoryItem } from '../../../models/history/history-item';
-import { ActionHistoryItem } from '../../../models/history/action-history-item';
-import { Action } from '../../../models/action/action';
-import { AllCardsService } from '../../all-cards.service';
-import { BlockType } from '../../../models/enums/block-type';
-import { Entity } from '../../../models/game/entity';
 import { Map } from 'immutable';
-import { uniq, isEqual } from 'lodash';
-import { MetaData } from '../../../models/parser/metadata';
-import { MetaTags } from '../../../models/enums/meta-tags';
-import { Info } from '../../../models/parser/info';
-import { GameTag } from '../../../models/enums/game-tags';
-import { CardType } from '../../../models/enums/card-type';
-import { PowerTargetAction } from '../../../models/action/power-target-action';
-import { ActionHelper } from './action-helper';
-import { CardTargetAction } from '../../../models/action/card-target-action';
-import { AttachingEnchantmentAction } from '../../../models/action/attaching-enchantment-action';
+import isEqual from 'lodash-es/isEqual';
+import uniq from 'lodash-es/uniq';
 import { NGXLogger } from 'ngx-logger';
+import { Action } from '../../../models/action/action';
+import { AttachingEnchantmentAction } from '../../../models/action/attaching-enchantment-action';
+import { CardTargetAction } from '../../../models/action/card-target-action';
+import { PowerTargetAction } from '../../../models/action/power-target-action';
+import { BlockType } from '../../../models/enums/block-type';
+import { CardType } from '../../../models/enums/card-type';
+import { GameTag } from '../../../models/enums/game-tags';
+import { MetaTags } from '../../../models/enums/meta-tags';
+import { Entity } from '../../../models/game/entity';
+import { ActionHistoryItem } from '../../../models/history/action-history-item';
+import { HistoryItem } from '../../../models/history/history-item';
 import { MetadataHistoryItem } from '../../../models/history/metadata-history-item';
+import { Info } from '../../../models/parser/info';
+import { MetaData } from '../../../models/parser/metadata';
+import { AllCardsService } from '../../all-cards.service';
+import { ActionHelper } from './action-helper';
+import { Parser } from './parser';
 
 export class PowerTargetParser implements Parser {
 	constructor(private allCards: AllCardsService, private logger: NGXLogger) {}

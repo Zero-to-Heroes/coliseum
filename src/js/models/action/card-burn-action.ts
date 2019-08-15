@@ -1,9 +1,9 @@
-import { Action } from './action';
 import { Map } from 'immutable';
-import { Entity } from '../game/entity';
+import uniq from 'lodash-es/uniq';
 import { AllCardsService } from '../../services/all-cards.service';
-import { uniq } from 'lodash';
 import { ActionHelper } from '../../services/parser/action/action-helper';
+import { Entity } from '../game/entity';
+import { Action } from './action';
 
 export class CardBurnAction extends Action {
 	readonly controller: number;
