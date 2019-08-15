@@ -15,7 +15,6 @@
 		"@angular/platform-browser-dynamic": "8.1.1",
 		"immutable": "3.8.2",
 		"lodash": "4.17.14",
-		"moment": "2.22.2",
 		"ng2-fittext": "1.2.0",
 		"ngx-logger": "3.3.11",
 		"rxjs": "6.4.0",
@@ -52,6 +51,7 @@
 		"style-loader": "0.23.1",
 		"typescript": "3.4.5",
 		"webpack": "4.30.0",
+		"webpack-bundle-analyzer": "^3.4.1",
 		"webpack-cli": "3.3.0",
 		"webpack-dev-server": "3.3.1"
 	}

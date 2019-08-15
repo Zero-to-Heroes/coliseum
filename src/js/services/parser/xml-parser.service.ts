@@ -1,32 +1,30 @@
 import { Injectable } from '@angular/core';
-import { Tag, parser, SAXParser } from 'sax';
 import { Map } from 'immutable';
-
-import moment from 'moment';
-import { HistoryItem } from '../../models/history/history-item';
-import { EnrichedTag } from '../../models/parser/enriched-tag';
-import { EntityDefinition } from '../../models/parser/entity-definition';
-import { EntityTag } from '../../models/parser/entity-tag';
-import { ChosenTag } from '../../models/parser/chosen-tag';
-import { Option } from '../../models/parser/option';
-import { MetaData } from '../../models/parser/metadata';
-import { Choices } from '../../models/parser/choices';
-import { Info } from '../../models/parser/info';
-import { PlayerHistoryItem } from '../../models/history/player-history-item';
-import { ActionHistoryItem } from '../../models/history/action-history-item';
-import { TagChangeHistoryItem } from '../../models/history/tag-change-history-item';
-import { ChosenEntityHistoryItem } from '../../models/history/chosen-entities-history-item';
-import { OptionsHistoryItem } from '../../models/history/options-history-item';
-import { GameHistoryItem } from '../../models/history/game-history-item';
-import { FullEntityHistoryItem } from '../../models/history/full-entity-history-item';
-import { ShowEntityHistoryItem } from '../../models/history/show-entity-history-item';
-import { ChangeEntityHistoryItem } from '../../models/history/change-entity-history-item';
-import { ChoicesHistoryItem } from '../../models/history/choices-history-item';
-import { EntityDefinitionAttribute } from '../../models/parser/entity-definition-attribute';
+import { NGXLogger } from 'ngx-logger';
+import { parser, SAXParser, Tag } from 'sax';
 import { GameTag } from '../../models/enums/game-tags';
 import { MetaTags } from '../../models/enums/meta-tags';
-import { NGXLogger } from 'ngx-logger';
+import { ActionHistoryItem } from '../../models/history/action-history-item';
+import { ChangeEntityHistoryItem } from '../../models/history/change-entity-history-item';
+import { ChoicesHistoryItem } from '../../models/history/choices-history-item';
+import { ChosenEntityHistoryItem } from '../../models/history/chosen-entities-history-item';
+import { FullEntityHistoryItem } from '../../models/history/full-entity-history-item';
+import { GameHistoryItem } from '../../models/history/game-history-item';
+import { HistoryItem } from '../../models/history/history-item';
 import { MetadataHistoryItem } from '../../models/history/metadata-history-item';
+import { OptionsHistoryItem } from '../../models/history/options-history-item';
+import { PlayerHistoryItem } from '../../models/history/player-history-item';
+import { ShowEntityHistoryItem } from '../../models/history/show-entity-history-item';
+import { TagChangeHistoryItem } from '../../models/history/tag-change-history-item';
+import { Choices } from '../../models/parser/choices';
+import { ChosenTag } from '../../models/parser/chosen-tag';
+import { EnrichedTag } from '../../models/parser/enriched-tag';
+import { EntityDefinition } from '../../models/parser/entity-definition';
+import { EntityDefinitionAttribute } from '../../models/parser/entity-definition-attribute';
+import { EntityTag } from '../../models/parser/entity-tag';
+import { Info } from '../../models/parser/info';
+import { MetaData } from '../../models/parser/metadata';
+import { Option } from '../../models/parser/option';
 
 @Injectable()
 export class XmlParserService {
@@ -451,6 +449,13 @@ export class XmlParserService {
 	}
 
 	private tsToSeconds(ts: string): number {
-		return moment(ts, ['HH:mm:ss.SSSSSSSSS']).unix() - (this.initialTimestamp || 0);
+		if (!ts) {
+			return undefined;
+		}
+		// Format of timestamp is HH:mm:ss.SSSSSSSSS
+		const tsWithoutMillis = ts.split('.')[0];
+		const split = tsWithoutMillis.split(':');
+		const tsInSeconds: number = parseInt(split[2]) + 60 * parseInt(split[1]) + 3600 * parseInt(split[0]);
+		return tsInSeconds - (this.initialTimestamp || 0);
 	}
 }
