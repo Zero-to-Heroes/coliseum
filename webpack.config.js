@@ -97,7 +97,7 @@ module.exports = function(env, argv) {
 				{ from: path.join(process.cwd(), 'replay.xml') },
 			]),
 
-			new BundleAnalyzerPlugin(),
+			// new BundleAnalyzerPlugin(),
 		],
 	};
 };
