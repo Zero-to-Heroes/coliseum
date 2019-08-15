@@ -1,28 +1,29 @@
 import { Injectable } from '@angular/core';
 import { Map } from 'immutable';
 import * as _ from 'lodash';
-
+import { NGXLogger } from 'ngx-logger';
+import { Entity } from '../../models/game/entity';
 import { Game } from '../../models/game/game';
 import { HistoryItem } from '../../models/history/history-item';
-import { ActionParserService } from './gamepipeline/action-parser.service';
-import { TurnParserService } from './gamepipeline/turn-parser.service';
-import { XmlParserService } from './xml-parser.service';
+import { AllCardsService } from '../all-cards.service';
 import { GamePopulationService } from './entitiespipeline/game-population.service';
 import { GameStateParserService } from './entitiespipeline/game-state-parser.service';
-import { GameInitializerService } from './gamepipeline/game-initializer.service';
-import { StateProcessorService } from './state-processor.service';
-import { Entity } from '../../models/game/entity';
-import { NGXLogger } from 'ngx-logger';
-import { NarratorService } from './gamepipeline/narrator.service';
-import { ActiveSpellParserService } from './gamepipeline/active-spell-parser.service';
-import { MulliganParserService } from './gamepipeline/mulligan-parser.service';
-import { TargetsParserService } from './gamepipeline/targets-parser.service';
-import { EndGameParserService } from './gamepipeline/end-game-parser.service';
+import { ActionParserService } from './gamepipeline/action-parser.service';
 import { ActivePlayerParserService } from './gamepipeline/active-player-parser.service';
+import { ActiveSpellParserService } from './gamepipeline/active-spell-parser.service';
+import { EndGameParserService } from './gamepipeline/end-game-parser.service';
+import { GameInitializerService } from './gamepipeline/game-initializer.service';
+import { MulliganParserService } from './gamepipeline/mulligan-parser.service';
+import { NarratorService } from './gamepipeline/narrator.service';
+import { TargetsParserService } from './gamepipeline/targets-parser.service';
+import { TurnParserService } from './gamepipeline/turn-parser.service';
+import { StateProcessorService } from './state-processor.service';
+import { XmlParserService } from './xml-parser.service';
 
 @Injectable()
 export class GameParserService {
 	constructor(
+		private allCards: AllCardsService,
 		private actionParser: ActionParserService,
 		private replayParser: XmlParserService,
 		private turnParser: TurnParserService,
@@ -39,9 +40,10 @@ export class GameParserService {
 		private stateProcessor: StateProcessorService,
 	) {}
 
-	public parse(replayAsString: string): Game {
+	public async parse(replayAsString: string): Promise<Game> {
 		const start = Date.now();
-		this.logPerf('Parsing replay', start);
+		await this.allCards.initializeCardsDb();
+		this.logPerf('Retrieved cards DB, parsing replay', start);
 		const history: readonly HistoryItem[] = this.replayParser.parseXml(replayAsString);
 		this.logPerf('Creating history', start);
 		const entities: Map<number, Entity> = this.createEntitiesPipeline(history, start);

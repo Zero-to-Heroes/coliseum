@@ -114,8 +114,8 @@ export class AppComponent {
 		console.log('new coliseum', window['coliseum']);
 	}
 
-	public loadReplay(replayXml: string, options?: ReplayOptions) {
-		this.game = this.gameParser.parse(replayXml);
+	public async loadReplay(replayXml: string, options?: ReplayOptions) {
+		this.game = await this.gameParser.parse(replayXml);
 		this.logger.info('[app] Converted game');
 		this.totalTime = this.buildTotalTime();
 		const turn = parseInt(this.getSearchParam('turn')) || 0;
