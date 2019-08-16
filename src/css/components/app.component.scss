@@ -22,19 +22,11 @@
 		pointer-events: none;
 	}
 
-	seeker {
-		height: 20px;
-	}
-
 	turn-narrator {
 		height: 50px;
 		display: flex;
 		align-items: flex-start;
 		justify-content: center;
-	}
-
-	controls {
-		height: 40px;
 	}
 
 	&.wide {
@@ -78,4 +70,5 @@
 	max-width: calc((100vh - 150px) * 16 / 9);
 	display: flex;
 	flex-direction: column;
+	overflow: hidden;
 }

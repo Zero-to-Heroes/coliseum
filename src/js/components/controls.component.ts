@@ -13,7 +13,7 @@ import { Key } from 'ts-keycode-enum';
 
 @Component({
 	selector: 'controls',
-	styleUrls: ['../../css/components/controls.component.scss'],
+	styleUrls: ['../../css/components/controls.component.scss', '../../css/global/global.scss'],
 	template: `
 		<div class="player-controls light-theme">
 			<div class="player-controls-buttons-wrapper">

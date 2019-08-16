@@ -15,7 +15,7 @@ import { Events } from '../services/events.service';
 import { GameParserService } from '../services/parser/game-parser.service';
 
 @Component({
-	styleUrls: ['../../css/components/app.component.scss'],
+	styleUrls: ['../../css/components/app.component.scss', '../../css/global/global.scss'],
 	template: `
 		<div class="coliseum wide">
 			<section class="manastorm-player-wrapper">
@@ -51,9 +51,17 @@ import { GameParserService } from '../services/parser/game-parser.service';
 					</div>
 				</div>
 			</section>
-			<seeker *ngIf="totalTime > 0" [totalTime]="totalTime" [currentTime]="currentTime" (seek)="onSeek($event)"> </seeker>
-			<turn-narrator [text]="text"></turn-narrator>
+			<seeker
+				class="ignored-wrapper"
+				*ngIf="totalTime > 0"
+				[totalTime]="totalTime"
+				[currentTime]="currentTime"
+				(seek)="onSeek($event)"
+			>
+			</seeker>
+			<turn-narrator class="ignored-wrapper" [text]="text"></turn-narrator>
 			<controls
+				class="ignored-wrapper"
 				[reviewId]="reviewId"
 				(nextAction)="onNextAction()"
 				(nextTurn)="onNextTurn()"
