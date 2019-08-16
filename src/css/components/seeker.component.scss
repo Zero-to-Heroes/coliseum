@@ -51,17 +51,17 @@ $dark-foreground-third: $gray168;
 $dark-foreground-forth: $gray130;
 
 // borders
-$transparent-border: rgba(white, .1);
+$transparent-border: rgba(white, 0.1);
 
 // gaps
 $grid-gap: 20px;
 
 // transparent buttons
-$transparent-btn-background-hover: rgba(white, .1);
-$transparent-btn-background-selected: rgba(white, .2);
+$transparent-btn-background-hover: rgba(white, 0.1);
+$transparent-btn-background-selected: rgba(white, 0.2);
 
-$transparent-btn-foreground: rgba(white, .4);
-$transparent-btn-foreground-selected: rgba(white, .9);
+$transparent-btn-foreground: rgba(white, 0.4);
+$transparent-btn-foreground-selected: rgba(white, 0.9);
 
 .light-theme {
 	--main-color: white;
@@ -69,7 +69,7 @@ $transparent-btn-foreground-selected: rgba(white, .9);
 	--background-secondary: #{$light-background-secondary};
 	--background-third: #{$light-background-third};
 	--background-forth: #{$light-background-forth};
-	
+
 	--foreground-main: #{$light-foreground-main};
 	--foreground-secondary: #{$light-foreground-secondary};
 	--foreground-third: #{$light-foreground-third};
@@ -83,7 +83,7 @@ $transparent-btn-foreground-selected: rgba(white, .9);
 	--background-secondary: #{$dark-background-secondary};
 	--background-third: #{$dark-background-third};
 	--background-forth: #{$dark-background-forth};
-	
+
 	--foreground-main: #{$dark-foreground-main};
 	--foreground-secondary: #{$dark-foreground-secondary};
 	--foreground-third: #{$dark-foreground-third};
@@ -97,16 +97,16 @@ $transparent-btn-foreground-selected: rgba(white, .9);
 	--background-main-hover: #{$dark-background-secondary};
 	--background-third: #{$dark-background-third};
 	--background-forth: #{$dark-background-forth};
-	
-	--text-main: #{rgba(white, .6)};
+
+	--text-main: #{rgba(white, 0.6)};
 }
 
 [type='range'] {
 	background-color: transparent;
 	opacity: 0;
-	
-	&, 
-	&::-webkit-slider-thumb, 
+
+	&,
+	&::-webkit-slider-thumb,
 	&::-moz-range-thumb {
 		-webkit-appearance: none;
 		-moz-appearance: none;
@@ -118,6 +118,7 @@ $transparent-btn-foreground-selected: rgba(white, .9);
 	position: relative;
 	height: 20px;
 	color: $red01;
+	margin-top: -10px;
 }
 
 .player-seeker {
@@ -127,8 +128,8 @@ $transparent-btn-foreground-selected: rgba(white, .9);
 	bottom: 0;
 	right: 0;
 	width: 100%;
-	
-	&::-webkit-slider-runnable-track, 
+
+	&::-webkit-slider-runnable-track,
 	&::-moz-range-track {
 		display: flex;
 	}
@@ -136,7 +137,7 @@ $transparent-btn-foreground-selected: rgba(white, .9);
 
 .player-seeker-track {
 	position: absolute;
-	top: 0;
+	top: 50%;
 	margin: auto;
 	display: flex;
 	align-items: center;
@@ -154,29 +155,27 @@ $transparent-btn-foreground-selected: rgba(white, .9);
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	
+	left: 0;
 	width: 0;
 	height: 0;
-	
+
 	&:before {
-		content: "";
+		content: '';
 		position: absolute;
 		width: 0;
 		height: 0;
 		border-radius: 50%;
-		transition: .15s;
+		transition: 0.15s;
 		background-color: currentcolor;
 	}
 }
 
 .player-seeker-container:hover {
 	.player-seeker-track {
-		
 	}
-	
+
 	.player-seeker-thumb:before {
 		width: 9px;
 		height: 9px;
 	}
 }
-
