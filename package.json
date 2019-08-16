@@ -13,8 +13,9 @@
 		"@angular/core": "8.1.1",
 		"@angular/platform-browser": "8.1.1",
 		"@angular/platform-browser-dynamic": "8.1.1",
+		"@sentry/browser": "5.5.0",
 		"immutable": "3.8.2",
-		"lodash-es": "^4.17.15",
+		"lodash-es": "4.17.15",
 		"ng2-fittext": "1.2.0",
 		"ngx-logger": "3.3.11",
 		"rxjs": "6.4.0",
@@ -30,7 +31,7 @@
 		"@types/core-js": "2.5.0",
 		"@types/lodash": "4.14.129",
 		"@types/node": "11.13.5",
-		"@types/sax": "^1.2.0",
+		"@types/sax": "1.2.0",
 		"@types/webpack": "4.4.27",
 		"@typescript-eslint/eslint-plugin": "1.13.0",
 		"@typescript-eslint/parser": "1.13.0",
@@ -51,7 +52,7 @@
 		"style-loader": "0.23.1",
 		"typescript": "3.4.5",
 		"webpack": "4.30.0",
-		"webpack-bundle-analyzer": "^3.4.1",
+		"webpack-bundle-analyzer": "3.4.1",
 		"webpack-cli": "3.3.0",
 		"webpack-dev-server": "3.3.1"
 	}

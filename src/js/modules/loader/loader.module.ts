@@ -1,9 +1,16 @@
+import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { init } from '@sentry/browser';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
-import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { ReplayLoaderComponent } from '../../components/replay-loader.component';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+
+init({
+	dsn: 'https://fe35eae785af4971a767bc8d4c1fe791@sentry.io/1532731',
+	enabled: process.env.NODE_ENV === 'production',
+	release: process.env.APP_VERSION,
+});
 
 @NgModule({
 	bootstrap: [ReplayLoaderComponent],

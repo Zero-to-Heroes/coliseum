@@ -1,6 +1,7 @@
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { ErrorHandler, Injectable, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { captureException, init } from '@sentry/browser';
 import { Ng2FittextModule } from 'ng2-fittext';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import { AppComponent } from '../../components/app.component';
@@ -86,6 +87,21 @@ import { XmlParserService } from '../../services/parser/xml-parser.service';
 console.log('version is ' + process.env.APP_VERSION);
 console.log('environment is', process.env.NODE_ENV);
 
+init({
+	dsn: 'https://fe35eae785af4971a767bc8d4c1fe791@sentry.io/1532731',
+	enabled: process.env.NODE_ENV === 'production',
+	release: process.env.APP_VERSION,
+});
+
+@Injectable()
+export class SentryErrorHandler implements ErrorHandler {
+	constructor() {}
+	handleError(error) {
+		captureException(error.originalError || error);
+		throw error;
+	}
+}
+
 @NgModule({
 	imports: [BrowserModule, Ng2FittextModule, LoggerModule.forRoot({ level: NgxLoggerLevel.INFO })],
 	declarations: [
@@ -169,6 +185,7 @@ console.log('environment is', process.env.NODE_ENV);
 	providers: [
 		Location,
 		{ provide: LocationStrategy, useClass: PathLocationStrategy },
+		{ provide: ErrorHandler, useClass: SentryErrorHandler },
 
 		ActionParserService,
 		ActivePlayerParserService,
