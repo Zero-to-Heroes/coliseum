@@ -9,6 +9,7 @@ import {
 	Output,
 	ViewRef,
 } from '@angular/core';
+import { NGXLogger } from 'ngx-logger';
 import { Key } from 'ts-keycode-enum';
 
 @Component({
@@ -36,13 +37,18 @@ import { Key } from 'ts-keycode-enum';
 						</svg>
 					</span>
 					<p class="player-controls-content-note">
-						<a target="_blank" href="http://replays.firestoneapp.com/?reviewId={{ reviewId }}">View online</a>
-						| <a target="_blank" href="https://www.zerotoheroes.com/r/hearthstone/{{ reviewId }}">Discuss</a>
+						<a class="player-control-element" target="_blank" href="http://replays.firestoneapp.com/?reviewId={{ reviewId }}"
+							>View online</a
+						>
+						|
+						<a class="player-control-element" target="_blank" href="https://www.zerotoheroes.com/r/hearthstone/{{ reviewId }}"
+							>Discuss</a
+						>
 					</p>
 				</div>
 
 				<div class="player-controls-content player-controls-content-middle">
-					<button class="gs-icon player-control-main hint-tooltip-container" (click)="goPreviousTurn()">
+					<button class="gs-icon player-control-main player-control-element hint-tooltip-container" (click)="goPreviousTurn()">
 						<svg viewBox="0 0 30 30">
 							<polygon points="22 8 12 15 22 22 22 8" fill="currentcolor" />
 							<polygon points="15 8 5 15 15 22 15 8" fill="currentcolor" />
@@ -51,7 +57,7 @@ import { Key } from 'ts-keycode-enum';
 							<span>Previous turn<br /><kbd>Ctrl</kbd> + <kbd>🡨</kbd></span>
 						</div>
 					</button>
-					<button class="gs-icon player-control-main hint-tooltip-container" (click)="goPreviousAction()">
+					<button class="gs-icon player-control-main player-control-element hint-tooltip-container" (click)="goPreviousAction()">
 						<svg viewBox="0 0 30 30">
 							<polygon points="20 8 10 15 20 22 20 8" fill="currentcolor" />
 							<rect x="9" y="8" width="1" height="14" fill="currentcolor" />
@@ -61,7 +67,7 @@ import { Key } from 'ts-keycode-enum';
 						</div>
 					</button>
 					<button
-						class="gs-icon toggle-icons player-control-main player-control-play hint-tooltip-container"
+						class="gs-icon toggle-icons player-control-main player-control-element player-control-play hint-tooltip-container"
 						(click)="togglePlayPause()"
 					>
 						<svg viewBox="0 0 40 40" *ngIf="!isPlaying">
@@ -77,7 +83,7 @@ import { Key } from 'ts-keycode-enum';
 							<span>Play/Pause<br /><kbd>Spacebar</kbd></span>
 						</div>
 					</button>
-					<button class="gs-icon player-control-main hint-tooltip-container" (click)="goNextAction()">
+					<button class="gs-icon player-control-main player-control-element hint-tooltip-container" (click)="goNextAction()">
 						<svg viewBox="0 0 30 30">
 							<polygon points="10 8 20 15 10 22 10 8" fill="currentcolor" />
 							<rect x="20" y="8" width="1" height="14" fill="currentcolor" />
@@ -86,7 +92,7 @@ import { Key } from 'ts-keycode-enum';
 							<span>Next action<br /><kbd>🡪</kbd></span>
 						</div>
 					</button>
-					<button class="gs-icon player-control-main hint-tooltip-container" (click)="goNextTurn()">
+					<button class="gs-icon player-control-main player-control-element hint-tooltip-container" (click)="goNextTurn()">
 						<svg viewBox="0 0 30 30">
 							<polygon points="8,8 18,15 8,22" fill="currentcolor" />
 							<polygon points="15,8 25,15 15,22" fill="currentcolor" />
@@ -100,28 +106,28 @@ import { Key } from 'ts-keycode-enum';
 				<div class="player-controls-content player-controls-content-right">
 					<div class="player-control-group hint-tooltip-container">
 						<button
-							class="gs-icon btn-gs-icon player-control"
+							class="gs-icon btn-gs-icon player-control player-control-element"
 							[ngClass]="{ 'toggled': currentSpeed === 1 }"
 							(click)="changeSpeed(1)"
 						>
 							<span class="player-control-text">1<sub>x</sub></span>
 						</button>
 						<button
-							class="gs-icon btn-gs-icon player-control"
+							class="gs-icon btn-gs-icon player-control player-control-element"
 							[ngClass]="{ 'toggled': currentSpeed === 2 }"
 							(click)="changeSpeed(2)"
 						>
 							<span class="player-control-text">2<sub>x</sub></span>
 						</button>
 						<button
-							class="gs-icon btn-gs-icon player-control"
+							class="gs-icon btn-gs-icon player-control player-control-element"
 							[ngClass]="{ 'toggled': currentSpeed === 4 }"
 							(click)="changeSpeed(4)"
 						>
 							<span class="player-control-text">4<sub>x</sub></span>
 						</button>
 						<button
-							class="gs-icon btn-gs-icon player-control"
+							class="gs-icon btn-gs-icon player-control player-control-element"
 							[ngClass]="{ 'toggled': currentSpeed === 8 }"
 							(click)="changeSpeed(8)"
 						>
@@ -133,7 +139,7 @@ import { Key } from 'ts-keycode-enum';
 					</div>
 					<div class="gs-icon-divider"></div>
 					<button
-						class="gs-icon btn-gs-icon player-control toggle-icons hint-tooltip-container show"
+						class="gs-icon btn-gs-icon player-control player-control-element toggle-icons hint-tooltip-container show"
 						[ngClass]="{ 'show': showingHiddenCards }"
 						(click)="toggleShowHiddenCards()"
 					>
@@ -255,7 +261,7 @@ export class ControlsComponent implements OnInit {
 	currentSpeed = 1;
 	showingHiddenCards = false;
 
-	constructor(private cdr: ChangeDetectorRef) {}
+	constructor(private cdr: ChangeDetectorRef, private logger: NGXLogger) {}
 
 	ngOnInit() {
 		this.startPlayingControl();
@@ -271,7 +277,14 @@ export class ControlsComponent implements OnInit {
 				event.ctrlKey ? this.goPreviousTurn() : this.goPreviousAction();
 				break;
 			case Key.Space:
-				this.togglePlayPause();
+				const focusedElement = document.activeElement;
+				this.logger.debug('[controls] pressed space while focused on', focusedElement);
+				// If the focus is on a player control, we don't trigger the play action,
+				// so that the control's action can trigger instead
+				if (!focusedElement.classList.contains('player-control-element')) {
+					event.stopPropagation();
+					this.togglePlayPause();
+				}
 				break;
 			case Key.UpArrow:
 				if (event.ctrlKey) {
