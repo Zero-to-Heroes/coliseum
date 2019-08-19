@@ -134,10 +134,10 @@ import { Key } from 'ts-keycode-enum';
 					<div class="gs-icon-divider"></div>
 					<button
 						class="gs-icon btn-gs-icon player-control toggle-icons hint-tooltip-container show"
-						*ngIf="showingHiddenCards"
+						[ngClass]="{ 'show': showingHiddenCards }"
 						(click)="toggleShowHiddenCards()"
 					>
-						<svg viewBox="0 0 30 30">
+						<svg viewBox="0 0 30 30" *ngIf="showingHiddenCards">
 							<line
 								x1="12.5"
 								y1="19.5"
@@ -193,16 +193,11 @@ import { Key } from 'ts-keycode-enum';
 								stroke-linejoin="round"
 							/>
 						</svg>
-						<div class="hint-tooltip hint-tooltip-top hint-tooltip-aligned-right dark-theme">
+						<div class="hint-tooltip hint-tooltip-top hint-tooltip-aligned-right dark-theme" *ngIf="showingHiddenCards">
 							<span>Hide hidden cards<br /><kbd>H</kbd></span>
 						</div>
-					</button>
-					<button
-						class="gs-icon btn-gs-icon player-control toggle-icons hint-tooltip-container"
-						*ngIf="!showingHiddenCards"
-						(click)="toggleShowHiddenCards()"
-					>
-						<svg viewBox="0 0 30 30">
+
+						<svg viewBox="0 0 30 30" *ngIf="!showingHiddenCards">
 							<polyline
 								points="9.5 7.92 3.72 9.58 7.58 23.04 9.5 22.48"
 								fill="none"
@@ -238,7 +233,7 @@ import { Key } from 'ts-keycode-enum';
 								stroke-miterlimit="10"
 							/>
 						</svg>
-						<div class="hint-tooltip hint-tooltip-top hint-tooltip-aligned-right dark-theme">
+						<div class="hint-tooltip hint-tooltip-top hint-tooltip-aligned-right dark-theme" *ngIf="!showingHiddenCards">
 							<span>Show hidden cards<br /><kbd>H</kbd></span>
 						</div>
 					</button>
