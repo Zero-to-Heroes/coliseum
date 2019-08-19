@@ -1,5 +1,6 @@
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { ErrorHandler, Injectable, NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { captureException, init } from '@sentry/browser';
 import { Ng2FittextModule } from 'ng2-fittext';
@@ -103,7 +104,7 @@ export class SentryErrorHandler implements ErrorHandler {
 }
 
 @NgModule({
-	imports: [BrowserModule, Ng2FittextModule, LoggerModule.forRoot({ level: NgxLoggerLevel.INFO })],
+	imports: [BrowserModule, FormsModule, Ng2FittextModule, LoggerModule.forRoot({ level: NgxLoggerLevel.DEBUG })],
 	declarations: [
 		AppComponent,
 		GameComponent,

@@ -163,8 +163,9 @@ export class AppComponent {
 	}
 
 	onSeek(targetTimestamp: number) {
-		let lastActionIndex: number;
-		let lastTurnIndex: number;
+		this.logger.debug('[app] seeking target timestamp', targetTimestamp);
+		let lastActionIndex = 0;
+		let lastTurnIndex = 0;
 		for (let turnIndex = 0; turnIndex < this.game.turns.size - 1; turnIndex++) {
 			const turn = this.game.turns.get(turnIndex);
 			for (let actionIndex = 0; actionIndex < turn.actions.length - 1; actionIndex++) {
@@ -178,7 +179,10 @@ export class AppComponent {
 		}
 		this.currentTurn = lastTurnIndex;
 		this.currentActionInTurn = lastActionIndex;
+		this.logger.debug('[app] finished seeking', this.currentTurn, this.currentActionInTurn, this.game.turns);
 		this.populateInfo();
+		// So that the value is always what the user actually selected, and there are no weird jumps
+		this.currentTime = targetTimestamp;
 	}
 
 	private populateInfo() {
@@ -226,7 +230,7 @@ export class AppComponent {
 	}
 
 	private computeCurrentTime() {
-		const currentTime = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].timestamp;
+		const currentTime = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].timestamp || 0;
 		return currentTime;
 	}
 
