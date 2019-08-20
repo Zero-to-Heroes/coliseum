@@ -37,7 +37,10 @@ import { Key } from 'ts-keycode-enum';
 						</svg>
 					</span>
 					<p class="player-controls-content-note">
-						<a class="player-control-element" target="_blank" href="http://replays.firestoneapp.com/?reviewId={{ reviewId }}"
+						<a
+							class="player-control-element"
+							target="_blank"
+							href="http://replays.firestoneapp.com/?reviewId={{ reviewId }}&source=game-summary"
 							>View online</a
 						>
 						|
