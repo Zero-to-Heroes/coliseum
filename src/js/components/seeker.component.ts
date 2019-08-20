@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Out
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { NGXLogger } from 'ngx-logger';
 import { Subject, Subscription } from 'rxjs';
-import { distinctUntilChanged } from 'rxjs/internal/operators';
+import { debounceTime, distinctUntilChanged } from 'rxjs/internal/operators';
 
 @Component({
 	selector: 'seeker',
@@ -38,11 +38,20 @@ export class SeekerComponent implements OnDestroy {
 	private progressSubscription: Subscription;
 
 	constructor(private logger: NGXLogger, private sanitizer: DomSanitizer) {
+		// Update the seeker in real time
 		this.progressSubscription = this.progressChanged.pipe(distinctUntilChanged()).subscribe(newProgress => {
 			this.progress = newProgress;
 			this.updateBackground();
-			this.seek.next(newProgress * 0.01 * this._totalTime);
 		});
+		// Periodically send events to the parent, as it involves some computation each time
+		this.progressSubscription = this.progressChanged
+			.pipe(
+				distinctUntilChanged(),
+				debounceTime(100),
+			)
+			.subscribe(newProgress => {
+				this.seek.next(newProgress * 0.01 * this._totalTime);
+			});
 	}
 
 	@Input('totalTime') set totalTime(value: number) {

@@ -128,6 +128,7 @@ $transparent-btn-foreground-selected: rgba(white, 0.9);
 	bottom: 0;
 	right: 0;
 	width: 100%;
+	margin: 0;
 
 	&::-webkit-slider-runnable-track,
 	&::-moz-range-track {

@@ -166,9 +166,9 @@ export class AppComponent {
 		this.logger.debug('[app] seeking target timestamp', targetTimestamp);
 		let lastActionIndex = 0;
 		let lastTurnIndex = 0;
-		for (let turnIndex = 0; turnIndex < this.game.turns.size - 1; turnIndex++) {
+		for (let turnIndex = 0; turnIndex < this.game.turns.size; turnIndex++) {
 			const turn = this.game.turns.get(turnIndex);
-			for (let actionIndex = 0; actionIndex < turn.actions.length - 1; actionIndex++) {
+			for (let actionIndex = 0; actionIndex < turn.actions.length; actionIndex++) {
 				const action = turn.actions[actionIndex];
 				if (action.timestamp > targetTimestamp) {
 					break;
@@ -179,7 +179,13 @@ export class AppComponent {
 		}
 		this.currentTurn = lastTurnIndex;
 		this.currentActionInTurn = lastActionIndex;
-		this.logger.debug('[app] finished seeking', this.currentTurn, this.currentActionInTurn, this.game.turns);
+		this.logger.debug(
+			'[app] finished seeking',
+			this.currentTurn,
+			this.currentActionInTurn,
+			this.game.turns.toJS(),
+			this.game.turns.get(this.currentTurn).actions,
+		);
 		this.populateInfo();
 		// So that the value is always what the user actually selected, and there are no weird jumps
 		this.currentTime = targetTimestamp;
@@ -221,7 +227,7 @@ export class AppComponent {
 		}
 		const lastTurn: Turn = this.game.turns.last();
 		for (let i = lastTurn.actions.length - 1; i >= 0; i--) {
-			const lastAction = lastTurn.actions[lastTurn.actions.length - i];
+			const lastAction = lastTurn.actions[i];
 			if (lastAction.timestamp) {
 				return lastAction.timestamp;
 			}
