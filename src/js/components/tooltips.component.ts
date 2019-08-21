@@ -1,20 +1,23 @@
 import {
-	Component,
+	AfterViewInit,
 	ChangeDetectionStrategy,
 	ChangeDetectorRef,
+	Component,
+	ComponentFactoryResolver,
+	ComponentRef,
 	ElementRef,
-	Input,
 	HostBinding,
+	HostListener,
+	Input,
 	ViewChild,
 	ViewContainerRef,
-	ComponentFactoryResolver,
-	AfterViewInit,
 	ViewRef,
-	ComponentRef,
 } from '@angular/core';
+import { NGXLogger } from 'ngx-logger';
 import { Entity } from '../models/game/entity';
 import { Events } from '../services/events.service';
 
+// Also takes into account the borders + mana symbol
 const CARD_ASPECT_RATIO = 1.56;
 
 @Component({
@@ -61,39 +64,59 @@ export class TooltipsComponent implements AfterViewInit {
 
 	private tooltipHeight: number = undefined;
 	private tooltipWidth: number = undefined;
+	private horizontalOffset: number = undefined;
+	private tooltipSize: number = undefined;
 	private rect;
 
 	constructor(
 		private events: Events,
+		private logger: NGXLogger,
 		private elRef: ElementRef,
 		private cdr: ChangeDetectorRef,
 		private resolver: ComponentFactoryResolver,
 	) {
 		this.events.on(Events.SHOW_TOOLTIP).subscribe(data => {
 			this.destroy();
+			this.logger.debug('[tooltips] showing tooltip', data, this.rect);
 			if (!this.rect) {
 				return;
 			}
 			const entity: Entity = data.data[0];
 			const controller: Entity = data.data[1];
 
-			const leftInput = data.data[2];
-			const topInput = data.data[3];
-			const enchantments = data.data[4];
+			const elementLeft = data.data[2];
+			const elementTop = data.data[3];
+			const elementWidth = data.data[4];
+			const elementHeight = data.data[5];
+			const enchantments = data.data[6];
 
-			const left =
-				leftInput < this.rect.left
-					? this.rect.left
-					: leftInput + this.tooltipWidth > this.rect.right
-					? this.rect.right - this.tooltipWidth
-					: leftInput;
-			const top =
-				topInput < this.rect.top
-					? this.rect.top
-					: topInput + this.tooltipHeight > this.rect.bottom
-					? this.rect.bottom - this.tooltipHeight
-					: topInput;
+			// First try to fit it at the right of the element
+			let left = elementLeft + elementWidth + this.horizontalOffset;
+			if (left + this.tooltipWidth > this.rect.right) {
+				// Put it on the left then
+				left = elementLeft - this.tooltipWidth - this.horizontalOffset;
+				this.logger.debug(
+					'[tooltips] doesnt fit on the right, putting it left',
+					left,
+					this.tooltipWidth,
+					elementLeft,
+					elementWidth,
+					this.horizontalOffset,
+				);
+			}
 
+			// First try to center the tooltip vs the element
+			const elementCenter = elementTop + elementHeight / 2;
+			let top = elementCenter - this.tooltipHeight / 2;
+			this.logger.debug('[tooltips] first top computation', top, elementCenter, this.tooltipHeight, this.rect.height);
+			if (top < 0) {
+				top = 0;
+			} else if (top + this.tooltipHeight > this.rect.height) {
+				top = this.rect.height - this.tooltipHeight;
+				this.logger.debug('[tooltips] would go over zone', top, this.tooltipHeight, this.rect.height);
+			}
+
+			this.logger.debug('[tooltips] will show tooltip', left, top);
 			this.tooltip.instance.entity = entity;
 			this.tooltip.instance.controller = controller;
 			this.tooltip.instance.enchantments = enchantments;
@@ -124,20 +147,31 @@ export class TooltipsComponent implements AfterViewInit {
 
 			// Cache the variables
 			setTimeout(() => {
+				// We do this only at initialization, since afterwards the % size
+				// is replaced by a pixel size
+				const tooltipElement = this.elRef.nativeElement.querySelector('tooltip');
+				const styles = getComputedStyle(tooltipElement);
+				this.tooltipSize = parseInt(styles.width.split('%')[0]) * 0.01;
 				this.cacheTooltipSize();
 			});
 		});
 	}
 
-	// TODO: handle resize
 	private cacheTooltipSize() {
 		this.rect = this.elRef.nativeElement.getBoundingClientRect();
-
 		const tooltipElement = this.elRef.nativeElement.querySelector('tooltip');
 		const styles = getComputedStyle(tooltipElement);
-		const tooltipSize = parseInt(styles.width.split('%')[0]) * 0.01;
-		this.tooltipWidth = this.rect.width * tooltipSize;
+		this.logger.debug('[tooltips] tooltip size', this.tooltipSize, styles.width, styles);
+		this.tooltipWidth = this.rect.width * this.tooltipSize;
 		this.tooltipHeight = this.tooltipWidth * CARD_ASPECT_RATIO;
+		this.horizontalOffset = this.rect.width * 0.018;
+		this.logger.debug('[tooltips] cached tooltip info', this.rect, this.tooltipWidth, this.tooltipHeight, this.horizontalOffset);
+	}
+
+	@HostListener('window:resize', ['$event'])
+	onResize(event) {
+		this.logger.debug('[tooltips] starting resize');
+		this.cacheTooltipSize();
 	}
 
 	private destroy() {
