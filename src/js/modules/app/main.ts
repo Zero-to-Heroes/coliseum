@@ -1,10 +1,9 @@
 import { enableProdMode } from '@angular/core';
-import 'zone.js';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-
-import { AppModule } from './app.module';
-import { DynamicNg2Loader } from '../../services/DynamicNg2Loader.service';
+import 'zone.js';
 import { AppComponent } from '../../components/app.component';
+import { DynamicNg2Loader } from '../../services/DynamicNg2Loader.service';
+import { AppModule } from './app.module';
 
 if (process.env.NODE_ENV === 'production') {
 	enableProdMode();
@@ -44,3 +43,5 @@ const existingColiseum = window['coliseum'] || {};
 window['coliseum'] = Object.assign(existingColiseum, {
 	init: initColiseum,
 });
+
+// bootstrapWorkerUi('./parser.js');

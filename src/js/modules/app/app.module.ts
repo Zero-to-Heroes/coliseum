@@ -70,20 +70,7 @@ import { CardResizeDirective } from '../../directives/card-resize.directive';
 import { CardTooltipDirective } from '../../directives/card-tooltip.directive';
 import { AllCardsService } from '../../services/all-cards.service';
 import { Events } from '../../services/events.service';
-import { GamePopulationService } from '../../services/parser/entitiespipeline/game-population.service';
-import { GameStateParserService } from '../../services/parser/entitiespipeline/game-state-parser.service';
-import { GameParserService } from '../../services/parser/game-parser.service';
-import { ActionParserService } from '../../services/parser/gamepipeline/action-parser.service';
-import { ActivePlayerParserService } from '../../services/parser/gamepipeline/active-player-parser.service';
-import { ActiveSpellParserService } from '../../services/parser/gamepipeline/active-spell-parser.service';
-import { EndGameParserService } from '../../services/parser/gamepipeline/end-game-parser.service';
-import { GameInitializerService } from '../../services/parser/gamepipeline/game-initializer.service';
-import { MulliganParserService } from '../../services/parser/gamepipeline/mulligan-parser.service';
-import { NarratorService } from '../../services/parser/gamepipeline/narrator.service';
-import { TargetsParserService } from '../../services/parser/gamepipeline/targets-parser.service';
-import { TurnParserService } from '../../services/parser/gamepipeline/turn-parser.service';
-import { StateProcessorService } from '../../services/parser/state-processor.service';
-import { XmlParserService } from '../../services/parser/xml-parser.service';
+import { ParserModule } from '../parser/parser.module';
 
 console.log('version is ' + process.env.APP_VERSION);
 console.log('environment is', process.env.NODE_ENV);
@@ -104,7 +91,7 @@ export class SentryErrorHandler implements ErrorHandler {
 }
 
 @NgModule({
-	imports: [BrowserModule, FormsModule, Ng2FittextModule, LoggerModule.forRoot({ level: NgxLoggerLevel.INFO })],
+	imports: [BrowserModule, FormsModule, Ng2FittextModule, LoggerModule.forRoot({ level: NgxLoggerLevel.DEBUG }), ParserModule.forRoot()],
 	declarations: [
 		AppComponent,
 		GameComponent,
@@ -188,22 +175,8 @@ export class SentryErrorHandler implements ErrorHandler {
 		{ provide: LocationStrategy, useClass: PathLocationStrategy },
 		{ provide: ErrorHandler, useClass: SentryErrorHandler },
 
-		ActionParserService,
-		ActivePlayerParserService,
-		ActiveSpellParserService,
 		AllCardsService,
 		Events,
-		GameInitializerService,
-		GameParserService,
-		GamePopulationService,
-		GameStateParserService,
-		MulliganParserService,
-		EndGameParserService,
-		NarratorService,
-		StateProcessorService,
-		TargetsParserService,
-		TurnParserService,
-		XmlParserService,
 	],
 	entryComponents: [AppComponent],
 })
