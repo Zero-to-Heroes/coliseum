@@ -38,6 +38,7 @@ import { StateProcessorService } from '../state-processor.service';
 @Injectable()
 export class ActionParserService {
 	private currentTurn = 0;
+	private hasYielded = false;
 
 	constructor(private logger: NGXLogger, private allCards: AllCardsService, private stateProcessorService: StateProcessorService) {}
 
@@ -70,7 +71,7 @@ export class ActionParserService {
 		];
 	}
 
-	public parseActions(game: Game, history: readonly HistoryItem[]): Game {
+	public *parseActions(game: Game, history: readonly HistoryItem[]): IterableIterator<Game> {
 		// const start = Date.now();
 		this.currentTurn = 0;
 		let actionsForTurn: readonly Action[] = [];
@@ -138,7 +139,11 @@ export class ActionParserService {
 				turns = turns.set(turnNumber, turnWithNewActions);
 				actionsForTurn = [lastAction];
 				previousProcessedItem = item;
-				// this.logger.log('took', Date.now() - start, 'ms to merge everything after turn', turnNumber);
+				if (this.shouldYield()) {
+					// Return something as soon as we can show something on screen, i.e the first turn
+					yield Game.createGame(game, { turns: turns });
+					// this.logger.log('took', Date.now() - start, 'ms to merge everything after turn', turnNumber);
+				}
 			}
 		}
 
@@ -166,8 +171,7 @@ export class ActionParserService {
 			this.logger.warn(this.currentTurn, turns.toJS(), actionsForTurn);
 		}
 		// this.logger.log('took', Date.now() - start, 'ms for parseActions');
-
-		return Game.createGame(game, { turns: turns });
+		yield Game.createGame(game, { turns: turns });
 	}
 
 	private fillMissingEntities(actionsForTurn: readonly Action[], previousStateEntities: Map<number, Entity>): readonly Action[] {
@@ -248,5 +252,13 @@ export class ActionParserService {
 			}
 		}
 		return true;
+	}
+
+	private shouldYield() {
+		if (!this.hasYielded) {
+			this.hasYielded = true;
+			return true;
+		}
+		return false;
 	}
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Map } from 'immutable';
 import flow from 'lodash-es/flow';
 import { NGXLogger } from 'ngx-logger';
+import { Observable } from 'rxjs';
 import { Entity } from '../../models/game/entity';
 import { Game } from '../../models/game/game';
 import { HistoryItem } from '../../models/history/history-item';
@@ -40,16 +41,26 @@ export class GameParserService {
 		private stateProcessor: StateProcessorService,
 	) {}
 
-	public async parse(replayAsString: string): Promise<Game> {
+	public async parse(replayAsString: string): Promise<Observable<[Game, boolean]>> {
 		const start = Date.now();
 		await this.allCards.initializeCardsDb();
 		this.logPerf('Retrieved cards DB, parsing replay', start);
 		const history: readonly HistoryItem[] = this.replayParser.parseXml(replayAsString);
 		this.logPerf('Creating history (XML parsing)', start);
 		const entities: Map<number, Entity> = this.createEntitiesPipeline(history, start);
-		const game: Game = this.createGamePipeline(history, entities, start);
-		this.logger.info('full story', game.fullStoryRaw);
-		return game;
+
+		const iterator = this.createGamePipeline(history, entities, start);
+
+		return Observable.create(observer => {
+			const interval = setInterval(() => {
+				const itValue = iterator.next();
+				console.log('calling next obersable', itValue);
+				observer.next([itValue.value, itValue.done]);
+				if (itValue.done) {
+					clearInterval(interval);
+				}
+			}, 1000);
+		});
 	}
 
 	private createEntitiesPipeline(history: readonly HistoryItem[], start: number): Map<number, Entity> {
@@ -61,14 +72,25 @@ export class GameParserService {
 		)(history);
 	}
 
-	private createGamePipeline(history: readonly HistoryItem[], entities: Map<number, Entity>, start: number): Game {
-		return flow(
+	private *createGamePipeline(history: readonly HistoryItem[], entities: Map<number, Entity>, start: number): IterableIterator<Game> {
+		const preStep = flow(
 			(hist, ent) => this.gameInitializer.initializeGameWithPlayers(hist, ent),
 			game => this.logPerf('initializeGameWithPlayers', start, game),
 			game => this.turnParser.createTurns(game, history),
 			game => this.logPerf('createTurns', start, game),
-			game => this.actionParser.parseActions(game, history),
-			game => this.logPerf('parseActions', start, game),
+		)(history, entities);
+		const iterator = this.actionParser.parseActions(preStep, history);
+		// Trigger the minimal process to show something on screen
+		const stepForFirstAction = iterator.next().value;
+		yield stepForFirstAction;
+
+		// And trigger the rest of the process
+		const firstStep = iterator.next().value || stepForFirstAction;
+		this.logPerf('parseActions', start, firstStep);
+		yield firstStep;
+
+		// Then the rest of the process
+		return flow(
 			game => this.activePlayerParser.parseActivePlayer(game),
 			game => this.logPerf('activePlayerParser', start, game),
 			game => this.activeSpellParser.parseActiveSpell(game),
@@ -84,11 +106,16 @@ export class GameParserService {
 			game => this.logPerf('populateActionText', start, game),
 			game => this.narrator.createGameStory(game),
 			game => this.logPerf('game story', start, game),
-		)(history, entities);
+		)(firstStep);
 	}
 
 	private logPerf<T>(what: string, start: number, result?: T): T {
 		this.logger.info('[perf] ', what, 'done after ', Date.now() - start, 'ms');
 		return result;
 	}
+}
+
+export interface GameProcessingStep {
+	game: Game;
+	shouldBubble: boolean;
 }

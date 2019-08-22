@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, NgZone, ViewRef } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, NgZone, OnDestroy, ViewRef } from '@angular/core';
 import { Map } from 'immutable';
 import { NGXLogger } from 'ngx-logger';
+import { Subscription } from 'rxjs';
 import { CardBurnAction } from '../models/action/card-burn-action';
 import { DiscoverAction } from '../models/action/discover-action';
 import { FatigueDamageAction } from '../models/action/fatigue-damage-action';
@@ -75,7 +76,7 @@ import { GameParserService } from '../services/parser/game-parser.service';
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent {
+export class AppComponent implements OnDestroy {
 	reviewId: string;
 
 	game: Game;
@@ -104,6 +105,7 @@ export class AppComponent {
 
 	private currentActionInTurn = 0;
 	private currentTurn = 0;
+	private gameSub: Subscription;
 
 	constructor(
 		private gameParser: GameParserService,
@@ -123,20 +125,29 @@ export class AppComponent {
 	}
 
 	public async loadReplay(replayXml: string, options?: ReplayOptions) {
-		this.game = await this.gameParser.parse(replayXml);
-		this.logger.info('[app] Converted game');
-		this.totalTime = this.buildTotalTime();
-		const turn = parseInt(this.getSearchParam('turn')) || 0;
-		const action = parseInt(this.getSearchParam('action')) || 0;
-		this.reviewId = (options && options.reviewId) || this.getSearchParam('reviewId');
-		this.currentTurn = turn <= 0 ? 0 : turn >= this.game.turns.size ? this.game.turns.size - 1 : turn;
-		this.currentActionInTurn =
-			action <= 0
-				? 0
-				: action >= this.game.turns.get(this.currentTurn).actions.length
-				? this.game.turns.get(this.currentTurn).actions.length - 1
-				: action;
-		this.populateInfo();
+		this.reset();
+		const gameObs = await this.gameParser.parse(replayXml);
+		this.gameSub = gameObs.subscribe(([game, complete]: [Game, boolean]) => {
+			this.logger.info('[app] Received updated game');
+			// TODO: if not complete, show loading screen
+			this.game = game;
+			this.totalTime = this.buildTotalTime();
+			const turn = parseInt(this.getSearchParam('turn')) || 0;
+			const action = parseInt(this.getSearchParam('action')) || 0;
+			this.reviewId = (options && options.reviewId) || this.getSearchParam('reviewId');
+			this.currentTurn = turn <= 0 ? 0 : turn >= this.game.turns.size ? this.game.turns.size - 1 : turn;
+			this.currentActionInTurn =
+				action <= 0
+					? 0
+					: action >= this.game.turns.get(this.currentTurn).actions.length
+					? this.game.turns.get(this.currentTurn).actions.length - 1
+					: action;
+			this.populateInfo(complete);
+		});
+	}
+
+	ngOnDestroy() {
+		this.gameSub.unsubscribe();
 	}
 
 	onNextAction() {
@@ -191,10 +202,18 @@ export class AppComponent {
 		this.currentTime = targetTimestamp;
 	}
 
-	private populateInfo() {
-		if (!this.game) {
+	private populateInfo(complete = true) {
+		if (
+			!this.game ||
+			!this.game.turns ||
+			!this.game.turns.has(this.currentTurn) ||
+			!this.game.turns.get(this.currentTurn).actions ||
+			!this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn]
+		) {
+			this.logger.debug('[app] nothing to process', this.game, this);
 			return;
 		}
+
 		this.entities = this.computeNewEntities();
 		this.crossed = this.computeCrossed();
 		this.text = this.computeText();
@@ -212,8 +231,11 @@ export class AppComponent {
 		this.isMulligan = this.computeMulligan();
 		this.isEndGame = this.computeEndGame();
 		this.endGameStatus = this.computeEndGameStatus();
-		this.currentTime = this.computeCurrentTime();
-		this.updateUrlQueryString();
+		// This avoid truncating the query string because we don't have all the info yet
+		if (complete) {
+			this.currentTime = this.computeCurrentTime();
+			this.updateUrlQueryString();
+		}
 		this.logger.debug('[app] setting turn', this.turnString);
 		this.logger.info('[app] Considering action', this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn]);
 		if (!(this.cdr as ViewRef).destroyed) {
@@ -392,5 +414,35 @@ export class AppComponent {
 		const queryString = `${reviewQuery}turn=${this.currentTurn}&action=${this.currentActionInTurn}`;
 		const newUrl = `${baseUrl}?${queryString}`;
 		window.history.replaceState({ path: newUrl }, '', newUrl);
+	}
+
+	private reset() {
+		this.reviewId = undefined;
+		this.game = undefined;
+		this.entities = undefined;
+		this.crossed = undefined;
+		this.text = undefined;
+		this.turnString = undefined;
+		this.activePlayer = 0;
+		this.activeSpell = 0;
+		this.discovers = undefined;
+		this.chosen = undefined;
+		this.burned = undefined;
+		this.fatigue = 0;
+		this.targets = undefined;
+		this.options = undefined;
+		this.secretRevealed = 0;
+		this.questCompleted = 0;
+		this.showHiddenCards = false;
+		this.isMulligan = false;
+		this.isEndGame = false;
+		this.endGameStatus = undefined;
+		this.totalTime = 0;
+		this.currentTime = 0;
+		this.currentActionInTurn = 0;
+		this.currentTurn = 0;
+		if (this.gameSub) {
+			this.gameSub.unsubscribe();
+		}
 	}
 }
