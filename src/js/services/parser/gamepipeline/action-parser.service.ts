@@ -139,11 +139,11 @@ export class ActionParserService {
 				turns = turns.set(turnNumber, turnWithNewActions);
 				actionsForTurn = [lastAction];
 				previousProcessedItem = item;
-				if (this.shouldYield()) {
-					// Return something as soon as we can show something on screen, i.e the first turn
-					yield Game.createGame(game, { turns: turns });
-					// this.logger.log('took', Date.now() - start, 'ms to merge everything after turn', turnNumber);
-				}
+				yield Game.createGame(game, { turns: turns });
+				// if (this.shouldYield()) {
+				// 	// Return something as soon as we can show something on screen, i.e the first turn
+				// 	// this.logger.log('took', Date.now() - start, 'ms to merge everything after turn', turnNumber);
+				// }
 			}
 		}
 

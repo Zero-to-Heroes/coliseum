@@ -21,6 +21,8 @@ import { TurnParserService } from './gamepipeline/turn-parser.service';
 import { StateProcessorService } from './state-processor.service';
 import { XmlParserService } from './xml-parser.service';
 
+const SMALL_PAUSE = 7;
+
 @Injectable()
 export class GameParserService {
 	constructor(
@@ -45,68 +47,87 @@ export class GameParserService {
 		const start = Date.now();
 		await this.allCards.initializeCardsDb();
 		this.logPerf('Retrieved cards DB, parsing replay', start);
-		const history: readonly HistoryItem[] = this.replayParser.parseXml(replayAsString);
-		this.logPerf('Creating history (XML parsing)', start);
-		const entities: Map<number, Entity> = this.createEntitiesPipeline(history, start);
 
-		const iterator = this.createGamePipeline(history, entities, start);
-
+		const iterator: IterableIterator<[Game, number]> = this.createGamePipeline(replayAsString, start);
 		return Observable.create(observer => {
-			const interval = setInterval(() => {
-				const itValue = iterator.next();
-				console.log('calling next obersable', itValue);
-				observer.next([itValue.value, itValue.done]);
-				if (itValue.done) {
-					clearInterval(interval);
-				}
-			}, 1000);
+			this.buildObservableFunction(observer, iterator);
 		});
 	}
 
-	private createEntitiesPipeline(history: readonly HistoryItem[], start: number): Map<number, Entity> {
-		return flow(
-			result => this.gamePopulationService.populateInitialEntities(result),
-			result => this.logPerf('Populating initial entities', start, result),
-			(result: Map<number, Entity>) => this.gameStateParser.populateEntitiesUntilMulliganState(history, result),
-			result => this.logPerf('Populating entities with mulligan state', start, result),
-		)(history);
+	private buildObservableFunction(observer, iterator: IterableIterator<[Game, number]>) {
+		const itValue = iterator.next();
+		// this.logger.info('calling next obersable', itValue, itValue.value);
+		observer.next([itValue.value[0], itValue.done]);
+		if (!itValue.done) {
+			setTimeout(() => this.buildObservableFunction(observer, iterator), itValue.value[1]);
+		}
 	}
 
-	private *createGamePipeline(history: readonly HistoryItem[], entities: Map<number, Entity>, start: number): IterableIterator<Game> {
-		const preStep = flow(
-			(hist, ent) => this.gameInitializer.initializeGameWithPlayers(hist, ent),
-			game => this.logPerf('initializeGameWithPlayers', start, game),
-			game => this.turnParser.createTurns(game, history),
-			game => this.logPerf('createTurns', start, game),
-		)(history, entities);
-		const iterator = this.actionParser.parseActions(preStep, history);
-		// Trigger the minimal process to show something on screen
-		const stepForFirstAction = iterator.next().value;
-		yield stepForFirstAction;
+	private *createGamePipeline(replayAsString: string, start: number): IterableIterator<[Game, number]> {
+		const history: readonly HistoryItem[] = this.replayParser.parseXml(replayAsString);
+		this.logPerf('XML parsing', start);
+		yield [null, SMALL_PAUSE];
 
-		// And trigger the rest of the process
-		const firstStep = iterator.next().value || stepForFirstAction;
-		this.logPerf('parseActions', start, firstStep);
-		yield firstStep;
+		const initialEntities = this.gamePopulationService.populateInitialEntities(history);
+		this.logPerf('Populating initial entities', start);
+		yield [null, SMALL_PAUSE];
 
-		// Then the rest of the process
-		return flow(
-			game => this.activePlayerParser.parseActivePlayer(game),
-			game => this.logPerf('activePlayerParser', start, game),
-			game => this.activeSpellParser.parseActiveSpell(game),
-			game => this.logPerf('activeSpellParser', start, game),
-			game => this.targetsParser.parseTargets(game),
-			game => this.logPerf('targets', start, game),
-			// Add the red cross for mulligan
-			game => this.mulliganParser.affectMulligan(game),
-			game => this.logPerf('affectMulligan', start, game),
-			game => this.endGameParser.parseEndGame(game),
-			game => this.logPerf('parseEndGame', start, game),
-			game => this.narrator.populateActionText(game),
-			game => this.logPerf('populateActionText', start, game),
-			game => this.narrator.createGameStory(game),
-			game => this.logPerf('game story', start, game),
-		)(firstStep);
+		const entities: Map<number, Entity> = this.gameStateParser.populateEntitiesUntilMulliganState(history, initialEntities);
+		this.logPerf('Populating entities with mulligan state', start);
+		yield [null, SMALL_PAUSE];
+
+		const gameWithPlayers: Game = this.gameInitializer.initializeGameWithPlayers(history, entities);
+		this.logPerf('initializeGameWithPlayers', start);
+		yield [gameWithPlayers, SMALL_PAUSE];
+
+		const gameWithTurns: Game = this.turnParser.createTurns(gameWithPlayers, history);
+		this.logPerf('createTurns', start);
+		yield [gameWithTurns, SMALL_PAUSE];
+
+		const iterator = this.actionParser.parseActions(gameWithTurns, history);
+		let previousStep = gameWithTurns;
+		while (true) {
+			const itValue = iterator.next();
+			const step = itValue.value || previousStep;
+			previousStep = step;
+			yield [step, SMALL_PAUSE];
+			if (itValue.done) {
+				break;
+			}
+		}
+		this.logPerf('parseActions', start, previousStep);
+
+		const gameWithActivePlayer: Game = this.activePlayerParser.parseActivePlayer(previousStep);
+		this.logPerf('activePlayerParser', start);
+		yield [gameWithTurns, SMALL_PAUSE];
+
+		const gameWithActiveSpell: Game = this.activeSpellParser.parseActiveSpell(gameWithActivePlayer);
+		this.logPerf('activeSpellParser', start);
+		yield [gameWithActiveSpell, SMALL_PAUSE];
+
+		const gameWithTargets: Game = this.targetsParser.parseTargets(gameWithActiveSpell);
+		this.logPerf('targets', start);
+		yield [gameWithTargets, SMALL_PAUSE];
+
+		const gameWithMulligan: Game = this.mulliganParser.affectMulligan(gameWithTargets);
+		this.logPerf('affectMulligan', start);
+		yield [gameWithMulligan, SMALL_PAUSE];
+
+		const gameWithEndGame: Game = this.endGameParser.parseEndGame(gameWithMulligan);
+		this.logPerf('parseEndGame', start);
+		yield [gameWithEndGame, SMALL_PAUSE];
+
+		const gameWithNarrator: Game = this.narrator.populateActionText(gameWithEndGame);
+		this.logPerf('populateActionText', start);
+		yield [gameWithNarrator, SMALL_PAUSE];
+
+		const gameWithFullStory: Game = this.narrator.createGameStory(gameWithNarrator);
+		this.logPerf('game story', start);
+		return [gameWithFullStory, SMALL_PAUSE];
+	}
+
+	private createEntitiesPipeline(history: readonly HistoryItem[], start: number): Map<number, Entity> {
+		return flow()(history);
 	}
 
 	private logPerf<T>(what: string, start: number, result?: T): T {

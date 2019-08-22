@@ -128,21 +128,23 @@ export class AppComponent implements OnDestroy {
 		this.reset();
 		const gameObs = await this.gameParser.parse(replayXml);
 		this.gameSub = gameObs.subscribe(([game, complete]: [Game, boolean]) => {
-			this.logger.info('[app] Received updated game');
 			// TODO: if not complete, show loading screen
-			this.game = game;
-			this.totalTime = this.buildTotalTime();
-			const turn = parseInt(this.getSearchParam('turn')) || 0;
-			const action = parseInt(this.getSearchParam('action')) || 0;
-			this.reviewId = (options && options.reviewId) || this.getSearchParam('reviewId');
-			this.currentTurn = turn <= 0 ? 0 : turn >= this.game.turns.size ? this.game.turns.size - 1 : turn;
-			this.currentActionInTurn =
-				action <= 0
-					? 0
-					: action >= this.game.turns.get(this.currentTurn).actions.length
-					? this.game.turns.get(this.currentTurn).actions.length - 1
-					: action;
-			this.populateInfo(complete);
+			if (complete) {
+				this.logger.info('[app] Received complete game');
+				this.game = game;
+				this.totalTime = this.buildTotalTime();
+				const turn = parseInt(this.getSearchParam('turn')) || 0;
+				const action = parseInt(this.getSearchParam('action')) || 0;
+				this.reviewId = (options && options.reviewId) || this.getSearchParam('reviewId');
+				this.currentTurn = turn <= 0 ? 0 : turn >= this.game.turns.size ? this.game.turns.size - 1 : turn;
+				this.currentActionInTurn =
+					action <= 0
+						? 0
+						: action >= this.game.turns.get(this.currentTurn).actions.length
+						? this.game.turns.get(this.currentTurn).actions.length - 1
+						: action;
+				this.populateInfo(complete);
+			}
 		});
 	}
 
@@ -237,7 +239,7 @@ export class AppComponent implements OnDestroy {
 			this.updateUrlQueryString();
 		}
 		this.logger.debug('[app] setting turn', this.turnString);
-		this.logger.info('[app] Considering action', this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn]);
+		this.logger.debug('[app] Considering action', this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn]);
 		if (!(this.cdr as ViewRef).destroyed) {
 			this.cdr.detectChanges();
 		}
