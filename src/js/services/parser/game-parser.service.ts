@@ -45,7 +45,7 @@ export class GameParserService {
 		await this.allCards.initializeCardsDb();
 		this.logPerf('Retrieved cards DB, parsing replay', start);
 		const history: readonly HistoryItem[] = this.replayParser.parseXml(replayAsString);
-		this.logPerf('Creating history', start);
+		this.logPerf('Creating history (XML parsing)', start);
 		const entities: Map<number, Entity> = this.createEntitiesPipeline(history, start);
 		const game: Game = this.createGamePipeline(history, entities, start);
 		this.logger.info('full story', game.fullStoryRaw);
@@ -88,7 +88,7 @@ export class GameParserService {
 	}
 
 	private logPerf<T>(what: string, start: number, result?: T): T {
-		this.logger.debug('[perf] ', what, 'done after ', Date.now() - start, 'ms');
+		this.logger.info('[perf] ', what, 'done after ', Date.now() - start, 'ms');
 		return result;
 	}
 }

@@ -91,7 +91,7 @@ export class SentryErrorHandler implements ErrorHandler {
 }
 
 @NgModule({
-	imports: [BrowserModule, FormsModule, Ng2FittextModule, LoggerModule.forRoot({ level: NgxLoggerLevel.DEBUG }), ParserModule.forRoot()],
+	imports: [BrowserModule, FormsModule, Ng2FittextModule, LoggerModule.forRoot({ level: NgxLoggerLevel.INFO }), ParserModule.forRoot()],
 	declarations: [
 		AppComponent,
 		GameComponent,

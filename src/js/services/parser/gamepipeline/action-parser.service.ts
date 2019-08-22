@@ -1,39 +1,39 @@
 import { Injectable } from '@angular/core';
 import { Map } from 'immutable';
-import { HistoryItem } from '../../../models/history/history-item';
+import { NGXLogger } from 'ngx-logger';
+import { Action } from '../../../models/action/action';
+import { StartTurnAction } from '../../../models/action/start-turn-action';
+import { Entity } from '../../../models/game/entity';
 import { Game } from '../../../models/game/game';
 import { Turn } from '../../../models/game/turn';
-import { Action } from '../../../models/action/action';
-import { Parser } from '../action/parser';
-import { MulliganCardParser } from '../action/mulligan-card-parser';
-import { CardDrawParser } from '../action/card-draw-parser';
-import { NGXLogger } from 'ngx-logger';
-import { StartTurnParser } from '../action/start-turn-parser';
+import { HistoryItem } from '../../../models/history/history-item';
 import { AllCardsService } from '../../all-cards.service';
-import { HeroPowerUsedParser } from '../action/hero-power-used-parser';
-import { Entity } from '../../../models/game/entity';
-import { StateProcessorService } from '../state-processor.service';
-import { CardPlayedFromHandParser } from '../action/card-played-from-hand-parser';
+import { AttachingEnchantmentParser } from '../action/attaching-enchantment-parser';
 import { AttackParser } from '../action/attack-parser';
-import { MinionDeathParser } from '../action/minion-death-parser';
-import { PowerTargetParser } from '../action/power-target-parser';
+import { CardBurnParser } from '../action/card-burn-parser';
+import { CardDiscardParser } from '../action/card-discard-parser';
+import { CardDrawParser } from '../action/card-draw-parser';
+import { CardPlayedFromHandParser } from '../action/card-played-from-hand-parser';
 import { CardTargetParser } from '../action/card-target-parser';
+import { DamageParser } from '../action/damage-parser';
 import { DiscoverParser } from '../action/discover-parser';
-import { SummonsParser } from '../action/summons-parser';
-import { StartTurnAction } from '../../../models/action/start-turn-action';
-import { StartOfMulliganParser } from '../action/start-of-mulligan-parser';
+import { DiscoveryPickParser } from '../action/discovery-pick-parser';
+import { EndGameParser } from '../action/end-game-parser';
+import { FatigueDamageParser } from '../action/fatigue-damage-parser';
+import { HeroPowerUsedParser } from '../action/hero-power-used-parser';
+import { MinionDeathParser } from '../action/minion-death-parser';
+import { MulliganCardChoiceParser } from '../action/mulligan-card-choice-parser';
+import { MulliganCardParser } from '../action/mulligan-card-parser';
+import { OptionsParser } from '../action/options-parser';
+import { Parser } from '../action/parser';
+import { PowerTargetParser } from '../action/power-target-parser';
+import { QuestCompletedParser } from '../action/quest-completed-parser';
 import { SecretPlayedFromHandParser } from '../action/secret-played-from-hand-parser';
 import { SecretRevealedParser } from '../action/secret-revealed-parser';
-import { AttachingEnchantmentParser } from '../action/attaching-enchantment-parser';
-import { DamageParser } from '../action/damage-parser';
-import { DiscoveryPickParser } from '../action/discovery-pick-parser';
-import { MulliganCardChoiceParser } from '../action/mulligan-card-choice-parser';
-import { CardDiscardParser } from '../action/card-discard-parser';
-import { OptionsParser } from '../action/options-parser';
-import { EndGameParser } from '../action/end-game-parser';
-import { CardBurnParser } from '../action/card-burn-parser';
-import { FatigueDamageParser } from '../action/fatigue-damage-parser';
-import { QuestCompletedParser } from '../action/quest-completed-parser';
+import { StartOfMulliganParser } from '../action/start-of-mulligan-parser';
+import { StartTurnParser } from '../action/start-turn-parser';
+import { SummonsParser } from '../action/summons-parser';
+import { StateProcessorService } from '../state-processor.service';
 
 @Injectable()
 export class ActionParserService {
@@ -71,6 +71,7 @@ export class ActionParserService {
 	}
 
 	public parseActions(game: Game, history: readonly HistoryItem[]): Game {
+		// const start = Date.now();
 		this.currentTurn = 0;
 		let actionsForTurn: readonly Action[] = [];
 		let previousStateEntities: Map<number, Entity> = game.entities;
@@ -79,9 +80,12 @@ export class ActionParserService {
 		// Recreating this every time lets the parsers store state and emit the action only when necessary
 		const actionParsers: Parser[] = this.registerActionParsers();
 
+		// let parserDurationForTurn = 0;
 		for (const item of history) {
+			// const start = Date.now();
 			actionParsers.forEach(parser => {
 				if (parser.applies(item)) {
+					// const start = Date.now();
 					// When we perform an action, we want to show the result of the state updates until the next action is
 					// played.
 					previousStateEntities = this.stateProcessorService.applyHistoryUntilNow(
@@ -96,11 +100,20 @@ export class ActionParserService {
 						actionsForTurn = [...actionsForTurn, ...actions];
 						previousProcessedItem = item;
 					}
+					// const time = Date.now() - start;
+					// if (time > 2) {
+					// 	this.logger.log('took', time, 'ms to apply parser', parser);
+					// }
 				}
 			});
+			// parserDurationForTurn += Date.now() - start;
 
 			const updatedTurn: Turn = this.updateCurrentTurn(item, game, actionsForTurn);
+			// This whole process takes roughly 5-20ms depending on the turn
 			if (updatedTurn) {
+				// this.logger.log('took', parserDurationForTurn, 'ms to parse all history items in turn');
+				// parserDurationForTurn = 0;
+				// const start = Date.now();
 				// The last action is a start turn action, which we want to keep for the start
 				// of the next turn instead
 				const lastAction = actionsForTurn[actionsForTurn.length - 1];
@@ -121,9 +134,11 @@ export class ActionParserService {
 				actionsForTurn = this.reduceActions(actionParsers, actionsForTurn);
 				actionsForTurn = this.addDamageToEntities(actionsForTurn, previousStateEntities);
 				const turnWithNewActions = updatedTurn.update({ actions: actionsForTurn });
-				turns = turns.set(turnWithNewActions.turn === 'mulligan' ? 0 : parseInt(turnWithNewActions.turn), turnWithNewActions);
+				const turnNumber = turnWithNewActions.turn === 'mulligan' ? 0 : parseInt(turnWithNewActions.turn);
+				turns = turns.set(turnNumber, turnWithNewActions);
 				actionsForTurn = [lastAction];
 				previousProcessedItem = item;
+				// this.logger.log('took', Date.now() - start, 'ms to merge everything after turn', turnNumber);
 			}
 		}
 
@@ -150,6 +165,7 @@ export class ActionParserService {
 			this.logger.error(e);
 			this.logger.warn(this.currentTurn, turns.toJS(), actionsForTurn);
 		}
+		// this.logger.log('took', Date.now() - start, 'ms for parseActions');
 
 		return Game.createGame(game, { turns: turns });
 	}

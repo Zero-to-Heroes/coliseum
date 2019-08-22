@@ -19,7 +19,7 @@ export class AllCardsService {
 	public getCard(id: string): any {
 		const candidates = this.allCards.filter(card => card.id === id);
 		if (!candidates || candidates.length === 0) {
-			console.debug('Could not find card for id', id);
+			this.logger.debug('Could not find card for id', id);
 			return {};
 		}
 		return candidates[0];
@@ -34,7 +34,7 @@ export class AllCardsService {
 			}
 			this.http.get('./cards.json').subscribe(
 				(result: any[]) => {
-					this.logger.debug('[all-cards] retrieved all cards locally', result);
+					this.logger.debug('[all-cards] retrieved all cards locally', result.length);
 					this.allCards = result;
 					resolve();
 				},
@@ -42,7 +42,7 @@ export class AllCardsService {
 					this.logger.debug('[all-cards] Could not retrieve cards locally, getting them from CDN', error);
 					this.http.get(CARDS_CDN_URL).subscribe(
 						(result: any[]) => {
-							this.logger.debug('[all-cards] retrieved all cards from CDN', result);
+							this.logger.debug('[all-cards] retrieved all cards from CDN', result.length);
 							this.allCards = result;
 							resolve();
 						},

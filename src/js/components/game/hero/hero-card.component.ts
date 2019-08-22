@@ -55,7 +55,6 @@ export class HeroCardComponent {
 		this.damage = hero.getTag(GameTag.DAMAGE);
 		this.armor = hero.getTag(GameTag.ARMOR);
 		this.premium = hero.getTag(GameTag.PREMIUM) === 1;
-		console.log('hero-card is premium', this.premium, hero.getTag(GameTag.PREMIUM));
 
 		this.shownDamage = hero.damageForThisAction;
 	}
