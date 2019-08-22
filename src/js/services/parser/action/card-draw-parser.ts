@@ -58,7 +58,7 @@ export class CardDrawParser implements Parser {
 			}
 		}
 		// ShowEntity also happens, for instance when you draw a card with Life Tap
-		if (item instanceof ShowEntityHistoryItem) {
+		else if (item instanceof ShowEntityHistoryItem) {
 			const previousZone = entitiesBeforeAction.get(item.entityDefintion.id).getTag(GameTag.ZONE);
 			if (item.entityDefintion.tags.get(GameTag[GameTag.ZONE]) === Zone.HAND && (previousZone === Zone.DECK || !previousZone)) {
 				const controller = entitiesBeforeAction.get(item.entityDefintion.id).getTag(GameTag.CONTROLLER);
@@ -79,7 +79,7 @@ export class CardDrawParser implements Parser {
 			}
 		}
 		// Otherwise when we draw a card it's a ShowEntity or FullEntity
-		if (item instanceof FullEntityHistoryItem) {
+		else if (item instanceof FullEntityHistoryItem) {
 			const zone = item.entityDefintion.tags.get(GameTag[GameTag.ZONE]);
 			if (zone !== Zone.HAND) {
 				return [];

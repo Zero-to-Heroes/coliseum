@@ -24,7 +24,17 @@ export class PowerTargetParser implements Parser {
 	constructor(private allCards: AllCardsService, private logger: NGXLogger) {}
 
 	public applies(item: HistoryItem): boolean {
-		return item instanceof MetadataHistoryItem;
+		if (!(item instanceof MetadataHistoryItem)) {
+			return false;
+		}
+		const meta = item.meta;
+		if (!meta.info && !meta.meta) {
+			return false;
+		}
+		if (meta.meta !== MetaTags[MetaTags.TARGET]) {
+			return false;
+		}
+		return true;
 	}
 
 	public parse(
@@ -35,8 +45,8 @@ export class PowerTargetParser implements Parser {
 	): Action[] {
 		const meta = item.meta;
 		const parentAction = history
-			.filter(historyItem => historyItem instanceof ActionHistoryItem)
 			.filter(historyItem => historyItem.index === item.meta.parentIndex)
+			.filter(historyItem => historyItem instanceof ActionHistoryItem)
 			.map(historyItem => historyItem as ActionHistoryItem)[0];
 		if (
 			parseInt(parentAction.node.attributes.type) !== BlockType.POWER &&
@@ -45,12 +55,6 @@ export class PowerTargetParser implements Parser {
 			return;
 		}
 		// TODO: hard-code Malchezaar?
-		if (!meta.info && !meta.meta) {
-			return;
-		}
-		if (meta.meta !== MetaTags[MetaTags.TARGET]) {
-			return;
-		}
 		if (meta.info) {
 			return meta.info
 				.map(info => this.buildPowerActions(entitiesBeforeAction, parentAction, meta, info))
