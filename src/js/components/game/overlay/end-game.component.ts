@@ -1,16 +1,16 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
-import { Entity } from '../../../models/game/entity';
-import { NGXLogger } from 'ngx-logger';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Map } from 'immutable';
-import { PlayState } from '../../../models/enums/playstate';
-import { PlayerEntity } from '../../../models/game/player-entity';
+import { NGXLogger } from 'ngx-logger';
 import { GameTag } from '../../../models/enums/game-tags';
+import { PlayState } from '../../../models/enums/playstate';
+import { Entity } from '../../../models/game/entity';
+import { PlayerEntity } from '../../../models/game/player-entity';
 
 @Component({
 	selector: 'end-game',
 	styleUrls: ['../../../../css/components/game/overlay/end-game.component.scss'],
 	template: `
-		<div class="end-game">
+		<div class="end-game {{ statusClass }}">
 			<img src="{{ heroImage }}" class="hero-image" />
 			<img src="{{ frame }}" class="status-frame" />
 		</div>
@@ -23,6 +23,7 @@ export class EndGameComponent {
 	_status: PlayState;
 	heroImage: string;
 	frame: string;
+	statusClass: string;
 
 	constructor(private logger: NGXLogger) {}
 
@@ -49,6 +50,7 @@ export class EndGameComponent {
 			this.logger.debug('[end-game] entities not initialized yet');
 			return;
 		}
+		this.statusClass = this._status === PlayState.WON ? 'won' : 'lost';
 		const imageName = this._status === PlayState.WON ? 'victory_screen' : 'loss_screen';
 		this.frame = `https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/${imageName}.png`;
 	}

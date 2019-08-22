@@ -15,6 +15,10 @@
 	justify-content: center;
 	width: 40%;
 	position: relative;
+
+	&.lost .hero-image {
+		top: 22%;
+	}
 }
 
 .hero-image {
