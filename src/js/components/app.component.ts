@@ -441,6 +441,7 @@ export class AppComponent implements OnDestroy {
 		this.currentTime = 0;
 		this.currentActionInTurn = 0;
 		this.currentTurn = 0;
+		this.updateUrlQueryString();
 		if (this.gameSub) {
 			this.gameSub.unsubscribe();
 		}
