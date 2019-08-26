@@ -30,7 +30,7 @@ export class MulliganCardAction extends Action {
 	}
 
 	private buildMulliganText(cards: readonly number[]): string {
-		if (!cards) {
+		if (!cards || cards.length === 0) {
 			return '';
 		}
 		const ownerNames: string[] = uniq(
