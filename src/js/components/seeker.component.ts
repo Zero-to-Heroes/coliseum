@@ -50,25 +50,25 @@ export class SeekerComponent implements OnDestroy {
 				debounceTime(100),
 			)
 			.subscribe(newProgress => {
-				this.logger.debug('[seeker] emitting progress', newProgress * 0.01 * this._totalTime, this._totalTime, newProgress);
+				this.logger.info('[seeker] emitting progress', newProgress * 0.01 * this._totalTime, this._totalTime, newProgress);
 				this.seek.next(newProgress * 0.01 * this._totalTime);
 			});
 	}
 
 	@Input('totalTime') set totalTime(value: number) {
-		this.logger.debug('[seeker] setting totalTime', value);
+		this.logger.info('[seeker] setting totalTime', value);
 		this._totalTime = value;
 		this.updateProgress();
 	}
 
 	@Input('currentTime') set currentTime(value: number) {
-		this.logger.debug('[seeker] setting currentTime', value);
+		this.logger.info('[seeker] setting currentTime', value);
 		this._currentTime = value;
 		this.updateProgress();
 	}
 
 	onInput(newProgress: number) {
-		this.logger.debug('[seeker] clicked on', newProgress);
+		this.logger.info('[seeker] clicked on', newProgress);
 		this.progressChanged.next(newProgress);
 	}
 
@@ -81,7 +81,7 @@ export class SeekerComponent implements OnDestroy {
 			this.progress = undefined;
 		}
 		this.progress = this._totalTime ? 100 * (this._currentTime / this._totalTime) : undefined;
-		this.logger.debug('[seeker] progress', this.progress, this._totalTime, this._currentTime);
+		this.logger.info('[seeker] progress', this.progress, this._totalTime, this._currentTime);
 		this.updateBackground();
 	}
 
