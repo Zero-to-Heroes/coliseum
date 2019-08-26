@@ -458,6 +458,7 @@ export class AppComponent implements OnDestroy {
 		this.currentTurn = 0;
 		this.showPreloader = true;
 		this.updateUrlQueryString();
+		this.gameParser.cancelProcessing();
 		if (this.gameSub) {
 			this.gameSub.unsubscribe();
 		}

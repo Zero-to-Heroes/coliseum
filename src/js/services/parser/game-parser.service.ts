@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Map } from 'immutable';
-import flow from 'lodash-es/flow';
 import { NGXLogger } from 'ngx-logger';
 import { Observable } from 'rxjs';
 import { Entity } from '../../models/game/entity';
@@ -25,6 +24,9 @@ const SMALL_PAUSE = 7;
 
 @Injectable()
 export class GameParserService {
+	private cancelled: boolean;
+	private processingTimeout: NodeJS.Timeout;
+
 	constructor(
 		private allCards: AllCardsService,
 		private actionParser: ActionParserService,
@@ -45,6 +47,7 @@ export class GameParserService {
 
 	public async parse(replayAsString: string): Promise<Observable<[Game, boolean]>> {
 		const start = Date.now();
+		this.cancelled = false;
 		await this.allCards.initializeCardsDb();
 		this.logPerf('Retrieved cards DB, parsing replay', start);
 
@@ -54,12 +57,17 @@ export class GameParserService {
 		});
 	}
 
+	public cancelProcessing(): void {
+		this.cancelled = true;
+		clearTimeout(this.processingTimeout);
+	}
+
 	private buildObservableFunction(observer, iterator: IterableIterator<[Game, number]>) {
 		const itValue = iterator.next();
 		// this.logger.info('calling next obersable', itValue, itValue.value);
 		observer.next([itValue.value[0], itValue.done]);
-		if (!itValue.done) {
-			setTimeout(() => this.buildObservableFunction(observer, iterator), itValue.value[1]);
+		if (!itValue.done && !this.cancelled) {
+			this.processingTimeout = setTimeout(() => this.buildObservableFunction(observer, iterator), itValue.value[1]);
 		}
 	}
 
@@ -124,10 +132,6 @@ export class GameParserService {
 		const gameWithFullStory: Game = this.narrator.createGameStory(gameWithNarrator);
 		this.logPerf('game story', start);
 		return [gameWithFullStory, SMALL_PAUSE];
-	}
-
-	private createEntitiesPipeline(history: readonly HistoryItem[], start: number): Map<number, Entity> {
-		return flow()(history);
 	}
 
 	private logPerf<T>(what: string, start: number, result?: T): T {
