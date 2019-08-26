@@ -1,9 +1,9 @@
-import { Action } from './action';
 import { Map } from 'immutable';
-import { Entity } from '../game/entity';
 import { AllCardsService } from '../../services/all-cards.service';
-import { PlayerEntity } from '../game/player-entity';
 import { ActionHelper } from '../../services/parser/action/action-helper';
+import { Entity } from '../game/entity';
+import { PlayerEntity } from '../game/player-entity';
+import { Action } from './action';
 
 export class DiscoverAction extends Action {
 	readonly origin: number;
@@ -44,6 +44,16 @@ export class DiscoverAction extends Action {
 			this.chosen &&
 			this.chosen.length > 0 &&
 			this.chosen.map(entityId => ActionHelper.getCardId(this.entities, entityId)).map(cardId => this.allCards.getCard(cardId));
+		if (!chosenCards) {
+			console.error(
+				'Trying to do a discover action with an empty chosen array, aborting',
+				this.origin,
+				this.ownerId,
+				this.choices,
+				this.chosen,
+			);
+			return this;
+		}
 		let choiceInfo;
 		// We don't have the mulligan info, so we just display the amount of cards being mulliganed
 		if (chosenCards.some(card => !card)) {
