@@ -1,9 +1,9 @@
-import { Component, ChangeDetectionStrategy, Input, AfterViewInit, ChangeDetectorRef, ViewRef } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, ViewRef } from '@angular/core';
 import { Map } from 'immutable';
-import { Entity } from '../../models/game/entity';
 import { NGXLogger } from 'ngx-logger';
 import { GameTag } from '../../models/enums/game-tags';
 import { PlayState } from '../../models/enums/playstate';
+import { Entity } from '../../models/game/entity';
 import { Events } from '../../services/events.service';
 
 @Component({
@@ -106,7 +106,7 @@ export class GameComponent implements AfterViewInit {
 	}
 
 	@Input('entities') set entities(entities: Map<number, Entity>) {
-		this.logger.debug('[game] setting new entities', entities.toJS());
+		this.logger.debug('[game] setting new entities', entities && entities.toJS());
 		this._entities = entities;
 		this.updateActiveSpell();
 		this.updateSecretRevealed();
@@ -227,7 +227,7 @@ export class GameComponent implements AfterViewInit {
 
 	private updateActiveSpell() {
 		this._activeSpell = this._entities && this.activeSpellId && this._entities.get(this.activeSpellId);
-		this._activeSpellController = this._entities.find(entity => entity.getTag(GameTag.PLAYER_ID) === this._playerId);
+		this._activeSpellController = this._entities && this._entities.find(entity => entity.getTag(GameTag.PLAYER_ID) === this._playerId);
 	}
 
 	private updateSecretRevealed() {

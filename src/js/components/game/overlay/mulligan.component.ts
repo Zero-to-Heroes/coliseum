@@ -1,9 +1,9 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
-import { Entity } from '../../../models/game/entity';
-import { NGXLogger } from 'ngx-logger';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Map } from 'immutable';
+import { NGXLogger } from 'ngx-logger';
 import { GameTag } from '../../../models/enums/game-tags';
 import { Zone } from '../../../models/enums/zone';
+import { Entity } from '../../../models/game/entity';
 
 @Component({
 	selector: 'mulligan',
@@ -28,7 +28,7 @@ export class MulliganComponent {
 	constructor(private logger: NGXLogger) {}
 
 	@Input('entities') set entities(entities: Map<number, Entity>) {
-		this.logger.debug('[mulligan] setting new entities', entities.toJS());
+		this.logger.debug('[mulligan] setting new entities', entities && entities.toJS());
 		this._entities = entities;
 		this.updateEntityGroups();
 	}

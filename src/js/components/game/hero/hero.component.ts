@@ -1,6 +1,6 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
-import { Entity } from '../../../models/game/entity';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
+import { Entity } from '../../../models/game/entity';
 
 @Component({
 	selector: 'hero',
@@ -24,7 +24,7 @@ export class HeroComponent {
 	constructor(private logger: NGXLogger) {}
 
 	@Input('hero') set hero(hero: Entity) {
-		this.logger.debug('[hero] setting hero', hero, hero.tags.toJS());
+		this.logger.debug('[hero] setting hero', hero, hero && hero.tags.toJS());
 		this._hero = hero;
 	}
 
@@ -49,6 +49,6 @@ export class HeroComponent {
 	}
 
 	isOption(entity: Entity): boolean {
-		return this._options.indexOf(entity.id) !== -1;
+		return this._options && this._options.indexOf(entity.id) !== -1;
 	}
 }

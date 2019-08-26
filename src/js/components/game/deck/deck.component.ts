@@ -1,12 +1,12 @@
 import {
-	Component,
-	ChangeDetectionStrategy,
-	Input,
-	ElementRef,
-	ChangeDetectorRef,
-	ViewRef,
-	HostListener,
 	AfterViewInit,
+	ChangeDetectionStrategy,
+	ChangeDetectorRef,
+	Component,
+	ElementRef,
+	HostListener,
+	Input,
+	ViewRef,
 } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
 import { Entity } from '../../../models/game/entity';
@@ -33,7 +33,7 @@ export class DeckComponent implements AfterViewInit {
 	@Input('deck') set deck(value: readonly Entity[]) {
 		this.logger.debug('[deck] setting deck', value);
 		this._deck = value;
-		this.numberOfCards = this._deck.length;
+		this.numberOfCards = this._deck ? this._deck.length : undefined;
 	}
 
 	@HostListener('window:resize', ['$event'])

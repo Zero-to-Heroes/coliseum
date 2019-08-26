@@ -1,7 +1,7 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
-import { Entity } from '../../../models/game/entity';
-import { GameTag } from '../../../models/enums/game-tags';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
+import { GameTag } from '../../../models/enums/game-tags';
+import { Entity } from '../../../models/game/entity';
 
 @Component({
 	selector: 'hero-power',
@@ -27,8 +27,11 @@ export class HeroPowerComponent {
 	constructor(private logger: NGXLogger) {}
 
 	@Input('heroPower') set heroPower(heroPower: Entity) {
-		this.logger.debug('[hero-power] setting new heroPower', heroPower, heroPower.tags.toJS());
+		this.logger.debug('[hero-power] setting new heroPower', heroPower, heroPower && heroPower.tags.toJS());
 		this.entity = heroPower;
+		if (!heroPower) {
+			return;
+		}
 		this.entityId = heroPower.id;
 		this.cardId = heroPower.cardID;
 		this.exhausted = heroPower.getTag(GameTag.EXHAUSTED) === 1 || heroPower.getTag(GameTag.HERO_POWER_DISABLED) === 1;

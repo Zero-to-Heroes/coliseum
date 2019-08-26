@@ -1,7 +1,7 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
-import { Entity } from '../../../models/game/entity';
 import { GameTag } from '../../../models/enums/game-tags';
+import { Entity } from '../../../models/game/entity';
 
 @Component({
 	selector: 'hero-overlays',
@@ -21,6 +21,9 @@ export class HeroOverlaysComponent {
 	@Input('entity') set entity(value: Entity) {
 		this.logger.debug('[hero-overlays] setting entity', value);
 		this.overlays = [];
+		if (!value) {
+			return;
+		}
 		if (value.getTag(GameTag.CANT_BE_DAMAGED) === 1) {
 			this.pushOverlay('hero_immune');
 		}

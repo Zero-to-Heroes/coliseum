@@ -62,6 +62,7 @@ import { QuestTooltipComponent } from '../../components/game/overlay/quest-toolt
 import { PlayAreaComponent } from '../../components/game/play-area.component';
 import { SecretRevealedComponent } from '../../components/game/secret-revealed.component';
 import { TargetZoneComponent } from '../../components/game/target-zone.component';
+import { PreloaderComponent } from '../../components/preloader.component';
 import { SeekerComponent } from '../../components/seeker.component';
 import { TooltipComponent, TooltipsComponent } from '../../components/tooltips.component';
 import { TurnNarratorComponent } from '../../components/turn-narrator.component';
@@ -161,6 +162,7 @@ export class SentryErrorHandler implements ErrorHandler {
 		QuestCompletedComponent,
 		QuestTooltipComponent,
 
+		PreloaderComponent,
 		SeekerComponent,
 		ControlsComponent,
 

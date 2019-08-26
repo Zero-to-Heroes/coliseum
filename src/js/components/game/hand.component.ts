@@ -1,6 +1,6 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
-import { Entity } from '../../models/game/entity';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
+import { Entity } from '../../models/game/entity';
 
 @Component({
 	selector: 'hand',
@@ -26,6 +26,9 @@ export class HandComponent {
 	@Input('entities') set entities(entities: readonly Entity[]) {
 		this.logger.debug('[hand] setting new entities', entities);
 		this._entities = entities;
+		if (!entities) {
+			return;
+		}
 		switch (entities.length) {
 			case 7:
 				this.marginLeft = -2;

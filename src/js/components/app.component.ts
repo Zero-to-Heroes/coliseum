@@ -24,12 +24,11 @@ import { GameParserService } from '../services/parser/game-parser.service';
 					<div class="aspect-ratio-wrapper ar-16x9">
 						<div class="aspect-ratio-inner">
 							<game
-								*ngIf="game"
 								[turn]="turnString"
-								[playerId]="game.players[0].playerId"
-								[opponentId]="game.players[1].playerId"
-								[playerName]="game.players[0].name"
-								[opponentName]="game.players[1].name"
+								[playerId]="game && game.players[0].playerId"
+								[opponentId]="game && game.players[1].playerId"
+								[playerName]="game && game.players[0].name"
+								[opponentName]="game && game.players[1].name"
 								[activePlayer]="activePlayer"
 								[activeSpell]="activeSpell"
 								[isMulligan]="isMulligan"
@@ -48,6 +47,7 @@ import { GameParserService } from '../services/parser/game-parser.service';
 								[crossed]="crossed"
 							>
 							</game>
+							<preloader class="dark-theme" [ngClass]="{ 'active': !game || showPreloader }"></preloader>
 						</div>
 					</div>
 				</div>
@@ -103,6 +103,8 @@ export class AppComponent implements OnDestroy {
 	totalTime: number;
 	currentTime = 0;
 
+	showPreloader = true;
+
 	private currentActionInTurn = 0;
 	private currentTurn = 0;
 	private gameSub: Subscription;
@@ -126,6 +128,10 @@ export class AppComponent implements OnDestroy {
 
 	public async loadReplay(replayXml: string, options?: ReplayOptions) {
 		this.reset();
+		this.showPreloader = true;
+		if (!(this.cdr as ViewRef).destroyed) {
+			this.cdr.detectChanges();
+		}
 		const gameObs = await this.gameParser.parse(replayXml);
 		this.gameSub = gameObs.subscribe(([game, complete]: [Game, boolean]) => {
 			// TODO: if not complete, show loading screen
@@ -144,6 +150,13 @@ export class AppComponent implements OnDestroy {
 						? this.game.turns.get(this.currentTurn).actions.length - 1
 						: action;
 				this.populateInfo(complete);
+				// We do this so that the initial drawing is already done when hiding the preloader
+				setTimeout(() => {
+					this.showPreloader = false;
+					if (!(this.cdr as ViewRef).destroyed) {
+						this.cdr.detectChanges();
+					}
+				}, 1500);
 			}
 		});
 	}
@@ -443,6 +456,7 @@ export class AppComponent implements OnDestroy {
 		this.currentTime = 0;
 		this.currentActionInTurn = 0;
 		this.currentTurn = 0;
+		this.showPreloader = true;
 		this.updateUrlQueryString();
 		if (this.gameSub) {
 			this.gameSub.unsubscribe();

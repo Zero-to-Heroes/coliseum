@@ -24,6 +24,9 @@ export class AllCardsService {
 		}
 		return candidates[0];
 	}
+	public getCards(): any[] {
+		return this.allCards;
+	}
 
 	public async initializeCardsDb(): Promise<void> {
 		return new Promise<void>((resolve, reject) => {

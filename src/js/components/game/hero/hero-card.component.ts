@@ -1,8 +1,8 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
-import { Entity } from '../../../models/game/entity';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { NGXLogger } from 'ngx-logger';
 import { CardType } from '../../../models/enums/card-type';
 import { GameTag } from '../../../models/enums/game-tags';
-import { NGXLogger } from 'ngx-logger';
+import { Entity } from '../../../models/game/entity';
 
 @Component({
 	selector: 'hero-card',
@@ -44,8 +44,11 @@ export class HeroCardComponent {
 	constructor(private logger: NGXLogger) {}
 
 	@Input('hero') set hero(hero: Entity) {
-		this.logger.debug('[hero-card] setting hero', hero, hero.tags.toJS());
+		this.logger.debug('[hero-card] setting hero', hero, hero && hero.tags.toJS());
 		this._entity = hero;
+		if (!hero) {
+			return;
+		}
 		this.entityId = hero.id;
 		this.playerEntityId = hero.getTag(GameTag.CONTROLLER) + 1; // If they ever change this logic we need to do something :)
 		this.cardId = hero.cardID;

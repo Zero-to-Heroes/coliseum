@@ -1,10 +1,10 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Map } from 'immutable';
-import { Entity } from '../../models/game/entity';
+import { NGXLogger } from 'ngx-logger';
+import { CardType } from '../../models/enums/card-type';
 import { GameTag } from '../../models/enums/game-tags';
 import { Zone } from '../../models/enums/zone';
-import { CardType } from '../../models/enums/card-type';
-import { NGXLogger } from 'ngx-logger';
+import { Entity } from '../../models/game/entity';
 
 @Component({
 	selector: 'play-area',
@@ -62,7 +62,7 @@ export class PlayAreaComponent {
 	}
 
 	@Input('entities') set entities(entities: Map<number, Entity>) {
-		this.logger.debug('[play-area] setting new entities', entities.toJS());
+		this.logger.debug('[play-area] setting new entities', entities && entities.toJS());
 		this._entities = entities;
 		this.updateEntityGroups();
 	}

@@ -28,7 +28,7 @@ export class EndGameComponent {
 	constructor(private logger: NGXLogger) {}
 
 	@Input('entities') set entities(entities: Map<number, Entity>) {
-		this.logger.debug('[end-game] setting new entities', entities.toJS());
+		this.logger.debug('[end-game] setting new entities', entities && entities.toJS());
 		this._entities = entities;
 		this.updateHeroImage();
 	}
