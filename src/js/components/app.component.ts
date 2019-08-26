@@ -126,9 +126,41 @@ export class AppComponent implements OnDestroy {
 		console.log('new coliseum', window['coliseum']);
 	}
 
+	public reset() {
+		this.reviewId = undefined;
+		this.game = undefined;
+		this.entities = undefined;
+		this.crossed = undefined;
+		this.text = undefined;
+		this.turnString = undefined;
+		this.activePlayer = 0;
+		this.activeSpell = 0;
+		this.discovers = undefined;
+		this.chosen = undefined;
+		this.burned = undefined;
+		this.fatigue = 0;
+		this.targets = undefined;
+		this.options = undefined;
+		this.secretRevealed = 0;
+		this.questCompleted = 0;
+		this.showHiddenCards = false;
+		this.isMulligan = false;
+		this.isEndGame = false;
+		this.endGameStatus = undefined;
+		this.totalTime = 0;
+		this.currentTime = 0;
+		this.currentActionInTurn = 0;
+		this.currentTurn = 0;
+		this.showPreloader = true;
+		this.updateUrlQueryString();
+		this.gameParser.cancelProcessing();
+		if (this.gameSub) {
+			this.gameSub.unsubscribe();
+		}
+	}
+
 	public async loadReplay(replayXml: string, options?: ReplayOptions) {
 		this.reset();
-		this.showPreloader = true;
 		if (!(this.cdr as ViewRef).destroyed) {
 			this.cdr.detectChanges();
 		}
@@ -429,38 +461,5 @@ export class AppComponent implements OnDestroy {
 		const queryString = `${reviewQuery}turn=${this.currentTurn}&action=${this.currentActionInTurn}`;
 		const newUrl = `${baseUrl}?${queryString}`;
 		window.history.replaceState({ path: newUrl }, '', newUrl);
-	}
-
-	private reset() {
-		this.reviewId = undefined;
-		this.game = undefined;
-		this.entities = undefined;
-		this.crossed = undefined;
-		this.text = undefined;
-		this.turnString = undefined;
-		this.activePlayer = 0;
-		this.activeSpell = 0;
-		this.discovers = undefined;
-		this.chosen = undefined;
-		this.burned = undefined;
-		this.fatigue = 0;
-		this.targets = undefined;
-		this.options = undefined;
-		this.secretRevealed = 0;
-		this.questCompleted = 0;
-		this.showHiddenCards = false;
-		this.isMulligan = false;
-		this.isEndGame = false;
-		this.endGameStatus = undefined;
-		this.totalTime = 0;
-		this.currentTime = 0;
-		this.currentActionInTurn = 0;
-		this.currentTurn = 0;
-		this.showPreloader = true;
-		this.updateUrlQueryString();
-		this.gameParser.cancelProcessing();
-		if (this.gameSub) {
-			this.gameSub.unsubscribe();
-		}
 	}
 }
