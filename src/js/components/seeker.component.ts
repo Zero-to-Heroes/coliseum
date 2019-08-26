@@ -50,6 +50,7 @@ export class SeekerComponent implements OnDestroy {
 				debounceTime(100),
 			)
 			.subscribe(newProgress => {
+				this.logger.debug('[seeker] emitting progress', newProgress * 0.01 * this._totalTime, this._totalTime, newProgress);
 				this.seek.next(newProgress * 0.01 * this._totalTime);
 			});
 	}
@@ -67,6 +68,7 @@ export class SeekerComponent implements OnDestroy {
 	}
 
 	onInput(newProgress: number) {
+		this.logger.debug('[seeker] clicked on', newProgress);
 		this.progressChanged.next(newProgress);
 	}
 
