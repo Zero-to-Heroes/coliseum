@@ -146,15 +146,21 @@ export class TooltipsComponent implements AfterViewInit {
 			this.tooltip.instance.position = 'absolute';
 
 			// Cache the variables
-			setTimeout(() => {
-				// We do this only at initialization, since afterwards the % size
-				// is replaced by a pixel size
-				const tooltipElement = this.elRef.nativeElement.querySelector('tooltip');
-				const styles = getComputedStyle(tooltipElement);
-				this.tooltipSize = parseInt(styles.width.split('%')[0]) * 0.01;
-				this.cacheTooltipSize();
-			});
+			setTimeout(() => this.initializeTooltipVariables());
 		});
+	}
+
+	private initializeTooltipVariables() {
+		// We do this only at initialization, since afterwards the % size
+		// is replaced by a pixel size
+		const tooltipElement = this.elRef.nativeElement.querySelector('tooltip');
+		if (!tooltipElement) {
+			setTimeout(() => this.initializeTooltipVariables(), 20);
+			return;
+		}
+		const styles = getComputedStyle(tooltipElement);
+		this.tooltipSize = parseInt(styles.width.split('%')[0]) * 0.01;
+		this.cacheTooltipSize();
 	}
 
 	private cacheTooltipSize() {
