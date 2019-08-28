@@ -19,7 +19,7 @@ import { Key } from 'ts-keycode-enum';
 	template: `
 		<div class="player-controls light-theme" [ngClass]="{ 'player-controls-disabled': !_active }">
 			<div class="player-controls-buttons-wrapper">
-				<div class="player-controls-content player-controls-content-left" [style.opacity]="_reviewId ? 1 : 0">
+				<div class="player-controls-content player-controls-content-left">
 					<span class="gs-icon">
 						<svg viewBox="0 0 30 30">
 							<path
