@@ -52,7 +52,14 @@ import { GameParserService } from '../services/parser/game-parser.service';
 					</div>
 				</div>
 			</section>
-			<seeker class="ignored-wrapper" [totalTime]="totalTime" [currentTime]="currentTime" (seek)="onSeek($event)"> </seeker>
+			<seeker
+				class="ignored-wrapper"
+				[totalTime]="totalTime"
+				[currentTime]="currentTime"
+				[active]="game && !showPreloader"
+				(seek)="onSeek($event)"
+			>
+			</seeker>
 			<turn-narrator class="ignored-wrapper" [text]="text" [active]="game && !showPreloader"></turn-narrator>
 			<controls
 				class="ignored-wrapper"
@@ -175,6 +182,9 @@ export class AppComponent implements OnDestroy {
 						? this.game.turns.get(this.currentTurn).actions.length - 1
 						: action;
 				this.populateInfo(complete);
+				if (!(this.cdr as ViewRef).destroyed) {
+					this.cdr.detectChanges();
+				}
 				// We do this so that the initial drawing is already done when hiding the preloader
 				setTimeout(() => {
 					this.showPreloader = false;
@@ -240,6 +250,9 @@ export class AppComponent implements OnDestroy {
 		this.populateInfo();
 		// So that the value is always what the user actually selected, and there are no weird jumps
 		this.currentTime = targetTimestamp;
+		if (!(this.cdr as ViewRef).destroyed) {
+			this.cdr.detectChanges();
+		}
 	}
 
 	private populateInfo(complete = true) {
@@ -278,9 +291,6 @@ export class AppComponent implements OnDestroy {
 		}
 		this.logger.debug('[app] setting turn', this.turnString);
 		this.logger.debug('[app] Considering action', this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn]);
-		if (!(this.cdr as ViewRef).destroyed) {
-			this.cdr.detectChanges();
-		}
 	}
 
 	private buildTotalTime() {
@@ -407,6 +417,9 @@ export class AppComponent implements OnDestroy {
 			this.currentTurn++;
 		}
 		this.populateInfo();
+		if (!(this.cdr as ViewRef).destroyed) {
+			this.cdr.detectChanges();
+		}
 	}
 
 	private moveCursorToPreviousAction() {
@@ -419,6 +432,9 @@ export class AppComponent implements OnDestroy {
 			this.currentActionInTurn = this.game.turns.get(this.currentTurn).actions.length - 1;
 		}
 		this.populateInfo();
+		if (!(this.cdr as ViewRef).destroyed) {
+			this.cdr.detectChanges();
+		}
 	}
 
 	private moveCursorToNextTurn() {
@@ -428,6 +444,9 @@ export class AppComponent implements OnDestroy {
 		this.currentActionInTurn = 0;
 		this.currentTurn++;
 		this.populateInfo();
+		if (!(this.cdr as ViewRef).destroyed) {
+			this.cdr.detectChanges();
+		}
 	}
 
 	private moveCursorToPreviousTurn() {
@@ -437,6 +456,9 @@ export class AppComponent implements OnDestroy {
 		this.currentActionInTurn = 0;
 		this.currentTurn--;
 		this.populateInfo();
+		if (!(this.cdr as ViewRef).destroyed) {
+			this.cdr.detectChanges();
+		}
 	}
 
 	private getSearchParam(name: string): string {

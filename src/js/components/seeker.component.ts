@@ -16,7 +16,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/internal/operators';
 				max="100"
 				step="0.1"
 				class="player-seeker"
-				[(ngModel)]="progress"
+				[ngModel]="progress"
 				(ngModelChange)="onInput($event)"
 			/>
 			<span class="player-seeker-track" [style.background]="background">
@@ -51,19 +51,19 @@ export class SeekerComponent implements OnDestroy {
 				debounceTime(100),
 			)
 			.subscribe(newProgress => {
-				this.logger.info('[seeker] emitting progress', newProgress * 0.01 * this._totalTime, this._totalTime, newProgress);
+				this.logger.debug('[seeker] emitting progress', newProgress, newProgress * 0.01 * this._totalTime, this._totalTime);
 				this.seek.next(newProgress * 0.01 * this._totalTime);
 			});
 	}
 
 	@Input('totalTime') set totalTime(value: number) {
-		this.logger.info('[seeker] setting totalTime', value);
+		this.logger.debug('[seeker] setting totalTime', value);
 		this._totalTime = value;
 		this.updateProgress();
 	}
 
 	@Input('currentTime') set currentTime(value: number) {
-		this.logger.info('[seeker] setting currentTime', value);
+		this.logger.debug('[seeker] setting currentTime', value);
 		this._currentTime = value;
 		this.updateProgress();
 	}
@@ -73,8 +73,9 @@ export class SeekerComponent implements OnDestroy {
 	}
 
 	onInput(newProgress: number) {
-		this.logger.info('[seeker] clicked on', newProgress);
+		this.logger.debug('[seeker] clicked on', newProgress, this._totalTime * newProgress * 0.01);
 		this.progressChanged.next(newProgress);
+		this.progress = newProgress; // Avoid the seeker going back and forth
 	}
 
 	ngOnDestroy() {
@@ -86,7 +87,7 @@ export class SeekerComponent implements OnDestroy {
 			this.progress = undefined;
 		}
 		this.progress = this._totalTime ? 100 * (this._currentTime / this._totalTime) : 0;
-		this.logger.info('[seeker] progress', this.progress, this._totalTime, this._currentTime);
+		this.logger.debug('[seeker] progress', this.progress, this._totalTime, this._currentTime);
 		this.updateBackground();
 	}
 
