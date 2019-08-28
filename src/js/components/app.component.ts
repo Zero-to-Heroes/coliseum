@@ -117,14 +117,14 @@ export class AppComponent implements OnDestroy {
 		private logger: NGXLogger,
 		private zone: NgZone,
 	) {
-		console.log('building coliseum app component');
+		logger.debug('building coliseum app component');
 		const existingColiseum = window['coliseum'] || {};
-		console.log('existing', existingColiseum);
+		logger.debug('existing', existingColiseum);
 		window['coliseum'] = Object.assign(existingColiseum, {
 			zone: this.zone,
 			component: this,
 		});
-		console.log('new coliseum', window['coliseum']);
+		logger.debug('new coliseum', window['coliseum']);
 	}
 
 	public reset(reviewId: string = null) {
@@ -148,7 +148,7 @@ export class AppComponent implements OnDestroy {
 		this.isMulligan = false;
 		this.isEndGame = false;
 		this.endGameStatus = undefined;
-		this.totalTime = 0;
+		this.totalTime = undefined;
 		this.currentTime = 0;
 		this.currentActionInTurn = 0;
 		this.currentTurn = 0;

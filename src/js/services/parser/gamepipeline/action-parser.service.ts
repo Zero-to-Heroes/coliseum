@@ -74,6 +74,7 @@ export class ActionParserService {
 	public *parseActions(game: Game, history: readonly HistoryItem[]): IterableIterator<Game> {
 		// const start = Date.now();
 		this.currentTurn = 0;
+		this.hasYielded = false;
 		let actionsForTurn: readonly Action[] = [];
 		let previousStateEntities: Map<number, Entity> = game.entities;
 		let previousProcessedItem: HistoryItem = history[0];

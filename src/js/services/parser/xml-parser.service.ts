@@ -442,10 +442,15 @@ export class XmlParserService {
 		this.stack = [];
 		this.state = ['root'];
 		this.index = 0;
+		this.initialTimestamp = undefined;
 		this.history = [];
 		this.entityDefinition = {
 			tags: Map(),
 		};
+		this.choices = undefined;
+		this.chosen = undefined;
+		this.metaData = undefined;
+		this.timestamp = undefined;
 	}
 
 	private tsToSeconds(ts: string): number {

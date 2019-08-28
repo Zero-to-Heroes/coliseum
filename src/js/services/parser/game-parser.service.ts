@@ -48,6 +48,10 @@ export class GameParserService {
 	public async parse(replayAsString: string): Promise<Observable<[Game, boolean]>> {
 		const start = Date.now();
 		this.cancelled = false;
+		if (this.processingTimeout) {
+			clearTimeout(this.processingTimeout);
+			this.processingTimeout = undefined;
+		}
 		await this.allCards.initializeCardsDb();
 		this.logPerf('Retrieved cards DB, parsing replay', start);
 
@@ -73,7 +77,7 @@ export class GameParserService {
 
 	private *createGamePipeline(replayAsString: string, start: number): IterableIterator<[Game, number]> {
 		const history: readonly HistoryItem[] = this.replayParser.parseXml(replayAsString);
-		this.logPerf('XML parsing', start);
+		this.logPerf('XML parsing', start, history);
 		yield [null, SMALL_PAUSE];
 
 		const initialEntities = this.gamePopulationService.populateInitialEntities(history);
@@ -135,7 +139,7 @@ export class GameParserService {
 	}
 
 	private logPerf<T>(what: string, start: number, result?: T): T {
-		this.logger.info('[perf] ', what, 'done after ', Date.now() - start, 'ms');
+		this.logger.info('[perf] ', what, 'done after ', Date.now() - start, 'ms', result);
 		return result;
 	}
 }

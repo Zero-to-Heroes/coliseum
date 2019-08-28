@@ -5,6 +5,8 @@ import { AppComponent } from '../../components/app.component';
 import { DynamicNg2Loader } from '../../services/DynamicNg2Loader.service';
 import { AppModule } from './app.module';
 
+console.log('starting coliseum boostrap');
+
 if (process.env.NODE_ENV === 'production') {
 	enableProdMode();
 }
@@ -43,5 +45,3 @@ const existingColiseum = window['coliseum'] || {};
 window['coliseum'] = Object.assign(existingColiseum, {
 	init: initColiseum,
 });
-
-// bootstrapWorkerUi('./parser.js');

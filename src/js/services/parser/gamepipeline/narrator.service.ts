@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Game } from '../../../models/game/game';
 import { NGXLogger } from 'ngx-logger';
+import { Game } from '../../../models/game/game';
 import { Turn } from '../../../models/game/turn';
 
 @Injectable()
@@ -34,6 +34,7 @@ export class NarratorService {
 			.map(turn => turn.actions)
 			.reduce((a, b) => a.concat(b), []);
 		const fullStoryRaw: string = allActions.map(action => action.textRaw).join('\n');
+		this.logger.debug('[narrator] full story', fullStoryRaw);
 		return Game.createGame(game, { fullStoryRaw: '\n' + fullStoryRaw });
 	}
 }
