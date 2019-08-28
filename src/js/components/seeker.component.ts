@@ -8,7 +8,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/internal/operators';
 	selector: 'seeker',
 	styleUrls: ['../../css/components/seeker.component.scss'],
 	template: `
-		<div class="player-seeker-container light-theme">
+		<div class="player-seeker-container light-theme" [ngClass]="{ 'seeker-disabled': !_active }">
 			<input
 				#seeker
 				type="range"
@@ -29,6 +29,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/internal/operators';
 export class SeekerComponent implements OnDestroy {
 	@Output() seek = new EventEmitter<number>();
 
+	_active = false;
 	progress: number;
 	background: SafeStyle;
 
@@ -67,6 +68,10 @@ export class SeekerComponent implements OnDestroy {
 		this.updateProgress();
 	}
 
+	@Input() set active(value: boolean) {
+		this._active = value;
+	}
+
 	onInput(newProgress: number) {
 		this.logger.info('[seeker] clicked on', newProgress);
 		this.progressChanged.next(newProgress);
@@ -80,7 +85,7 @@ export class SeekerComponent implements OnDestroy {
 		if (!this._totalTime) {
 			this.progress = undefined;
 		}
-		this.progress = this._totalTime ? 100 * (this._currentTime / this._totalTime) : undefined;
+		this.progress = this._totalTime ? 100 * (this._currentTime / this._totalTime) : 0;
 		this.logger.info('[seeker] progress', this.progress, this._totalTime, this._currentTime);
 		this.updateBackground();
 	}

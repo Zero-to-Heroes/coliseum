@@ -52,18 +52,12 @@ import { GameParserService } from '../services/parser/game-parser.service';
 					</div>
 				</div>
 			</section>
-			<seeker
-				class="ignored-wrapper"
-				*ngIf="totalTime > 0"
-				[totalTime]="totalTime"
-				[currentTime]="currentTime"
-				(seek)="onSeek($event)"
-			>
-			</seeker>
-			<turn-narrator class="ignored-wrapper" [text]="text"></turn-narrator>
+			<seeker class="ignored-wrapper" [totalTime]="totalTime" [currentTime]="currentTime" (seek)="onSeek($event)"> </seeker>
+			<turn-narrator class="ignored-wrapper" [text]="text" [active]="game && !showPreloader"></turn-narrator>
 			<controls
 				class="ignored-wrapper"
 				[reviewId]="reviewId"
+				[active]="game && !showPreloader"
 				(nextAction)="onNextAction()"
 				(nextTurn)="onNextTurn()"
 				(previousAction)="onPreviousAction()"
@@ -126,8 +120,8 @@ export class AppComponent implements OnDestroy {
 		console.log('new coliseum', window['coliseum']);
 	}
 
-	public reset() {
-		this.reviewId = undefined;
+	public reset(reviewId: string = null) {
+		this.reviewId = reviewId; // That was we can already start showing the links
 		this.game = undefined;
 		this.entities = undefined;
 		this.crossed = undefined;
@@ -157,13 +151,13 @@ export class AppComponent implements OnDestroy {
 		if (this.gameSub) {
 			this.gameSub.unsubscribe();
 		}
+		if (!(this.cdr as ViewRef).destroyed) {
+			this.cdr.detectChanges();
+		}
 	}
 
 	public async loadReplay(replayXml: string, options?: ReplayOptions) {
 		this.reset();
-		if (!(this.cdr as ViewRef).destroyed) {
-			this.cdr.detectChanges();
-		}
 		const gameObs = await this.gameParser.parse(replayXml);
 		this.gameSub = gameObs.subscribe(([game, complete]: [Game, boolean]) => {
 			if (complete) {
@@ -458,7 +452,7 @@ export class AppComponent implements OnDestroy {
 		const baseUrl = `${window.location.protocol}//${window.location.host}${window.location.pathname}`;
 		const reviewQuery = this.reviewId ? `reviewId=${this.reviewId}&` : '';
 		if (!reviewQuery) {
-			this.logger.warn('Could not retrieve review id', this.reviewId, window.location);
+			this.logger.warn('Could not retrieve review id', this.reviewId, window.location.href);
 		}
 		const queryString = `${reviewQuery}turn=${this.currentTurn}&action=${this.currentActionInTurn}`;
 		const newUrl = `${baseUrl}?${queryString}`;

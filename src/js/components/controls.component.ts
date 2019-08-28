@@ -5,6 +5,7 @@ import {
 	EventEmitter,
 	HostListener,
 	Input,
+	OnDestroy,
 	OnInit,
 	Output,
 	ViewRef,
@@ -16,9 +17,9 @@ import { Key } from 'ts-keycode-enum';
 	selector: 'controls',
 	styleUrls: ['../../css/components/controls.component.scss', '../../css/global/global.scss'],
 	template: `
-		<div class="player-controls light-theme">
+		<div class="player-controls light-theme" [ngClass]="{ 'player-controls-disabled': !_active }">
 			<div class="player-controls-buttons-wrapper">
-				<div class="player-controls-content player-controls-content-left" [style.opacity]="reviewId ? 1 : 0">
+				<div class="player-controls-content player-controls-content-left" [style.opacity]="_reviewId ? 1 : 0">
 					<span class="gs-icon">
 						<svg viewBox="0 0 30 30">
 							<path
@@ -40,11 +41,11 @@ import { Key } from 'ts-keycode-enum';
 						<a
 							class="player-control-element"
 							target="_blank"
-							href="http://replays.firestoneapp.com/?reviewId={{ reviewId }}&source=game-summary"
+							href="http://replays.firestoneapp.com/?reviewId={{ _reviewId }}&source=game-summary"
 							>View online</a
 						>
 						|
-						<a class="player-control-element" target="_blank" href="https://www.zerotoheroes.com/r/hearthstone/{{ reviewId }}"
+						<a class="player-control-element" target="_blank" href="https://www.zerotoheroes.com/r/hearthstone/{{ _reviewId }}"
 							>Discuss</a
 						>
 					</p>
@@ -252,22 +253,43 @@ import { Key } from 'ts-keycode-enum';
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ControlsComponent implements OnInit {
-	@Input() reviewId;
+export class ControlsComponent implements OnInit, OnDestroy {
 	@Output() nextAction = new EventEmitter<void>();
 	@Output() nextTurn = new EventEmitter<void>();
 	@Output() previousAction = new EventEmitter<void>();
 	@Output() previousTurn = new EventEmitter<void>();
 	@Output() showHiddenCards = new EventEmitter<boolean>();
 
+	_active = false;
+	_reviewId: string;
 	isPlaying = false;
 	currentSpeed = 1;
 	showingHiddenCards = false;
+
+	private playingTimeout: NodeJS.Timeout;
 
 	constructor(private cdr: ChangeDetectorRef, private logger: NGXLogger) {}
 
 	ngOnInit() {
 		this.startPlayingControl();
+	}
+
+	ngOnDestroy() {
+		if (this.playingTimeout) {
+			clearTimeout(this.playingTimeout);
+		}
+	}
+
+	@Input() set reviewId(value: string) {
+		// reset all the controls
+		this.isPlaying = false;
+		this.currentSpeed = 1;
+		this.showingHiddenCards = false;
+		this._reviewId = value;
+	}
+
+	@Input() set active(value: boolean) {
+		this._active = value;
 	}
 
 	@HostListener('document:keyup', ['$event'])
@@ -342,7 +364,7 @@ export class ControlsComponent implements OnInit {
 
 	private startPlayingControl() {
 		const nextTick = (2.0 / this.currentSpeed) * 1000;
-		setTimeout(() => this.startPlayingControl(), nextTick);
+		this.playingTimeout = setTimeout(() => this.startPlayingControl(), nextTick);
 		if (this.isPlaying) {
 			this.goNextAction();
 		}

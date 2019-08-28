@@ -247,6 +247,13 @@ kbd {
 	display: flex;
 	flex-direction: column;
 	--focus-visible-color: var(--background-third);
+	font-family: 'nice ampersand', 'KlavikaWebBasicRegular', sans-serif;
+	transition: 0.15s;
+}
+
+.player-controls-disabled {
+	opacity: 0.3;
+	pointer-events: none;
 }
 
 .player-controls-buttons-wrapper {

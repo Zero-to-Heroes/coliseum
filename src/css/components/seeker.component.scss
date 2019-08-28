@@ -136,6 +136,11 @@ $transparent-btn-foreground-selected: rgba(white, 0.9);
 	}
 }
 
+.seeker-disabled {
+	opacity: 0.8;
+	pointer-events: none;
+}
+
 .player-seeker-track {
 	position: absolute;
 	top: 50%;
