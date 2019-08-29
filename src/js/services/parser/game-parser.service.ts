@@ -17,6 +17,7 @@ import { MulliganParserService } from './gamepipeline/mulligan-parser.service';
 import { NarratorService } from './gamepipeline/narrator.service';
 import { TargetsParserService } from './gamepipeline/targets-parser.service';
 import { TurnParserService } from './gamepipeline/turn-parser.service';
+import { ImagePreloaderService } from './image-preloader.service';
 import { StateProcessorService } from './state-processor.service';
 import { XmlParserService } from './xml-parser.service';
 
@@ -32,6 +33,7 @@ export class GameParserService {
 		private actionParser: ActionParserService,
 		private replayParser: XmlParserService,
 		private turnParser: TurnParserService,
+		private imagePreloader: ImagePreloaderService,
 		private gamePopulationService: GamePopulationService,
 		private gameStateParser: GameStateParserService,
 		private gameInitializer: GameInitializerService,
@@ -77,8 +79,11 @@ export class GameParserService {
 
 	private *createGamePipeline(replayAsString: string, start: number): IterableIterator<[Game, number]> {
 		const history: readonly HistoryItem[] = this.replayParser.parseXml(replayAsString);
-		this.logPerf('XML parsing', start, history);
+		this.logPerf('XML parsing', start);
 		yield [null, SMALL_PAUSE];
+
+		this.imagePreloader.preloadImages(history);
+		this.logPerf('Started image preloading', start);
 
 		const initialEntities = this.gamePopulationService.populateInitialEntities(history);
 		this.logPerf('Populating initial entities', start);

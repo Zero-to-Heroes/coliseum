@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
 import { Entity } from '../../../models/game/entity';
 import { AllCardsService } from '../../../services/all-cards.service';
@@ -25,7 +25,7 @@ export class CardEnchantmentComponent {
 	name: string;
 	art: string;
 	description: string;
-	ringImage = 'http://static.zerotoheroes.com/hearthstone/asset/coliseum/images/enchantments/enchantment-ring.png';
+	ringImage = 'https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/enchantments/enchantment-ring.png';
 
 	constructor(private logger: NGXLogger, private cards: AllCardsService) {}
 

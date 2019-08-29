@@ -1,6 +1,6 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
-import { CardType } from '../../../models/enums/card-type';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
+import { CardType } from '../../../models/enums/card-type';
 
 @Component({
 	selector: 'card-art',
@@ -20,7 +20,7 @@ export class CardArtComponent {
 		this.logger.debug('[card-art] setting cardId', cardId);
 		this.image = cardId
 			? `https://static.zerotoheroes.com/hearthstone/cardart/256x/${cardId}.jpg`
-			: `http://static.zerotoheroes.com/hearthstone/asset/manastorm/card_unknown.png`;
+			: `https://static.zerotoheroes.com/hearthstone/asset/manastorm/card_unknown.png`;
 	}
 
 	@Input('cardType') set cardType(cardType: CardType) {

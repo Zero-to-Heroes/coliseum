@@ -14,6 +14,7 @@ import { MulliganParserService } from '../../services/parser/gamepipeline/mullig
 import { NarratorService } from '../../services/parser/gamepipeline/narrator.service';
 import { TargetsParserService } from '../../services/parser/gamepipeline/targets-parser.service';
 import { TurnParserService } from '../../services/parser/gamepipeline/turn-parser.service';
+import { ImagePreloaderService } from '../../services/parser/image-preloader.service';
 import { StateProcessorService } from '../../services/parser/state-processor.service';
 import { XmlParserService } from '../../services/parser/xml-parser.service';
 
@@ -53,6 +54,7 @@ export class ParserModule {
 				GameParserService,
 				GamePopulationService,
 				GameStateParserService,
+				ImagePreloaderService,
 				MulliganParserService,
 				EndGameParserService,
 				NarratorService,
