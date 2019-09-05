@@ -1,8 +1,8 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
-import { AllCardsService } from '../../../services/all-cards.service';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { NGXLogger } from 'ngx-logger';
 import { CardClass } from '../../../models/enums/card-class';
 import { CardType } from '../../../models/enums/card-type';
-import { NGXLogger } from 'ngx-logger';
+import { AllCardsService } from '../../../services/all-cards.service';
 
 @Component({
 	selector: 'card-frame',
@@ -50,8 +50,7 @@ export class CardFrameComponent {
 	}
 
 	private buildFrame(cardClass: CardClass, cardType: CardType, premium: boolean): string {
-		const strType = '-' + CardType[cardType].toLowerCase();
 		const strClass = cardType === CardType.HERO_POWER ? '' : premium ? '-premium' : '-' + CardClass[cardClass].toLowerCase();
-		return `frame${strType}${strClass}`;
+		return `frame-${CardType[cardType].toLowerCase()}${strClass}`;
 	}
 }

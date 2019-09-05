@@ -15,13 +15,12 @@ export class ImagePreloaderService {
 		manaLocked: 'https://static.zerotoheroes.com/hearthstone/asset/manastorm/mana_locked.png',
 		// Used in JS
 		raceBanner: 'https://static.zerotoheroes.com/hearthstone/asset/manastorm/card/race-banner.png',
-		frameMinion: 'https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/card/frame-minion.png',
 		frameMinionPremium: 'https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/card/frame-minion-premium.png',
-		frameHeroPower: 'https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/card/frame-hero_power.png',
-		frameHeroPowerExhausted: 'https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/card/frame-hero_power_exhausted.png',
-		frameHeroPowerPremium: 'https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/card/frame-hero_power_premium.png',
+		frameHeroPower: 'https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/hero/hero_power.png',
+		frameHeroPowerExhausted: 'https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/hero/hero_power_exhausted.png',
+		frameHeroPowerPremium: 'https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/hero/hero_power_premium.png',
 		frameHeroPowerExhaustedPremium:
-			'https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/card/frame-hero_power_exhausted_premium.png',
+			'https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/hero/hero_power_exhausted_premium.png',
 		onBoardMinionFrame: 'https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/onboard_minion_frame.png',
 		onBoardMinionFramePremium: 'https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/onboard_minion_frame_premium.png',
 		onBoardMinionTaunt: 'https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/onboard_minion_taunt.png',
@@ -31,7 +30,6 @@ export class ImagePreloaderService {
 		nameBannerSpell: 'https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/card/name-banner-spell.png',
 		nameBannerMinion: 'https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/card/name-banner-minion.png',
 		nameBannerWeapon: 'https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/card/name-banner-weapon.png',
-		nameBannerHeroPower: 'https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/card/name-banner-hero_power.png',
 		weaponSheathed: 'https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/weapon_sheathed.png',
 		weaponUnsheathed: 'https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/weapon_unsheathed.png',
 		exhausted: 'https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/exhausted.png',
@@ -79,23 +77,43 @@ export class ImagePreloaderService {
 			`https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/card/frame-minion-${playerClass}.png`,
 		weaponFrame: playerClass =>
 			`https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/card/frame-weapon-${playerClass}.png`,
-		secretFrame: playerClass => `https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/secrets/secret_${playerClass}.png`,
-		secretSplash: playerClass =>
-			`https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/secrets/secret_splash_${playerClass}.png`,
-		secretBanner: playerClass =>
-			`https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/secrets/secret_banner_${playerClass}.png`,
+		secretFrame: playerClass => {
+			if (['warlock', 'druid', 'priest', 'neutral'].indexOf(playerClass) !== -1) {
+				return null;
+			}
+			return `https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/secrets/secret_${playerClass}.png`;
+		},
+		secretSplash: playerClass => {
+			if (['warlock', 'druid', 'priest', 'neutral'].indexOf(playerClass) !== -1) {
+				return null;
+			}
+			return `https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/secrets/secret_splash_${playerClass}.png`;
+		},
+		secretBanner: playerClass => {
+			if (['warlock', 'druid', 'priest', 'neutral'].indexOf(playerClass) !== -1) {
+				return null;
+			}
+			return `https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/secrets/secret_banner_${playerClass}.png`;
+		},
 	};
 
 	constructor(private logger: NGXLogger, private cards: AllCardsService) {}
 
-	public preloadImages(history: readonly HistoryItem[]) {
+	public *preloadImages(history: readonly HistoryItem[]) {
 		const imageUrls = this.buildImageUrls(history);
-		for (const imageUrl of imageUrls) {
+		yield;
+		this.logger.info('preloading ' + imageUrls.length + ' images');
+		for (let i = 0; i < imageUrls.length; i++) {
+			const imageUrl = imageUrls[i];
 			this.logger.debug('[image-preloader] preloading image', imageUrl);
 			const image = new Image();
 			image.onload = () => this.logger.debug('[image-preloader] preloaded image', imageUrl);
 			image.src = imageUrl;
+			// if (i % 15 === 0) {
+			// 	yield;
+			// }
 		}
+		return;
 	}
 
 	private buildImageUrls(history: readonly HistoryItem[]): readonly string[] {

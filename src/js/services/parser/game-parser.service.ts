@@ -82,7 +82,14 @@ export class GameParserService {
 		this.logPerf('XML parsing', start);
 		yield [null, SMALL_PAUSE];
 
-		this.imagePreloader.preloadImages(history);
+		const preloadIterator = this.imagePreloader.preloadImages(history);
+		while (true) {
+			const itValue = preloadIterator.next();
+			yield [null, SMALL_PAUSE];
+			if (itValue.done) {
+				break;
+			}
+		}
 		this.logPerf('Started image preloading', start);
 
 		const initialEntities = this.gamePopulationService.populateInitialEntities(history);
