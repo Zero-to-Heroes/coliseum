@@ -166,6 +166,10 @@ export class TooltipsComponent implements AfterViewInit {
 	private cacheTooltipSize() {
 		this.rect = this.elRef.nativeElement.getBoundingClientRect();
 		const tooltipElement = this.elRef.nativeElement.querySelector('tooltip');
+		if (!tooltipElement) {
+			setTimeout(() => this.cacheTooltipSize(), 20);
+			return;
+		}
 		const styles = getComputedStyle(tooltipElement);
 		this.logger.debug('[tooltips] tooltip size', this.tooltipSize, styles.width, styles);
 		this.tooltipWidth = this.rect.width * this.tooltipSize;

@@ -473,9 +473,6 @@ export class AppComponent implements OnDestroy {
 	private updateUrlQueryString() {
 		const baseUrl = `${window.location.protocol}//${window.location.host}${window.location.pathname}`;
 		const reviewQuery = this.reviewId ? `reviewId=${this.reviewId}&` : '';
-		if (!reviewQuery) {
-			this.logger.warn('Could not retrieve review id', this.reviewId, window.location.href);
-		}
 		const queryString = `${reviewQuery}turn=${this.currentTurn}&action=${this.currentActionInTurn}`;
 		const newUrl = `${baseUrl}?${queryString}`;
 		window.history.replaceState({ path: newUrl }, '', newUrl);
