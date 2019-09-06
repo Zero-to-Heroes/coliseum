@@ -160,6 +160,7 @@ export class TooltipsComponent implements AfterViewInit {
 		}
 		const styles = getComputedStyle(tooltipElement);
 		this.tooltipSize = parseInt(styles.width.split('%')[0]) * 0.01;
+		this.logger.info('[tooltips] tooltip variables initialized', this.tooltipSize);
 		this.cacheTooltipSize();
 	}
 
@@ -175,7 +176,7 @@ export class TooltipsComponent implements AfterViewInit {
 		this.tooltipWidth = this.rect.width * this.tooltipSize;
 		this.tooltipHeight = this.tooltipWidth * CARD_ASPECT_RATIO;
 		this.horizontalOffset = this.rect.width * 0.018;
-		this.logger.debug('[tooltips] cached tooltip info', this.rect, this.tooltipWidth, this.tooltipHeight, this.horizontalOffset);
+		this.logger.info('[tooltips] cached tooltip info', this.tooltipWidth, this.tooltipHeight, this.horizontalOffset, this.rect);
 	}
 
 	@HostListener('window:resize', ['$event'])
