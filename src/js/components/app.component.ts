@@ -127,8 +127,9 @@ export class AppComponent implements OnDestroy {
 		logger.debug('new coliseum', window['coliseum']);
 	}
 
-	public reset(reviewId: string = null) {
-		this.reviewId = reviewId; // That was we can already start showing the links
+	public reset(shouldUpdateQueryString = true) {
+		this.showPreloader = true;
+		this.reviewId = this.reviewId; // That was we can already start showing the links
 		this.game = undefined;
 		this.entities = undefined;
 		this.crossed = undefined;
@@ -152,8 +153,9 @@ export class AppComponent implements OnDestroy {
 		this.currentTime = 0;
 		this.currentActionInTurn = 0;
 		this.currentTurn = 0;
-		this.showPreloader = true;
-		this.updateUrlQueryString();
+		if (shouldUpdateQueryString) {
+			this.updateUrlQueryString();
+		}
 		this.gameParser.cancelProcessing();
 		if (this.gameSub) {
 			this.gameSub.unsubscribe();
@@ -164,16 +166,18 @@ export class AppComponent implements OnDestroy {
 	}
 
 	public async loadReplay(replayXml: string, options?: ReplayOptions) {
-		this.reset();
+		// Cache the info so that it's not erased by a reset
+		const turn = parseInt(this.getSearchParam('turn')) || 0;
+		const action = parseInt(this.getSearchParam('action')) || 0;
+		const reviewId = (options && options.reviewId) || this.getSearchParam('reviewId');
+		this.reset(false);
 		const gameObs = await this.gameParser.parse(replayXml);
 		this.gameSub = gameObs.subscribe(([game, complete]: [Game, boolean]) => {
 			if (complete) {
 				this.logger.info('[app] Received complete game');
 				this.game = game;
 				this.totalTime = this.buildTotalTime();
-				const turn = parseInt(this.getSearchParam('turn')) || 0;
-				const action = parseInt(this.getSearchParam('action')) || 0;
-				this.reviewId = (options && options.reviewId) || this.getSearchParam('reviewId');
+				this.reviewId = reviewId;
 				this.currentTurn = turn <= 0 ? 0 : turn >= this.game.turns.size ? this.game.turns.size - 1 : turn;
 				this.currentActionInTurn =
 					action <= 0
