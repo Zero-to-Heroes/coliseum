@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import { Map } from 'immutable';
 import { NGXLogger } from 'ngx-logger';
 import { parser, SAXParser, Tag } from 'sax';
@@ -26,7 +25,7 @@ import { Info } from '../../models/parser/info';
 import { MetaData } from '../../models/parser/metadata';
 import { Option } from '../../models/parser/option';
 
-@Injectable()
+// Don't inject it, because of the global state
 export class XmlParserService {
 	private stack: EnrichedTag[];
 	private state: string[];

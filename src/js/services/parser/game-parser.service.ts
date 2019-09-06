@@ -31,7 +31,6 @@ export class GameParserService {
 	constructor(
 		private allCards: AllCardsService,
 		private actionParser: ActionParserService,
-		private replayParser: XmlParserService,
 		private turnParser: TurnParserService,
 		private imagePreloader: ImagePreloaderService,
 		private gamePopulationService: GamePopulationService,
@@ -78,7 +77,7 @@ export class GameParserService {
 	}
 
 	private *createGamePipeline(replayAsString: string, start: number): IterableIterator<[Game, number]> {
-		const history: readonly HistoryItem[] = this.replayParser.parseXml(replayAsString);
+		const history: readonly HistoryItem[] = new XmlParserService(this.logger).parseXml(replayAsString);
 		this.logPerf('XML parsing', start);
 		yield [null, SMALL_PAUSE];
 
@@ -119,7 +118,7 @@ export class GameParserService {
 				break;
 			}
 		}
-		this.logPerf('parseActions', start, previousStep);
+		this.logPerf('parseActions', start);
 
 		const gameWithActivePlayer: Game = this.activePlayerParser.parseActivePlayer(previousStep);
 		this.logPerf('activePlayerParser', start);
@@ -151,7 +150,7 @@ export class GameParserService {
 	}
 
 	private logPerf<T>(what: string, start: number, result?: T): T {
-		this.logger.info('[perf] ', what, 'done after ', Date.now() - start, 'ms', result);
+		this.logger.info('[perf] ', what, 'done after ', Date.now() - start, 'ms');
 		return result;
 	}
 }

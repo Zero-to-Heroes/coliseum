@@ -37,9 +37,6 @@ import { StateProcessorService } from '../state-processor.service';
 
 @Injectable()
 export class ActionParserService {
-	private currentTurn = 0;
-	private hasYielded = false;
-
 	constructor(private logger: NGXLogger, private allCards: AllCardsService, private stateProcessorService: StateProcessorService) {}
 
 	private registerActionParsers(): Parser[] {
@@ -73,8 +70,7 @@ export class ActionParserService {
 
 	public *parseActions(game: Game, history: readonly HistoryItem[]): IterableIterator<Game> {
 		// const start = Date.now();
-		this.currentTurn = 0;
-		this.hasYielded = false;
+		let currentTurn = 0;
 		let actionsForTurn: readonly Action[] = [];
 		let previousStateEntities: Map<number, Entity> = game.entities;
 		let previousProcessedItem: HistoryItem = history[0];
@@ -96,7 +92,7 @@ export class ActionParserService {
 						previousProcessedItem,
 						item,
 					);
-					const actions: Action[] = parser.parse(item, this.currentTurn, previousStateEntities, history, game.players);
+					const actions: Action[] = parser.parse(item, currentTurn, previousStateEntities, history, game.players);
 					if (actions && actions.length > 0) {
 						actionsForTurn = this.fillMissingEntities(actionsForTurn, previousStateEntities);
 						actionsForTurn = [...actionsForTurn, ...actions];
@@ -110,7 +106,8 @@ export class ActionParserService {
 			});
 			// parserDurationForTurn += Date.now() - start;
 
-			const updatedTurn: Turn = this.updateCurrentTurn(item, game, actionsForTurn);
+			const [updatedTurn, newCurrentTurn] = this.updateCurrentTurn(item, game, actionsForTurn, currentTurn);
+			currentTurn = newCurrentTurn;
 			// This whole process takes roughly 5-20ms depending on the turn
 			if (updatedTurn) {
 				// this.logger.log('took', parserDurationForTurn, 'ms to parse all history items in turn');
@@ -164,12 +161,12 @@ export class ActionParserService {
 		actionsForTurn = this.reduceActions(actionParsers, actionsForTurn);
 		actionsForTurn = this.addDamageToEntities(actionsForTurn, previousStateEntities);
 		try {
-			const turnWithNewActions = game.turns.get(this.currentTurn).update({ actions: actionsForTurn });
+			const turnWithNewActions = game.turns.get(currentTurn).update({ actions: actionsForTurn });
 			turns = turns.set(turnWithNewActions.turn === 'mulligan' ? 0 : parseInt(turnWithNewActions.turn), turnWithNewActions);
 			actionsForTurn = [];
 		} catch (e) {
 			this.logger.error(e);
-			this.logger.warn(this.currentTurn, turns.toJS(), actionsForTurn);
+			this.logger.warn(currentTurn, turns.toJS(), actionsForTurn);
 		}
 		// this.logger.log('took', Date.now() - start, 'ms for parseActions');
 		yield Game.createGame(game, { turns: turns });
@@ -209,17 +206,16 @@ export class ActionParserService {
 		return damage ? entity.updateDamage(damage) : entity;
 	}
 
-	private updateCurrentTurn(item: HistoryItem, game: Game, actions: readonly Action[]): Turn {
+	private updateCurrentTurn(item: HistoryItem, game: Game, actions: readonly Action[], currentTurn): [Turn, number] {
 		if (
 			actions.length > 1 &&
 			actions[actions.length - 1] instanceof StartTurnAction &&
 			!(actions[actions.length - 1] as StartTurnAction).isStartOfMulligan
 		) {
-			const turnToUpdate: Turn = game.turns.get(this.currentTurn);
-			this.currentTurn++;
-			return turnToUpdate;
+			const turnToUpdate: Turn = game.turns.get(currentTurn);
+			return [turnToUpdate, currentTurn + 1];
 		}
-		return null;
+		return [null, currentTurn];
 	}
 
 	private reduceActions(actionParsers: Parser[], actionsForTurn: readonly Action[]): readonly Action[] {
@@ -253,13 +249,5 @@ export class ActionParserService {
 			}
 		}
 		return true;
-	}
-
-	private shouldYield() {
-		if (!this.hasYielded) {
-			this.hasYielded = true;
-			return true;
-		}
-		return false;
 	}
 }
