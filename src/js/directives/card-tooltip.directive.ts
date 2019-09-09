@@ -15,7 +15,7 @@ export class CardTooltipDirective {
 
 	@HostListener('mouseenter')
 	onMouseEnter() {
-		if (!this.hasTooltip || !this.tooltipEntity.cardID) {
+		if (!this.hasTooltip || !this.tooltipEntity || !this.tooltipEntity.cardID) {
 			return;
 		}
 		let elementLeft = 0;

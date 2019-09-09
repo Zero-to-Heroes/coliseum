@@ -49,6 +49,6 @@ export class HeroComponent {
 	}
 
 	isOption(entity: Entity): boolean {
-		return this._options && this._options.indexOf(entity.id) !== -1;
+		return this._options && entity && this._options.indexOf(entity.id) !== -1;
 	}
 }
