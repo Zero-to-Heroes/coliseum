@@ -482,8 +482,10 @@ export enum GameTag {
 	ALTERNATE_CHAPTER_VO = 1334,
 	HAS_BEEN_REBORN = 1336,
 	USE_DISCOVER_VISUALS = 1342,
+	DOUBLE_FATIGUE_DAMAGE = 1346,
 	EXTRA_SPELL_CASTS_ADDITIONAL = 1348,
 	SQUELCH_LIFETIME_EFFECTS = 1350,
+	UI_BUFF_DURABILITY_UP = 1443,
 
 	// Not sure what this is, it seems to indicate that a temporary effect (shadow madness, corruption) is active?,
 	_333 = 333,
