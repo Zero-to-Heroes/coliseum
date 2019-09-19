@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
-import { AllCardsService } from '../../all-cards.service';
+import { Action } from '../../../models/action/action';
+import { GameTag } from '../../../models/enums/game-tags';
+import { Step } from '../../../models/enums/step';
 import { Game } from '../../../models/game/game';
 import { Turn } from '../../../models/game/turn';
-import { Action } from '../../../models/action/action';
+import { AllCardsService } from '../../all-cards.service';
 
 @Injectable()
 export class MulliganParserService {
@@ -31,7 +33,7 @@ export class MulliganParserService {
 		let isMulligan = true;
 		if (action.activeSpell) {
 			isMulligan = false;
-		} else if (previousAction) {
+		} else if (previousAction && previousAction.entities.get(1).getTag(GameTag.STEP) === Step.BEGIN_MULLIGAN) {
 			isMulligan = previousAction.isMulligan;
 		}
 		return action.updateAction({ isMulligan: isMulligan } as Action);
