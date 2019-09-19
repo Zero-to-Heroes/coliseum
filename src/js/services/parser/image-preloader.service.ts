@@ -136,6 +136,7 @@ export class ImagePreloaderService {
 			.map(generator => classes.map(playerClass => generator(playerClass)))
 			.reduce((a, b) => a.concat(b), []);
 
-		return [...cardArtUrls, ...staticImageUrls, ...dynamicImageUrls];
+		const withDuplications = [...cardArtUrls, ...staticImageUrls, ...dynamicImageUrls];
+		return withDuplications.filter((item, index) => withDuplications.indexOf(item) === index);
 	}
 }
