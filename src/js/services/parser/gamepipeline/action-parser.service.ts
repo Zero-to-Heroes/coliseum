@@ -69,7 +69,7 @@ export class ActionParserService {
 	}
 
 	public *parseActions(game: Game, history: readonly HistoryItem[]): IterableIterator<[Game, number]> {
-		const start = Date.now();
+		// const start = Date.now();
 		let currentTurn = 0;
 		let actionsForTurn: readonly Action[] = [];
 		let previousStateEntities: Map<number, Entity> = game.entities;
@@ -78,7 +78,7 @@ export class ActionParserService {
 		// Recreating this every time lets the parsers store state and emit the action only when necessary
 		const actionParsers: Parser[] = this.registerActionParsers();
 
-		let turnStart = Date.now();
+		// let turnStart = Date.now();
 		// let parserDurationForTurn = 0;
 		for (const item of history) {
 			// const start = Date.now();
@@ -127,7 +127,7 @@ export class ActionParserService {
 				actionsForTurn = this.fillMissingEntities(actionsForTurn, previousStateEntities);
 				// Sort actions based on their index (so that actions that were created from the same
 				// parent action can have a custom order)
-				actionsForTurn = this.sortActions(actionsForTurn, (a: Action, b: Action) => a.index - b.index);
+				actionsForTurn = this.sortActions(actionsForTurn, (a: Action, b: Action) => a.index - b.index || a.timestamp - b.timestamp);
 				// Give an opportunity to each parser to combine the actions it produced by merging them
 				// For instance, if we two card draws in a row, we might want to display them as a single
 				// action that draws two cards
@@ -141,7 +141,7 @@ export class ActionParserService {
 				// Return something as soon as we can show something on screen, i.e the first turn
 				// this.logger.log('took', Date.now() - turnStart, 'ms to merge everything after turn', turnNumber);
 				yield [Game.createGame(game, { turns: turns }), turnNumber];
-				turnStart = Date.now();
+				// turnStart = Date.now();
 			}
 		}
 
@@ -154,7 +154,7 @@ export class ActionParserService {
 		actionsForTurn = this.fillMissingEntities(actionsForTurn, previousStateEntities);
 		// Sort actions based on their index (so that actions that were created from the same
 		// parent action can have a custom order)
-		actionsForTurn = this.sortActions(actionsForTurn, (a: Action, b: Action) => a.index - b.index);
+		actionsForTurn = this.sortActions(actionsForTurn, (a: Action, b: Action) => a.index - b.index || a.timestamp - b.timestamp);
 		// Give an opportunity to each parser to combine the actions it produced by merging them
 		// For instance, if we two card draws in a row, we might want to display them as a single
 		// action that draws two cards
