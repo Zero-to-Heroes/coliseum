@@ -68,8 +68,8 @@ export class ActionParserService {
 		];
 	}
 
-	public *parseActions(game: Game, history: readonly HistoryItem[]): IterableIterator<Game> {
-		// const start = Date.now();
+	public *parseActions(game: Game, history: readonly HistoryItem[]): IterableIterator<[Game, number]> {
+		const start = Date.now();
 		let currentTurn = 0;
 		let actionsForTurn: readonly Action[] = [];
 		let previousStateEntities: Map<number, Entity> = game.entities;
@@ -78,6 +78,7 @@ export class ActionParserService {
 		// Recreating this every time lets the parsers store state and emit the action only when necessary
 		const actionParsers: Parser[] = this.registerActionParsers();
 
+		let turnStart = Date.now();
 		// let parserDurationForTurn = 0;
 		for (const item of history) {
 			// const start = Date.now();
@@ -137,11 +138,10 @@ export class ActionParserService {
 				turns = turns.set(turnNumber, turnWithNewActions);
 				actionsForTurn = [lastAction];
 				previousProcessedItem = item;
-				yield Game.createGame(game, { turns: turns });
-				// if (this.shouldYield()) {
-				// 	// Return something as soon as we can show something on screen, i.e the first turn
-				// 	// this.logger.log('took', Date.now() - start, 'ms to merge everything after turn', turnNumber);
-				// }
+				// Return something as soon as we can show something on screen, i.e the first turn
+				// this.logger.log('took', Date.now() - turnStart, 'ms to merge everything after turn', turnNumber);
+				yield [Game.createGame(game, { turns: turns }), turnNumber];
+				turnStart = Date.now();
 			}
 		}
 
@@ -169,7 +169,7 @@ export class ActionParserService {
 			this.logger.warn(currentTurn, turns.toJS(), actionsForTurn);
 		}
 		// this.logger.log('took', Date.now() - start, 'ms for parseActions');
-		yield Game.createGame(game, { turns: turns });
+		return [Game.createGame(game, { turns: turns }), currentTurn];
 	}
 
 	private fillMissingEntities(actionsForTurn: readonly Action[], previousStateEntities: Map<number, Entity>): readonly Action[] {

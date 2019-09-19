@@ -105,3 +105,14 @@ $dark-foreground-forth: $gray130;
 	margin-top: 10px;
 	text-align: end;
 }
+
+.status {
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+	font-size: 10px;
+
+	&::after {
+		content: '...';
+	}
+}

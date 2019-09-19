@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { NGXLogger } from 'ngx-logger';
 import { preloader } from '../../assets/svg/preloader';
@@ -15,10 +15,12 @@ import { AllCardsService } from '../services/all-cards.service';
 				<strong>{{ cardName }}</strong>
 			</figcaption>
 		</figure>
+		<div class="status">{{ status }}</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PreloaderComponent implements OnInit, OnDestroy {
+	@Input() status: string;
 	svg: SafeHtml;
 	quote: string;
 	cardName: string;

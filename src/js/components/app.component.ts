@@ -47,7 +47,7 @@ import { GameParserService } from '../services/parser/game-parser.service';
 								[crossed]="crossed"
 							>
 							</game>
-							<preloader class="dark-theme" [ngClass]="{ 'active': !game || showPreloader }"></preloader>
+							<preloader class="dark-theme" [ngClass]="{ 'active': !game || showPreloader }" [status]="status"></preloader>
 						</div>
 					</div>
 				</div>
@@ -79,6 +79,7 @@ import { GameParserService } from '../services/parser/game-parser.service';
 })
 export class AppComponent implements OnDestroy {
 	reviewId: string;
+	status: string;
 
 	game: Game;
 	entities: Map<number, Entity>;
@@ -128,6 +129,7 @@ export class AppComponent implements OnDestroy {
 	}
 
 	public reset(shouldUpdateQueryString = true) {
+		this.status = null;
 		this.showPreloader = true;
 		this.reviewId = this.reviewId; // That was we can already start showing the links
 		this.game = undefined;
@@ -171,8 +173,16 @@ export class AppComponent implements OnDestroy {
 		const action = parseInt(this.getSearchParam('action')) || 0;
 		const reviewId = (options && options.reviewId) || this.getSearchParam('reviewId');
 		this.reset(false);
+		this.status = 'Parsing replay file';
+		if (!(this.cdr as ViewRef).destroyed) {
+			this.cdr.detectChanges();
+		}
 		const gameObs = await this.gameParser.parse(replayXml);
-		this.gameSub = gameObs.subscribe(([game, complete]: [Game, boolean]) => {
+		this.gameSub = gameObs.subscribe(([game, status, complete]: [Game, string, boolean]) => {
+			this.status = status || this.status;
+			if (!(this.cdr as ViewRef).destroyed) {
+				this.cdr.detectChanges();
+			}
 			if (complete) {
 				this.logger.info('[app] Received complete game');
 				this.game = game;
