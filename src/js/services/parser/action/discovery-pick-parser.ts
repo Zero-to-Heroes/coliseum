@@ -1,14 +1,15 @@
-import { Parser } from './parser';
-import { HistoryItem } from '../../../models/history/history-item';
-import { Action } from '../../../models/action/action';
-import { AllCardsService } from '../../all-cards.service';
-import { Entity } from '../../../models/game/entity';
 import { Map } from 'immutable';
-import { DiscoverAction } from '../../../models/action/discover-action';
-import { ChosenEntityHistoryItem } from '../../../models/history/chosen-entities-history-item';
-import { DiscoveryPickAction } from '../../../models/action/discovery-pick-action';
-import { ActionHelper } from './action-helper';
 import { NGXLogger } from 'ngx-logger';
+import { Action } from '../../../models/action/action';
+import { DiscoverAction } from '../../../models/action/discover-action';
+import { DiscoveryPickAction } from '../../../models/action/discovery-pick-action';
+import { StartTurnAction } from '../../../models/action/start-turn-action';
+import { Entity } from '../../../models/game/entity';
+import { ChosenEntityHistoryItem } from '../../../models/history/chosen-entities-history-item';
+import { HistoryItem } from '../../../models/history/history-item';
+import { AllCardsService } from '../../all-cards.service';
+import { ActionHelper } from './action-helper';
+import { Parser } from './parser';
 
 export class DiscoveryPickParser implements Parser {
 	constructor(private allCards: AllCardsService, private logger: NGXLogger) {}
@@ -49,7 +50,10 @@ export class DiscoveryPickParser implements Parser {
 		if (previousAction instanceof DiscoverAction && currentAction instanceof DiscoveryPickAction) {
 			return true;
 		} else if (currentAction instanceof DiscoveryPickAction) {
-			this.logger.warn('removing discovery pick action', previousAction, currentAction);
+			// Mulligan is handled differently
+			if (!(previousAction instanceof StartTurnAction)) {
+				this.logger.warn('removing discovery pick action', previousAction, currentAction);
+			}
 			return true;
 		}
 		return false;
