@@ -124,7 +124,7 @@ export class GameParserService {
 
 		const gameWithActivePlayer: Game = this.activePlayerParser.parseActivePlayer(previousStep);
 		this.logPerf('activePlayerParser', start);
-		yield [gameWithTurns, SMALL_PAUSE, 'Parsed active players'];
+		yield [gameWithActivePlayer, SMALL_PAUSE, 'Parsed active players'];
 
 		const gameWithActiveSpell: Game = this.activeSpellParser.parseActiveSpell(gameWithActivePlayer);
 		this.logPerf('activeSpellParser', start);
@@ -144,6 +144,7 @@ export class GameParserService {
 
 		const gameWithNarrator: Game = this.narrator.populateActionText(gameWithEndGame);
 		this.logPerf('populateActionText', start);
+		// console.log(gameWithNarrator.fullStoryRaw);
 		yield [gameWithNarrator, SMALL_PAUSE, 'Populated actions text'];
 
 		const gameWithFullStory: Game = this.narrator.createGameStory(gameWithNarrator);
