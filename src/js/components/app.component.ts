@@ -167,6 +167,13 @@ export class AppComponent implements OnDestroy {
 		}
 	}
 
+	public updateStatus(newStatus: string) {
+		this.status = newStatus;
+		if (!(this.cdr as ViewRef).destroyed) {
+			this.cdr.detectChanges();
+		}
+	}
+
 	public async loadReplay(replayXml: string, options?: ReplayOptions) {
 		// Cache the info so that it's not erased by a reset
 		const turn = parseInt(this.getSearchParam('turn')) || 0;

@@ -1,5 +1,5 @@
-import { Component, ChangeDetectionStrategy, AfterViewInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AfterViewInit, ChangeDetectionStrategy, Component } from '@angular/core';
 
 declare var $;
 
@@ -34,12 +34,12 @@ export class ReplayLoaderComponent implements AfterViewInit {
 			return;
 		}
 
+		window['coliseum'].zone.run(() => {
+			window['coliseum'].component.updateStatus('Downloading replay file');
+		});
 		const review: any = await this.http.get(REVIEW_API + reviewId).toPromise();
-		// console.log('loaded review', review);
-
 		const headers = new HttpHeaders({ 'Content-Type': 'text/xml' }).set('Accept', 'text/xml');
 		const replay = await this.http.get(REPLAY_API + review.key, { headers: headers, responseType: 'text' }).toPromise();
-		// console.log('loaded replay', replay);
 		window['coliseum'].zone.run(() => {
 			window['coliseum'].component.loadReplay(replay);
 		});
