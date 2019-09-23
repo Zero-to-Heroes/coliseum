@@ -39,13 +39,16 @@ import { Key } from 'ts-keycode-enum';
 					</span>
 					<p class="player-controls-content-note">
 						<a
-							class="player-control-element"
+							class="player-control-element view-online"
 							target="_blank"
 							href="http://replays.firestoneapp.com/?reviewId={{ _reviewId }}&source=game-summary"
 							>View online</a
 						>
-						|
-						<a class="player-control-element" target="_blank" href="https://www.zerotoheroes.com/r/hearthstone/{{ _reviewId }}"
+						<span class="divider">|</span>
+						<a
+							class="player-control-element discuss"
+							target="_blank"
+							href="https://www.zerotoheroes.com/r/hearthstone/{{ _reviewId }}"
 							>Discuss</a
 						>
 					</p>
