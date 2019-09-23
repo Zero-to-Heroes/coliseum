@@ -34,7 +34,7 @@ export class DiscoverAction extends Action {
 			.map(cardId => this.allCards.getCard(cardId));
 		let offerInfo = '';
 		// We don't have the mulligan info, so we just display the amount of cards being mulliganed
-		if (offeredCards.some(card => !card)) {
+		if (offeredCards.some(card => !card || !card.name)) {
 			offerInfo = `${offeredCards.length} cards`;
 		} else {
 			offerInfo = offeredCards.map(card => card.name).join(', ');
@@ -56,7 +56,7 @@ export class DiscoverAction extends Action {
 		}
 		let choiceInfo;
 		// We don't have the mulligan info, so we just display the amount of cards being mulliganed
-		if (chosenCards.some(card => !card)) {
+		if (chosenCards.some(card => !card || !card.name)) {
 			choiceInfo = `${chosenCards.length} cards`;
 		} else {
 			choiceInfo = chosenCards.map(card => card.name).join(', ');

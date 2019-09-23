@@ -1,7 +1,7 @@
-import { Component, ChangeDetectionStrategy, Input, ChangeDetectorRef, ViewRef } from '@angular/core';
-import { AllCardsService } from '../../../services/all-cards.service';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, ViewRef } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
 import { CardType } from '../../../models/enums/card-type';
+import { AllCardsService } from '../../../services/all-cards.service';
 
 @Component({
 	selector: 'card-cost',

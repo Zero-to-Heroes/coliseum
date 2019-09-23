@@ -128,7 +128,7 @@ export class ImagePreloaderService {
 
 		const classes = cardIds
 			.map(cardId => this.cards.getCard(cardId))
-			.filter(card => card) // This could happen if the json cards are not in sync, like right after a patch
+			.filter(card => card && card.playerClass) // This could happen if the json cards are not in sync, like right after a patch
 			.map(card => card.playerClass as string)
 			.filter(playerClass => playerClass)
 			.map(playerClass => playerClass.toLowerCase());

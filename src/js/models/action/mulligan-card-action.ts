@@ -45,7 +45,7 @@ export class MulliganCardAction extends Action {
 			.map(cardId => this.allCards.getCard(cardId));
 		let mulliganInfo = '';
 		// We don't have the mulligan info, so we just display the amount of cards being mulliganed
-		if (mulliganedCards.some(card => !card)) {
+		if (mulliganedCards.some(card => !card || !card.name)) {
 			mulliganInfo = `${mulliganedCards.length} cards`;
 		} else {
 			mulliganInfo = mulliganedCards.map(card => card.name).join(', ');

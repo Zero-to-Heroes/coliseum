@@ -1,10 +1,10 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
-import { Entity } from '../../../models/game/entity';
-import { GameTag } from '../../../models/enums/game-tags';
-import { CardType } from '../../../models/enums/card-type';
-import { CardClass } from '../../../models/enums/card-class';
-import { AllCardsService } from '../../../services/all-cards.service';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
+import { CardClass } from '../../../models/enums/card-class';
+import { CardType } from '../../../models/enums/card-type';
+import { GameTag } from '../../../models/enums/game-tags';
+import { Entity } from '../../../models/game/entity';
+import { AllCardsService } from '../../../services/all-cards.service';
 
 @Component({
 	selector: 'card-on-board',
@@ -62,8 +62,11 @@ export class CardOnBoardComponent {
 
 		this.cardId = entity.cardID;
 		this.originalCard = this.cards.getCard(this.cardId);
-		this.cardType = CardType[this.originalCard.type.toUpperCase() as string];
-		this.cardClass = CardClass[this.originalCard.playerClass.toUpperCase() as string];
+		this.cardType = this.originalCard && this.originalCard.type ? CardType[this.originalCard.type.toUpperCase() as string] : undefined;
+		this.cardClass =
+			this.originalCard && this.originalCard.playerClass
+				? CardClass[this.originalCard.playerClass.toUpperCase() as string]
+				: undefined;
 
 		this.premium = entity.getTag(GameTag.PREMIUM) === 1;
 		this.attack = entity.getTag(GameTag.ATK);

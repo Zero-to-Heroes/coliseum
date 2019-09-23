@@ -1,9 +1,9 @@
-import { Action } from './action';
 import { Map } from 'immutable';
-import { Entity } from '../game/entity';
 import { AllCardsService } from '../../services/all-cards.service';
-import { HasTargets } from './has-targets';
 import { ActionHelper } from '../../services/parser/action/action-helper';
+import { Entity } from '../game/entity';
+import { Action } from './action';
+import { HasTargets } from './has-targets';
 
 export class PowerTargetAction extends Action implements HasTargets {
 	readonly originId: number;
@@ -26,7 +26,9 @@ export class PowerTargetAction extends Action implements HasTargets {
 		const targetCardIds = this.targetIds.map(entityId => ActionHelper.getCardId(this.entities, entityId));
 		const originCardName = this.allCards.getCard(originCardId).name;
 		const cardIds = targetCardIds.map(cardId => this.allCards.getCard(cardId));
-		const targetCardNames = cardIds.some(card => !card) ? `${cardIds.length} cards` : cardIds.map(card => card.name).join(', ');
+		const targetCardNames = cardIds.some(card => !card || !card.name)
+			? `${cardIds.length} cards`
+			: cardIds.map(card => card.name).join(', ');
 		let damageText = '';
 		if (this.damages) {
 			damageText = this.damages

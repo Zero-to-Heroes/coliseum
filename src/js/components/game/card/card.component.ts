@@ -1,9 +1,9 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
-import { Entity } from '../../../models/game/entity';
-import { GameTag } from '../../../models/enums/game-tags';
-import { CardType } from '../../../models/enums/card-type';
-import { CardClass } from '../../../models/enums/card-class';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
+import { CardClass } from '../../../models/enums/card-class';
+import { CardType } from '../../../models/enums/card-type';
+import { GameTag } from '../../../models/enums/game-tags';
+import { Entity } from '../../../models/game/entity';
 import { AllCardsService } from '../../../services/all-cards.service';
 
 @Component({
@@ -151,9 +151,13 @@ export class CardComponent {
 			this.armor = this._entity.getTag(GameTag.ARMOR);
 			this.cost = this._entity.getTag(GameTag.COST);
 			this.originalCard = this.cards.getCard(this.cardId);
-			this.race = this.originalCard.race ? this.originalCard.race.toLowerCase() : undefined;
-			this.cardType = CardType[this.originalCard.type.toUpperCase() as string];
-			this.cardClass = CardClass[this.originalCard.playerClass.toUpperCase() as string];
+			this.race = this.originalCard && this.originalCard.race ? this.originalCard.race.toLowerCase() : undefined;
+			this.cardType =
+				this.originalCard && this.originalCard.type ? CardType[this.originalCard.type.toUpperCase() as string] : undefined;
+			this.cardClass =
+				this.originalCard && this.originalCard.playerClass
+					? CardClass[this.originalCard.playerClass.toUpperCase() as string]
+					: undefined;
 		}
 	}
 }

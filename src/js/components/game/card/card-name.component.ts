@@ -1,8 +1,8 @@
-import { Component, ChangeDetectionStrategy, Input, ElementRef } from '@angular/core';
-import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
+import { ChangeDetectionStrategy, Component, ElementRef, Input } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { NGXLogger } from 'ngx-logger';
 import { CardType } from '../../../models/enums/card-type';
 import { AllCardsService } from '../../../services/all-cards.service';
-import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'card-name',
@@ -24,14 +24,14 @@ export class CardNameComponent {
 	@Input('cardId') set cardId(cardId: string) {
 		this.logger.debug('[card-name] setting cardId', cardId);
 		const originalCard = this.cards.getCard(cardId);
-		const cardType: CardType = CardType[originalCard.type.toUpperCase() as string];
+		const cardType: CardType = originalCard && originalCard.type ? CardType[originalCard.type.toUpperCase() as string] : undefined;
 		this.banner =
-			cardType === CardType.HERO_POWER
+			cardType === CardType.HERO_POWER || !cardType
 				? undefined // Banner already included in frame art
 				: `https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/card/name-banner-${CardType[
 						cardType
 				  ].toLowerCase()}.png`;
-		this.textSvg = this.domSanitizer.bypassSecurityTrustHtml(this.buildNameSvg(cardType, originalCard.name));
+		this.textSvg = cardType ? this.domSanitizer.bypassSecurityTrustHtml(this.buildNameSvg(cardType, originalCard.name)) : undefined;
 	}
 
 	private buildNameSvg(cardType: CardType, name: string): string {

@@ -1,6 +1,6 @@
-import { Component, ChangeDetectionStrategy, Input, ChangeDetectorRef, ElementRef, ViewRef } from '@angular/core';
-import { AllCardsService } from '../../../services/all-cards.service';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, ViewRef } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
+import { AllCardsService } from '../../../services/all-cards.service';
 
 @Component({
 	selector: 'board-card-stats',

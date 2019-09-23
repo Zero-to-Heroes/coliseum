@@ -46,7 +46,7 @@ export class CardBurnAction extends Action {
 			.map(cardId => this.allCards.getCard(cardId));
 		let drawInfo = '';
 		// We don't have the mulligan info, so we just display the amount of cards being mulliganed
-		if (drawnCards.some(card => !card)) {
+		if (drawnCards.some(card => !card || !card.name)) {
 			drawInfo = `${drawnCards.length} cards`;
 		} else {
 			drawInfo = drawnCards.map(card => card.name).join(', ');

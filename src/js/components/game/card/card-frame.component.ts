@@ -38,13 +38,14 @@ export class CardFrameComponent {
 		}
 		const originalCard = this.cards.getCard(this._cardId);
 		const cardClass: CardClass = this.buildPlayerClass(originalCard);
-		const cardType: CardType = CardType[originalCard.type.toUpperCase() as string];
+		const cardType: CardType = originalCard && originalCard.type ? CardType[originalCard.type.toUpperCase() as string] : undefined;
 		const frame: string = this.buildFrame(cardClass, cardType, this._premium);
 		this.image = `https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/card/${frame}.png`;
 	}
 
 	private buildPlayerClass(originalCard): CardClass {
-		const cardClass: CardClass = CardClass[originalCard.playerClass.toUpperCase() as string];
+		const cardClass: CardClass =
+			originalCard && originalCard.playerClass ? CardClass[originalCard.playerClass.toUpperCase() as string] : undefined;
 		// Ysera
 		return cardClass === CardClass.DREAM ? CardClass.HUNTER : cardClass;
 	}
