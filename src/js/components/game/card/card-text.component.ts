@@ -1,10 +1,10 @@
-import { Component, ChangeDetectionStrategy, Input, ChangeDetectorRef, ViewRef } from '@angular/core';
-import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
-import { AllCardsService } from '../../../services/all-cards.service';
-import { CardType } from '../../../models/enums/card-type';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, ViewRef } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { NGXLogger } from 'ngx-logger';
-import { Entity } from '../../../models/game/entity';
+import { CardType } from '../../../models/enums/card-type';
 import { GameTag } from '../../../models/enums/game-tags';
+import { Entity } from '../../../models/game/entity';
+import { AllCardsService } from '../../../services/all-cards.service';
 
 @Component({
 	selector: 'card-text',
@@ -25,24 +25,6 @@ import { GameTag } from '../../../models/enums/game-tags';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardTextComponent {
-	private readonly CARD_IDS_TO_FIX = [
-		'DAL_357t', // Spirit of Lucentbark
-		'DALA_BOSS_07p', // Take Flight!
-		'DALA_BOSS_07p2', // Flying!
-		'DALA_BOSS_45p', // Ray of Suffering
-		'DALA_BOSS_45px', // Ray of Suffering
-		'DALA_BOSS_69p', // Dragonwrath
-		'DALA_BOSS_69px', // Dragonwrath
-		'FB_LK005', // Remorseless Winter
-		'GILA_601', // Cannon
-		'ICCA08_030p', // Remorseless Winter
-		'DAL_007', // Rafaam's Scheme
-		'DAL_008', // Dr Boom's Scheme
-		'DAL_009', // Hagatha's Scheme
-		'DAL_010', // Togwaggle's Scheme
-		'DAL_011', // Lazul's Scheme
-	];
-
 	_cardType: string;
 	premium: boolean;
 	text: SafeHtml;
@@ -88,9 +70,7 @@ export class CardTextComponent {
 		}
 
 		// There are a few cards whose text is truncated in the json cards export
-		const originalText =
-			this.CARD_IDS_TO_FIX.indexOf(cardId) !== -1 ? originalCard.text + ' @' + originalCard.collectionText : originalCard.text;
-		let description: string = originalText
+		let description: string = (originalCard.text || '')
 			.replace('\n', '<br/>')
 			.replace(/\u00a0/g, ' ')
 			.replace(/^\[x\]/, '');
