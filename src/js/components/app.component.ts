@@ -190,7 +190,7 @@ export class AppComponent implements OnDestroy {
 			if (!(this.cdr as ViewRef).destroyed) {
 				this.cdr.detectChanges();
 			}
-			if (complete) {
+			if (complete && game) {
 				this.logger.info('[app] Received complete game');
 				this.game = game;
 				this.totalTime = this.buildTotalTime();
@@ -245,6 +245,10 @@ export class AppComponent implements OnDestroy {
 	}
 
 	onSeek(targetTimestamp: number) {
+		if (!this.game) {
+			this.logger.warn('[app] game not present, not performing operation', 'onSeek');
+			return;
+		}
 		this.logger.debug('[app] seeking target timestamp', targetTimestamp);
 		let lastActionIndex = 0;
 		let lastTurnIndex = 0;
@@ -329,31 +333,59 @@ export class AppComponent implements OnDestroy {
 	}
 
 	private computeCurrentTime() {
+		if (!this.game) {
+			this.logger.warn('[app] game not present, not performing operation', 'computeCurrentTime');
+			return;
+		}
 		const currentTime = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].timestamp || 0;
 		return currentTime;
 	}
 
 	private computeActiveSpell(): number {
+		if (!this.game) {
+			this.logger.warn('[app] game not present, not performing operation', 'computeActiveSpell');
+			return;
+		}
 		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].activeSpell;
 	}
 
 	private computeMulligan(): boolean {
+		if (!this.game) {
+			this.logger.warn('[app] game not present, not performing operation', 'computeMulligan');
+			return;
+		}
 		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].isMulligan;
 	}
 
 	private computeEndGame(): boolean {
+		if (!this.game) {
+			this.logger.warn('[app] game not present, not performing operation', 'computeEndGame');
+			return;
+		}
 		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].isEndGame;
 	}
 
 	private computeEndGameStatus(): PlayState {
+		if (!this.game) {
+			this.logger.warn('[app] game not present, not performing operation', 'computeEndGameStatus');
+			return;
+		}
 		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].endGameStatus;
 	}
 
 	private computeOptions(): readonly number[] {
+		if (!this.game) {
+			this.logger.warn('[app] game not present, not performing operation', 'computeOptions');
+			return;
+		}
 		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].options;
 	}
 
 	private computeBurned(): readonly number[] {
+		if (!this.game) {
+			this.logger.warn('[app] game not present, not performing operation', 'computeBurned');
+			return;
+		}
 		const action = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn];
 		if (action instanceof CardBurnAction) {
 			return action.burnedCardIds;
@@ -362,6 +394,10 @@ export class AppComponent implements OnDestroy {
 	}
 
 	private computeDiscovers(): readonly number[] {
+		if (!this.game) {
+			this.logger.warn('[app] game not present, not performing operation', 'computeDiscovers');
+			return;
+		}
 		const action = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn];
 		if (action instanceof DiscoverAction) {
 			return action.choices;
@@ -370,6 +406,10 @@ export class AppComponent implements OnDestroy {
 	}
 
 	private computeChosen(): readonly number[] {
+		if (!this.game) {
+			this.logger.warn('[app] game not present, not performing operation', 'computeChosen');
+			return;
+		}
 		const action = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn];
 		if (action instanceof DiscoverAction) {
 			return action.chosen;
@@ -378,6 +418,10 @@ export class AppComponent implements OnDestroy {
 	}
 
 	private computeFatigue(): number {
+		if (!this.game) {
+			this.logger.warn('[app] game not present, not performing operation', 'computeFatigue');
+			return;
+		}
 		const action = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn];
 		if (action instanceof FatigueDamageAction) {
 			return action.amount;
@@ -386,6 +430,10 @@ export class AppComponent implements OnDestroy {
 	}
 
 	private computeSecretRevealed(): number {
+		if (!this.game) {
+			this.logger.warn('[app] game not present, not performing operation', 'computeSecretRevealed');
+			return;
+		}
 		const action = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn];
 		if (action instanceof SecretRevealedAction) {
 			return action.entityId;
@@ -394,6 +442,10 @@ export class AppComponent implements OnDestroy {
 	}
 
 	private computeQuestCompleted(): number {
+		if (!this.game) {
+			this.logger.warn('[app] game not present, not performing operation', 'computeQuestCompleted');
+			return;
+		}
 		const action = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn];
 		if (action instanceof QuestCompletedAction) {
 			return action.originId;
@@ -402,30 +454,57 @@ export class AppComponent implements OnDestroy {
 	}
 
 	private computeActivePlayer(): number {
+		if (!this.game) {
+			this.logger.warn('[app] game not present, not performing operation', 'computeActivePlayer');
+			return;
+		}
 		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].activePlayer;
 	}
 
 	private computeNewEntities(): Map<number, Entity> {
+		if (!this.game) {
+			this.logger.warn('[app] game not present, not performing operation', 'computeNewEntities');
+			return;
+		}
 		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].entities;
 	}
 
 	private computeCrossed(): readonly number[] {
+		if (!this.game) {
+			this.logger.warn('[app] game not present, not performing operation', 'computeCrossed');
+			return;
+		}
 		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].crossedEntities;
 	}
 
 	private computeText(): string {
+		if (!this.game) {
+			this.logger.warn('[app] game not present, not performing operation', 'computeText');
+			return;
+		}
 		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].textRaw;
 	}
 
 	private computeTurnString(): string {
+		if (!this.game) {
+			this.logger.warn('[app] game not present, not performing operation', 'computeTurnString');
+			return;
+		}
 		return this.game.turns.get(this.currentTurn).turn === 'mulligan' ? 'Mulligan' : `Turn${this.game.turns.get(this.currentTurn).turn}`;
 	}
 
 	private computeTargets(): readonly [number, number][] {
+		if (!this.game) {
+			this.logger.warn('[app] game not present, not performing operation', 'computeTargets');
+			return;
+		}
 		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].targets;
 	}
 
 	private moveCursorToNextAction() {
+		if (!this.game || !this.game.turns) {
+			return;
+		}
 		if (
 			this.currentActionInTurn >= this.game.turns.get(this.currentTurn).actions.length - 1 &&
 			this.currentTurn >= this.game.turns.size - 1
@@ -444,6 +523,9 @@ export class AppComponent implements OnDestroy {
 	}
 
 	private moveCursorToPreviousAction() {
+		if (!this.game || !this.game.turns) {
+			return;
+		}
 		if (this.currentActionInTurn === 0 && this.currentTurn === 0) {
 			return;
 		}
@@ -459,6 +541,9 @@ export class AppComponent implements OnDestroy {
 	}
 
 	private moveCursorToNextTurn() {
+		if (!this.game || !this.game.turns) {
+			return;
+		}
 		if (this.currentTurn >= this.game.turns.size - 1) {
 			return;
 		}
@@ -471,6 +556,9 @@ export class AppComponent implements OnDestroy {
 	}
 
 	private moveCursorToPreviousTurn() {
+		if (!this.game || !this.game.turns) {
+			return;
+		}
 		if (this.currentTurn === 0) {
 			return;
 		}
