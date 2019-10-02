@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
-import { AllCardsService } from '../../all-cards.service';
-import { Game } from '../../../models/game/game';
-import { Turn } from '../../../models/game/turn';
 import { Action } from '../../../models/action/action';
 import { EndGameAction } from '../../../models/action/end-game-action';
 import { PlayState } from '../../../models/enums/playstate';
+import { Game } from '../../../models/game/game';
+import { Turn } from '../../../models/game/turn';
+import { AllCardsService } from '../../all-cards.service';
 
 @Injectable()
 export class EndGameParserService {
@@ -25,7 +25,10 @@ export class EndGameParserService {
 			newActions.push(turn.actions[i]);
 		}
 		if (!(turn.actions[turn.actions.length - 1] instanceof EndGameAction)) {
-			throw new Error('invalid last action' + turn.actions[turn.actions.length - 1].textRaw);
+			this.logger.warn(
+				'invalid last action ' + turn.actions[turn.actions.length - 1] + ', ' + turn.actions[turn.actions.length - 1].textRaw,
+			);
+			return turn;
 		}
 		const newEndGame = this.enrichAction(turn.actions[turn.actions.length - 1] as EndGameAction);
 		newActions.push(newEndGame);
