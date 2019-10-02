@@ -1,18 +1,18 @@
-import { Parser } from './parser';
-import { HistoryItem } from '../../../models/history/history-item';
-import { Action } from '../../../models/action/action';
-import { AllCardsService } from '../../all-cards.service';
-import { GameTag } from '../../../models/enums/game-tags';
-import { Zone } from '../../../models/enums/zone';
-import { NGXLogger } from 'ngx-logger';
-import { Entity } from '../../../models/game/entity';
 import { Map } from 'immutable';
-import { ActionHelper } from './action-helper';
-import { ChosenEntityHistoryItem } from '../../../models/history/chosen-entities-history-item';
-import { PlayerEntity } from '../../../models/game/player-entity';
+import { NGXLogger } from 'ngx-logger';
+import { Action } from '../../../models/action/action';
+import { MulliganCardAction } from '../../../models/action/mulligan-card-action';
 import { MulliganCardChoiceAction } from '../../../models/action/mulligan-card-choice-action';
 import { StartTurnAction } from '../../../models/action/start-turn-action';
-import { MulliganCardAction } from '../../../models/action/mulligan-card-action';
+import { GameTag } from '../../../models/enums/game-tags';
+import { Zone } from '../../../models/enums/zone';
+import { Entity } from '../../../models/game/entity';
+import { PlayerEntity } from '../../../models/game/player-entity';
+import { ChosenEntityHistoryItem } from '../../../models/history/chosen-entities-history-item';
+import { HistoryItem } from '../../../models/history/history-item';
+import { AllCardsService } from '../../all-cards.service';
+import { ActionHelper } from './action-helper';
+import { Parser } from './parser';
 
 export class MulliganCardChoiceParser implements Parser {
 	constructor(private allCards: AllCardsService, private logger: NGXLogger) {}
@@ -36,6 +36,7 @@ export class MulliganCardChoiceParser implements Parser {
 		const playerHand = this.getHandEntityIds(entitiesBeforeAction, item.tag.entity);
 		const mulligan = playerHand.filter(entityId => keptCards.indexOf(entityId) === -1);
 		if (item.tag.playerID === players[0].id) {
+			//this.logger.info('[mulligan-card-choice] adding mulligan card choice for player', mulligan, item);
 			return [
 				MulliganCardChoiceAction.create(
 					{
@@ -47,6 +48,7 @@ export class MulliganCardChoiceParser implements Parser {
 				),
 			];
 		} else if (item.tag.playerID === players[1].id) {
+			//this.logger.info('[mulligan-card-choice] adding mulligan card choice for opponent', mulligan, item);
 			return [
 				MulliganCardChoiceAction.create(
 					{
@@ -83,6 +85,7 @@ export class MulliganCardChoiceParser implements Parser {
 			return previousAction;
 		}
 		if (previousAction instanceof MulliganCardChoiceAction) {
+			//this.logger.info('[mulligan-card] merging into MulliganCardChoiceAction', previousAction, currentAction);
 			return MulliganCardChoiceAction.create(
 				{
 					timestamp: previousAction.timestamp,
@@ -94,6 +97,7 @@ export class MulliganCardChoiceParser implements Parser {
 				this.allCards,
 			);
 		} else {
+			//this.logger.info('[mulligan-card] merging into StartTurnAction', previousAction, currentAction);
 			return StartTurnAction.create({
 				turn: previousAction.turn,
 				entities: previousAction.entities,

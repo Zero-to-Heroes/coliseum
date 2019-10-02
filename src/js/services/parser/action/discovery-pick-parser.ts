@@ -24,6 +24,7 @@ export class DiscoveryPickParser implements Parser {
 		entitiesBeforeAction: Map<number, Entity>,
 		history: readonly HistoryItem[],
 	): Action[] {
+		// this.logger.debug('[discovery-pick] adding discovery pick action', item.tag.cards[0], item);
 		return [
 			DiscoveryPickAction.create(
 				{
@@ -52,7 +53,13 @@ export class DiscoveryPickParser implements Parser {
 		} else if (currentAction instanceof DiscoveryPickAction) {
 			// Mulligan is handled differently
 			if (!(previousAction instanceof StartTurnAction)) {
-				this.logger.warn('removing discovery pick action', previousAction, currentAction);
+				this.logger.warn(
+					'removing discovery pick action',
+					currentAction.choice,
+					currentAction.options,
+					previousAction,
+					currentAction,
+				);
 			}
 			return true;
 		}

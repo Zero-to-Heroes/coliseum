@@ -1,17 +1,17 @@
-import { Parser } from './parser';
-import { HistoryItem } from '../../../models/history/history-item';
-import { ActionHistoryItem } from '../../../models/history/action-history-item';
-import { MulliganCardAction } from '../../../models/action/mulligan-card-action';
-import { GameHepler } from '../../../models/game/game-helper';
+import { Map } from 'immutable';
+import { NGXLogger } from 'ngx-logger';
 import { Action } from '../../../models/action/action';
-import { AllCardsService } from '../../all-cards.service';
+import { MulliganCardAction } from '../../../models/action/mulligan-card-action';
+import { BlockType } from '../../../models/enums/block-type';
 import { GameTag } from '../../../models/enums/game-tags';
 import { Zone } from '../../../models/enums/zone';
-import { NGXLogger } from 'ngx-logger';
-import { BlockType } from '../../../models/enums/block-type';
 import { Entity } from '../../../models/game/entity';
-import { Map } from 'immutable';
+import { GameHepler } from '../../../models/game/game-helper';
+import { ActionHistoryItem } from '../../../models/history/action-history-item';
+import { HistoryItem } from '../../../models/history/history-item';
+import { AllCardsService } from '../../all-cards.service';
 import { ActionHelper } from './action-helper';
+import { Parser } from './parser';
 
 export class MulliganCardParser implements Parser {
 	constructor(private allCards: AllCardsService, private logger: NGXLogger) {}
@@ -54,7 +54,7 @@ export class MulliganCardParser implements Parser {
 			item.node.tags &&
 			item.node.tags.length > 0
 		) {
-			const relevantTags = item.node.tags.filter(tag => tag.tag === GameTag.ZONE).filter(tag => tag.value === Zone.DECK);
+			const relevantTags = item.node.tags.filter(tag => tag.tag === GameTag.ZONE && tag.value === Zone.DECK);
 			if (relevantTags && relevantTags.length > 0) {
 				const result = relevantTags.map(tag =>
 					MulliganCardAction.create(

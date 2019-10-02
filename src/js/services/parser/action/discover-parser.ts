@@ -1,12 +1,12 @@
-import { Parser } from './parser';
-import { HistoryItem } from '../../../models/history/history-item';
-import { Action } from '../../../models/action/action';
-import { AllCardsService } from '../../all-cards.service';
-import { Entity } from '../../../models/game/entity';
 import { Map } from 'immutable';
-import { ChoicesHistoryItem } from '../../../models/history/choices-history-item';
-import { ChoiceType } from '../../../models/enums/choice-type';
+import { Action } from '../../../models/action/action';
 import { DiscoverAction } from '../../../models/action/discover-action';
+import { ChoiceType } from '../../../models/enums/choice-type';
+import { Entity } from '../../../models/game/entity';
+import { ChoicesHistoryItem } from '../../../models/history/choices-history-item';
+import { HistoryItem } from '../../../models/history/history-item';
+import { AllCardsService } from '../../all-cards.service';
+import { Parser } from './parser';
 
 export class DiscoverParser implements Parser {
 	constructor(private allCards: AllCardsService) {}
@@ -21,6 +21,9 @@ export class DiscoverParser implements Parser {
 		entitiesBeforeAction: Map<number, Entity>,
 		history: readonly HistoryItem[],
 	): Action[] {
+		if (currentTurn === 0) {
+			return;
+		}
 		if (item.choices.type !== ChoiceType.GENERAL) {
 			return [];
 		}

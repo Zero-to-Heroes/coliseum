@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
 import { Action } from '../../../models/action/action';
+import { AttachingEnchantmentAction } from '../../../models/action/attaching-enchantment-action';
 import { GameTag } from '../../../models/enums/game-tags';
 import { Step } from '../../../models/enums/step';
 import { Game } from '../../../models/game/game';
@@ -31,7 +32,7 @@ export class MulliganParserService {
 
 	private enrichAction(action: Action, previousAction: Action): Action {
 		let isMulligan = true;
-		if (action.activeSpell) {
+		if (action.activeSpell || action instanceof AttachingEnchantmentAction) {
 			isMulligan = false;
 		} else if (previousAction && previousAction.entities.get(1).getTag(GameTag.STEP) === Step.BEGIN_MULLIGAN) {
 			isMulligan = previousAction.isMulligan;
