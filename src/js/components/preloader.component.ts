@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { NGXLogger } from 'ngx-logger';
 import { preloader } from '../../assets/svg/preloader';
@@ -19,7 +19,7 @@ import { AllCardsService } from '../services/all-cards.service';
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PreloaderComponent implements OnInit, OnDestroy {
+export class PreloaderComponent implements OnInit, AfterViewInit, OnDestroy {
 	@Input() status: string;
 	svg: SafeHtml;
 	quote: string;
@@ -33,15 +33,17 @@ export class PreloaderComponent implements OnInit, OnDestroy {
 		private domSanitizer: DomSanitizer,
 		private cards: AllCardsService,
 		private cdr: ChangeDetectorRef,
-	) {
-		this.svg = this.domSanitizer.bypassSecurityTrustHtml(preloader);
-	}
+	) {}
 
 	async ngOnInit() {
 		await this.cards.initializeCardsDb();
 		this.cardsWithQuotes = this.cards.getCards().filter(card => card.flavor);
 		this.chooseRandomQuote();
 		this.interval = setInterval(() => this.chooseRandomQuote(), 7000);
+	}
+
+	ngAfterViewInit() {
+		this.svg = this.domSanitizer.bypassSecurityTrustHtml(preloader);
 	}
 
 	private chooseRandomQuote() {

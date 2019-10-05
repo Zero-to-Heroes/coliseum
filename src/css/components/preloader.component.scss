@@ -72,6 +72,10 @@ $dark-foreground-forth: $gray130;
 	&.active {
 		pointer-events: auto;
 		opacity: 1;
+
+		.preloader {
+			animation: rotate 1s linear infinite;
+		}
 	}
 }
 
@@ -82,7 +86,7 @@ $dark-foreground-forth: $gray130;
 	max-height: 100%;
 	flex: 0 1 var(--size);
 	color: var(--background-secondary);
-	animation: rotate 1s linear infinite;
+	transform: translateZ(0); // https://stackoverflow.com/questions/13176746/css-keyframe-animation-cpu-usage-is-high-should-it-be-this-way
 
 	svg {
 		width: 100%;
