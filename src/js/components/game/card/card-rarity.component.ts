@@ -1,6 +1,5 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
-import { AllCardsService } from '../../../services/all-cards.service';
-import { CardRarity } from '../../../models/enums/card-rarity';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { AllCardsService, CardRarity } from '@firestone-hs/replay-parser';
 import { NGXLogger } from 'ngx-logger';
 
 @Component({

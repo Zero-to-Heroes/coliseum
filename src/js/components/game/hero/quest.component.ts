@@ -1,5 +1,5 @@
-import { Component, ChangeDetectionStrategy, Input, HostListener } from '@angular/core';
-import { Entity } from '../../../models/game/entity';
+import { ChangeDetectionStrategy, Component, HostListener, Input } from '@angular/core';
+import { Entity } from '@firestone-hs/replay-parser';
 import { NGXLogger } from 'ngx-logger';
 import { Events } from '../../../services/events.service';
 

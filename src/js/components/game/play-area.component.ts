@@ -1,10 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { CardType, Entity, GameTag, Zone } from '@firestone-hs/replay-parser';
 import { Map } from 'immutable';
 import { NGXLogger } from 'ngx-logger';
-import { CardType } from '../../models/enums/card-type';
-import { GameTag } from '../../models/enums/game-tags';
-import { Zone } from '../../models/enums/zone';
-import { Entity } from '../../models/game/entity';
 
 @Component({
 	selector: 'play-area',

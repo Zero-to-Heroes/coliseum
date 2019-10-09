@@ -1,8 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { CardType, Entity, GameTag } from '@firestone-hs/replay-parser';
 import { NGXLogger } from 'ngx-logger';
-import { CardType } from '../../../models/enums/card-type';
-import { GameTag } from '../../../models/enums/game-tags';
-import { Entity } from '../../../models/game/entity';
 
 @Component({
 	selector: 'hero-card',

@@ -1,7 +1,6 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Entity, GameTag } from '@firestone-hs/replay-parser';
 import { NGXLogger } from 'ngx-logger';
-import { Entity } from '../../../models/game/entity';
-import { GameTag } from '../../../models/enums/game-tags';
 
 @Component({
 	selector: 'card-on-board-overlays',

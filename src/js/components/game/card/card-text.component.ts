@@ -1,10 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, ViewRef } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { AllCardsService, CardType, Entity, GameTag } from '@firestone-hs/replay-parser';
 import { NGXLogger } from 'ngx-logger';
-import { CardType } from '../../../models/enums/card-type';
-import { GameTag } from '../../../models/enums/game-tags';
-import { Entity } from '../../../models/game/entity';
-import { AllCardsService } from '../../../services/all-cards.service';
 
 @Component({
 	selector: 'card-text',

@@ -1,19 +1,21 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, NgZone, OnDestroy, ViewRef } from '@angular/core';
+import {
+	CardBurnAction,
+	DiscoverAction,
+	Entity,
+	FatigueDamageAction,
+	Game,
+	GameParserService,
+	PlayState,
+	QuestCompletedAction,
+	SecretRevealedAction,
+	Turn,
+} from '@firestone-hs/replay-parser';
 import { Map } from 'immutable';
 import { NGXLogger } from 'ngx-logger';
 import { Subscription } from 'rxjs';
-import { CardBurnAction } from '../models/action/card-burn-action';
-import { DiscoverAction } from '../models/action/discover-action';
-import { FatigueDamageAction } from '../models/action/fatigue-damage-action';
-import { QuestCompletedAction } from '../models/action/quest-completed-action';
-import { SecretRevealedAction } from '../models/action/secret-revealed-action';
-import { PlayState } from '../models/enums/playstate';
-import { Entity } from '../models/game/entity';
-import { Game } from '../models/game/game';
-import { Turn } from '../models/game/turn';
 import { ReplayOptions } from '../models/replay-options';
 import { Events } from '../services/events.service';
-import { GameParserService } from '../services/parser/game-parser.service';
 
 @Component({
 	styleUrls: ['../../css/components/app.component.scss', '../../css/global/global.scss'],

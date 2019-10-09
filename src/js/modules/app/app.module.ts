@@ -2,6 +2,7 @@ import { Location, LocationStrategy, PathLocationStrategy } from '@angular/commo
 import { ErrorHandler, Injectable, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { ReplayParserModule } from '@firestone-hs/replay-parser';
 import { captureException, init } from '@sentry/browser';
 import { Ng2FittextModule } from 'ng2-fittext';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
@@ -69,9 +70,7 @@ import { TurnNarratorComponent } from '../../components/turn-narrator.component'
 import { CardElementResizeDirective } from '../../directives/card-element-resize.directive';
 import { CardResizeDirective } from '../../directives/card-resize.directive';
 import { CardTooltipDirective } from '../../directives/card-tooltip.directive';
-import { AllCardsService } from '../../services/all-cards.service';
 import { Events } from '../../services/events.service';
-import { ParserModule } from '../parser/parser.module';
 
 console.log('version is ' + process.env.APP_VERSION);
 console.log('environment is', process.env.NODE_ENV);
@@ -92,7 +91,7 @@ export class SentryErrorHandler implements ErrorHandler {
 }
 
 @NgModule({
-	imports: [BrowserModule, FormsModule, Ng2FittextModule, LoggerModule.forRoot({ level: NgxLoggerLevel.INFO }), ParserModule.forRoot()],
+	imports: [BrowserModule, FormsModule, Ng2FittextModule, LoggerModule.forRoot({ level: NgxLoggerLevel.INFO }), ReplayParserModule],
 	declarations: [
 		AppComponent,
 		GameComponent,
@@ -177,7 +176,6 @@ export class SentryErrorHandler implements ErrorHandler {
 		{ provide: LocationStrategy, useClass: PathLocationStrategy },
 		{ provide: ErrorHandler, useClass: SentryErrorHandler },
 
-		AllCardsService,
 		Events,
 	],
 	entryComponents: [AppComponent],

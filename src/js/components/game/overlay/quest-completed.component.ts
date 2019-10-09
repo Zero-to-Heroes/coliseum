@@ -1,7 +1,6 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
-import { Entity } from '../../../models/game/entity';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Entity } from '@firestone-hs/replay-parser';
 import { NGXLogger } from 'ngx-logger';
-import { AllCardsService } from '../../../services/all-cards.service';
 
 @Component({
 	selector: 'quest-completed',
@@ -16,7 +15,7 @@ import { AllCardsService } from '../../../services/all-cards.service';
 export class QuestCompletedComponent {
 	_quest: Entity;
 
-	constructor(private logger: NGXLogger, private cards: AllCardsService) {}
+	constructor(private logger: NGXLogger) {}
 
 	@Input('quest') set quest(value: Entity) {
 		this.logger.debug('[quest-completed] setting quest', value);

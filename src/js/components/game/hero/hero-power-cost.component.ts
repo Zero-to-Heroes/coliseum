@@ -1,14 +1,14 @@
 import {
-	Component,
-	ChangeDetectionStrategy,
-	Input,
 	AfterViewInit,
-	HostListener,
-	ElementRef,
+	ChangeDetectionStrategy,
 	ChangeDetectorRef,
+	Component,
+	ElementRef,
+	HostListener,
+	Input,
 	ViewRef,
 } from '@angular/core';
-import { AllCardsService } from '../../../services/all-cards.service';
+import { AllCardsService } from '@firestone-hs/replay-parser';
 import { NGXLogger } from 'ngx-logger';
 
 @Component({

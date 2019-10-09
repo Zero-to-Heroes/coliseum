@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { CardType } from '@firestone-hs/replay-parser';
 import { NGXLogger } from 'ngx-logger';
-import { CardType } from '../../../models/enums/card-type';
 
 @Component({
 	selector: 'card-art',

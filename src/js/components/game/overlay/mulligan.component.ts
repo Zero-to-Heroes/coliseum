@@ -1,9 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Entity, GameTag, Zone } from '@firestone-hs/replay-parser';
 import { Map } from 'immutable';
 import { NGXLogger } from 'ngx-logger';
-import { GameTag } from '../../../models/enums/game-tags';
-import { Zone } from '../../../models/enums/zone';
-import { Entity } from '../../../models/game/entity';
 
 @Component({
 	selector: 'mulligan',

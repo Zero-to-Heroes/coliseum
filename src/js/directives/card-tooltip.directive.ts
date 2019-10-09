@@ -1,5 +1,5 @@
 import { Directive, ElementRef, HostListener, Input } from '@angular/core';
-import { Entity } from '../models/game/entity';
+import { Entity } from '@firestone-hs/replay-parser';
 import { Events } from '../services/events.service';
 
 @Directive({

@@ -1,8 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { AllCardsService, CardClass, CardType } from '@firestone-hs/replay-parser';
 import { NGXLogger } from 'ngx-logger';
-import { CardClass } from '../../../models/enums/card-class';
-import { CardType } from '../../../models/enums/card-type';
-import { AllCardsService } from '../../../services/all-cards.service';
 
 @Component({
 	selector: 'card-frame',

@@ -1,6 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { AllCardsService } from '../../../services/all-cards.service';
-import { NGXLogger } from 'ngx-logger';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
 	selector: 'overlay-crossed',
@@ -12,6 +10,4 @@ import { NGXLogger } from 'ngx-logger';
 })
 export class OverlayCrossedComponent {
 	image: string;
-
-	constructor(private cards: AllCardsService, private logger: NGXLogger) {}
 }

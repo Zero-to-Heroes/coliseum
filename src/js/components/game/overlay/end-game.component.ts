@@ -1,10 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Entity, GameTag, PlayerEntity, PlayState } from '@firestone-hs/replay-parser';
 import { Map } from 'immutable';
 import { NGXLogger } from 'ngx-logger';
-import { GameTag } from '../../../models/enums/game-tags';
-import { PlayState } from '../../../models/enums/playstate';
-import { Entity } from '../../../models/game/entity';
-import { PlayerEntity } from '../../../models/game/player-entity';
 
 @Component({
 	selector: 'end-game',

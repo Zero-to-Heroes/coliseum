@@ -1,8 +1,7 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
-import { Entity } from '../../../models/game/entity';
-import { NGXLogger } from 'ngx-logger';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Entity, GameTag } from '@firestone-hs/replay-parser';
 import { Map } from 'immutable';
-import { GameTag } from '../../../models/enums/game-tags';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'quest-tooltip',

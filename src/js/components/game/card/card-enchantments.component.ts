@@ -1,6 +1,6 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Entity } from '@firestone-hs/replay-parser';
 import { NGXLogger } from 'ngx-logger';
-import { Entity } from '../../../models/game/entity';
 
 @Component({
 	selector: 'card-enchantments',

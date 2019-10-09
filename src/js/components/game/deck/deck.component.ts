@@ -8,8 +8,8 @@ import {
 	Input,
 	ViewRef,
 } from '@angular/core';
+import { Entity } from '@firestone-hs/replay-parser';
 import { NGXLogger } from 'ngx-logger';
-import { Entity } from '../../../models/game/entity';
 
 @Component({
 	selector: 'deck',

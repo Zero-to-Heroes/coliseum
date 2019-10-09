@@ -1,9 +1,6 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
-import { Entity } from '../../models/game/entity';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { AllCardsService, CardClass, Entity, GameTag } from '@firestone-hs/replay-parser';
 import { NGXLogger } from 'ngx-logger';
-import { AllCardsService } from '../../services/all-cards.service';
-import { GameTag } from '../../models/enums/game-tags';
-import { CardClass } from '../../models/enums/card-class';
 
 @Component({
 	selector: 'secret-revealed',
