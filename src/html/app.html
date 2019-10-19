@@ -34,7 +34,8 @@
 				url: 'replay.xml',
 				dataType: 'xml',
 				success: function(response) {
-					const replayAsString = new XMLSerializer().serializeToString(response);
+					console.log('respoinse', response);
+					const replayAsString = response ? new XMLSerializer().serializeToString(response) : null;
 					window.coliseum.zone.run(() => {
 						window.coliseum.component.loadReplay(replayAsString, {
 							reviewId: 'fakeReviewId',
