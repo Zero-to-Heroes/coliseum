@@ -14,7 +14,7 @@
 		"@angular/forms": "8.2.9",
 		"@angular/platform-browser": "8.2.9",
 		"@angular/platform-browser-dynamic": "8.2.9",
-		"@firestone-hs/replay-parser": "0.0.16",
+		"@firestone-hs/replay-parser": "0.0.21",
 		"@sentry/browser": "5.5.0",
 		"immutable": "3.8.2",
 		"lodash-es": "4.17.15",
