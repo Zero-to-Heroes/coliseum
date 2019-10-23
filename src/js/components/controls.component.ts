@@ -13,6 +13,8 @@ import {
 import { NGXLogger } from 'ngx-logger';
 import { Key } from 'ts-keycode-enum';
 
+declare var gtag;
+
 @Component({
 	selector: 'controls',
 	styleUrls: ['../../css/components/controls.component.scss', '../../css/global/global.scss'],
@@ -331,22 +333,27 @@ export class ControlsComponent implements OnInit, OnDestroy {
 	}
 
 	goPreviousTurn() {
+		gtag('event', 'controls', { 'event_category': 'previous-turn' });
 		this.previousTurn.next();
 	}
 
 	goPreviousAction() {
+		gtag('event', 'controls', { 'event_category': 'previous-action' });
 		this.previousAction.next();
 	}
 
 	goNextAction() {
+		gtag('event', 'controls', { 'event_category': 'next-action' });
 		this.nextAction.next();
 	}
 
 	goNextTurn() {
+		gtag('event', 'controls', { 'event_category': 'next-turn' });
 		this.nextTurn.next();
 	}
 
 	togglePlayPause() {
+		gtag('event', 'controls', { 'event_category': 'toggle-play-pause' });
 		this.isPlaying = !this.isPlaying;
 		if (!(this.cdr as ViewRef).destroyed) {
 			this.cdr.detectChanges();
@@ -354,6 +361,7 @@ export class ControlsComponent implements OnInit, OnDestroy {
 	}
 
 	changeSpeed(newSpeed: number) {
+		gtag('event', 'controls', { 'event_category': 'change-speed', 'value': newSpeed });
 		this.currentSpeed = newSpeed;
 		if (!(this.cdr as ViewRef).destroyed) {
 			this.cdr.detectChanges();
@@ -361,6 +369,7 @@ export class ControlsComponent implements OnInit, OnDestroy {
 	}
 
 	toggleShowHiddenCards() {
+		gtag('event', 'controls', { 'event_category': 'toggle-show-hidden-cards' });
 		this.showingHiddenCards = !this.showingHiddenCards;
 		this.showHiddenCards.next(this.showingHiddenCards);
 	}

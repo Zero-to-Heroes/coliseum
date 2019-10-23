@@ -1,17 +1,30 @@
 ﻿<!DOCTYPE html>
 <html>
 	<head>
-        <title>Coliseum</title>
-    	<meta charset="UTF-8">
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-		<link href="https://fonts.googleapis.com/css?family=Passion+One:400,600,700" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css?family=Raleway:400,600,700" rel="stylesheet">
-        <!-- Not needed for the angular app, but needed for this HTML scaffholding -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" ></script>
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-65945334-5"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag() {
+				dataLayer.push(arguments);
+			}
+			gtag('js', new Date());
+
+			gtag('config', 'UA-65945334-5');
+		</script>
+
+		<title>Coliseum</title>
+		<meta charset="UTF-8" />
+		<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+		<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+		<link href="https://fonts.googleapis.com/css?family=Passion+One:400,600,700" rel="stylesheet" />
+		<link href="https://fonts.googleapis.com/css?family=Raleway:400,600,700" rel="stylesheet" />
+		<!-- Not needed for the angular app, but needed for this HTML scaffholding -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 		<style>
-			html, body {
+			html,
+			body {
 				margin: 0;
 				height: 100%;
 			}
@@ -27,8 +40,8 @@
 	<body>
 		<div id="externalPlayer" class="external-player">
 			Waiting waiting
-        </div>
-        <replay-loader></replay-loader>
+		</div>
+		<replay-loader></replay-loader>
 
 		<script src="./coliseum.js"></script>
 		<script src="./loader.js"></script>
