@@ -17,7 +17,7 @@ import { Subscription } from 'rxjs';
 import { ReplayOptions } from '../models/replay-options';
 import { Events } from '../services/events.service';
 
-declare var gtag;
+declare var ga;
 
 @Component({
 	styleUrls: ['../../css/components/app.component.scss', '../../css/global/global.scss'],
@@ -179,7 +179,7 @@ export class AppComponent implements OnDestroy {
 	}
 
 	public async loadReplay(replayXml: string, options?: ReplayOptions) {
-		gtag('event', 'start-replay-load');
+		ga('send', 'event', 'start-replay-load');
 		// Cache the info so that it's not erased by a reset
 		const turn = parseInt(this.getSearchParam('turn')) || 0;
 		const action = parseInt(this.getSearchParam('action')) || 0;
@@ -211,7 +211,7 @@ export class AppComponent implements OnDestroy {
 				if (!(this.cdr as ViewRef).destroyed) {
 					this.cdr.detectChanges();
 				}
-				gtag('event', 'replay-loaded');
+				ga('send', 'event', 'replay-loaded');
 
 				// We do this so that the initial drawing is already done when hiding the preloader
 				setTimeout(() => {

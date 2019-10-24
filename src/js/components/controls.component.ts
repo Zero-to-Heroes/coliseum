@@ -13,7 +13,7 @@ import {
 import { NGXLogger } from 'ngx-logger';
 import { Key } from 'ts-keycode-enum';
 
-declare var gtag;
+declare var ga;
 
 @Component({
 	selector: 'controls',
@@ -333,27 +333,27 @@ export class ControlsComponent implements OnInit, OnDestroy {
 	}
 
 	goPreviousTurn() {
-		gtag('event', 'controls', { 'event_category': 'previous-turn' });
+		ga('send', 'event', 'controls', 'previous-turn');
 		this.previousTurn.next();
 	}
 
 	goPreviousAction() {
-		gtag('event', 'controls', { 'event_category': 'previous-action' });
+		ga('send', 'event', 'controls', 'previous-action');
 		this.previousAction.next();
 	}
 
 	goNextAction() {
-		gtag('event', 'controls', { 'event_category': 'next-action' });
+		ga('send', 'event', 'controls', 'next-action');
 		this.nextAction.next();
 	}
 
 	goNextTurn() {
-		gtag('event', 'controls', { 'event_category': 'next-turn' });
+		ga('send', 'event', 'controls', 'next-turn');
 		this.nextTurn.next();
 	}
 
 	togglePlayPause() {
-		gtag('event', 'controls', { 'event_category': 'toggle-play-pause' });
+		ga('send', 'event', 'controls', 'toggle-play-pause');
 		this.isPlaying = !this.isPlaying;
 		if (!(this.cdr as ViewRef).destroyed) {
 			this.cdr.detectChanges();
@@ -361,7 +361,7 @@ export class ControlsComponent implements OnInit, OnDestroy {
 	}
 
 	changeSpeed(newSpeed: number) {
-		gtag('event', 'controls', { 'event_category': 'change-speed', 'value': newSpeed });
+		ga('send', 'event', 'controls', 'change-speed', newSpeed);
 		this.currentSpeed = newSpeed;
 		if (!(this.cdr as ViewRef).destroyed) {
 			this.cdr.detectChanges();
@@ -369,7 +369,7 @@ export class ControlsComponent implements OnInit, OnDestroy {
 	}
 
 	toggleShowHiddenCards() {
-		gtag('event', 'controls', { 'event_category': 'toggle-show-hidden-cards' });
+		ga('send', 'event', 'controls', 'toggle-show-hidden-cards');
 		this.showingHiddenCards = !this.showingHiddenCards;
 		this.showHiddenCards.next(this.showingHiddenCards);
 	}
