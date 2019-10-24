@@ -73,7 +73,7 @@ $dark-foreground-forth: $gray130;
 		pointer-events: auto;
 		opacity: 1;
 
-		.preloader {
+		::ng-deep .preloader svg {
 			animation: rotate 1s linear infinite;
 		}
 	}
