@@ -35,5 +35,5 @@ $ aws s3 cp ./dist s3://replays.firestoneapp.com --acl public-read --recursive
 # Local dev (just for me)
 
 ```
-$ cp dist/coliseum.js ../overwolf-replay-viewer/Files/dependencies/
+$ cp dist/coliseum.js ../overwolf-replay-viewer/dependencies/
 ```
