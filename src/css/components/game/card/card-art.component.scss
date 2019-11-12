@@ -17,8 +17,9 @@
 	object-fit: contain;
 
 	&.minion {
-		clip-path: ellipse(37% 25% at 50% 50%);
-		top: -19%;
+		// clip-path: ellipse(37% 25% at 50% 50%);
+		// top: -19%;
+		clip-path: ellipse(37% 39% at 50% 50%);
 	}
 
 	&.spell {
