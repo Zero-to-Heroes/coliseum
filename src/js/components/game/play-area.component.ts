@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { CardType, Entity, GameTag, Zone } from '@firestone-hs/replay-parser';
+import { CardType, GameTag, Zone } from '@firestone-hs/reference-data';
+import { Entity } from '@firestone-hs/replay-parser';
 import { Map } from 'immutable';
 import { NGXLogger } from 'ngx-logger';
 

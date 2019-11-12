@@ -1,5 +1,6 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, ViewRef } from '@angular/core';
-import { Entity, GameTag, PlayState } from '@firestone-hs/replay-parser';
+import { GameTag, PlayState } from '@firestone-hs/reference-data';
+import { Entity } from '@firestone-hs/replay-parser';
 import { Map } from 'immutable';
 import { NGXLogger } from 'ngx-logger';
 import { Events } from '../../services/events.service';

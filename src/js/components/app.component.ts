@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, NgZone, OnDestroy, ViewRef } from '@angular/core';
+import { PlayState } from '@firestone-hs/reference-data';
 import {
 	CardBurnAction,
 	DiscoverAction,
@@ -6,7 +7,6 @@ import {
 	FatigueDamageAction,
 	Game,
 	GameParserService,
-	PlayState,
 	QuestCompletedAction,
 	SecretRevealedAction,
 	Turn,

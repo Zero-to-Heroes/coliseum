@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, ViewRef } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { AllCardsService, CardType, Entity, GameTag } from '@firestone-hs/replay-parser';
+import { CardType, GameTag } from '@firestone-hs/reference-data';
+import { AllCardsService, Entity } from '@firestone-hs/replay-parser';
 import { NGXLogger } from 'ngx-logger';
 
 @Component({

@@ -29,6 +29,7 @@ $ git clone ...
 $ npm install  # You need to have node installed
 $ npm run dev # For development
 $ npm run build # For release
+
 $ aws s3 cp ./dist s3://replays.firestoneapp.com --acl public-read --recursive
 ```
 
