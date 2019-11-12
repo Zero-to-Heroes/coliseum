@@ -16,7 +16,10 @@ import { NGXLogger } from 'ngx-logger';
 	styleUrls: ['../../../../css/global/text.scss', '../../../../css/components/game/deck/deck.component.scss'],
 	template: `
 		<div class="deck">
-			<img class="cardback-icon" src="https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/cardback.png" />
+			<img
+				class="cardback-icon"
+				src="https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/cardback.png"
+			/>
 			<div class="count">
 				<div class="text">{{ numberOfCards }}</div>
 			</div>

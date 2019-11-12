@@ -10,7 +10,8 @@ import { NGXLogger } from 'ngx-logger';
 	template: `
 		<div class="play-area" [ngClass]="{ 'mulligan': _isMulligan }">
 			<hand [entities]="hand" [showCards]="_showCards" [options]="handOptions" [controller]="playerEntity"></hand>
-			<hero [hero]="hero" [heroPower]="heroPower" [weapon]="weapon" [secrets]="secrets" [options]="heroOptions"> </hero>
+			<hero [hero]="hero" [heroPower]="heroPower" [weapon]="weapon" [secrets]="secrets" [options]="heroOptions">
+			</hero>
 			<board [entities]="board" [enchantmentCandidates]="enchantmentCandidates" [options]="boardOptions"> </board>
 			<mana-tray
 				[total]="totalCrystals"

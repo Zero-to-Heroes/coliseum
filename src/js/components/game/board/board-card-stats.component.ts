@@ -38,7 +38,12 @@ export class BoardCardStatsComponent {
 	private _health: number;
 	private _damage: number;
 
-	constructor(private cards: AllCardsService, private cdr: ChangeDetectorRef, private elRef: ElementRef, private logger: NGXLogger) {}
+	constructor(
+		private cards: AllCardsService,
+		private cdr: ChangeDetectorRef,
+		private elRef: ElementRef,
+		private logger: NGXLogger,
+	) {}
 
 	@Input('cardId') set cardId(cardId: string) {
 		this.logger.debug('[board-card-stats] setting cardId', cardId);

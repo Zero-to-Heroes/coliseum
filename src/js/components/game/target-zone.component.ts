@@ -31,7 +31,12 @@ export class TargetZoneComponent implements AfterViewInit {
 
 	private gameEl;
 
-	constructor(private logger: NGXLogger, private sanitizer: DomSanitizer, private el: ElementRef, private cdr: ChangeDetectorRef) {}
+	constructor(
+		private logger: NGXLogger,
+		private sanitizer: DomSanitizer,
+		private el: ElementRef,
+		private cdr: ChangeDetectorRef,
+	) {}
 
 	ngAfterViewInit() {
 		this.gameEl = this.el.nativeElement.parentNode;
@@ -65,7 +70,9 @@ export class TargetZoneComponent implements AfterViewInit {
 	}
 
 	private assessTargetsAvailability(): boolean {
-		const allTargetIds: number[] = this._targets.reduce((a, b) => a.concat(b), []).filter((v, i, a) => a.indexOf(v) === i); // Keep unique values
+		const allTargetIds: number[] = this._targets
+			.reduce((a, b) => a.concat(b), [])
+			.filter((v, i, a) => a.indexOf(v) === i); // Keep unique values
 		// console.log('all targets', allTargetIds);
 		const anyMissingTargetElement = allTargetIds.some(
 			targetId => !this.el.nativeElement.parentNode.querySelector(`[data-entity-id="${targetId}"]`),
@@ -118,10 +125,14 @@ export class TargetZoneComponent implements AfterViewInit {
 			this.logger.debug('[targets] missing some elements', originElement, originId, targetElement, targetId);
 			return null;
 		}
-		const orX = originElement.getBoundingClientRect().left + originElement.getBoundingClientRect().width / 2 - this.left;
-		const orY = originElement.getBoundingClientRect().top + originElement.getBoundingClientRect().height / 2 - this.top;
-		const tarX = targetElement.getBoundingClientRect().left + targetElement.getBoundingClientRect().width / 2 - this.left;
-		const tarY = targetElement.getBoundingClientRect().top + targetElement.getBoundingClientRect().height / 2 - this.top;
+		const orX =
+			originElement.getBoundingClientRect().left + originElement.getBoundingClientRect().width / 2 - this.left;
+		const orY =
+			originElement.getBoundingClientRect().top + originElement.getBoundingClientRect().height / 2 - this.top;
+		const tarX =
+			targetElement.getBoundingClientRect().left + targetElement.getBoundingClientRect().width / 2 - this.left;
+		const tarY =
+			targetElement.getBoundingClientRect().top + targetElement.getBoundingClientRect().height / 2 - this.top;
 		const svgPath = `
             <line x1="${orX}" y1="${orY}" x2="${tarX}" y2="${tarY}" class="arrow" marker-end="url(#arrow)"/>
         `;

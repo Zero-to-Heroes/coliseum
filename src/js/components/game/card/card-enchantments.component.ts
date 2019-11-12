@@ -4,10 +4,14 @@ import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'card-enchantments',
-	styleUrls: ['../../../../css/global/text.scss', '../../../../css/components/game/card/card-enchantments.component.scss'],
+	styleUrls: [
+		'../../../../css/global/text.scss',
+		'../../../../css/components/game/card/card-enchantments.component.scss',
+	],
 	template: `
 		<div class="card-enchantments">
-			<card-enchantment *ngFor="let enchantment of _enchantments; trackBy: trackByFn" [enchantment]="enchantment"> </card-enchantment>
+			<card-enchantment *ngFor="let enchantment of _enchantments; trackBy: trackByFn" [enchantment]="enchantment">
+			</card-enchantment>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,

@@ -51,7 +51,11 @@ declare var ga;
 								[crossed]="crossed"
 							>
 							</game>
-							<preloader class="dark-theme" [ngClass]="{ 'active': !game || showPreloader }" [status]="status"></preloader>
+							<preloader
+								class="dark-theme"
+								[ngClass]="{ 'active': !game || showPreloader }"
+								[status]="status"
+							></preloader>
 						</div>
 					</div>
 				</div>
@@ -322,7 +326,10 @@ export class AppComponent implements OnDestroy {
 			this.updateUrlQueryString();
 		}
 		this.logger.debug('[app] setting turn', this.turnString);
-		this.logger.debug('[app] Considering action', this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn]);
+		this.logger.debug(
+			'[app] Considering action',
+			this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn],
+		);
 	}
 
 	private buildTotalTime() {
@@ -497,7 +504,9 @@ export class AppComponent implements OnDestroy {
 			this.logger.warn('[app] game not present, not performing operation', 'computeTurnString');
 			return;
 		}
-		return this.game.turns.get(this.currentTurn).turn === 'mulligan' ? 'Mulligan' : `Turn${this.game.turns.get(this.currentTurn).turn}`;
+		return this.game.turns.get(this.currentTurn).turn === 'mulligan'
+			? 'Mulligan'
+			: `Turn${this.game.turns.get(this.currentTurn).turn}`;
 	}
 
 	private computeTargets(): readonly [number, number][] {

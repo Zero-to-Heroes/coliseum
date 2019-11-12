@@ -32,7 +32,12 @@ export class HeroPowerCostComponent implements AfterViewInit {
 
 	private _cardId: string;
 
-	constructor(private cards: AllCardsService, private elRef: ElementRef, private logger: NGXLogger, private cdr: ChangeDetectorRef) {}
+	constructor(
+		private cards: AllCardsService,
+		private elRef: ElementRef,
+		private logger: NGXLogger,
+		private cdr: ChangeDetectorRef,
+	) {}
 
 	@Input('cardId') set cardId(cardId: string) {
 		this.logger.debug('[hero-power-cost] setting cardId', cardId);

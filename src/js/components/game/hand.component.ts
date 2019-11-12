@@ -7,8 +7,12 @@ import { NGXLogger } from 'ngx-logger';
 	styleUrls: ['../../../css/components/game/hand.component.scss'],
 	template: `
 		<ul class="hand">
-			<li *ngFor="let entity of _entities; let i = index; trackBy: trackByFn" [style.marginLeft.%]="i !== 0 ? marginLeft : 0">
-				<card [entity]="entity" [showCard]="_showCards" [option]="isOption(entity)" [controller]="_controller"> </card>
+			<li
+				*ngFor="let entity of _entities; let i = index; trackBy: trackByFn"
+				[style.marginLeft.%]="i !== 0 ? marginLeft : 0"
+			>
+				<card [entity]="entity" [showCard]="_showCards" [option]="isOption(entity)" [controller]="_controller">
+				</card>
 			</li>
 		</ul>
 	`,

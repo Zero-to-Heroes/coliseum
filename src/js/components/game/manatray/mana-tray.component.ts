@@ -3,7 +3,10 @@ import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'mana-tray',
-	styleUrls: ['../../../../css/global/text.scss', '../../../../css/components/game/manatray/mana-tray.component.scss'],
+	styleUrls: [
+		'../../../../css/global/text.scss',
+		'../../../../css/components/game/manatray/mana-tray.component.scss',
+	],
 	template: `
 		<div class="mana-tray" cardElementResize [fontSizeRatio]="0.06">
 			<div class="summary" resizeTarget>

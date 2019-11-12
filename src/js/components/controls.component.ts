@@ -57,7 +57,10 @@ declare var ga;
 				</div>
 
 				<div class="player-controls-content player-controls-content-middle">
-					<button class="gs-icon player-control-main player-control-element hint-tooltip-container" (click)="goPreviousTurn()">
+					<button
+						class="gs-icon player-control-main player-control-element hint-tooltip-container"
+						(click)="goPreviousTurn()"
+					>
 						<svg viewBox="0 0 30 30">
 							<polygon points="22 8 12 15 22 22 22 8" fill="currentcolor" />
 							<polygon points="15 8 5 15 15 22 15 8" fill="currentcolor" />
@@ -66,7 +69,10 @@ declare var ga;
 							<span>Previous turn<br /><kbd>Ctrl</kbd> + <kbd>🡨</kbd></span>
 						</div>
 					</button>
-					<button class="gs-icon player-control-main player-control-element hint-tooltip-container" (click)="goPreviousAction()">
+					<button
+						class="gs-icon player-control-main player-control-element hint-tooltip-container"
+						(click)="goPreviousAction()"
+					>
 						<svg viewBox="0 0 30 30">
 							<polygon points="20 8 10 15 20 22 20 8" fill="currentcolor" />
 							<rect x="9" y="8" width="1" height="14" fill="currentcolor" />
@@ -92,7 +98,10 @@ declare var ga;
 							<span>Play/Pause<br /><kbd>Spacebar</kbd></span>
 						</div>
 					</button>
-					<button class="gs-icon player-control-main player-control-element hint-tooltip-container" (click)="goNextAction()">
+					<button
+						class="gs-icon player-control-main player-control-element hint-tooltip-container"
+						(click)="goNextAction()"
+					>
 						<svg viewBox="0 0 30 30">
 							<polygon points="10 8 20 15 10 22 10 8" fill="currentcolor" />
 							<rect x="20" y="8" width="1" height="14" fill="currentcolor" />
@@ -101,7 +110,10 @@ declare var ga;
 							<span>Next action<br /><kbd>🡪</kbd></span>
 						</div>
 					</button>
-					<button class="gs-icon player-control-main player-control-element hint-tooltip-container" (click)="goNextTurn()">
+					<button
+						class="gs-icon player-control-main player-control-element hint-tooltip-container"
+						(click)="goNextTurn()"
+					>
 						<svg viewBox="0 0 30 30">
 							<polygon points="8,8 18,15 8,22" fill="currentcolor" />
 							<polygon points="15,8 25,15 15,22" fill="currentcolor" />
@@ -208,7 +220,10 @@ declare var ga;
 								stroke-linejoin="round"
 							/>
 						</svg>
-						<div class="hint-tooltip hint-tooltip-top hint-tooltip-aligned-right dark-theme" *ngIf="showingHiddenCards">
+						<div
+							class="hint-tooltip hint-tooltip-top hint-tooltip-aligned-right dark-theme"
+							*ngIf="showingHiddenCards"
+						>
 							<span>Hide hidden cards<br /><kbd>H</kbd></span>
 						</div>
 
@@ -248,7 +263,10 @@ declare var ga;
 								stroke-miterlimit="10"
 							/>
 						</svg>
-						<div class="hint-tooltip hint-tooltip-top hint-tooltip-aligned-right dark-theme" *ngIf="!showingHiddenCards">
+						<div
+							class="hint-tooltip hint-tooltip-top hint-tooltip-aligned-right dark-theme"
+							*ngIf="!showingHiddenCards"
+						>
 							<span>Show hidden cards<br /><kbd>H</kbd></span>
 						</div>
 					</button>

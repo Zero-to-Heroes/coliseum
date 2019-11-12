@@ -11,7 +11,10 @@ import { NGXLogger } from 'ngx-logger';
 		<div class="quest-tooltip" cardElementResize [fontSizeRatio]="0.1">
 			<card class="entity" [entity]="_quest" [hasTooltip]="false"></card>
 			<div class="progress">
-				<img class="arrow" src="https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/secrets/quest_info_arrow.png" />
+				<img
+					class="arrow"
+					src="https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/secrets/quest_info_arrow.png"
+				/>
 				<div class="number" resizeTarget>{{ progress }}</div>
 			</div>
 			<card class="reward" [entity]="_reward" [hasTooltip]="false"></card>

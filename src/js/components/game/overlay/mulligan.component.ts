@@ -10,7 +10,13 @@ import { NGXLogger } from 'ngx-logger';
 	template: `
 		<div class="mulligan">
 			<li *ngFor="let entity of mulliganCards; let i = index; trackBy: trackByFn">
-				<card [entity]="entity" [showCard]="_showCards" [hasTooltip]="false" [crossed]="_crossed.indexOf(entity.id) !== -1"> </card>
+				<card
+					[entity]="entity"
+					[showCard]="_showCards"
+					[hasTooltip]="false"
+					[crossed]="_crossed.indexOf(entity.id) !== -1"
+				>
+				</card>
 			</li>
 		</div>
 	`,

@@ -4,7 +4,10 @@ import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'card-enchantment',
-	styleUrls: ['../../../../css/global/text.scss', '../../../../css/components/game/card/card-enchantment.component.scss'],
+	styleUrls: [
+		'../../../../css/global/text.scss',
+		'../../../../css/components/game/card/card-enchantment.component.scss',
+	],
 	template: `
 		<div class="card-enchantment" cardElementResize [fontSizeRatio]="0.1">
 			<div class="name" resizeTarget>{{ name }}</div>

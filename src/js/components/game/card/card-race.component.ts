@@ -6,7 +6,10 @@ import { NGXLogger } from 'ngx-logger';
 	styleUrls: ['../../../../css/global/text.scss', '../../../../css/components/game/card/card-race.component.scss'],
 	template: `
 		<div class="card-race" cardElementResize [fontSizeRatio]="0.1">
-			<img class="banner" src="https://static.zerotoheroes.com/hearthstone/asset/manastorm/card/race-banner.png" />
+			<img
+				class="banner"
+				src="https://static.zerotoheroes.com/hearthstone/asset/manastorm/card/race-banner.png"
+			/>
 			<div class="text" resizeTarget>{{ _race }}</div>
 		</div>
 	`,

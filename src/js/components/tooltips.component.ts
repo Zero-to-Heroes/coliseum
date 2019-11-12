@@ -108,7 +108,13 @@ export class TooltipsComponent implements AfterViewInit {
 			// First try to center the tooltip vs the element
 			const elementCenter = elementTop + elementHeight / 2;
 			let top = elementCenter - this.tooltipHeight / 2;
-			this.logger.debug('[tooltips] first top computation', top, elementCenter, this.tooltipHeight, this.rect.height);
+			this.logger.debug(
+				'[tooltips] first top computation',
+				top,
+				elementCenter,
+				this.tooltipHeight,
+				this.rect.height,
+			);
 			if (top < 0) {
 				top = 0;
 			} else if (top + this.tooltipHeight > this.rect.height) {
@@ -176,7 +182,13 @@ export class TooltipsComponent implements AfterViewInit {
 		this.tooltipWidth = this.rect.width * this.tooltipSize;
 		this.tooltipHeight = this.tooltipWidth * CARD_ASPECT_RATIO;
 		this.horizontalOffset = this.rect.width * 0.018;
-		this.logger.info('[tooltips] cached tooltip info', this.tooltipWidth, this.tooltipHeight, this.horizontalOffset, this.rect);
+		this.logger.info(
+			'[tooltips] cached tooltip info',
+			this.tooltipWidth,
+			this.tooltipHeight,
+			this.horizontalOffset,
+			this.rect,
+		);
 	}
 
 	@HostListener('window:resize', ['$event'])

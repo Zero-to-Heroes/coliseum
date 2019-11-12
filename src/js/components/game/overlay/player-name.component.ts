@@ -1,4 +1,12 @@
-import { Component, ChangeDetectionStrategy, Input, ElementRef, ChangeDetectorRef, ViewRef, HostListener } from '@angular/core';
+import {
+	Component,
+	ChangeDetectionStrategy,
+	Input,
+	ElementRef,
+	ChangeDetectorRef,
+	ViewRef,
+	HostListener,
+} from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { playerName } from '../../../../assets/svg/player_name';
@@ -7,7 +15,13 @@ import { playerName } from '../../../../assets/svg/player_name';
 	selector: 'player-name',
 	styleUrls: ['../../../../css/components/game/overlay/player-name.component.scss'],
 	template: `
-		<div class="player-name" [ngClass]="{ 'active': _active }" cardElementResize [fontSizeRatio]="0.08" [keepOpacity]="true">
+		<div
+			class="player-name"
+			[ngClass]="{ 'active': _active }"
+			cardElementResize
+			[fontSizeRatio]="0.08"
+			[keepOpacity]="true"
+		>
 			<div class="background" [innerHTML]="svg"></div>
 			<div class="text" resizeTarget>
 				<span>{{ _name }}</span>
@@ -21,7 +35,12 @@ export class PlayerNameComponent {
 	_active: boolean;
 	svg: SafeHtml;
 
-	constructor(private logger: NGXLogger, private domSanitizer: DomSanitizer, private cdr: ChangeDetectorRef, private elRef: ElementRef) {
+	constructor(
+		private logger: NGXLogger,
+		private domSanitizer: DomSanitizer,
+		private cdr: ChangeDetectorRef,
+		private elRef: ElementRef,
+	) {
 		this.svg = this.domSanitizer.bypassSecurityTrustHtml(playerName);
 	}
 

@@ -10,7 +10,8 @@ import { NGXLogger } from 'ngx-logger';
 		<div class="weapon" cardTooltip [tooltipEntity]="_weapon" [attr.data-entity-id]="entityId">
 			<weapon-art [cardId]="cardId" *ngIf="!exhausted"></weapon-art>
 			<weapon-frame [exhausted]="exhausted"></weapon-frame>
-			<weapon-stats [cardId]="cardId" [attack]="attack" [durability]="durability" [damage]="damage"> </weapon-stats>
+			<weapon-stats [cardId]="cardId" [attack]="attack" [durability]="durability" [damage]="damage">
+			</weapon-stats>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,

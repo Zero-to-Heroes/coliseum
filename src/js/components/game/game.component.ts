@@ -20,14 +20,28 @@ import { Events } from '../../services/events.service';
 					[playerId]="_opponentId"
 				>
 				</play-area>
-				<play-area class="bottom" [mulligan]="_isMulligan" [entities]="_entities" [options]="_options" [playerId]="_playerId">
+				<play-area
+					class="bottom"
+					[mulligan]="_isMulligan"
+					[entities]="_entities"
+					[options]="_options"
+					[playerId]="_playerId"
+				>
 				</play-area>
 			</div>
-			<player-name class="player-name top" [name]="_opponentName" [active]="_opponentId === _activePlayer"> </player-name>
-			<player-name class="player-name bottom" [name]="_playerName" [active]="_playerId === _activePlayer"> </player-name>
-			<active-spell class="active-spell" *ngIf="_activeSpell" [entity]="_activeSpell" [controller]="_activeSpellController">
+			<player-name class="player-name top" [name]="_opponentName" [active]="_opponentId === _activePlayer">
+			</player-name>
+			<player-name class="player-name bottom" [name]="_playerName" [active]="_playerId === _activePlayer">
+			</player-name>
+			<active-spell
+				class="active-spell"
+				*ngIf="_activeSpell"
+				[entity]="_activeSpell"
+				[controller]="_activeSpellController"
+			>
 			</active-spell>
-			<secret-revealed class="secret-revealed" *ngIf="_secretRevealed" [entity]="_secretRevealed"> </secret-revealed>
+			<secret-revealed class="secret-revealed" *ngIf="_secretRevealed" [entity]="_secretRevealed">
+			</secret-revealed>
 			<quest-tooltip *ngIf="_quest" [quest]="_quest"></quest-tooltip>
 			<quest-completed *ngIf="_questCompleted" [quest]="_questCompleted"></quest-completed>
 			<target-zone *ngIf="_targets" [targets]="_targets" [active]="_playerId === _activePlayer"> </target-zone>
@@ -41,9 +55,18 @@ import { Events } from '../../services/events.service';
 					[playerId]="_opponentId"
 				>
 				</mulligan>
-				<mulligan *ngIf="_isMulligan" class="bottom" [entities]="_entities" [crossed]="_crossed" [playerId]="_playerId"> </mulligan>
-				<end-game *ngIf="_isEndGame" [status]="_endGameStatus" [entities]="_entities" [playerId]="_playerId"> </end-game>
-				<discover *ngIf="_discovers" [entities]="_entities" [choices]="_discovers" [chosen]="_chosen"> </discover>
+				<mulligan
+					*ngIf="_isMulligan"
+					class="bottom"
+					[entities]="_entities"
+					[crossed]="_crossed"
+					[playerId]="_playerId"
+				>
+				</mulligan>
+				<end-game *ngIf="_isEndGame" [status]="_endGameStatus" [entities]="_entities" [playerId]="_playerId">
+				</end-game>
+				<discover *ngIf="_discovers" [entities]="_entities" [choices]="_discovers" [chosen]="_chosen">
+				</discover>
 				<burn *ngIf="_burned" [entities]="_entities" [burned]="_burned"> </burn>
 				<fatigue *ngIf="_fatigue" [fatigue]="_fatigue"></fatigue>
 			</div>
@@ -226,7 +249,8 @@ export class GameComponent implements AfterViewInit {
 
 	private updateActiveSpell() {
 		this._activeSpell = this._entities && this.activeSpellId && this._entities.get(this.activeSpellId);
-		this._activeSpellController = this._entities && this._entities.find(entity => entity.getTag(GameTag.PLAYER_ID) === this._playerId);
+		this._activeSpellController =
+			this._entities && this._entities.find(entity => entity.getTag(GameTag.PLAYER_ID) === this._playerId);
 	}
 
 	private updateSecretRevealed() {

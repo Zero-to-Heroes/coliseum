@@ -5,7 +5,10 @@ import { NGXLogger } from 'ngx-logger';
 	selector: 'overlay-ticked',
 	styleUrls: ['../../../../css/components/game/card/overlay-ticked.component.scss'],
 	template: `
-		<img src="https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/mulligan_discard.png" class="overlay-ticked" />
+		<img
+			src="https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/mulligan_discard.png"
+			class="overlay-ticked"
+		/>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

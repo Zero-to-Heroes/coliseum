@@ -18,7 +18,10 @@ import { NGXLogger } from 'ngx-logger';
 				</div>
 			</div>
 			<div class="stat {{ healthClass }}">
-				<img class="stat-icon" src="https://static.zerotoheroes.com/hearthstone/asset/manastorm/health_new.png" />
+				<img
+					class="stat-icon"
+					src="https://static.zerotoheroes.com/hearthstone/asset/manastorm/health_new.png"
+				/>
 				<div class="stat-value" resizeTarget>
 					<span>{{ healthLeft }}</span>
 				</div>

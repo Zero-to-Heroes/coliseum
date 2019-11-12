@@ -5,7 +5,10 @@ import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'card-on-board-overlays',
-	styleUrls: ['../../../../css/global/text.scss', '../../../../css/components/game/board/card-on-board-overlays.component.scss'],
+	styleUrls: [
+		'../../../../css/global/text.scss',
+		'../../../../css/components/game/board/card-on-board-overlays.component.scss',
+	],
 	template: `
 		<div class="card-on-board-overlays" *ngIf="overlays.length > 0">
 			<img *ngFor="let overlay of overlays" class="overlay {{ overlay[0] }}" src="{{ overlay[1] }}" />
@@ -36,7 +39,10 @@ export class CardOnBoardOverlaysComponent {
 		if (value.getTag(GameTag.STEALTH) === 1) {
 			this.pushOverlay('minion_stealth');
 		}
-		if (value.getTag(GameTag.CANT_BE_TARGETED_BY_ABILITIES) === 1 && value.getTag(GameTag.CANT_BE_TARGETED_BY_HERO_POWERS) === 1) {
+		if (
+			value.getTag(GameTag.CANT_BE_TARGETED_BY_ABILITIES) === 1 &&
+			value.getTag(GameTag.CANT_BE_TARGETED_BY_HERO_POWERS) === 1
+		) {
 			this.pushOverlay('minion_elusive'); // missing
 		}
 		if (value.getTag(GameTag.WINDFURY) === 1) {
@@ -48,6 +54,9 @@ export class CardOnBoardOverlaysComponent {
 	}
 
 	private pushOverlay(image: string) {
-		this.overlays.push([image, `https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/overlays/${image}.png`]);
+		this.overlays.push([
+			image,
+			`https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/overlays/${image}.png`,
+		]);
 	}
 }

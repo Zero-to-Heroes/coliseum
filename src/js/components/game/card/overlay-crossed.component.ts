@@ -4,7 +4,10 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 	selector: 'overlay-crossed',
 	styleUrls: ['../../../../css/components/game/card/overlay-crossed.component.scss'],
 	template: `
-		<img src="https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/mulligan_discard.png" class="overlay-crossed" />
+		<img
+			src="https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/mulligan_discard.png"
+			class="overlay-crossed"
+		/>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

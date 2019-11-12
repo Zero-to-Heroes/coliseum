@@ -17,7 +17,8 @@ import { NGXLogger } from 'ngx-logger';
 			<hero-frame [premium]="premium"></hero-frame>
 			<hero-overlays [entity]="_entity"></hero-overlays>
 			<secrets [secrets]="_secrets" *ngIf="_secrets && _secrets.length > 0"></secrets>
-			<hero-stats [cardId]="cardId" [attack]="attack" [health]="health" [damage]="damage" [armor]="armor"> </hero-stats>
+			<hero-stats [cardId]="cardId" [attack]="attack" [health]="health" [damage]="damage" [armor]="armor">
+			</hero-stats>
 			<damage *ngIf="shownDamage" [amount]="shownDamage"></damage>
 		</div>
 	`,

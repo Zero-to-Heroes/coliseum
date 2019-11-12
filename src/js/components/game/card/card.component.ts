@@ -36,7 +36,8 @@ import { NGXLogger } from 'ngx-logger';
 			<overlay-crossed *ngIf="_crossed"></overlay-crossed>
 			<overlay-burned *ngIf="_burned"></overlay-burned>
 			<overlay-ticked *ngIf="_ticked"></overlay-ticked>
-			<card-enchantments *ngIf="_enchantments && _enchantments.length > 0" [enchantments]="_enchantments"> </card-enchantments>
+			<card-enchantments *ngIf="_enchantments && _enchantments.length > 0" [enchantments]="_enchantments">
+			</card-enchantments>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -150,7 +151,9 @@ export class CardComponent {
 			this.originalCard = this.cards.getCard(this.cardId);
 			this.race = this.originalCard && this.originalCard.race ? this.originalCard.race.toLowerCase() : undefined;
 			this.cardType =
-				this.originalCard && this.originalCard.type ? CardType[this.originalCard.type.toUpperCase() as string] : undefined;
+				this.originalCard && this.originalCard.type
+					? CardType[this.originalCard.type.toUpperCase() as string]
+					: undefined;
 			this.cardClass =
 				this.originalCard && this.originalCard.playerClass
 					? CardClass[this.originalCard.playerClass.toUpperCase() as string]

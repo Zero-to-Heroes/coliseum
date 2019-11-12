@@ -7,7 +7,14 @@ import { NGXLogger } from 'ngx-logger';
 	styleUrls: ['../../../css/components/game/active-spell.component.scss'],
 	template: `
 		<div class="active-spell">
-			<card class="active-spell" *ngIf="_entity" [hasTooltip]="false" [controller]="_controller" [entity]="_entity"> </card>
+			<card
+				class="active-spell"
+				*ngIf="_entity"
+				[hasTooltip]="false"
+				[controller]="_controller"
+				[entity]="_entity"
+			>
+			</card>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,

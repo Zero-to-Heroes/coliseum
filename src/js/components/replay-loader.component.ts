@@ -39,7 +39,9 @@ export class ReplayLoaderComponent implements AfterViewInit {
 		});
 		const review: any = await this.http.get(REVIEW_API + reviewId).toPromise();
 		const headers = new HttpHeaders({ 'Content-Type': 'text/xml' }).set('Accept', 'text/xml');
-		const replay = await this.http.get(REPLAY_API + review.key, { headers: headers, responseType: 'text' }).toPromise();
+		const replay = await this.http
+			.get(REPLAY_API + review.key, { headers: headers, responseType: 'text' })
+			.toPromise();
 		window['coliseum'].zone.run(() => {
 			window['coliseum'].component.loadReplay(replay);
 		});

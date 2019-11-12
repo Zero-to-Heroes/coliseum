@@ -18,7 +18,13 @@ import { NGXLogger } from 'ngx-logger';
 			<div class="main-card" [ngClass]="{ 'highlight': _option }">
 				<card-art [cardId]="cardId" [cardType]="cardType"></card-art>
 				<board-card-frame [taunt]="taunt" [hideStats]="hideStats" [premium]="premium"> </board-card-frame>
-				<board-card-stats *ngIf="!hideStats" [cardId]="cardId" [attack]="attack" [health]="health" [damage]="damage">
+				<board-card-stats
+					*ngIf="!hideStats"
+					[cardId]="cardId"
+					[attack]="attack"
+					[health]="health"
+					[damage]="damage"
+				>
 				</board-card-stats>
 			</div>
 			<damage *ngIf="shownDamage" [amount]="shownDamage"></damage>
@@ -59,7 +65,10 @@ export class CardOnBoardComponent {
 
 		this.cardId = entity.cardID;
 		this.originalCard = this.cards.getCard(this.cardId);
-		this.cardType = this.originalCard && this.originalCard.type ? CardType[this.originalCard.type.toUpperCase() as string] : undefined;
+		this.cardType =
+			this.originalCard && this.originalCard.type
+				? CardType[this.originalCard.type.toUpperCase() as string]
+				: undefined;
 		this.cardClass =
 			this.originalCard && this.originalCard.playerClass
 				? CardClass[this.originalCard.playerClass.toUpperCase() as string]
@@ -79,7 +88,9 @@ export class CardOnBoardComponent {
 
 		this.hideStats = entity.getTag(GameTag.HIDE_STATS) === 1;
 		this.sleeping =
-			entity.getTag(GameTag.EXHAUSTED) === 1 && entity.getTag(GameTag.JUST_PLAYED) === 1 && entity.getTag(GameTag.CHARGE) !== 1;
+			entity.getTag(GameTag.EXHAUSTED) === 1 &&
+			entity.getTag(GameTag.JUST_PLAYED) === 1 &&
+			entity.getTag(GameTag.CHARGE) !== 1;
 	}
 
 	@Input('option') set option(value: boolean) {

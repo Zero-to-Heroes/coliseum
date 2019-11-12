@@ -5,7 +5,10 @@ import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'hero-overlays',
-	styleUrls: ['../../../../css/global/text.scss', '../../../../css/components/game/hero/hero-overlays.component.scss'],
+	styleUrls: [
+		'../../../../css/global/text.scss',
+		'../../../../css/components/game/hero/hero-overlays.component.scss',
+	],
 	template: `
 		<div class="hero-overlays" *ngIf="overlays.length > 0">
 			<img *ngFor="let overlay of overlays" class="overlay {{ overlay[0] }}" src="{{ overlay[1] }}" />
@@ -39,6 +42,9 @@ export class HeroOverlaysComponent {
 	}
 
 	private pushOverlay(image: string) {
-		this.overlays.push([image, `https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/overlays/${image}.png`]);
+		this.overlays.push([
+			image,
+			`https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/overlays/${image}.png`,
+		]);
 	}
 }

@@ -5,7 +5,10 @@ import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'power-indicator',
-	styleUrls: ['../../../../css/global/text.scss', '../../../../css/components/game/board/power-indicator.component.scss'],
+	styleUrls: [
+		'../../../../css/global/text.scss',
+		'../../../../css/components/game/board/power-indicator.component.scss',
+	],
 	template: `
 		<div class="power-indicator {{ effect }}" *ngIf="effect">
 			<img class="icon" src="{{ effectImage }}" />

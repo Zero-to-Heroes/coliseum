@@ -24,7 +24,9 @@ export class CardRarityComponent {
 		if (!cardRarity || cardRarity === CardRarity.FREE) {
 			return;
 		}
-		this.image = `https://static.zerotoheroes.com/hearthstone/asset/manastorm/card/rarity-${CardRarity[cardRarity].toLowerCase()}.png`;
+		this.image = `https://static.zerotoheroes.com/hearthstone/asset/manastorm/card/rarity-${CardRarity[
+			cardRarity
+		].toLowerCase()}.png`;
 	}
 
 	private buildRarity(originalCard): CardRarity {

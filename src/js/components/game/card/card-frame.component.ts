@@ -37,20 +37,24 @@ export class CardFrameComponent {
 		}
 		const originalCard = this.cards.getCard(this._cardId);
 		const cardClass: CardClass = this.buildPlayerClass(originalCard);
-		const cardType: CardType = originalCard && originalCard.type ? CardType[originalCard.type.toUpperCase() as string] : undefined;
+		const cardType: CardType =
+			originalCard && originalCard.type ? CardType[originalCard.type.toUpperCase() as string] : undefined;
 		const frame: string = this.buildFrame(cardClass, cardType, this._premium);
 		this.image = `https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/card/${frame}.png`;
 	}
 
 	private buildPlayerClass(originalCard): CardClass {
 		const cardClass: CardClass =
-			originalCard && originalCard.playerClass ? CardClass[originalCard.playerClass.toUpperCase() as string] : undefined;
+			originalCard && originalCard.playerClass
+				? CardClass[originalCard.playerClass.toUpperCase() as string]
+				: undefined;
 		// Ysera
 		return cardClass === CardClass.DREAM ? CardClass.HUNTER : cardClass;
 	}
 
 	private buildFrame(cardClass: CardClass, cardType: CardType, premium: boolean): string {
-		const strClass = cardType === CardType.HERO_POWER ? '' : premium ? '-premium' : '-' + CardClass[cardClass].toLowerCase();
+		const strClass =
+			cardType === CardType.HERO_POWER ? '' : premium ? '-premium' : '-' + CardClass[cardClass].toLowerCase();
 		return `frame-${CardType[cardType].toLowerCase()}${strClass}`;
 	}
 }

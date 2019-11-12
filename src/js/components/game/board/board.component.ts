@@ -9,7 +9,8 @@ import { NGXLogger } from 'ngx-logger';
 	template: `
 		<ul class="board">
 			<li *ngFor="let entity of _entities; trackBy: trackByFn">
-				<card-on-board [entity]="entity" [enchantments]="buildEnchantments(entity)" [option]="isOption(entity)"> </card-on-board>
+				<card-on-board [entity]="entity" [enchantments]="buildEnchantments(entity)" [option]="isOption(entity)">
+				</card-on-board>
 			</li>
 		</ul>
 	`,

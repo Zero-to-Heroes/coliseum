@@ -8,8 +8,14 @@ import { Events } from '../../../services/events.service';
 	styleUrls: ['../../../../css/components/game/hero/quest.component.scss'],
 	template: `
 		<div class="quest" [attr.data-entity-id]="entityId">
-			<img class="quest-image" src="https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/secrets/quest_button.png" />
-			<img class="question-mark" src="https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/secrets/quest_bang.png" />
+			<img
+				class="quest-image"
+				src="https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/secrets/quest_button.png"
+			/>
+			<img
+				class="question-mark"
+				src="https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/secrets/quest_bang.png"
+			/>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
