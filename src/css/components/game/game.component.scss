@@ -49,6 +49,9 @@
 		::ng-deep hand {
 			opacity: 0;
 		}
+		.overlays {
+			background-color: rgba(0, 0, 0, 0.8);
+		}
 	}
 
 	play-area {
@@ -116,7 +119,8 @@
 		}
 	}
 
-	mulligan {
+	mulligan,
+	hero-selection {
 		flex-grow: 0;
 		flex-shrink: 0;
 		display: flex;

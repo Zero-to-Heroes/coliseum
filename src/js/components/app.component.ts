@@ -36,6 +36,7 @@ declare var ga;
 								[activePlayer]="activePlayer"
 								[activeSpell]="activeSpell"
 								[isMulligan]="isMulligan"
+								[isHeroSelection]="isHeroSelection"
 								[isEndGame]="isEndGame"
 								[endGameStatus]="endGameStatus"
 								[entities]="entities"
@@ -107,6 +108,7 @@ export class AppComponent implements OnDestroy {
 	showHiddenCards = false;
 
 	isMulligan: boolean;
+	isHeroSelection: boolean;
 	isEndGame: boolean;
 	endGameStatus: PlayState;
 
@@ -157,6 +159,7 @@ export class AppComponent implements OnDestroy {
 		this.questCompleted = 0;
 		this.showHiddenCards = false;
 		this.isMulligan = false;
+		this.isHeroSelection = false;
 		this.isEndGame = false;
 		this.endGameStatus = undefined;
 		this.totalTime = undefined;
@@ -318,6 +321,7 @@ export class AppComponent implements OnDestroy {
 		this.burned = this.computeBurned();
 		this.fatigue = this.computeFatigue();
 		this.isMulligan = this.computeMulligan();
+		this.isHeroSelection = this.computeHeroSelection();
 		this.isEndGame = this.computeEndGame();
 		this.endGameStatus = this.computeEndGameStatus();
 		// This avoid truncating the query string because we don't have all the info yet
@@ -326,7 +330,7 @@ export class AppComponent implements OnDestroy {
 			this.updateUrlQueryString();
 		}
 		this.logger.debug('[app] setting turn', this.turnString);
-		this.logger.debug(
+		this.logger.info(
 			'[app] Considering action',
 			this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn],
 		);
@@ -369,6 +373,14 @@ export class AppComponent implements OnDestroy {
 			return;
 		}
 		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].isMulligan;
+	}
+
+	private computeHeroSelection(): boolean {
+		if (!this.game) {
+			this.logger.warn('[app] game not present, not performing operation', 'computeHeroSelection');
+			return;
+		}
+		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].isHeroSelection;
 	}
 
 	private computeEndGame(): boolean {

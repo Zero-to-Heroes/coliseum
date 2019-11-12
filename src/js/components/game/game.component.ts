@@ -9,7 +9,10 @@ import { Events } from '../../services/events.service';
 	selector: 'game',
 	styleUrls: ['../../../css/components/game/game.component.scss'],
 	template: `
-		<div class="game" [ngClass]="{ 'in-overlay': isOverlay, 'mulligan': _isMulligan, 'quest': _quest }">
+		<div
+			class="game"
+			[ngClass]="{ 'in-overlay': isOverlay, 'mulligan': _isMulligan || _isHeroSelection, 'quest': _quest }"
+		>
 			<div class="play-areas">
 				<play-area
 					class="top"
@@ -47,7 +50,7 @@ import { Events } from '../../services/events.service';
 			<target-zone *ngIf="_targets" [targets]="_targets" [active]="_playerId === _activePlayer"> </target-zone>
 			<div class="overlays" *ngIf="isOverlay">
 				<mulligan
-					*ngIf="_isMulligan"
+					*ngIf="_isMulligan && !_isHeroSelection"
 					class="top"
 					[entities]="_entities"
 					[crossed]="_crossed"
@@ -56,13 +59,21 @@ import { Events } from '../../services/events.service';
 				>
 				</mulligan>
 				<mulligan
-					*ngIf="_isMulligan"
+					*ngIf="_isMulligan && !_isHeroSelection"
 					class="bottom"
 					[entities]="_entities"
 					[crossed]="_crossed"
 					[playerId]="_playerId"
 				>
 				</mulligan>
+				<hero-selection
+					*ngIf="_isHeroSelection"
+					class="bottom"
+					[entities]="_entities"
+					[crossed]="_crossed"
+					[playerId]="_playerId"
+				>
+				</hero-selection>
 				<end-game *ngIf="_isEndGame" [status]="_endGameStatus" [entities]="_entities" [playerId]="_playerId">
 				</end-game>
 				<discover *ngIf="_discovers" [entities]="_entities" [choices]="_discovers" [chosen]="_chosen">
@@ -98,6 +109,7 @@ export class GameComponent implements AfterViewInit {
 	_burned: readonly number[];
 	_chosen: readonly number[];
 	_isMulligan: boolean;
+	_isHeroSelection: boolean;
 	_isEndGame: boolean;
 	_endGameStatus: PlayState;
 
@@ -211,6 +223,12 @@ export class GameComponent implements AfterViewInit {
 		this.updateOverlay();
 	}
 
+	@Input('isHeroSelection') set isHeroSelection(value: boolean) {
+		this.logger.debug('[game] setting isHeroSelection', value);
+		this._isHeroSelection = value;
+		this.updateOverlay();
+	}
+
 	@Input('isEndGame') set isEndGame(value: boolean) {
 		this.logger.debug('[game] setting isEndGame', value);
 		this._isEndGame = value;
@@ -241,6 +259,7 @@ export class GameComponent implements AfterViewInit {
 	private updateOverlay() {
 		this.isOverlay =
 			this._isMulligan ||
+			this._isHeroSelection ||
 			this._isEndGame ||
 			(this._discovers && this._discovers.length > 0) ||
 			(this._burned && this._burned.length > 0) ||

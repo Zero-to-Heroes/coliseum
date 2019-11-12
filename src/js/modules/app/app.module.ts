@@ -56,6 +56,7 @@ import { BurnComponent } from '../../components/game/overlay/burn.component';
 import { DiscoverComponent } from '../../components/game/overlay/discover.component';
 import { EndGameComponent } from '../../components/game/overlay/end-game.component';
 import { FatigueComponent } from '../../components/game/overlay/fatigue.component';
+import { HeroSelectionComponent } from '../../components/game/overlay/hero-selection.component';
 import { MulliganComponent } from '../../components/game/overlay/mulligan.component';
 import { PlayerNameComponent } from '../../components/game/overlay/player-name.component';
 import { QuestCompletedComponent } from '../../components/game/overlay/quest-completed.component';
@@ -159,6 +160,7 @@ export class SentryErrorHandler implements ErrorHandler {
 		EndGameComponent,
 
 		MulliganComponent,
+		HeroSelectionComponent,
 		BurnComponent,
 		DiscoverComponent,
 		ActiveSpellComponent,
