@@ -188,47 +188,62 @@ export class AppComponent implements OnDestroy {
 	public async loadReplay(replayXml: string, options?: ReplayOptions) {
 		ga('send', 'event', 'start-replay-load');
 		// Cache the info so that it's not erased by a reset
-		const turn = parseInt(this.getSearchParam('turn')) || 0;
-		const action = parseInt(this.getSearchParam('action')) || 0;
+		// const turn = parseInt(this.getSearchParam('turn')) || 0;
+		// const action = parseInt(this.getSearchParam('action')) || 0;
 		const reviewId = (options && options.reviewId) || this.getSearchParam('reviewId');
 		this.reset(false);
 		this.status = 'Parsing replay file';
 		if (!(this.cdr as ViewRef).destroyed) {
 			this.cdr.detectChanges();
 		}
+
 		const gameObs = await this.gameParser.parse(replayXml);
-		this.gameSub = gameObs.subscribe(([game, status, complete]: [Game, string, boolean]) => {
-			this.status = status || this.status;
-			if (!(this.cdr as ViewRef).destroyed) {
-				this.cdr.detectChanges();
-			}
-			if (complete && game) {
-				this.logger.info('[app] Received complete game');
-				this.game = game;
-				this.totalTime = this.buildTotalTime();
-				this.reviewId = reviewId;
-				this.currentTurn = turn <= 0 ? 0 : turn >= this.game.turns.size ? this.game.turns.size - 1 : turn;
-				this.currentActionInTurn =
-					action <= 0
-						? 0
-						: action >= this.game.turns.get(this.currentTurn).actions.length
-						? this.game.turns.get(this.currentTurn).actions.length - 1
-						: action;
-				this.populateInfo(complete);
+		console.log('gameObs', gameObs);
+		this.gameSub = gameObs.subscribe(
+			([game, status, complete]: [Game, string, boolean]) => {
+				this.status = status || this.status;
 				if (!(this.cdr as ViewRef).destroyed) {
 					this.cdr.detectChanges();
 				}
-				ga('send', 'event', 'replay-loaded');
-
-				// We do this so that the initial drawing is already done when hiding the preloader
-				setTimeout(() => {
-					this.showPreloader = false;
+				if (game) {
+					// Since the user can already navigate before the game is fully loaded, we want
+					// to restore the navigation to where the user currently is
+					const turn = parseInt(this.getSearchParam('turn')) || 0;
+					const action = parseInt(this.getSearchParam('action')) || 0;
+					this.logger.info('[app] Received complete game', game.turns.size);
+					this.game = game;
+					this.totalTime = this.buildTotalTime();
+					this.reviewId = reviewId;
+					this.currentTurn = turn <= 0 ? 0 : turn >= this.game.turns.size ? this.game.turns.size - 1 : turn;
+					this.currentActionInTurn =
+						action <= 0
+							? 0
+							: action >= this.game.turns.get(this.currentTurn).actions.length
+							? this.game.turns.get(this.currentTurn).actions.length - 1
+							: action;
+					this.populateInfo(complete);
 					if (!(this.cdr as ViewRef).destroyed) {
 						this.cdr.detectChanges();
 					}
-				}, 1500);
-			}
-		});
+					ga('send', 'event', 'replay-loaded');
+
+					// We do this so that the initial drawing is already done when hiding the preloader
+					setTimeout(() => {
+						this.showPreloader = false;
+						if (!(this.cdr as ViewRef).destroyed) {
+							this.cdr.detectChanges();
+						}
+					}, 1500);
+				}
+			},
+			error => {
+				console.error('Could not parse replay', error);
+				this.status = 'error';
+				if (!(this.cdr as ViewRef).destroyed) {
+					this.cdr.detectChanges();
+				}
+			},
+		);
 	}
 
 	ngOnDestroy() {
@@ -302,7 +317,12 @@ export class AppComponent implements OnDestroy {
 			!this.game.turns.get(this.currentTurn).actions ||
 			!this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn]
 		) {
-			this.logger.debug('[app] nothing to process', this.game, this);
+			this.logger.debug(
+				'[app] nothing to process',
+				this.game.turns,
+				this.currentTurn,
+				this.game.turns.get(this.currentTurn),
+			);
 			return;
 		}
 
@@ -330,9 +350,14 @@ export class AppComponent implements OnDestroy {
 			this.updateUrlQueryString();
 		}
 		this.logger.debug('[app] setting turn', this.turnString);
-		this.logger.info(
+		this.logger.debug(
 			'[app] Considering action',
 			this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn],
+			this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].entities.get(66),
+			this.game.turns
+				.get(this.currentTurn)
+				.actions[this.currentActionInTurn].entities.get(66)
+				.tags.toJS(),
 		);
 	}
 
@@ -341,6 +366,9 @@ export class AppComponent implements OnDestroy {
 			return;
 		}
 		const lastTurn: Turn = this.game.turns.last();
+		if (!lastTurn) {
+			return;
+		}
 		for (let i = lastTurn.actions.length - 1; i >= 0; i--) {
 			const lastAction = lastTurn.actions[i];
 			if (lastAction.timestamp) {
@@ -537,12 +565,20 @@ export class AppComponent implements OnDestroy {
 			this.currentActionInTurn >= this.game.turns.get(this.currentTurn).actions.length - 1 &&
 			this.currentTurn >= this.game.turns.size - 1
 		) {
+			// console.log(
+			// 	'cannot go further',
+			// 	this.currentActionInTurn,
+			// 	this.currentTurn,
+			// 	this.game.turns.size,
+			// 	this.game.turns.toJS(),
+			// );
 			return;
 		}
 		this.currentActionInTurn++;
 		if (this.currentActionInTurn >= this.game.turns.get(this.currentTurn).actions.length) {
 			this.currentActionInTurn = 0;
 			this.currentTurn++;
+			// console.log('went further', this.currentTurn, this.currentActionInTurn);
 		}
 		this.populateInfo();
 		if (!(this.cdr as ViewRef).destroyed) {

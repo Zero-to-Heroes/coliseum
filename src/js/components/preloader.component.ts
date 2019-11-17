@@ -18,20 +18,34 @@ import { preloader } from '../../assets/svg/preloader';
 	template: `
 		<div class="preloader" [innerHTML]="svg"></div>
 		<figure class="preloader-quote">
-			<blockquote class="preloader-quote-text">"{{ quote }}"</blockquote>
+			<blockquote class="preloader-quote-text" [innerHTML]="quote"></blockquote>
 			<figcaption class="preloader-quote-author">
 				<strong>{{ cardName }}</strong>
 			</figcaption>
 		</figure>
-		<div class="status">{{ status }}</div>
+		<div class="status">{{ _status }}</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PreloaderComponent implements OnInit, AfterViewInit, OnDestroy {
-	@Input() status: string;
+	_status: string;
 	svg: SafeHtml;
 	quote: string;
 	cardName: string;
+
+	@Input() set status(value: string) {
+		this._status = value;
+		console.log('setting status', value);
+		if (value === 'error') {
+			console.log('setting error status', value);
+			this.quote =
+				'An error occured while parsing the replay. Please contact the support on <a href="https://twitter.com/ZerotoHeroes_HS" target="_blank">Twitter</a> or <a href="https://discord.gg/4Gpavvt" target="_blank">Discord</a>';
+			this.cardName = 'Alarm-o-Bot';
+			this.svg = null;
+			clearInterval(this.interval);
+			this.cdr.detectChanges();
+		}
+	}
 
 	private cardsWithQuotes: any[];
 	private interval;

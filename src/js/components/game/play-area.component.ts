@@ -142,6 +142,7 @@ export class PlayAreaComponent {
 	}
 
 	private getHeroEntity(playerEntity: Entity): Entity {
+		// console.log('getting hero from playerentity', playerEntity, playerEntity.tags.toJS());
 		const heroEntityId = playerEntity.getTag(GameTag.HERO_ENTITY);
 		return this._entities.get(heroEntityId);
 	}

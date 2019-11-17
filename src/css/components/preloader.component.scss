@@ -120,3 +120,7 @@ $dark-foreground-forth: $gray130;
 		content: '...';
 	}
 }
+
+::ng-deep a {
+	color: inherit;
+}

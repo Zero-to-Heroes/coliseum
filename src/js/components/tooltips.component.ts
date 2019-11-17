@@ -166,7 +166,7 @@ export class TooltipsComponent implements AfterViewInit {
 		}
 		const styles = getComputedStyle(tooltipElement);
 		this.tooltipSize = parseInt(styles.width.split('%')[0]) * 0.01;
-		this.logger.info('[tooltips] tooltip variables initialized', this.tooltipSize);
+		// this.logger.info('[tooltips] tooltip variables initialized', this.tooltipSize);
 		this.cacheTooltipSize();
 	}
 
@@ -177,18 +177,18 @@ export class TooltipsComponent implements AfterViewInit {
 			setTimeout(() => this.cacheTooltipSize(), 20);
 			return;
 		}
-		const styles = getComputedStyle(tooltipElement);
-		this.logger.debug('[tooltips] tooltip size', this.tooltipSize, styles.width, styles);
+		// const styles = getComputedStyle(tooltipElement);
+		// this.logger.debug('[tooltips] tooltip size', this.tooltipSize, styles.width, styles);
 		this.tooltipWidth = this.rect.width * this.tooltipSize;
 		this.tooltipHeight = this.tooltipWidth * CARD_ASPECT_RATIO;
 		this.horizontalOffset = this.rect.width * 0.018;
-		this.logger.info(
-			'[tooltips] cached tooltip info',
-			this.tooltipWidth,
-			this.tooltipHeight,
-			this.horizontalOffset,
-			this.rect,
-		);
+		// this.logger.info(
+		// 	'[tooltips] cached tooltip info',
+		// 	this.tooltipWidth,
+		// 	this.tooltipHeight,
+		// 	this.horizontalOffset,
+		// 	this.rect,
+		// );
 	}
 
 	@HostListener('window:resize', ['$event'])

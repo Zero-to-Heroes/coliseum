@@ -23,6 +23,7 @@
 		"ngx-logger": "3.3.11",
 		"rxjs": "6.4.0",
 		"sax": "1.2.4",
+		"saxes": "^4.0.2",
 		"ts-data.stack": "1.0.6",
 		"ts-keycode-enum": "1.0.6",
 		"xhr2": "^0.2.0",
