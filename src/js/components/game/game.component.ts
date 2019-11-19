@@ -29,6 +29,7 @@ import { Events } from '../../services/events.service';
 					[showCards]="_showHiddenCards"
 					[playerId]="_opponentId"
 					[opponentId]="_playerId"
+					[isMainPlayer]="false"
 				>
 				</play-area>
 				<play-area
@@ -37,6 +38,7 @@ import { Events } from '../../services/events.service';
 					[entities]="_entities"
 					[options]="_options"
 					[playerId]="_playerId"
+					[isMainPlayer]="true"
 				>
 				</play-area>
 			</div>

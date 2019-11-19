@@ -31,7 +31,7 @@ import { NGXLogger } from 'ngx-logger';
 			<sleeping *ngIf="sleeping"></sleeping>
 			<power-indicator [entity]="_entity"></power-indicator>
 			<card-on-board-overlays [entity]="_entity"></card-on-board-overlays>
-			<tavern-level-icon *ngIf="tavernTier > 0" [level]="tavernTier"></tavern-level-icon>
+			<tavern-level-icon *ngIf="!isMainPlayer && tavernTier > 0" [level]="tavernTier"></tavern-level-icon>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -59,6 +59,8 @@ export class CardOnBoardComponent {
 	tavernTier: number;
 
 	constructor(private cards: AllCardsService, private logger: NGXLogger) {}
+
+	@Input() isMainPlayer: boolean;
 
 	@Input('entity') set entity(entity: Entity) {
 		this.logger.debug('[card-on-board] setting entity', entity.id, entity, entity.tags.toJS());
@@ -94,7 +96,7 @@ export class CardOnBoardComponent {
 			entity.getTag(GameTag.JUST_PLAYED) === 1 &&
 			entity.getTag(GameTag.CHARGE) !== 1;
 		this.tavernTier = entity.getTag(GameTag.TECH_LEVEL);
-		console.log('tavern tier', this.tavernTier, entity.tags.toJS());
+		console.log('tavern tier', entity.id, this.tavernTier, entity.tags.toJS());
 	}
 
 	@Input('option') set option(value: boolean) {

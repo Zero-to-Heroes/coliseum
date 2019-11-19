@@ -12,7 +12,13 @@ import { GameHelper } from '../../services/game-helper';
 		<div class="play-area" [ngClass]="{ 'mulligan': _isMulligan }">
 			<hand [entities]="hand" [showCards]="_showCards" [options]="handOptions" [controller]="playerEntity"></hand>
 			<hero [entities]="_entities" [playerId]="_playerId" [opponentId]="opponentId" [options]="_options"> </hero>
-			<board [entities]="board" [enchantmentCandidates]="enchantmentCandidates" [options]="boardOptions"> </board>
+			<board
+				[entities]="board"
+				[enchantmentCandidates]="enchantmentCandidates"
+				[options]="boardOptions"
+				[isMainPlayer]="isMainPlayer"
+			>
+			</board>
 			<mana-tray
 				[total]="totalCrystals"
 				[available]="availableCrystals"
@@ -51,6 +57,7 @@ export class PlayAreaComponent {
 	constructor(private logger: NGXLogger) {}
 
 	@Input() opponentId: number;
+	@Input() isMainPlayer: boolean;
 
 	@Input('mulligan') set mulligan(value: string) {
 		this.logger.debug('[play-area] setting mulligan', value);

@@ -9,7 +9,12 @@ import { NGXLogger } from 'ngx-logger';
 	template: `
 		<ul class="board">
 			<li *ngFor="let entity of _entities; trackBy: trackByFn">
-				<card-on-board [entity]="entity" [enchantments]="buildEnchantments(entity)" [option]="isOption(entity)">
+				<card-on-board
+					[entity]="entity"
+					[enchantments]="buildEnchantments(entity)"
+					[option]="isOption(entity)"
+					[isMainPlayer]="isMainPlayer"
+				>
 				</card-on-board>
 			</li>
 		</ul>
@@ -22,6 +27,8 @@ export class BoardComponent {
 	_options: readonly number[];
 
 	constructor(private logger: NGXLogger) {}
+
+	@Input() isMainPlayer: boolean;
 
 	@Input('entities') set entities(entities: readonly Entity[]) {
 		this.logger.debug('[board] setting new entities', entities);
