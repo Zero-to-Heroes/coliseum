@@ -17,7 +17,7 @@ import { Events } from '../../../services/events.service';
 	selector: 'overlays',
 	styleUrls: ['../../../../css/components/game/overlay/overlays.component.scss'],
 	template: `
-		<div class="overlays" *ngIf="isOverlay">
+		<div class="overlays">
 			<mulligan
 				*ngIf="_isMulligan && !_isHeroSelection"
 				class="top"

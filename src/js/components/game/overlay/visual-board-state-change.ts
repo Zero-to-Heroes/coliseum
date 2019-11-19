@@ -1,3 +1,4 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { AllCardsService } from '@firestone-hs/replay-parser';
 import { NGXLogger } from 'ngx-logger';
@@ -6,27 +7,37 @@ import { NGXLogger } from 'ngx-logger';
 	selector: 'visual-board-state-change',
 	styleUrls: ['../../../../css/components/game/overlay/visual-board-state-change.component.scss'],
 	template: `
-		<div class="visual-board-state-change" cardElementResize [isCardElement]="false" [fontSizeRatio]="0.04">
-			<div class="state recruit" *ngIf="state === 1">
-				<img
-					class="splash"
-					src="https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/battlegrounds/recruit.png"
-				/>
-				<div class="text"><span resizeTarget>Recruit</span></div>
-			</div>
-			<div class="state combat" *ngIf="state === 2">
-				<img
-					class="splash"
-					src="https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/battlegrounds/combat.png"
-				/>
-				<div class="text" resizeTarget><span>Combat</span></div>
+		<div class="visual-board-state-change">
+			<div class="state {{ style }}">
+				<img class="splash" [src]="image" />
+				<div class="text">
+					<svg viewBox="0 0 56 18">
+						<text x="0" y="15">{{ text }}</text>
+					</svg>
+				</div>
 			</div>
 		</div>
 	`,
+	animations: [
+		trigger('fadeInOut', [
+			transition(':enter', [style({ width: 0 }), animate(300, style({ width: '100%' }))]),
+			transition(':leave', [style({ width: '100%' }), animate(300, style({ width: 0 }))]),
+		]),
+	],
+	host: { '[@fadeInOut]': 'in' },
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VisualBoardStateChangeComponent {
-	@Input() state: number;
+	style: string;
+	image: string;
+	text: string;
+
+	@Input() set state(value: number) {
+		this.style = value === 1 ? 'recruit' : 'combat';
+		const img = value === 1 ? 'recruit' : 'combat';
+		this.image = `https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/battlegrounds/${img}.png`;
+		this.text = value === 1 ? 'Recruit' : 'Combat';
+	}
 
 	constructor(private logger: NGXLogger, private cards: AllCardsService) {}
 }

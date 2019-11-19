@@ -2,6 +2,7 @@ import { Location, LocationStrategy, PathLocationStrategy } from '@angular/commo
 import { ErrorHandler, Injectable, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReplayParserModule } from '@firestone-hs/replay-parser';
 import { captureException, init } from '@sentry/browser';
 import { Ng2FittextModule } from 'ng2-fittext';
@@ -99,6 +100,7 @@ export class SentryErrorHandler implements ErrorHandler {
 	imports: [
 		BrowserModule,
 		FormsModule,
+		BrowserAnimationsModule,
 		Ng2FittextModule,
 		LoggerModule.forRoot({ level: NgxLoggerLevel.INFO }),
 		ReplayParserModule.forRoot(),
