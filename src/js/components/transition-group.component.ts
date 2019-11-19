@@ -23,7 +23,8 @@ export class TransitionGroupComponent {
 			items.forEach(this.applyTranslation);
 
 			// force reflow to put everything in position
-			// const offSet = document.body.offsetHeight;
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			const offSet = document.body.offsetHeight;
 			this.items.forEach(this.runTransition.bind(this));
 		});
 	}
