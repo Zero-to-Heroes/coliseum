@@ -76,6 +76,8 @@ export class HeroComponent {
 			this._entities && this._entities.find(entity => entity.getTag(GameTag.PLAYER_ID) === this._opponentId);
 		this.tavernLevel =
 			opponentEntity &&
+			this._hero &&
+			this._hero.cardID === 'TB_BaconShopBob' &&
 			gameEntity.getTag(GameTag.TECH_LEVEL_MANA_GEM) &&
 			opponentEntity.getTag(GameTag.PLAYER_TECH_LEVEL)
 				? opponentEntity.getTag(GameTag.PLAYER_TECH_LEVEL)
