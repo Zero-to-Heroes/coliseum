@@ -1,6 +1,9 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { CardType, GameTag, Zone } from '@firestone-hs/reference-data';
 import { Entity } from '@firestone-hs/replay-parser';
+import { Map } from 'immutable';
 import { NGXLogger } from 'ngx-logger';
+import { GameHelper } from '../../../services/game-helper';
 
 @Component({
 	selector: 'hero',
@@ -8,47 +11,105 @@ import { NGXLogger } from 'ngx-logger';
 	template: `
 		<div class="hero">
 			<weapon [weapon]="_weapon" *ngIf="_weapon"></weapon>
-			<hero-card [hero]="_hero" [secrets]="_secrets" [option]="isOption(_hero)"> </hero-card>
+			<hero-card [hero]="_hero" [playerEntity]="playerEntity" [secrets]="_secrets" [option]="isOption(_hero)">
+			</hero-card>
 			<hero-power [heroPower]="_heroPower" [option]="isOption(_heroPower)"></hero-power>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeroComponent {
+	_entities: Map<number, Entity>;
+	_playerId: number;
+
 	_hero: Entity;
 	_heroPower: Entity;
 	_weapon: Entity;
 	_options: readonly number[];
 	_secrets: readonly Entity[];
+	playerEntity: Entity;
+	heroOptions: readonly number[];
 
 	constructor(private logger: NGXLogger) {}
 
-	@Input('hero') set hero(hero: Entity) {
-		this.logger.info('[hero] setting hero', hero, hero && hero.tags.toJS());
-		this._hero = hero;
+	@Input('entities') set entities(entities: Map<number, Entity>) {
+		this.logger.info('[hero] setting new entities', entities && entities.toJS());
+		this._entities = entities;
+		this.updateEntityGroups();
 	}
 
-	@Input('heroPower') set heroPower(heroPower: Entity) {
-		this.logger.debug('[hero] setting new heroPower', heroPower);
-		this._heroPower = heroPower;
-	}
-
-	@Input('weapon') set weapon(weapon: Entity) {
-		this.logger.debug('[hero] setting new weapon', weapon);
-		this._weapon = weapon;
+	@Input('playerId') set playerId(playerId: number) {
+		this.logger.info('[hero] setting playerId', playerId);
+		this._playerId = playerId;
+		this.updateEntityGroups();
 	}
 
 	@Input('options') set options(value: readonly number[]) {
-		this.logger.debug('[hero] setting options', value);
+		this.logger.info('[hero] setting options', value);
 		this._options = value;
 	}
 
-	@Input('secrets') set secrets(value: readonly Entity[]) {
-		this.logger.debug('[hero] setting secrets', value);
-		this._secrets = value;
+	isOption(entity: Entity): boolean {
+		return this.heroOptions && entity && this.heroOptions.indexOf(entity.id) !== -1;
 	}
 
-	isOption(entity: Entity): boolean {
-		return this._options && entity && this._options.indexOf(entity.id) !== -1;
+	private updateEntityGroups() {
+		this.playerEntity =
+			this._entities && this._entities.find(entity => entity.getTag(GameTag.PLAYER_ID) === this._playerId);
+		this._hero = this.getHeroEntity(this._entities, this.playerEntity);
+		console.log('hero', this._hero, this._hero && this._hero.cardID, this._hero && this._hero.tags.toJS());
+		this._heroPower = this.getHeroPowerEntity(this._entities, this._playerId);
+		this._weapon = this.getWeaponEntity(this._entities, this._playerId);
+		this._secrets = this.getSecretEntities(this._entities, this._playerId);
+		this.heroOptions = GameHelper.getOptions([this._hero, this._heroPower, this._weapon], this._options);
+	}
+
+	private getHeroEntity(entities: Map<number, Entity>, playerEntity: Entity): Entity {
+		// console.log('getting hero from playerentity', playerEntity, playerEntity.tags.toJS());
+		if (!entities || !playerEntity) {
+			return null;
+		}
+		const heroEntityId = playerEntity.getTag(GameTag.HERO_ENTITY);
+		const result = entities.get(heroEntityId);
+		return result &&
+			result.cardID &&
+			result.getTag(GameTag.ZONE) === Zone.PLAY &&
+			result.cardID !== 'TB_BaconShop_HERO_PH'
+			? result
+			: null;
+	}
+
+	private getHeroPowerEntity(entities: Map<number, Entity>, playerId: number): Entity {
+		if (!entities || !playerId) {
+			return null;
+		}
+		const heroPower = entities
+			.toArray()
+			.filter(entity => entity.getTag(GameTag.CARDTYPE) === CardType.HERO_POWER)
+			.filter(entity => entity.getTag(GameTag.ZONE) === Zone.PLAY)
+			.filter(entity => entity.getTag(GameTag.CONTROLLER) === playerId)[0];
+		return heroPower;
+	}
+
+	private getWeaponEntity(entities: Map<number, Entity>, playerId: number): Entity {
+		if (!entities || !playerId) {
+			return null;
+		}
+		return entities
+			.toArray()
+			.filter(entity => entity.getTag(GameTag.CARDTYPE) === CardType.WEAPON)
+			.filter(entity => entity.getTag(GameTag.ZONE) === Zone.PLAY)
+			.filter(entity => entity.getTag(GameTag.CONTROLLER) === playerId)[0];
+	}
+
+	private getSecretEntities(entities: Map<number, Entity>, playerId: number): readonly Entity[] {
+		if (!entities || !playerId) {
+			return null;
+		}
+		return entities
+			.toArray()
+			.filter(entity => entity.getTag(GameTag.CONTROLLER) === playerId)
+			.filter(entity => entity.getTag(GameTag.ZONE) === Zone.SECRET)
+			.sort((a, b) => a.getTag(GameTag.ZONE_POSITION) - b.getTag(GameTag.ZONE_POSITION));
 	}
 }

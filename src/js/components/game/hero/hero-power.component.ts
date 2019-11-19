@@ -8,6 +8,7 @@ import { NGXLogger } from 'ngx-logger';
 	styleUrls: ['../../../../css/components/game/hero/hero-power.component.scss'],
 	template: `
 		<div
+			*ngIf="entity"
 			class="hero-power"
 			[ngClass]="{ 'highlight': _option }"
 			cardTooltip

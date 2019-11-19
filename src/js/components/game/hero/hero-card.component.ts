@@ -26,6 +26,7 @@ import { NGXLogger } from 'ngx-logger';
 })
 export class HeroCardComponent {
 	_entity: Entity;
+	_playerEntity: Entity;
 	// Some actions use the player id instead of the entity id when describing targets
 	// so having both of them makes us able to ignore these discrepancies
 	playerEntityId: number;
@@ -46,20 +47,26 @@ export class HeroCardComponent {
 	@Input('hero') set hero(hero: Entity) {
 		this.logger.debug('[hero-card] setting hero', hero, hero && hero.tags.toJS());
 		this._entity = hero;
-		if (!hero) {
-			return;
-		}
-		this.entityId = hero.id;
-		this.playerEntityId = hero.getTag(GameTag.CONTROLLER) + 1; // If they ever change this logic we need to do something :)
-		this.cardId = hero.cardID;
-		this.cardType = CardType.HERO;
-		this.attack = hero.getTag(GameTag.ATK);
-		this.health = hero.getTag(GameTag.HEALTH);
-		this.damage = hero.getTag(GameTag.DAMAGE);
-		this.armor = hero.getTag(GameTag.ARMOR);
-		this.premium = hero.getTag(GameTag.PREMIUM) === 1;
+		this.updateInfo();
+	}
 
-		this.shownDamage = hero.damageForThisAction;
+	@Input() set playerEntity(value: Entity) {
+		this._playerEntity = value;
+		this.updateInfo();
+	}
+
+	private updateInfo() {
+		this.entityId = this._entity ? this._entity.id : null;
+		this.playerEntityId = this._playerEntity ? this._playerEntity.id : null; // If they ever change this logic we need to do something :)
+		this.cardId = this._entity ? this._entity.cardID : null;
+		this.cardType = CardType.HERO;
+		this.attack = this._entity ? this._entity.getTag(GameTag.ATK) : null;
+		this.health = this._entity ? this._entity.getTag(GameTag.HEALTH) : null;
+		this.damage = this._entity ? this._entity.getTag(GameTag.DAMAGE) : null;
+		this.armor = this._entity ? this._entity.getTag(GameTag.ARMOR) : null;
+		this.premium = this._entity ? this._entity.getTag(GameTag.PREMIUM) === 1 : null;
+
+		this.shownDamage = this._entity ? this._entity.damageForThisAction : null;
 	}
 
 	@Input('option') set option(value: boolean) {

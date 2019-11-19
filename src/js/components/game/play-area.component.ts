@@ -3,6 +3,7 @@ import { CardType, GameTag, Zone } from '@firestone-hs/reference-data';
 import { Entity } from '@firestone-hs/replay-parser';
 import { Map } from 'immutable';
 import { NGXLogger } from 'ngx-logger';
+import { GameHelper } from '../../services/game-helper';
 
 @Component({
 	selector: 'play-area',
@@ -10,8 +11,7 @@ import { NGXLogger } from 'ngx-logger';
 	template: `
 		<div class="play-area" [ngClass]="{ 'mulligan': _isMulligan }">
 			<hand [entities]="hand" [showCards]="_showCards" [options]="handOptions" [controller]="playerEntity"></hand>
-			<hero [hero]="hero" [heroPower]="heroPower" [weapon]="weapon" [secrets]="secrets" [options]="heroOptions">
-			</hero>
+			<hero [entities]="_entities" [playerId]="_playerId" [options]="_options"> </hero>
 			<board [entities]="board" [enchantmentCandidates]="enchantmentCandidates" [options]="boardOptions"> </board>
 			<mana-tray
 				[total]="totalCrystals"
@@ -39,11 +39,6 @@ export class PlayAreaComponent {
 	boardOptions: readonly number[];
 	deck: readonly Entity[];
 	playerEntity: Entity;
-	hero: Entity;
-	heroOptions: readonly number[];
-	heroPower: Entity;
-	weapon: Entity;
-	secrets: readonly Entity[];
 
 	totalCrystals: number;
 	availableCrystals: number;
@@ -51,7 +46,7 @@ export class PlayAreaComponent {
 	lockedCrystals: number;
 	futureLockedCrystals: number;
 
-	private _options: readonly number[];
+	_options: readonly number[];
 
 	constructor(private logger: NGXLogger) {}
 
@@ -91,16 +86,11 @@ export class PlayAreaComponent {
 
 		this.playerEntity = this._entities.find(entity => entity.getTag(GameTag.PLAYER_ID) === this._playerId);
 		this.hand = this.getHandEntities(this._playerId);
-		this.handOptions = this.getOptions(this.hand, this._options);
+		this.handOptions = GameHelper.getOptions(this.hand, this._options);
 		this.board = this.getBoardEntities(this._playerId);
-		this.boardOptions = this.getOptions(this.board, this._options);
+		this.boardOptions = GameHelper.getOptions(this.board, this._options);
 		this.enchantmentCandidates = this.getEnchantmentCandidates(this.board, this._entities.toArray());
 		this.deck = this.getDeckEntities(this._playerId);
-		this.hero = this.getHeroEntity(this.playerEntity);
-		this.heroPower = this.getHeroPowerEntity(this._playerId);
-		this.weapon = this.getWeaponEntity(this._playerId);
-		this.secrets = this.getSecretEntities(this._playerId);
-		this.heroOptions = this.getOptions([this.hero, this.heroPower, this.weapon], this._options);
 
 		this.totalCrystals = this.playerEntity.getTag(GameTag.RESOURCES) || 0;
 		this.availableCrystals = this.totalCrystals - (this.playerEntity.getTag(GameTag.RESOURCES_USED) || 0);
@@ -139,43 +129,5 @@ export class PlayAreaComponent {
 		return entities
 			.filter(entity => entity.zone() === Zone.PLAY)
 			.filter(entity => boardIds.indexOf(entity.getTag(GameTag.ATTACHED)) !== -1);
-	}
-
-	private getHeroEntity(playerEntity: Entity): Entity {
-		// console.log('getting hero from playerentity', playerEntity, playerEntity.tags.toJS());
-		const heroEntityId = playerEntity.getTag(GameTag.HERO_ENTITY);
-		return this._entities.get(heroEntityId);
-	}
-
-	private getHeroPowerEntity(playerId: number): Entity {
-		const heroPower = this._entities
-			.toArray()
-			.filter(entity => entity.getTag(GameTag.CARDTYPE) === CardType.HERO_POWER)
-			.filter(entity => entity.getTag(GameTag.ZONE) === Zone.PLAY)
-			.filter(entity => entity.getTag(GameTag.CONTROLLER) === playerId)[0];
-		return heroPower;
-	}
-
-	private getWeaponEntity(playerId: number): Entity {
-		return this._entities
-			.toArray()
-			.filter(entity => entity.getTag(GameTag.CARDTYPE) === CardType.WEAPON)
-			.filter(entity => entity.getTag(GameTag.ZONE) === Zone.PLAY)
-			.filter(entity => entity.getTag(GameTag.CONTROLLER) === playerId)[0];
-	}
-
-	private getSecretEntities(playerId: number): readonly Entity[] {
-		return this._entities
-			.toArray()
-			.filter(entity => entity.getTag(GameTag.CONTROLLER) === playerId)
-			.filter(entity => entity.getTag(GameTag.ZONE) === Zone.SECRET)
-			.sort((a, b) => a.getTag(GameTag.ZONE_POSITION) - b.getTag(GameTag.ZONE_POSITION));
-	}
-
-	private getOptions(zone: readonly Entity[], options: readonly number[]): readonly number[] {
-		return zone
-			.filter(entity => entity)
-			.map(entity => entity.id)
-			.filter(id => options.indexOf(id) !== -1);
 	}
 }
