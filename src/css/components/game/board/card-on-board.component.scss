@@ -24,6 +24,13 @@
 		}
 	}
 
+	tavern-level-icon {
+		width: 55%;
+		position: absolute;
+		left: 25%;
+		top: -8%;
+	}
+
 	::ng-deep .card-art.card-art {
 		width: 123%;
 		// clip-path: ellipse(36% 41% at 50% 50%);
