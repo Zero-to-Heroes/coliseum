@@ -63,17 +63,13 @@ declare var ga;
 export class AppComponent implements OnDestroy {
 	reviewId: string;
 	status: string;
-
 	game: Game;
 	currentAction: Action;
-
 	text: string;
 	turnString: string;
 	showHiddenCards = false;
-
 	totalTime: number;
 	currentTime = 0;
-
 	showPreloader = true;
 	gameMode: string;
 
@@ -274,7 +270,6 @@ export class AppComponent implements OnDestroy {
 		}
 
 		this.currentAction = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn];
-
 		this.text = this.computeText();
 		this.turnString = this.computeTurnString();
 		this.gameMode = this.computeGameMode();

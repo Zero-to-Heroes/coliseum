@@ -1,15 +1,6 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, ViewRef } from '@angular/core';
-import { GameTag, PlayState } from '@firestone-hs/reference-data';
-import {
-	Action,
-	BaconOpponentRevealedAction,
-	CardBurnAction,
-	DiscoverAction,
-	Entity,
-	FatigueDamageAction,
-	QuestCompletedAction,
-	SecretRevealedAction,
-} from '@firestone-hs/replay-parser';
+import { GameTag } from '@firestone-hs/reference-data';
+import { Action, Entity, QuestCompletedAction, SecretRevealedAction } from '@firestone-hs/replay-parser';
 import { Map } from 'immutable';
 import { NGXLogger } from 'ngx-logger';
 import { Events } from '../../services/events.service';
@@ -24,15 +15,15 @@ import { Events } from '../../services/events.service';
 		<div
 			class="game {{ gameMode }}"
 			[ngClass]="{
-				'in-overlay': isOverlay,
-				'mulligan': _isMulligan || _isHeroSelection || _opponentsRevealed?.length > 0,
+				'blur': isOverlay,
+				'dark-blur': isDarkOverlay,
 				'quest': _quest
 			}"
 		>
 			<div class="play-areas">
 				<play-area
 					class="top"
-					[mulligan]="_isMulligan"
+					[mulligan]="isDarkOverlay"
 					[entities]="_entities"
 					[options]="_options"
 					[showCards]="_showHiddenCards"
@@ -41,7 +32,7 @@ import { Events } from '../../services/events.service';
 				</play-area>
 				<play-area
 					class="bottom"
-					[mulligan]="_isMulligan"
+					[mulligan]="isDarkOverlay"
 					[entities]="_entities"
 					[options]="_options"
 					[playerId]="_playerId"
@@ -64,54 +55,21 @@ import { Events } from '../../services/events.service';
 			<quest-tooltip *ngIf="_quest" [quest]="_quest"></quest-tooltip>
 			<quest-completed *ngIf="_questCompleted" [quest]="_questCompleted"></quest-completed>
 			<target-zone *ngIf="_targets" [targets]="_targets" [active]="_playerId === _activePlayer"> </target-zone>
-			<div class="overlays" *ngIf="isOverlay">
-				<mulligan
-					*ngIf="_isMulligan && !_isHeroSelection"
-					class="top"
-					[entities]="_entities"
-					[crossed]="_crossed"
-					[showCards]="_showHiddenCards"
-					[playerId]="_opponentId"
-				>
-				</mulligan>
-				<mulligan
-					*ngIf="_isMulligan && !_isHeroSelection"
-					class="bottom"
-					[entities]="_entities"
-					[crossed]="_crossed"
-					[playerId]="_playerId"
-				>
-				</mulligan>
-				<hero-selection
-					*ngIf="_isHeroSelection"
-					class="bottom"
-					[entities]="_entities"
-					[crossed]="_crossed"
-					[playerId]="_playerId"
-				>
-				</hero-selection>
-				<opponents-reveal
-					*ngIf="_opponentsRevealed"
-					[entities]="_entities"
-					[opponentIds]="_opponentsRevealed"
-					[playerId]="_playerId"
-				>
-				</opponents-reveal>
-				<end-game *ngIf="_isEndGame" [status]="_endGameStatus" [entities]="_entities" [playerId]="_playerId">
-				</end-game>
-				<discover *ngIf="_discovers" [entities]="_entities" [choices]="_discovers" [chosen]="_chosen">
-				</discover>
-				<burn *ngIf="_burned" [entities]="_entities" [burned]="_burned"> </burn>
-				<fatigue *ngIf="_fatigue" [fatigue]="_fatigue"></fatigue>
-			</div>
+			<overlays
+				[playerId]="_playerId"
+				[currentAction]="_currentAction"
+				[opponentId]="_opponentId"
+				[showHiddenCards]="_showHiddenCards"
+				(overlayUpdated)="onOverlayUpdated($event)"
+			>
+			</overlays>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GameComponent implements AfterViewInit {
-	_turn: string;
+	_currentAction: Action;
 	_entities: Map<number, Entity>;
-	_crossed: readonly number[] = [];
 	_playerId: number;
 	_opponentId: number;
 	_playerName: string;
@@ -127,15 +85,7 @@ export class GameComponent implements AfterViewInit {
 
 	_quest: Entity;
 	isOverlay: boolean;
-	_fatigue: number;
-	_discovers: readonly number[];
-	_burned: readonly number[];
-	_chosen: readonly number[];
-	_isMulligan: boolean;
-	_isHeroSelection: boolean;
-	_opponentsRevealed: readonly number[];
-	_isEndGame: boolean;
-	_endGameStatus: PlayState;
+	isDarkOverlay: boolean;
 
 	@Input() gameMode: string;
 
@@ -186,40 +136,28 @@ export class GameComponent implements AfterViewInit {
 	}
 
 	@Input() set currentAction(value: Action) {
-		this.logger.debug('[game] setting new action', value);
+		this.logger.info('[game] setting new action', value);
+		this._currentAction = value;
 		this._entities = value ? value.entities : undefined;
-		this._crossed = value ? value.crossedEntities : undefined;
 		this._activePlayer = value ? value.activePlayer : undefined;
 		this.activeSpellId = value ? value.activeSpell : undefined;
 		this.secretRevealedId = value instanceof SecretRevealedAction ? value.entityId : null;
 		this.questCompletedId = value instanceof QuestCompletedAction ? value.originId : null;
-		this._burned = value instanceof CardBurnAction ? value.burnedCardIds : null;
-		this._fatigue = value instanceof FatigueDamageAction ? value.amount : null;
-		this._discovers = value instanceof DiscoverAction ? value.choices : null;
-		this._chosen = value instanceof DiscoverAction ? value.chosen : null;
-		this._isMulligan = value ? value.isMulligan : null;
-		this._isHeroSelection = value ? value.isHeroSelection : null;
-		this._isEndGame = value ? value.isEndGame : null;
-		this._endGameStatus = value ? value.endGameStatus : null;
 		this._targets = value ? value.targets : null;
 		this._options = value ? value.options : null;
-		this._opponentsRevealed = value instanceof BaconOpponentRevealedAction ? value.opponentIds : null;
+
 		this.updateActiveSpell();
 		this.updateSecretRevealed();
 		this.updateQuestCompleted();
-		this.updateOverlay();
 	}
 
-	private updateOverlay() {
-		this.isOverlay =
-			this._isMulligan ||
-			this._isHeroSelection ||
-			(this._opponentsRevealed && this._opponentsRevealed.length > 0) ||
-			this._isEndGame ||
-			(this._discovers && this._discovers.length > 0) ||
-			(this._burned && this._burned.length > 0) ||
-			this._fatigue > 0;
-		console.log('is overlay?', this.isOverlay, this._opponentsRevealed && this._opponentsRevealed.length > 0);
+	onOverlayUpdated(event: { isOverlay: boolean; isDarkOverlay: boolean }) {
+		console.log('overlay updated', event);
+		this.isOverlay = event.isOverlay;
+		this.isDarkOverlay = event.isDarkOverlay;
+		if (!(this.cdr as ViewRef).destroyed) {
+			this.cdr.detectChanges();
+		}
 	}
 
 	private updateActiveSpell() {

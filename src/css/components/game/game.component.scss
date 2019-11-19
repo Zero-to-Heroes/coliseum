@@ -19,7 +19,7 @@
 		background-repeat: no-repeat, no-repeat;
 	}
 
-	.overlays {
+	overlays {
 		position: absolute;
 		top: 0;
 		left: 0;
@@ -31,7 +31,7 @@
 		flex-shrink: 0;
 	}
 
-	&.in-overlay {
+	&.blur {
 		.play-areas,
 		player-name {
 			filter: blur(3px);
@@ -45,11 +45,11 @@
 		}
 	}
 
-	&.mulligan {
+	&.dark-blur {
 		::ng-deep hand {
 			opacity: 0;
 		}
-		.overlays {
+		overlays {
 			background-color: rgba(0, 0, 0, 0.8);
 		}
 	}
@@ -117,34 +117,5 @@
 		&.bottom {
 			top: 60%;
 		}
-	}
-
-	mulligan,
-	hero-selection {
-		flex-grow: 0;
-		flex-shrink: 0;
-		display: flex;
-		overflow: hidden;
-
-		&.top {
-			height: 47%;
-			flex-basis: 47%;
-			max-height: 47%;
-		}
-		&.bottom {
-			height: 53%;
-			flex-basis: 53%;
-			max-height: 53%;
-		}
-	}
-
-	opponents-reveal {
-		flex-grow: 0;
-		flex-shrink: 0;
-		display: flex;
-		overflow: hidden;
-		height: 100%;
-		flex-basis: 100%;
-		max-height: 100%;
 	}
 }

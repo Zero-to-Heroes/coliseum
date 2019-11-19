@@ -59,6 +59,7 @@ import { FatigueComponent } from '../../components/game/overlay/fatigue.componen
 import { HeroSelectionComponent } from '../../components/game/overlay/hero-selection.component';
 import { MulliganComponent } from '../../components/game/overlay/mulligan.component';
 import { OpponentRevealedComponent } from '../../components/game/overlay/opponents-reveal.component';
+import { OverlaysComponent } from '../../components/game/overlay/overlays.component';
 import { PlayerNameComponent } from '../../components/game/overlay/player-name.component';
 import { QuestCompletedComponent } from '../../components/game/overlay/quest-completed.component';
 import { QuestTooltipComponent } from '../../components/game/overlay/quest-tooltip.component';
@@ -103,6 +104,7 @@ export class SentryErrorHandler implements ErrorHandler {
 	declarations: [
 		AppComponent,
 		GameComponent,
+		OverlaysComponent,
 		TurnNarratorComponent,
 		HandComponent,
 		PlayAreaComponent,
