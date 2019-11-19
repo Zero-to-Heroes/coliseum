@@ -18,5 +18,9 @@
 
 	leaderboard-entity {
 		margin-bottom: 5%;
+
+		&.next-opponent {
+			left: 40%;
+		}
 	}
 }

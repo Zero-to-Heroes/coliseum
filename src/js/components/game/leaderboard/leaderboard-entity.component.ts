@@ -23,7 +23,6 @@ export class LeaderboardEntityComponent {
 
 	@Input() set isMainPlayer(value: boolean) {
 		this._isMainPlayer = value;
-		console.log('setting main player', value);
 		this.updateEntity();
 	}
 
@@ -38,7 +37,6 @@ export class LeaderboardEntityComponent {
 			return;
 		}
 		const frame = this._isMainPlayer ? 'leaderboard_frame_player' : 'leaderboard_frame_opponent';
-		console.log('updating frame');
 		this.leaderboardFrame = `https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/battlegrounds/${frame}.png`;
 	}
 }

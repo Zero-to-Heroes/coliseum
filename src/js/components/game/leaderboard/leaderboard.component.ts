@@ -11,7 +11,8 @@ import { NGXLogger } from 'ngx-logger';
 		<div class="leaderboard">
 			<div class="entities">
 				<leaderboard-entity
-					*ngFor="let entity of leaderboard; trackBy: trackByFn"
+					*ngFor="let entity of leaderboard; let i = index; trackBy: trackByFn"
+					[ngClass]="{ 'next-opponent': isNextOpponent(entity) }"
 					[entity]="entity"
 					[isMainPlayer]="isMainPlayer(entity)"
 				>
@@ -25,13 +26,13 @@ export class LeaderboardComponent {
 	_entities: Map<number, Entity>;
 	_playerId: number;
 	leaderboard: readonly Entity[];
+	nextOpponentPlayerId: number;
 
 	private playerEntity: PlayerEntity;
 
 	constructor(private logger: NGXLogger, private cards: AllCardsService) {}
 
 	@Input() set playerId(value: number) {
-		console.log('laoderboard player id', value);
 		this._playerId = value;
 		this.updateLeaderboard();
 	}
@@ -43,8 +44,12 @@ export class LeaderboardComponent {
 
 	isMainPlayer(entity: Entity): boolean {
 		const result = this.playerEntity && entity.getTag(GameTag.CONTROLLER) === this.playerEntity.playerId;
-		console.log('is main player', result, entity, entity.getTag(GameTag.CONTROLLER), this.playerEntity);
+		// console.log('is main player', this.playerEntity.tags.toJS());
 		return result;
+	}
+
+	isNextOpponent(entity: Entity): boolean {
+		return entity.getTag(GameTag.PLAYER_ID) === this.nextOpponentPlayerId;
 	}
 
 	trackByFn(index, item: Entity) {
@@ -63,5 +68,6 @@ export class LeaderboardComponent {
 			.toArray()
 			.filter(entity => entity.getTag(GameTag.PLAYER_LEADERBOARD_PLACE) > 0)
 			.sort(entity => entity.getTag(GameTag.PLAYER_LEADERBOARD_PLACE));
+		this.nextOpponentPlayerId = this.playerEntity.getTag(GameTag.NEXT_OPPONENT_PLAYER_ID);
 	}
 }
