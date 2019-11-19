@@ -67,7 +67,8 @@ export class LeaderboardComponent {
 		this.leaderboard = this._entities
 			.toArray()
 			.filter(entity => entity.getTag(GameTag.PLAYER_LEADERBOARD_PLACE) > 0)
-			.sort(entity => entity.getTag(GameTag.PLAYER_LEADERBOARD_PLACE));
+			.sort((a, b) => a.getTag(GameTag.PLAYER_LEADERBOARD_PLACE) - b.getTag(GameTag.PLAYER_LEADERBOARD_PLACE));
+		console.log('leaderboard', this.leaderboard.map(entity => entity.cardID));
 		this.nextOpponentPlayerId = this.playerEntity.getTag(GameTag.NEXT_OPPONENT_PLAYER_ID);
 	}
 }
