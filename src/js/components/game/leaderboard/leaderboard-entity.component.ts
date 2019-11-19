@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { GameTag } from '@firestone-hs/reference-data';
 import { AllCardsService, Entity } from '@firestone-hs/replay-parser';
 import { NGXLogger } from 'ngx-logger';
 
@@ -7,7 +6,7 @@ import { NGXLogger } from 'ngx-logger';
 	selector: 'leaderboard-entity',
 	styleUrls: ['../../../../css/components/game/leaderboard/leaderboard-entity.component.scss'],
 	template: `
-		<div class="leaderboard-entity" [ngClass]="{ 'main-player': _playerId === _entity.id }">
+		<div class="leaderboard-entity">
 			<img class="portrait" [src]="image" />
 			<img class="frame" [src]="leaderboardFrame" />
 		</div>
@@ -29,7 +28,6 @@ export class LeaderboardEntityComponent {
 
 	@Input() set entity(value: Entity) {
 		this._entity = value;
-		console.log('leaderboard position', value.cardID, value.getTag(GameTag.PLAYER_LEADERBOARD_PLACE));
 		this.image = `https://static.zerotoheroes.com/hearthstone/cardart/256x/${value.cardID}.jpg`;
 		this.updateEntity();
 	}

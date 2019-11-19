@@ -9,8 +9,9 @@ import { NGXLogger } from 'ngx-logger';
 	styleUrls: ['../../../../css/components/game/leaderboard/leaderboard.component.scss'],
 	template: `
 		<div class="leaderboard">
-			<div class="entities">
+			<div class="entities" [transition-group]="'flip-list'">
 				<leaderboard-entity
+					transition-group-item
 					*ngFor="let entity of leaderboard; let i = index; trackBy: trackByFn"
 					[ngClass]="{ 'next-opponent': isNextOpponent(entity) }"
 					[entity]="entity"

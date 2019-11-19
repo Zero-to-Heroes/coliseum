@@ -74,10 +74,12 @@ import { TargetZoneComponent } from '../../components/game/target-zone.component
 import { PreloaderComponent } from '../../components/preloader.component';
 import { SeekerComponent } from '../../components/seeker.component';
 import { TooltipComponent, TooltipsComponent } from '../../components/tooltips.component';
+import { TransitionGroupComponent } from '../../components/transition-group.component';
 import { TurnNarratorComponent } from '../../components/turn-narrator.component';
 import { CardElementResizeDirective } from '../../directives/card-element-resize.directive';
 import { CardResizeDirective } from '../../directives/card-resize.directive';
 import { CardTooltipDirective } from '../../directives/card-tooltip.directive';
+import { TransitionGroupItemDirective } from '../../directives/transition-group-item.directive';
 import { Events } from '../../services/events.service';
 
 console.log('version is ' + process.env.APP_VERSION);
@@ -190,9 +192,12 @@ export class SentryErrorHandler implements ErrorHandler {
 
 		TargetZoneComponent,
 
+		TransitionGroupComponent,
+
 		CardTooltipDirective,
 		CardResizeDirective,
 		CardElementResizeDirective,
+		TransitionGroupItemDirective,
 	],
 	providers: [
 		Location,
