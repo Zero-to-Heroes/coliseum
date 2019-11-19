@@ -1,6 +1,15 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, ViewRef } from '@angular/core';
 import { GameTag, PlayState } from '@firestone-hs/reference-data';
-import { Entity } from '@firestone-hs/replay-parser';
+import {
+	Action,
+	BaconOpponentRevealedAction,
+	CardBurnAction,
+	DiscoverAction,
+	Entity,
+	FatigueDamageAction,
+	QuestCompletedAction,
+	SecretRevealedAction,
+} from '@firestone-hs/replay-parser';
 import { Map } from 'immutable';
 import { NGXLogger } from 'ngx-logger';
 import { Events } from '../../services/events.service';
@@ -151,23 +160,6 @@ export class GameComponent implements AfterViewInit {
 		});
 	}
 
-	@Input('turn') set turn(value: string) {
-		this.logger.debug('[game] setting turn', value);
-		this._turn = value;
-	}
-
-	@Input('entities') set entities(entities: Map<number, Entity>) {
-		this.logger.debug('[game] setting new entities', entities && entities.toJS());
-		this._entities = entities;
-		this.updateActiveSpell();
-		this.updateSecretRevealed();
-		this.updateQuestCompleted();
-	}
-
-	@Input('crossed') set crossed(value: readonly number[]) {
-		this._crossed = value;
-	}
-
 	@Input('playerId') set playerId(playerId: number) {
 		this.logger.debug('[game] setting playerId', playerId);
 		this._playerId = playerId;
@@ -188,94 +180,33 @@ export class GameComponent implements AfterViewInit {
 		this._opponentName = value;
 	}
 
-	@Input('activePlayer') set activePlayer(value: number) {
-		this.logger.debug('[game] setting activePlayer', value);
-		this._activePlayer = value;
-	}
-
-	@Input('activeSpell') set activeSpell(value: number) {
-		this.logger.debug('[game] setting activeSpell', value);
-		this.activeSpellId = value;
-		this.updateActiveSpell();
-	}
-
-	@Input('secretRevealed') set secretRevealed(value: number) {
-		this.logger.debug('[game] setting secretRevealed', value);
-		this.secretRevealedId = value;
-		this.updateSecretRevealed();
-	}
-
-	@Input('questCompleted') set questCompleted(value: number) {
-		this.logger.debug('[game] setting questCompleted', value);
-		this.questCompletedId = value;
-		this.updateQuestCompleted();
-	}
-
-	@Input('discovers') set discovers(value: readonly number[]) {
-		this.logger.debug('[game] setting discovers', value);
-		this._discovers = value;
-		this.updateOverlay();
-	}
-
-	@Input('burned') set burned(value: readonly number[]) {
-		this.logger.debug('[game] setting burned', value);
-		this._burned = value;
-		this.updateOverlay();
-	}
-
-	@Input('fatigue') set fatigue(value: number) {
-		this.logger.debug('[game] setting fatigue', value);
-		this._fatigue = value;
-		this.updateOverlay();
-	}
-
-	@Input('chosen') set chosen(value: readonly number[]) {
-		this.logger.debug('[game] setting chosen', value);
-		this._chosen = value;
-	}
-
-	@Input('isMulligan') set isMulligan(value: boolean) {
-		this.logger.debug('[game] setting isMulligan', value);
-		this._isMulligan = value;
-		this.updateOverlay();
-	}
-
-	@Input('isHeroSelection') set isHeroSelection(value: boolean) {
-		this.logger.debug('[game] setting isHeroSelection', value);
-		this._isHeroSelection = value;
-		this.updateOverlay();
-	}
-
-	@Input('isEndGame') set isEndGame(value: boolean) {
-		this.logger.debug('[game] setting isEndGame', value);
-		this._isEndGame = value;
-		this.updateOverlay();
-	}
-
 	@Input('showHiddenCards') set showHiddenCards(value: boolean) {
 		this.logger.debug('[game] setting showHiddenCards', value);
 		this._showHiddenCards = value;
 	}
 
-	@Input('endGameStatus') set endGameStatus(value: PlayState) {
-		this.logger.debug('[game] setting endGameStatus', value);
-		this._endGameStatus = value;
-		this.updateOverlay();
-	}
-
-	@Input('targets') set targets(value: readonly [number, number][]) {
-		this.logger.debug('[game] setting targets', value);
-		this._targets = value;
-	}
-
-	@Input('options') set options(value: readonly number[]) {
-		this.logger.debug('[game] setting options', value);
-		this._options = value;
-	}
-
-	@Input('opponentsRevealed') set opponentsRevealed(value: readonly number[]) {
-		this.logger.info('[game] setting opponentsRevealed', value);
-		this._opponentsRevealed = value;
+	@Input() set currentAction(value: Action) {
+		this.logger.debug('[game] setting new action', value);
+		this._entities = value ? value.entities : undefined;
+		this._crossed = value ? value.crossedEntities : undefined;
+		this._activePlayer = value ? value.activePlayer : undefined;
+		this.activeSpellId = value ? value.activeSpell : undefined;
+		this.secretRevealedId = value instanceof SecretRevealedAction ? value.entityId : null;
+		this.questCompletedId = value instanceof QuestCompletedAction ? value.originId : null;
+		this._burned = value instanceof CardBurnAction ? value.burnedCardIds : null;
+		this._fatigue = value instanceof FatigueDamageAction ? value.amount : null;
+		this._discovers = value instanceof DiscoverAction ? value.choices : null;
+		this._chosen = value instanceof DiscoverAction ? value.chosen : null;
+		this._isMulligan = value ? value.isMulligan : null;
+		this._isHeroSelection = value ? value.isHeroSelection : null;
+		this._isEndGame = value ? value.isEndGame : null;
+		this._endGameStatus = value ? value.endGameStatus : null;
+		this._targets = value ? value.targets : null;
+		this._options = value ? value.options : null;
+		this._opponentsRevealed = value instanceof BaconOpponentRevealedAction ? value.opponentIds : null;
+		this.updateActiveSpell();
+		this.updateSecretRevealed();
+		this.updateQuestCompleted();
 		this.updateOverlay();
 	}
 

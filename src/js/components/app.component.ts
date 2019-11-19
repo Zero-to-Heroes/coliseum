@@ -1,18 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, NgZone, OnDestroy, ViewRef } from '@angular/core';
-import { GameType, PlayState } from '@firestone-hs/reference-data';
-import {
-	BaconOpponentRevealedAction,
-	CardBurnAction,
-	DiscoverAction,
-	Entity,
-	FatigueDamageAction,
-	Game,
-	GameParserService,
-	QuestCompletedAction,
-	SecretRevealedAction,
-	Turn,
-} from '@firestone-hs/replay-parser';
-import { Map } from 'immutable';
+import { GameType } from '@firestone-hs/reference-data';
+import { Action, Game, GameParserService, Turn } from '@firestone-hs/replay-parser';
 import { NGXLogger } from 'ngx-logger';
 import { Subscription } from 'rxjs';
 import { ReplayOptions } from '../models/replay-options';
@@ -30,29 +18,12 @@ declare var ga;
 						<div class="aspect-ratio-inner">
 							<game
 								[gameMode]="gameMode"
-								[turn]="turnString"
 								[playerId]="game && game.players[0].playerId"
 								[opponentId]="game && game.players[1].playerId"
 								[playerName]="game && game.players[0].name"
 								[opponentName]="game && game.players[1].name"
-								[activePlayer]="activePlayer"
-								[activeSpell]="activeSpell"
-								[isMulligan]="isMulligan"
-								[isHeroSelection]="isHeroSelection"
-								[opponentsRevealed]="opponentsRevealed"
-								[isEndGame]="isEndGame"
-								[endGameStatus]="endGameStatus"
-								[entities]="entities"
-								[targets]="targets"
-								[secretRevealed]="secretRevealed"
-								[questCompleted]="questCompleted"
-								[discovers]="discovers"
-								[burned]="burned"
-								[fatigue]="fatigue"
-								[chosen]="chosen"
-								[options]="options"
+								[currentAction]="currentAction"
 								[showHiddenCards]="showHiddenCards"
-								[crossed]="crossed"
 							>
 							</game>
 							<preloader
@@ -94,27 +65,11 @@ export class AppComponent implements OnDestroy {
 	status: string;
 
 	game: Game;
-	entities: Map<number, Entity>;
-	crossed: readonly number[];
+	currentAction: Action;
+
 	text: string;
 	turnString: string;
-	activePlayer: number;
-	activeSpell: number;
-	discovers: readonly number[];
-	chosen: readonly number[];
-	burned: readonly number[];
-	fatigue: number;
-	targets: readonly [number, number][];
-	options: readonly number[];
-	secretRevealed: number;
-	questCompleted: number;
 	showHiddenCards = false;
-
-	isMulligan: boolean;
-	isHeroSelection: boolean;
-	opponentsRevealed: readonly number[];
-	isEndGame: boolean;
-	endGameStatus: PlayState;
 
 	totalTime: number;
 	currentTime = 0;
@@ -148,26 +103,11 @@ export class AppComponent implements OnDestroy {
 		this.showPreloader = true;
 		this.reviewId = this.reviewId; // That was we can already start showing the links
 		this.game = undefined;
-		this.entities = undefined;
-		this.crossed = undefined;
+		this.currentAction = undefined;
+
 		this.text = undefined;
 		this.turnString = undefined;
-		this.activePlayer = 0;
-		this.activeSpell = 0;
-		this.discovers = undefined;
-		this.chosen = undefined;
-		this.burned = undefined;
-		this.fatigue = 0;
-		this.targets = undefined;
-		this.options = undefined;
-		this.secretRevealed = 0;
-		this.questCompleted = 0;
 		this.showHiddenCards = false;
-		this.isMulligan = false;
-		this.isHeroSelection = false;
-		this.opponentsRevealed = undefined;
-		this.isEndGame = false;
-		this.endGameStatus = undefined;
 		this.gameMode = undefined;
 		this.totalTime = undefined;
 		this.currentTime = 0;
@@ -333,26 +273,11 @@ export class AppComponent implements OnDestroy {
 			return;
 		}
 
-		this.entities = this.computeNewEntities();
-		this.crossed = this.computeCrossed();
+		this.currentAction = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn];
+
 		this.text = this.computeText();
 		this.turnString = this.computeTurnString();
-		this.activePlayer = this.computeActivePlayer();
-		this.activeSpell = this.computeActiveSpell();
-		this.secretRevealed = this.computeSecretRevealed();
-		this.questCompleted = this.computeQuestCompleted();
-		this.targets = this.computeTargets();
-		this.options = this.computeOptions();
-		this.discovers = this.computeDiscovers();
-		this.chosen = this.computeChosen();
-		this.burned = this.computeBurned();
-		this.fatigue = this.computeFatigue();
-		this.isMulligan = this.computeMulligan();
-		this.isHeroSelection = this.computeHeroSelection();
-		this.opponentsRevealed = this.computeOpponentsRevealed();
-		this.isEndGame = this.computeEndGame();
 		this.gameMode = this.computeGameMode();
-		this.endGameStatus = this.computeEndGameStatus();
 		// This avoid truncating the query string because we don't have all the info yet
 		if (complete) {
 			this.currentTime = this.computeCurrentTime();
@@ -392,39 +317,6 @@ export class AppComponent implements OnDestroy {
 		return currentTime;
 	}
 
-	private computeActiveSpell(): number {
-		if (!this.game) {
-			this.logger.warn('[app] game not present, not performing operation', 'computeActiveSpell');
-			return;
-		}
-		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].activeSpell;
-	}
-
-	private computeMulligan(): boolean {
-		if (!this.game) {
-			this.logger.warn('[app] game not present, not performing operation', 'computeMulligan');
-			return;
-		}
-		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].isMulligan;
-	}
-
-	private computeHeroSelection(): boolean {
-		if (!this.game) {
-			this.logger.warn('[app] game not present, not performing operation', 'computeHeroSelection');
-			return;
-		}
-		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].isHeroSelection;
-	}
-
-	private computeOpponentsRevealed(): readonly number[] {
-		if (!this.game) {
-			this.logger.warn('[app] game not present, not performing operation', 'computeOpponentsReveal');
-			return;
-		}
-		const action = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn];
-		return action instanceof BaconOpponentRevealedAction ? action.opponentIds : undefined;
-	}
-
 	private computeGameMode(): string {
 		if (!this.game) {
 			this.logger.warn('[app] game not present, not performing operation', 'computeGameMode');
@@ -434,126 +326,6 @@ export class AppComponent implements OnDestroy {
 			return 'battlegrounds';
 		}
 		return null;
-	}
-
-	private computeEndGame(): boolean {
-		if (!this.game) {
-			this.logger.warn('[app] game not present, not performing operation', 'computeEndGame');
-			return;
-		}
-		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].isEndGame;
-	}
-
-	private computeEndGameStatus(): PlayState {
-		if (!this.game) {
-			this.logger.warn('[app] game not present, not performing operation', 'computeEndGameStatus');
-			return;
-		}
-		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].endGameStatus;
-	}
-
-	private computeOptions(): readonly number[] {
-		if (!this.game) {
-			this.logger.warn('[app] game not present, not performing operation', 'computeOptions');
-			return;
-		}
-		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].options;
-	}
-
-	private computeBurned(): readonly number[] {
-		if (!this.game) {
-			this.logger.warn('[app] game not present, not performing operation', 'computeBurned');
-			return;
-		}
-		const action = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn];
-		if (action instanceof CardBurnAction) {
-			return action.burnedCardIds;
-		}
-		return null;
-	}
-
-	private computeDiscovers(): readonly number[] {
-		if (!this.game) {
-			this.logger.warn('[app] game not present, not performing operation', 'computeDiscovers');
-			return;
-		}
-		const action = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn];
-		if (action instanceof DiscoverAction) {
-			return action.choices;
-		}
-		return null;
-	}
-
-	private computeChosen(): readonly number[] {
-		if (!this.game) {
-			this.logger.warn('[app] game not present, not performing operation', 'computeChosen');
-			return;
-		}
-		const action = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn];
-		if (action instanceof DiscoverAction) {
-			return action.chosen;
-		}
-		return null;
-	}
-
-	private computeFatigue(): number {
-		if (!this.game) {
-			this.logger.warn('[app] game not present, not performing operation', 'computeFatigue');
-			return;
-		}
-		const action = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn];
-		if (action instanceof FatigueDamageAction) {
-			return action.amount;
-		}
-		return null;
-	}
-
-	private computeSecretRevealed(): number {
-		if (!this.game) {
-			this.logger.warn('[app] game not present, not performing operation', 'computeSecretRevealed');
-			return;
-		}
-		const action = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn];
-		if (action instanceof SecretRevealedAction) {
-			return action.entityId;
-		}
-		return null;
-	}
-
-	private computeQuestCompleted(): number {
-		if (!this.game) {
-			this.logger.warn('[app] game not present, not performing operation', 'computeQuestCompleted');
-			return;
-		}
-		const action = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn];
-		if (action instanceof QuestCompletedAction) {
-			return action.originId;
-		}
-		return null;
-	}
-
-	private computeActivePlayer(): number {
-		if (!this.game) {
-			this.logger.warn('[app] game not present, not performing operation', 'computeActivePlayer');
-			return;
-		}
-		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].activePlayer;
-	}
-
-	private computeNewEntities(): Map<number, Entity> {
-		if (!this.game) {
-			this.logger.warn('[app] game not present, not performing operation', 'computeNewEntities');
-			return;
-		}
-		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].entities;
-	}
-
-	private computeCrossed(): readonly number[] {
-		if (!this.game) {
-			this.logger.warn('[app] game not present, not performing operation', 'computeCrossed');
-			return;
-		}
-		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].crossedEntities;
 	}
 
 	private computeText(): string {
@@ -572,14 +344,6 @@ export class AppComponent implements OnDestroy {
 		return this.game.turns.get(this.currentTurn).turn === 'mulligan'
 			? 'Mulligan'
 			: `Turn${this.game.turns.get(this.currentTurn).turn}`;
-	}
-
-	private computeTargets(): readonly [number, number][] {
-		if (!this.game) {
-			this.logger.warn('[app] game not present, not performing operation', 'computeTargets');
-			return;
-		}
-		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].targets;
 	}
 
 	private moveCursorToNextAction() {

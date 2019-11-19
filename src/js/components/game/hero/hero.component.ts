@@ -24,7 +24,7 @@ export class HeroComponent {
 	constructor(private logger: NGXLogger) {}
 
 	@Input('hero') set hero(hero: Entity) {
-		this.logger.debug('[hero] setting hero', hero, hero && hero.tags.toJS());
+		this.logger.info('[hero] setting hero', hero, hero && hero.tags.toJS());
 		this._hero = hero;
 	}
 
