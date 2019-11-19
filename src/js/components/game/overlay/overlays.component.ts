@@ -99,7 +99,7 @@ export class OverlaysComponent {
 		if (value === this.action) {
 			return;
 		}
-		this.logger.info('[overlays] setting new action', value);
+		this.logger.debug('[overlays] setting new action', value);
 		this.action = value;
 		this._entities = value ? value.entities : undefined;
 		this._crossed = value ? value.crossedEntities : undefined;

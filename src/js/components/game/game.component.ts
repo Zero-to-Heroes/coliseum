@@ -28,6 +28,7 @@ import { Events } from '../../services/events.service';
 					[options]="_options"
 					[showCards]="_showHiddenCards"
 					[playerId]="_opponentId"
+					[opponentId]="_playerId"
 				>
 				</play-area>
 				<play-area
@@ -136,7 +137,7 @@ export class GameComponent implements AfterViewInit {
 	}
 
 	@Input() set currentAction(value: Action) {
-		this.logger.info('[game] setting new action', value);
+		this.logger.debug('[game] setting new action', value);
 		this._currentAction = value;
 		this._entities = value ? value.entities : undefined;
 		this._activePlayer = value ? value.activePlayer : undefined;

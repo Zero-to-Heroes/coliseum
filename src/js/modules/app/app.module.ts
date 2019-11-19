@@ -31,6 +31,7 @@ import { DamageComponent } from '../../components/game/card/damage.component';
 import { OverlayBurnedComponent } from '../../components/game/card/overlay-burned.component';
 import { OverlayCrossedComponent } from '../../components/game/card/overlay-crossed.component';
 import { OverlayTickedComponent } from '../../components/game/card/overlay-ticked.component';
+import { TavernLevelIconComponent } from '../../components/game/card/tavern-level-icon.component';
 import { DeckComponent } from '../../components/game/deck/deck.component';
 import { GameComponent } from '../../components/game/game.component';
 import { HandComponent } from '../../components/game/hand.component';
@@ -157,6 +158,8 @@ export class SentryErrorHandler implements ErrorHandler {
 		OverlayCrossedComponent,
 		OverlayTickedComponent,
 		OverlayBurnedComponent,
+
+		TavernLevelIconComponent,
 
 		DeckComponent,
 		PlayerNameComponent,

@@ -14,6 +14,7 @@ import { GameHelper } from '../../../services/game-helper';
 			<hero-card [hero]="_hero" [playerEntity]="playerEntity" [secrets]="_secrets" [option]="isOption(_hero)">
 			</hero-card>
 			<hero-power [heroPower]="_heroPower" [option]="isOption(_heroPower)"></hero-power>
+			<tavern-level-icon *ngIf="tavernLevel > 0" [level]="tavernLevel"></tavern-level-icon>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -27,8 +28,10 @@ export class HeroComponent {
 	_weapon: Entity;
 	_options: readonly number[];
 	_secrets: readonly Entity[];
+	_opponentId: number;
 	playerEntity: Entity;
 	heroOptions: readonly number[];
+	tavernLevel: number;
 
 	constructor(private logger: NGXLogger) {}
 
@@ -41,6 +44,11 @@ export class HeroComponent {
 	@Input('playerId') set playerId(playerId: number) {
 		this.logger.info('[hero] setting playerId', playerId);
 		this._playerId = playerId;
+		this.updateEntityGroups();
+	}
+
+	@Input() set opponentId(value: number) {
+		this._opponentId = value;
 		this.updateEntityGroups();
 	}
 
@@ -61,6 +69,18 @@ export class HeroComponent {
 		this._heroPower = this.getHeroPowerEntity(this._entities, this._playerId);
 		this._weapon = this.getWeaponEntity(this._entities, this._playerId);
 		this._secrets = this.getSecretEntities(this._entities, this._playerId);
+
+		// Battlegrounds stuff
+		const gameEntity = GameHelper.getGameEntity(this._entities);
+		const opponentEntity =
+			this._entities && this._entities.find(entity => entity.getTag(GameTag.PLAYER_ID) === this._opponentId);
+		this.tavernLevel =
+			opponentEntity &&
+			gameEntity.getTag(GameTag.TECH_LEVEL_MANA_GEM) &&
+			opponentEntity.getTag(GameTag.PLAYER_TECH_LEVEL)
+				? opponentEntity.getTag(GameTag.PLAYER_TECH_LEVEL)
+				: 0;
+
 		this.heroOptions = GameHelper.getOptions([this._hero, this._heroPower, this._weapon], this._options);
 	}
 
