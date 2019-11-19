@@ -17,7 +17,7 @@
 }
 
 .splash {
-	width: 75%;
+	width: 65%;
 }
 
 .text {
@@ -38,7 +38,15 @@
 		color: white;
 		text-shadow: $text-shadow-fat;
 		position: relative;
-		top: -5%;
-		left: -2%;
 	}
+}
+
+.recruit .text span {
+	top: -5%;
+	left: -2%;
+}
+
+.combat .text span {
+	top: 7%;
+	left: -2%;
 }

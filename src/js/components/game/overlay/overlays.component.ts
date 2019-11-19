@@ -119,7 +119,7 @@ export class OverlaysComponent {
 		this._endGameStatus = value ? value.endGameStatus : null;
 		this._opponentsRevealed = value instanceof BaconOpponentRevealedAction ? value.opponentIds : null;
 		this._baconBoardStateChange = value instanceof BaconBoardVisualStateAction ? value.newState : null;
-		console.log('_baconBoardStateChange', this._baconBoardStateChange);
+		// console.log('_baconBoardStateChange', this._baconBoardStateChange);
 		this.updateOverlay();
 	}
 
