@@ -65,7 +65,6 @@ export class HeroSelectionComponent {
 			.toArray()
 			.filter(entity => entity.getTag(GameTag.CONTROLLER) === playerId)
 			.filter(entity => entity.getTag(GameTag.ZONE) === Zone.HAND)
-			.filter(entity => entity.cardID !== 'GAME_005') // Don't show the coin yet
 			.sort((a, b) => a.getTag(GameTag.ZONE_POSITION) - b.getTag(GameTag.ZONE_POSITION));
 	}
 }

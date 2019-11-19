@@ -1,0 +1,13 @@
+.game.battlegrounds {
+	::ng-deep {
+		hero-power-cost .hero-power-cost {
+			background-image: url('https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/battlegrounds/coin_mana.png');
+			background-size: 129%;
+			background-repeat: no-repeat;
+			background-position-x: 52%;
+			background-position-y: 14%;
+			overflow: visible;
+			width: 40%;
+		}
+	}
+}

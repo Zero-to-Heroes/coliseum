@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, NgZone, OnDestroy, ViewRef } from '@angular/core';
-import { PlayState } from '@firestone-hs/reference-data';
+import { GameType, PlayState } from '@firestone-hs/reference-data';
 import {
+	BaconOpponentRevealedAction,
 	CardBurnAction,
 	DiscoverAction,
 	Entity,
@@ -28,6 +29,7 @@ declare var ga;
 					<div class="aspect-ratio-wrapper ar-16x9">
 						<div class="aspect-ratio-inner">
 							<game
+								[gameMode]="gameMode"
 								[turn]="turnString"
 								[playerId]="game && game.players[0].playerId"
 								[opponentId]="game && game.players[1].playerId"
@@ -37,6 +39,7 @@ declare var ga;
 								[activeSpell]="activeSpell"
 								[isMulligan]="isMulligan"
 								[isHeroSelection]="isHeroSelection"
+								[opponentsRevealed]="opponentsRevealed"
 								[isEndGame]="isEndGame"
 								[endGameStatus]="endGameStatus"
 								[entities]="entities"
@@ -109,6 +112,7 @@ export class AppComponent implements OnDestroy {
 
 	isMulligan: boolean;
 	isHeroSelection: boolean;
+	opponentsRevealed: readonly number[];
 	isEndGame: boolean;
 	endGameStatus: PlayState;
 
@@ -116,6 +120,7 @@ export class AppComponent implements OnDestroy {
 	currentTime = 0;
 
 	showPreloader = true;
+	gameMode: string;
 
 	private currentActionInTurn = 0;
 	private currentTurn = 0;
@@ -160,8 +165,10 @@ export class AppComponent implements OnDestroy {
 		this.showHiddenCards = false;
 		this.isMulligan = false;
 		this.isHeroSelection = false;
+		this.opponentsRevealed = undefined;
 		this.isEndGame = false;
 		this.endGameStatus = undefined;
+		this.gameMode = undefined;
 		this.totalTime = undefined;
 		this.currentTime = 0;
 		this.currentActionInTurn = 0;
@@ -342,7 +349,9 @@ export class AppComponent implements OnDestroy {
 		this.fatigue = this.computeFatigue();
 		this.isMulligan = this.computeMulligan();
 		this.isHeroSelection = this.computeHeroSelection();
+		this.opponentsRevealed = this.computeOpponentsRevealed();
 		this.isEndGame = this.computeEndGame();
+		this.gameMode = this.computeGameMode();
 		this.endGameStatus = this.computeEndGameStatus();
 		// This avoid truncating the query string because we don't have all the info yet
 		if (complete) {
@@ -350,9 +359,10 @@ export class AppComponent implements OnDestroy {
 			this.updateUrlQueryString();
 		}
 		this.logger.debug('[app] setting turn', this.turnString);
-		this.logger.debug(
+		this.logger.info(
 			'[app] Considering action',
 			this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn],
+			this.game.turns.get(this.currentTurn).actions,
 		);
 	}
 
@@ -404,6 +414,26 @@ export class AppComponent implements OnDestroy {
 			return;
 		}
 		return this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].isHeroSelection;
+	}
+
+	private computeOpponentsRevealed(): readonly number[] {
+		if (!this.game) {
+			this.logger.warn('[app] game not present, not performing operation', 'computeOpponentsReveal');
+			return;
+		}
+		const action = this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn];
+		return action instanceof BaconOpponentRevealedAction ? action.opponentIds : undefined;
+	}
+
+	private computeGameMode(): string {
+		if (!this.game) {
+			this.logger.warn('[app] game not present, not performing operation', 'computeGameMode');
+			return;
+		}
+		if (this.game.gameType === GameType.GT_BATTLEGROUNDS) {
+			return 'battlegrounds';
+		}
+		return null;
 	}
 
 	private computeEndGame(): boolean {

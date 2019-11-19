@@ -7,11 +7,18 @@ import { Events } from '../../services/events.service';
 
 @Component({
 	selector: 'game',
-	styleUrls: ['../../../css/components/game/game.component.scss'],
+	styleUrls: [
+		'../../../css/components/game/game.component.scss',
+		'../../../css/components/game/game-battlegrounds.scss',
+	],
 	template: `
 		<div
-			class="game"
-			[ngClass]="{ 'in-overlay': isOverlay, 'mulligan': _isMulligan || _isHeroSelection, 'quest': _quest }"
+			class="game {{ gameMode }}"
+			[ngClass]="{
+				'in-overlay': isOverlay,
+				'mulligan': _isMulligan || _isHeroSelection || _opponentsRevealed?.length > 0,
+				'quest': _quest
+			}"
 		>
 			<div class="play-areas">
 				<play-area
@@ -74,6 +81,13 @@ import { Events } from '../../services/events.service';
 					[playerId]="_playerId"
 				>
 				</hero-selection>
+				<opponents-reveal
+					*ngIf="_opponentsRevealed"
+					[entities]="_entities"
+					[opponentIds]="_opponentsRevealed"
+					[playerId]="_playerId"
+				>
+				</opponents-reveal>
 				<end-game *ngIf="_isEndGame" [status]="_endGameStatus" [entities]="_entities" [playerId]="_playerId">
 				</end-game>
 				<discover *ngIf="_discovers" [entities]="_entities" [choices]="_discovers" [chosen]="_chosen">
@@ -110,8 +124,11 @@ export class GameComponent implements AfterViewInit {
 	_chosen: readonly number[];
 	_isMulligan: boolean;
 	_isHeroSelection: boolean;
+	_opponentsRevealed: readonly number[];
 	_isEndGame: boolean;
 	_endGameStatus: PlayState;
+
+	@Input() gameMode: string;
 
 	private activeSpellId: number;
 	private secretRevealedId: number;
@@ -256,14 +273,22 @@ export class GameComponent implements AfterViewInit {
 		this._options = value;
 	}
 
+	@Input('opponentsRevealed') set opponentsRevealed(value: readonly number[]) {
+		this.logger.info('[game] setting opponentsRevealed', value);
+		this._opponentsRevealed = value;
+		this.updateOverlay();
+	}
+
 	private updateOverlay() {
 		this.isOverlay =
 			this._isMulligan ||
 			this._isHeroSelection ||
+			(this._opponentsRevealed && this._opponentsRevealed.length > 0) ||
 			this._isEndGame ||
 			(this._discovers && this._discovers.length > 0) ||
 			(this._burned && this._burned.length > 0) ||
 			this._fatigue > 0;
+		console.log('is overlay?', this.isOverlay, this._opponentsRevealed && this._opponentsRevealed.length > 0);
 	}
 
 	private updateActiveSpell() {
