@@ -1,0 +1,15 @@
+:host() {
+	position: relative;
+}
+
+.portrait {
+	width: 100%;
+	clip-path: polygon(5% 5%, 95% 5%, 95% 95%, 5% 95%);
+}
+
+.frame {
+	position: absolute;
+	top: 0%;
+	left: -2%;
+	width: 105%;
+}

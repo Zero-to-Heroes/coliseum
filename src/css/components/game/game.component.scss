@@ -29,6 +29,7 @@
 		flex-direction: column;
 		flex-grow: 0;
 		flex-shrink: 0;
+		pointer-events: none;
 	}
 
 	&.blur {
@@ -117,5 +118,13 @@
 		&.bottom {
 			top: 60%;
 		}
+	}
+
+	leaderboard {
+		position: absolute;
+		height: 75%;
+		width: 10%;
+		left: 12%;
+		top: 12%;
 	}
 }

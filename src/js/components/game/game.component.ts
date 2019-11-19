@@ -46,6 +46,12 @@ import { Events } from '../../services/events.service';
 			</player-name>
 			<player-name class="player-name bottom" [name]="_playerName" [active]="_playerId === _activePlayer">
 			</player-name>
+			<leaderboard
+				*ngIf="gameMode === 'battlegrounds'"
+				class="leaderboard"
+				[entities]="_entities"
+				[playerId]="_playerId"
+			></leaderboard>
 			<active-spell
 				class="active-spell"
 				*ngIf="_activeSpell"

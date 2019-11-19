@@ -53,6 +53,8 @@ import { WeaponArtComponent } from '../../components/game/hero/weapon-art.compon
 import { WeaponFrameComponent } from '../../components/game/hero/weapon-frame.component';
 import { WeaponStatsComponent } from '../../components/game/hero/weapon-stats.component';
 import { WeaponComponent } from '../../components/game/hero/weapon.component';
+import { LeaderboardEntityComponent } from '../../components/game/leaderboard/leaderboard-entity.component';
+import { LeaderboardComponent } from '../../components/game/leaderboard/leaderboard.component';
 import { ManaTrayComponent } from '../../components/game/manatray/mana-tray.component';
 import { BurnComponent } from '../../components/game/overlay/burn.component';
 import { DiscoverComponent } from '../../components/game/overlay/discover.component';
@@ -164,6 +166,8 @@ export class SentryErrorHandler implements ErrorHandler {
 
 		TavernLevelIconComponent,
 		VisualBoardStateChangeComponent,
+		LeaderboardComponent,
+		LeaderboardEntityComponent,
 
 		DeckComponent,
 		PlayerNameComponent,
