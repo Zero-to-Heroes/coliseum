@@ -36,13 +36,13 @@ export class HeroComponent {
 	constructor(private logger: NGXLogger) {}
 
 	@Input('entities') set entities(entities: Map<number, Entity>) {
-		this.logger.info('[hero] setting new entities', entities && entities.toJS());
+		this.logger.debug('[hero] setting new entities', entities && entities.toJS());
 		this._entities = entities;
 		this.updateEntityGroups();
 	}
 
 	@Input('playerId') set playerId(playerId: number) {
-		this.logger.info('[hero] setting playerId', playerId);
+		this.logger.debug('[hero] setting playerId', playerId);
 		this._playerId = playerId;
 		this.updateEntityGroups();
 	}
@@ -53,7 +53,7 @@ export class HeroComponent {
 	}
 
 	@Input('options') set options(value: readonly number[]) {
-		this.logger.info('[hero] setting options', value);
+		this.logger.debug('[hero] setting options', value);
 		this._options = value;
 	}
 
@@ -65,7 +65,7 @@ export class HeroComponent {
 		this.playerEntity =
 			this._entities && this._entities.find(entity => entity.getTag(GameTag.PLAYER_ID) === this._playerId);
 		this._hero = this.getHeroEntity(this._entities, this.playerEntity);
-		console.log('hero', this._hero, this._hero && this._hero.cardID, this._hero && this._hero.tags.toJS());
+		// console.log('hero', this._hero, this._hero && this._hero.cardID, this._hero && this._hero.tags.toJS());
 		this._heroPower = this.getHeroPowerEntity(this._entities, this._playerId);
 		this._weapon = this.getWeaponEntity(this._entities, this._playerId);
 		this._secrets = this.getSecretEntities(this._entities, this._playerId);

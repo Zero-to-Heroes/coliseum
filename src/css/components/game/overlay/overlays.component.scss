@@ -29,7 +29,8 @@ hero-selection {
 	}
 }
 
-opponents-reveal {
+opponents-reveal,
+visual-board-state-change {
 	flex-grow: 0;
 	flex-shrink: 0;
 	display: flex;

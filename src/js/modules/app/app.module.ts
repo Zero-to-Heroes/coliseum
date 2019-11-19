@@ -64,6 +64,7 @@ import { OverlaysComponent } from '../../components/game/overlay/overlays.compon
 import { PlayerNameComponent } from '../../components/game/overlay/player-name.component';
 import { QuestCompletedComponent } from '../../components/game/overlay/quest-completed.component';
 import { QuestTooltipComponent } from '../../components/game/overlay/quest-tooltip.component';
+import { VisualBoardStateChangeComponent } from '../../components/game/overlay/visual-board-state-change';
 import { PlayAreaComponent } from '../../components/game/play-area.component';
 import { SecretRevealedComponent } from '../../components/game/secret-revealed.component';
 import { TargetZoneComponent } from '../../components/game/target-zone.component';
@@ -160,6 +161,7 @@ export class SentryErrorHandler implements ErrorHandler {
 		OverlayBurnedComponent,
 
 		TavernLevelIconComponent,
+		VisualBoardStateChangeComponent,
 
 		DeckComponent,
 		PlayerNameComponent,

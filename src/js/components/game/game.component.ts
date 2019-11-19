@@ -155,7 +155,7 @@ export class GameComponent implements AfterViewInit {
 	}
 
 	onOverlayUpdated(event: { isOverlay: boolean; isDarkOverlay: boolean }) {
-		console.log('overlay updated', event);
+		// console.log('overlay updated', event);
 		this.isOverlay = event.isOverlay;
 		this.isDarkOverlay = event.isDarkOverlay;
 		if (!(this.cdr as ViewRef).destroyed) {

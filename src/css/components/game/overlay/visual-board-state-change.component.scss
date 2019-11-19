@@ -1,0 +1,44 @@
+@import '../../../global/variables';
+
+.visual-board-state-change {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.state {
+	margin: auto;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+}
+
+.splash {
+	width: 75%;
+}
+
+.text {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	span {
+		font-family: Passion One;
+		font-style: normal;
+		font-weight: normal;
+		text-align: center;
+		color: white;
+		text-shadow: $text-shadow-fat;
+		position: relative;
+		top: -5%;
+		left: -2%;
+	}
+}

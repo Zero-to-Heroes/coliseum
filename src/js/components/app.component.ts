@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, NgZone, OnDestroy, ViewRef } from '@angular/core';
 import { GameType } from '@firestone-hs/reference-data';
-import { Action, Game, GameParserService, Turn } from '@firestone-hs/replay-parser';
+import { Action, BaconBoardVisualStateAction, Game, GameParserService, Turn } from '@firestone-hs/replay-parser';
 import { NGXLogger } from 'ngx-logger';
 import { Subscription } from 'rxjs';
 import { ReplayOptions } from '../models/replay-options';
@@ -153,7 +153,6 @@ export class AppComponent implements OnDestroy {
 					// to restore the navigation to where the user currently is
 					const turn = parseInt(this.getSearchParam('turn')) || 0;
 					const action = parseInt(this.getSearchParam('action')) || 0;
-					this.logger.info('[app] Received complete game', game.turns.size);
 					this.game = game;
 					this.totalTime = this.buildTotalTime();
 					this.reviewId = reviewId;
@@ -168,7 +167,11 @@ export class AppComponent implements OnDestroy {
 					if (!(this.cdr as ViewRef).destroyed) {
 						this.cdr.detectChanges();
 					}
-					ga('send', 'event', 'replay-loaded');
+
+					if (complete) {
+						this.logger.info('[app] Received complete game', game.turns.size);
+						ga('send', 'event', 'replay-loaded');
+					}
 
 					// We do this so that the initial drawing is already done when hiding the preloader
 					setTimeout(() => {
@@ -278,7 +281,6 @@ export class AppComponent implements OnDestroy {
 			this.currentTime = this.computeCurrentTime();
 			this.updateUrlQueryString();
 		}
-		this.logger.debug('[app] setting turn', this.turnString);
 		this.logger.info(
 			'[app] Considering action',
 			this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn],
@@ -364,6 +366,14 @@ export class AppComponent implements OnDestroy {
 			this.currentTurn++;
 			// console.log('went further', this.currentTurn, this.currentActionInTurn);
 		}
+		const currentTurn = this.game.turns.get(this.currentTurn);
+		if (
+			currentTurn.actions.length === 0 ||
+			(currentTurn.actions.length === 1 && currentTurn.actions[0] instanceof BaconBoardVisualStateAction)
+		) {
+			this.moveCursorToNextAction();
+			return;
+		}
 		this.populateInfo();
 		if (!(this.cdr as ViewRef).destroyed) {
 			this.cdr.detectChanges();
@@ -383,6 +393,14 @@ export class AppComponent implements OnDestroy {
 			this.currentActionInTurn = this.game.turns.get(this.currentTurn).actions.length - 1;
 		}
 		this.populateInfo();
+		const currentTurn = this.game.turns.get(this.currentTurn);
+		if (
+			currentTurn.actions.length === 0 ||
+			(currentTurn.actions.length === 1 && currentTurn.actions[0] instanceof BaconBoardVisualStateAction)
+		) {
+			this.moveCursorToPreviousAction();
+			return;
+		}
 		if (!(this.cdr as ViewRef).destroyed) {
 			this.cdr.detectChanges();
 		}
@@ -398,6 +416,14 @@ export class AppComponent implements OnDestroy {
 		this.currentActionInTurn = 0;
 		this.currentTurn++;
 		this.populateInfo();
+		const currentTurn = this.game.turns.get(this.currentTurn);
+		if (
+			currentTurn.actions.length === 0 ||
+			(currentTurn.actions.length === 1 && currentTurn.actions[0] instanceof BaconBoardVisualStateAction)
+		) {
+			this.moveCursorToNextTurn();
+			return;
+		}
 		if (!(this.cdr as ViewRef).destroyed) {
 			this.cdr.detectChanges();
 		}
@@ -413,6 +439,14 @@ export class AppComponent implements OnDestroy {
 		this.currentActionInTurn = 0;
 		this.currentTurn--;
 		this.populateInfo();
+		const currentTurn = this.game.turns.get(this.currentTurn);
+		if (
+			currentTurn.actions.length === 0 ||
+			(currentTurn.actions.length === 1 && currentTurn.actions[0] instanceof BaconBoardVisualStateAction)
+		) {
+			this.moveCursorToPreviousTurn();
+			return;
+		}
 		if (!(this.cdr as ViewRef).destroyed) {
 			this.cdr.detectChanges();
 		}

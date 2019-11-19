@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, In
 import { PlayState } from '@firestone-hs/reference-data';
 import {
 	Action,
+	BaconBoardVisualStateAction,
 	BaconOpponentRevealedAction,
 	CardBurnAction,
 	DiscoverAction,
@@ -54,6 +55,10 @@ import { Events } from '../../../services/events.service';
 			<discover *ngIf="_discovers" [entities]="_entities" [choices]="_discovers" [chosen]="_chosen"> </discover>
 			<burn *ngIf="_burned" [entities]="_entities" [burned]="_burned"> </burn>
 			<fatigue *ngIf="_fatigue" [fatigue]="_fatigue"></fatigue>
+			<visual-board-state-change
+				*ngIf="_baconBoardStateChange"
+				[state]="_baconBoardStateChange"
+			></visual-board-state-change>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -77,6 +82,7 @@ export class OverlaysComponent {
 	_opponentsRevealed: readonly number[];
 	_isEndGame: boolean;
 	_endGameStatus: PlayState;
+	_baconBoardStateChange: number;
 
 	constructor(private logger: NGXLogger, private events: Events, private cdr: ChangeDetectorRef) {}
 
@@ -112,6 +118,8 @@ export class OverlaysComponent {
 		this._isEndGame = value ? value.isEndGame : null;
 		this._endGameStatus = value ? value.endGameStatus : null;
 		this._opponentsRevealed = value instanceof BaconOpponentRevealedAction ? value.opponentIds : null;
+		this._baconBoardStateChange = value instanceof BaconBoardVisualStateAction ? value.newState : null;
+		console.log('_baconBoardStateChange', this._baconBoardStateChange);
 		this.updateOverlay();
 	}
 
@@ -123,6 +131,7 @@ export class OverlaysComponent {
 			this._isEndGame ||
 			(this._discovers && this._discovers.length > 0) ||
 			(this._burned && this._burned.length > 0) ||
+			this._baconBoardStateChange > 0 ||
 			this._fatigue > 0;
 		const isDarkOverlay =
 			this._isMulligan ||
