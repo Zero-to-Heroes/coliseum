@@ -22,7 +22,8 @@ import { NGXLogger } from 'ngx-logger';
 			<card-name [cardId]="cardId" *ngIf="cardId"></card-name>
 			<card-text *ngIf="cardId" [entity]="_entity" [controller]="_controller" [cardType]="cardType"> </card-text>
 			<card-race *ngIf="race" [race]="race"> </card-race>
-			<card-cost *ngIf="cardId" [cardType]="cardType" [cardId]="cardId" [cost]="cost"> </card-cost>
+			<card-cost *ngIf="cardId && !tavernTier" [cardType]="cardType" [cardId]="cardId" [cost]="cost"> </card-cost>
+			<tavern-level-icon *ngIf="tavernTier > 0" [level]="tavernTier"></tavern-level-icon>
 			<card-stats
 				*ngIf="cardId"
 				[cardId]="cardId"
@@ -64,6 +65,7 @@ export class CardComponent {
 	armor: number;
 	cost: number;
 	race: string;
+	tavernTier: number;
 
 	_forbiddenTargetSource = false;
 	_hasTooltip = true;
@@ -158,6 +160,7 @@ export class CardComponent {
 				this.originalCard && this.originalCard.playerClass
 					? CardClass[this.originalCard.playerClass.toUpperCase() as string]
 					: undefined;
+			this.tavernTier = this._entity.getTag(GameTag.TECH_LEVEL);
 		}
 	}
 }
