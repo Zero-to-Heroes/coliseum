@@ -154,6 +154,7 @@ export class GameComponent implements AfterViewInit {
 		this.questCompletedId = value instanceof QuestCompletedAction ? value.originId : null;
 		this._targets = value ? value.targets : null;
 		this._options = value ? value.options : null;
+		// console.log('set options', this._options);
 
 		this.updateActiveSpell();
 		this.updateSecretRevealed();

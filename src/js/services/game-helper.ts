@@ -4,6 +4,7 @@ import { Map } from 'immutable';
 
 export class GameHelper {
 	public static getOptions(zone: readonly Entity[], options: readonly number[]): readonly number[] {
+		// console.log('getting options for', zone.map(e => e && e.id));
 		return zone
 			.filter(entity => entity)
 			.map(entity => entity.id)

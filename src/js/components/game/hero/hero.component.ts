@@ -74,8 +74,9 @@ export class HeroComponent {
 	}
 
 	@Input('options') set options(value: readonly number[]) {
-		// this.logger.debug('[hero] setting options', value);
+		// this.logger.info('[hero] setting options', value);
 		this._options = value;
+		this.updateEntityGroups();
 	}
 
 	isOption(entity: Entity): boolean {
