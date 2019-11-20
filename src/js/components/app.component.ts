@@ -26,6 +26,10 @@ declare var ga;
 								[showHiddenCards]="showHiddenCards"
 							>
 							</game>
+							<div class="status" *ngIf="status">
+								Game is loading. The viewing experience will be optimal once loading is complete.
+								{{ status }}...
+							</div>
 							<preloader
 								class="dark-theme"
 								[ngClass]="{ 'active': !game || showPreloader }"
@@ -169,6 +173,7 @@ export class AppComponent implements OnDestroy {
 					}
 
 					if (complete) {
+						this.status = null;
 						this.logger.info('[app] Received complete game', game.turns.size);
 						ga('send', 'event', 'replay-loaded');
 					}

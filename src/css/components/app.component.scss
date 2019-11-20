@@ -72,3 +72,13 @@
 	flex-direction: column;
 	overflow: hidden;
 }
+
+.status {
+	position: absolute;
+	bottom: 2%;
+	right: 2%;
+	background: rgba(19, 19, 19, 1);
+	color: rgb(168, 168, 168);
+	padding: 5px;
+	font-size: 10px;
+}
