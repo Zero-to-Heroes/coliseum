@@ -31,7 +31,10 @@ import { NGXLogger } from 'ngx-logger';
 			<sleeping *ngIf="sleeping"></sleeping>
 			<power-indicator [entity]="_entity"></power-indicator>
 			<card-on-board-overlays [entity]="_entity"></card-on-board-overlays>
-			<tavern-level-icon *ngIf="!isMainPlayer && tavernTier > 0" [level]="tavernTier"></tavern-level-icon>
+			<tavern-level-icon
+				*ngIf="!isMainPlayer && tavernTier > 0 && isRecruitPhase"
+				[level]="tavernTier"
+			></tavern-level-icon>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -68,6 +71,7 @@ export class CardOnBoardComponent {
 	constructor(private cards: AllCardsService, private logger: NGXLogger) {}
 
 	@Input() isMainPlayer: boolean;
+	@Input() isRecruitPhase: boolean;
 
 	@Input('entity') set entity(entity: Entity) {
 		this.logger.debug('[card-on-board] setting entity', entity.id, entity, entity.tags.toJS());

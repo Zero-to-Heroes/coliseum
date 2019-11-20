@@ -15,6 +15,7 @@ import { NGXLogger } from 'ngx-logger';
 					[enchantments]="buildEnchantments(entity)"
 					[option]="isOption(entity)"
 					[isMainPlayer]="isMainPlayer"
+					[isRecruitPhase]="isRecruitPhase"
 				>
 				</card-on-board>
 			</li>
@@ -30,6 +31,7 @@ export class BoardComponent {
 	constructor(private logger: NGXLogger) {}
 
 	@Input() isMainPlayer: boolean;
+	@Input() isRecruitPhase: boolean;
 
 	@Input('entities') set entities(entities: readonly Entity[]) {
 		this.logger.debug('[board] setting new entities', entities);
