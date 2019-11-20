@@ -1,0 +1,20 @@
+.tavern-button {
+	position: relative;
+	display: flex;
+}
+
+.art {
+	position: absolute;
+	width: 106%;
+	top: 11%;
+	clip-path: polygon(32% 0, 70% 0%, 89% 8%, 89% 86%, 70% 100%, 28% 100%, 9% 86%, 9% 9%);
+	left: -5%;
+}
+
+.frame {
+	z-index: 1;
+}
+
+coin-cost {
+	z-index: 1;
+}

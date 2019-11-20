@@ -1,6 +1,7 @@
 import { Component, ContentChildren, Input, QueryList } from '@angular/core';
 import { TransitionGroupItemDirective } from '../directives/transition-group-item.directive';
 
+// https://stackoverflow.com/questions/43928524/how-to-implement-item-reorder-shuffle-animations-with-angulars-ngfor
 @Component({
 	selector: '[transition-group]',
 	template: '<ng-content></ng-content>',
@@ -10,22 +11,36 @@ export class TransitionGroupComponent {
 
 	@ContentChildren(TransitionGroupItemDirective) items: QueryList<TransitionGroupItemDirective>;
 
-	ngAfterContentInit() {
-		this.refreshPosition('prevPos');
-		this.items.changes.subscribe(items => {
-			items.forEach(item => {
-				console.log('prevPos', item.prevPos, item.newPos, item);
-				item.prevPos = item.newPos || item.prevPos;
-			});
+	ngAfterViewInit() {
+		setTimeout(() => this.refreshPosition('prevPos'), 0); // save init positions on next 'tick'
 
+		this.items.changes.subscribe(items => {
+			items.forEach(item => (item.prevPos = item.newPos || item.prevPos));
 			items.forEach(this.runCallback);
 			this.refreshPosition('newPos');
-			items.forEach(this.applyTranslation);
+			items.forEach(item => (item.prevPos = item.prevPos || item.newPos)); // for new items
 
-			// force reflow to put everything in position
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-			const offSet = document.body.offsetHeight;
-			this.items.forEach(this.runTransition.bind(this));
+			const animate = () => {
+				items.forEach(this.applyTranslation);
+				this['_forceReflow'] = document.body.offsetHeight; // force reflow to put everything in position
+				this.items.forEach(this.runTransition.bind(this));
+			};
+
+			const willMoveSome = items.some(item => {
+				const dx = item.prevPos.left - item.newPos.left;
+				const dy = item.prevPos.top - item.newPos.top;
+				return dx || dy;
+			});
+
+			if (willMoveSome) {
+				animate();
+			} else {
+				setTimeout(() => {
+					// for removed items
+					this.refreshPosition('newPos');
+					animate();
+				}, 0);
+			}
 		});
 	}
 

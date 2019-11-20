@@ -36,6 +36,7 @@ import { TavernLevelIconComponent } from '../../components/game/card/tavern-leve
 import { DeckComponent } from '../../components/game/deck/deck.component';
 import { GameComponent } from '../../components/game/game.component';
 import { HandComponent } from '../../components/game/hand.component';
+import { CoinCostComponent } from '../../components/game/hero/coin-cost.component';
 import { HeroArtComponent } from '../../components/game/hero/hero-art.component';
 import { HeroCardComponent } from '../../components/game/hero/hero-card.component';
 import { HeroFrameComponent } from '../../components/game/hero/hero-frame.component';
@@ -49,6 +50,7 @@ import { HeroComponent } from '../../components/game/hero/hero.component';
 import { QuestComponent } from '../../components/game/hero/quest.component';
 import { SecretComponent } from '../../components/game/hero/secret.component';
 import { SecretsComponent } from '../../components/game/hero/secrets.component';
+import { TavernButtonComponent } from '../../components/game/hero/tavern-button.component';
 import { WeaponArtComponent } from '../../components/game/hero/weapon-art.component';
 import { WeaponFrameComponent } from '../../components/game/hero/weapon-frame.component';
 import { WeaponStatsComponent } from '../../components/game/hero/weapon-stats.component';
@@ -170,6 +172,8 @@ export class SentryErrorHandler implements ErrorHandler {
 		VisualBoardStateChangeComponent,
 		LeaderboardComponent,
 		LeaderboardEntityComponent,
+		TavernButtonComponent,
+		CoinCostComponent,
 
 		DeckComponent,
 		PlayerNameComponent,

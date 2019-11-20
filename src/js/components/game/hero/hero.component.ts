@@ -15,6 +15,11 @@ import { GameHelper } from '../../../services/game-helper';
 			</hero-card>
 			<hero-power [heroPower]="_heroPower" [option]="isOption(_heroPower)"></hero-power>
 			<tavern-level-icon *ngIf="tavernLevel > 0" [level]="tavernLevel"></tavern-level-icon>
+			<tavern-button
+				class="tavern-upgrade"
+				*ngIf="tavernUpgradeEntity"
+				[entity]="tavernUpgradeEntity"
+			></tavern-button>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -32,6 +37,7 @@ export class HeroComponent {
 	playerEntity: Entity;
 	heroOptions: readonly number[];
 	tavernLevel: number;
+	tavernUpgradeEntity: Entity;
 
 	constructor(private logger: NGXLogger) {}
 
@@ -82,8 +88,21 @@ export class HeroComponent {
 			opponentEntity.getTag(GameTag.PLAYER_TECH_LEVEL)
 				? opponentEntity.getTag(GameTag.PLAYER_TECH_LEVEL)
 				: 0;
+		this.tavernUpgradeEntity =
+			this._entities &&
+			gameEntity.getTag(GameTag.TECH_LEVEL_MANA_GEM) &&
+			this._entities
+				.toArray()
+				.find(
+					entity =>
+						entity.getTag(GameTag.GAME_MODE_BUTTON_SLOT) === 3 &&
+						entity.getTag(GameTag.CONTROLLER) === this._opponentId,
+				);
 
-		this.heroOptions = GameHelper.getOptions([this._hero, this._heroPower, this._weapon], this._options);
+		this.heroOptions = GameHelper.getOptions(
+			[this._hero, this._heroPower, this._weapon, this.tavernUpgradeEntity],
+			this._options,
+		);
 	}
 
 	private getHeroEntity(entities: Map<number, Entity>, playerEntity: Entity): Entity {
