@@ -161,7 +161,7 @@ export class GameComponent implements AfterViewInit {
 		// console.log('set options', this._options);
 
 		const gameEntity = GameHelper.getGameEntity(this._entities);
-		this.isRecruitPhase = gameEntity.getTag(GameTag.BOARD_VISUAL_STATE) === 1;
+		this.isRecruitPhase = gameEntity && gameEntity.getTag(GameTag.BOARD_VISUAL_STATE) === 1;
 
 		this.updateActiveSpell();
 		this.updateSecretRevealed();
