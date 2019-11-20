@@ -10,7 +10,6 @@ import { NGXLogger } from 'ngx-logger';
 	template: `
 		<div
 			class="card-on-board"
-			cardResize
 			cardTooltip
 			[tooltipEntity]="_entity"
 			[tooltipEnchantments]="_enchantments"
@@ -38,8 +37,14 @@ import { NGXLogger } from 'ngx-logger';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	animations: [
 		trigger('fadeInOut', [
-			transition(':enter', [style({ width: 0 }), animate(150, style({ width: '100%' }))]),
-			transition(':leave', [style({ width: '100%' }), animate(150, style({ width: 0 }))]),
+			transition(':enter', [
+				style({ width: 0, height: 0 }),
+				animate(150, style({ width: '100%', height: '100%' })),
+			]),
+			transition(':leave', [
+				style({ width: '100%', height: '100%' }),
+				animate(150, style({ width: 0, height: 0 })),
+			]),
 		]),
 	],
 	host: { '[@fadeInOut]': 'in' },
