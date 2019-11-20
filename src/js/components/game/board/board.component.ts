@@ -7,9 +7,10 @@ import { NGXLogger } from 'ngx-logger';
 	selector: 'board',
 	styleUrls: ['../../../../css/components/game/board/board.component.scss'],
 	template: `
-		<ul class="board">
+		<ul class="board" [transition-group]="'flip-list'">
 			<li *ngFor="let entity of _entities; trackBy: trackByFn">
 				<card-on-board
+					transition-group-item
 					[entity]="entity"
 					[enchantments]="buildEnchantments(entity)"
 					[option]="isOption(entity)"
