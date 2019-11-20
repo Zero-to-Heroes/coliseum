@@ -52,7 +52,6 @@ export class PlayAreaComponent {
 	emptyCrystals: number;
 	lockedCrystals: number;
 	futureLockedCrystals: number;
-	isRecruitPhase: boolean;
 
 	_options: readonly number[];
 
@@ -60,6 +59,7 @@ export class PlayAreaComponent {
 
 	@Input() opponentId: number;
 	@Input() isMainPlayer: boolean;
+	@Input() isRecruitPhase: boolean;
 
 	@Input('mulligan') set mulligan(value: string) {
 		this.logger.debug('[play-area] setting mulligan', value);
@@ -108,9 +108,6 @@ export class PlayAreaComponent {
 		this.lockedCrystals = this.playerEntity.getTag(GameTag.OVERLOAD_LOCKED) || 0;
 		this.emptyCrystals = this.totalCrystals - this.availableCrystals - this.lockedCrystals;
 		this.futureLockedCrystals = this.playerEntity.getTag(GameTag.OVERLOAD_OWED) || 0;
-
-		const gameEntity = GameHelper.getGameEntity(this._entities);
-		this.isRecruitPhase = gameEntity.getTag(GameTag.BOARD_VISUAL_STATE) === 1;
 		this.logger.debug('[play-area] play-area entities updated', this.hand);
 	}
 

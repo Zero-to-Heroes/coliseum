@@ -1,9 +1,6 @@
 .leaderboard {
 	width: 100%;
 	height: 100%;
-	background-image: url('https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/battlegrounds/leaderboard.png');
-	background-size: contain;
-	background-repeat: no-repeat;
 	display: flex;
 	flex-direction: column;
 }
@@ -11,7 +8,7 @@
 .entities {
 	width: 40%;
 	position: relative;
-	left: 21%;
+	left: 9%;
 	top: 8%;
 	display: flex;
 	flex-direction: column;

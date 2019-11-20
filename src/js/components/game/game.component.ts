@@ -4,6 +4,7 @@ import { Action, Entity, QuestCompletedAction, SecretRevealedAction } from '@fir
 import { Map } from 'immutable';
 import { NGXLogger } from 'ngx-logger';
 import { Events } from '../../services/events.service';
+import { GameHelper } from '../../services/game-helper';
 
 @Component({
 	selector: 'game',
@@ -17,7 +18,8 @@ import { Events } from '../../services/events.service';
 			[ngClass]="{
 				'blur': isOverlay,
 				'dark-blur': isDarkOverlay,
-				'quest': _quest
+				'quest': _quest,
+				'recruit': isRecruitPhase
 			}"
 		>
 			<div class="play-areas">
@@ -30,6 +32,7 @@ import { Events } from '../../services/events.service';
 					[playerId]="_opponentId"
 					[opponentId]="_playerId"
 					[isMainPlayer]="false"
+					[isRecruitPhase]="isRecruitPhase"
 				>
 				</play-area>
 				<play-area
@@ -95,6 +98,7 @@ export class GameComponent implements AfterViewInit {
 	_quest: Entity;
 	isOverlay: boolean;
 	isDarkOverlay: boolean;
+	isRecruitPhase: boolean;
 
 	@Input() gameMode: string;
 
@@ -155,6 +159,9 @@ export class GameComponent implements AfterViewInit {
 		this._targets = value ? value.targets : null;
 		this._options = value ? value.options : null;
 		// console.log('set options', this._options);
+
+		const gameEntity = GameHelper.getGameEntity(this._entities);
+		this.isRecruitPhase = gameEntity.getTag(GameTag.BOARD_VISUAL_STATE) === 1;
 
 		this.updateActiveSpell();
 		this.updateSecretRevealed();
