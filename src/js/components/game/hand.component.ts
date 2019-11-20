@@ -6,8 +6,9 @@ import { NGXLogger } from 'ngx-logger';
 	selector: 'hand',
 	styleUrls: ['../../../css/components/game/hand.component.scss'],
 	template: `
-		<ul class="hand">
+		<ul class="hand" [transition-group]="'flip-list'">
 			<li
+				transition-group-item
 				*ngFor="let entity of _entities; let i = index; trackBy: trackByFn"
 				[style.marginLeft.%]="i !== 0 ? marginLeft : 0"
 			>
