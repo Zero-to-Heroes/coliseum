@@ -10,15 +10,19 @@ import { NGXLogger } from 'ngx-logger';
 		'../../../../css/components/game/card/card-stats-colors.scss',
 	],
 	template: `
-		<div class="card-stats" *ngIf="hasStats" cardElementResize [fontSizeRatio]="0.2">
+		<div class="card-stats" *ngIf="hasStats">
 			<div class="stat {{ attackClass }}">
-				<div class="stat-value" resizeTarget>
-					<span>{{ _attack }}</span>
+				<div class="stat-value">
+					<svg viewBox="0 0 20 20">
+						<text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">{{ _attack }}</text>
+					</svg>
 				</div>
 			</div>
 			<div class="stat {{ healthClass }}">
-				<div class="stat-value" resizeTarget>
-					<span>{{ healthLeft }}</span>
+				<div class="stat-value">
+					<svg viewBox="0 0 20 20">
+						<text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">{{ healthLeft }}</text>
+					</svg>
 				</div>
 			</div>
 		</div>
