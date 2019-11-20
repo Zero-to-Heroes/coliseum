@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, Renderer2 } from '@angular/core';
 import { CardType, GameTag, Zone } from '@firestone-hs/reference-data';
 import { Entity } from '@firestone-hs/replay-parser';
 import { Map } from 'immutable';
@@ -20,6 +20,7 @@ import { GameHelper } from '../../../services/game-helper';
 				*ngIf="tavernUpgradeEntity"
 				[entity]="tavernUpgradeEntity"
 				[option]="isOption(tavernUpgradeEntity)"
+				(entityChanged)="onTavernUpgraded($event)"
 			></tavern-button>
 			<tavern-button
 				class="tavern-reroll"
@@ -54,7 +55,7 @@ export class HeroComponent {
 	tavernRerollEntity: Entity;
 	tavernFreezeEntity: Entity;
 
-	constructor(private logger: NGXLogger) {}
+	constructor(private logger: NGXLogger, private renderer: Renderer2, private el: ElementRef) {}
 
 	@Input('entities') set entities(entities: Map<number, Entity>) {
 		// this.logger.debug('[hero] setting new entities', entities && entities.toJS());
@@ -83,6 +84,16 @@ export class HeroComponent {
 		const result = this.heroOptions && entity && this.heroOptions.indexOf(entity.id) !== -1;
 		// console.log('is option', entity && entity.id, result, this.heroOptions, entity);
 		return result;
+	}
+
+	onTavernUpgraded(event) {
+		const upgradeEl = this.el.nativeElement.querySelector('.tavern-upgrade');
+		console.log('tavern upgraded', upgradeEl);
+		if (!upgradeEl.classList.contains('scale')) {
+			console.log('adding class');
+			this.renderer.addClass(upgradeEl, 'scale');
+		}
+		setTimeout(() => this.renderer.removeClass(upgradeEl, 'scale'), 300);
 	}
 
 	private updateEntityGroups() {

@@ -42,6 +42,7 @@
 	.tavern-upgrade {
 		left: 38%;
 		top: 20%;
+		transition: transform 0.5s;
 	}
 
 	.tavern-reroll {
@@ -53,4 +54,8 @@
 		left: 62%;
 		top: 6%;
 	}
+}
+
+.scale {
+	transform: scale(1.1);
 }
