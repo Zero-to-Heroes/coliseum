@@ -34,10 +34,23 @@
 		top: 41%;
 	}
 
-	.tavern-upgrade {
+	tavern-button {
 		position: absolute;
-		left: 37.5%;
-		width: 5.5%;
+		width: 5%;
+	}
+
+	.tavern-upgrade {
+		left: 38%;
 		top: 20%;
+	}
+
+	.tavern-reroll {
+		left: 56%;
+		top: 20%;
+	}
+
+	.tavern-freeze {
+		left: 62%;
+		top: 6%;
 	}
 }

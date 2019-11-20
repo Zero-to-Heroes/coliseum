@@ -1,6 +1,12 @@
+@import '../card/highlights.scss';
+
 .tavern-button {
 	position: relative;
 	display: flex;
+
+	&.highlight {
+		filter: $highlight;
+	}
 }
 
 .art {

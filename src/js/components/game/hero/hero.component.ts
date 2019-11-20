@@ -19,6 +19,19 @@ import { GameHelper } from '../../../services/game-helper';
 				class="tavern-upgrade"
 				*ngIf="tavernUpgradeEntity"
 				[entity]="tavernUpgradeEntity"
+				[option]="isOption(tavernUpgradeEntity)"
+			></tavern-button>
+			<tavern-button
+				class="tavern-reroll"
+				*ngIf="tavernRerollEntity"
+				[entity]="tavernRerollEntity"
+				[option]="isOption(tavernRerollEntity)"
+			></tavern-button>
+			<tavern-button
+				class="tavern-freeze"
+				*ngIf="tavernFreezeEntity"
+				[entity]="tavernFreezeEntity"
+				[option]="isOption(tavernFreezeEntity)"
 			></tavern-button>
 		</div>
 	`,
@@ -38,17 +51,19 @@ export class HeroComponent {
 	heroOptions: readonly number[];
 	tavernLevel: number;
 	tavernUpgradeEntity: Entity;
+	tavernRerollEntity: Entity;
+	tavernFreezeEntity: Entity;
 
 	constructor(private logger: NGXLogger) {}
 
 	@Input('entities') set entities(entities: Map<number, Entity>) {
-		this.logger.debug('[hero] setting new entities', entities && entities.toJS());
+		// this.logger.debug('[hero] setting new entities', entities && entities.toJS());
 		this._entities = entities;
 		this.updateEntityGroups();
 	}
 
 	@Input('playerId') set playerId(playerId: number) {
-		this.logger.debug('[hero] setting playerId', playerId);
+		// this.logger.debug('[hero] setting playerId', playerId);
 		this._playerId = playerId;
 		this.updateEntityGroups();
 	}
@@ -59,12 +74,14 @@ export class HeroComponent {
 	}
 
 	@Input('options') set options(value: readonly number[]) {
-		this.logger.debug('[hero] setting options', value);
+		// this.logger.debug('[hero] setting options', value);
 		this._options = value;
 	}
 
 	isOption(entity: Entity): boolean {
-		return this.heroOptions && entity && this.heroOptions.indexOf(entity.id) !== -1;
+		const result = this.heroOptions && entity && this.heroOptions.indexOf(entity.id) !== -1;
+		// console.log('is option', entity && entity.id, result, this.heroOptions, entity);
+		return result;
 	}
 
 	private updateEntityGroups() {
@@ -88,21 +105,23 @@ export class HeroComponent {
 			opponentEntity.getTag(GameTag.PLAYER_TECH_LEVEL)
 				? opponentEntity.getTag(GameTag.PLAYER_TECH_LEVEL)
 				: 0;
-		this.tavernUpgradeEntity =
-			this._entities &&
-			gameEntity.getTag(GameTag.TECH_LEVEL_MANA_GEM) &&
-			this._entities
-				.toArray()
-				.find(
-					entity =>
-						entity.getTag(GameTag.GAME_MODE_BUTTON_SLOT) === 3 &&
-						entity.getTag(GameTag.CONTROLLER) === this._opponentId,
-				);
+		this.tavernUpgradeEntity = GameHelper.getTavernButton(this._entities, this._opponentId, 3);
+		this.tavernRerollEntity = GameHelper.getTavernButton(this._entities, this._opponentId, 2);
+		this.tavernFreezeEntity = GameHelper.getTavernButton(this._entities, this._opponentId, 1);
+		// console.log('freeze id', this.tavernFreezeEntity && this.tavernFreezeEntity.id, this.tavernFreezeEntity);
 
 		this.heroOptions = GameHelper.getOptions(
-			[this._hero, this._heroPower, this._weapon, this.tavernUpgradeEntity],
+			[
+				this._hero,
+				this._heroPower,
+				this._weapon,
+				this.tavernUpgradeEntity,
+				this.tavernRerollEntity,
+				this.tavernFreezeEntity,
+			],
 			this._options,
 		);
+		// console.log('hero options', this.heroOptions);
 	}
 
 	private getHeroEntity(entities: Map<number, Entity>, playerEntity: Entity): Entity {
