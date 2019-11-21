@@ -32,7 +32,7 @@ declare var ga;
 							</div>
 							<preloader
 								class="dark-theme"
-								[ngClass]="{ 'active': !game || showPreloader }"
+								[ngClass]="{ 'active': showPreloader }"
 								[status]="status"
 							></preloader>
 						</div>

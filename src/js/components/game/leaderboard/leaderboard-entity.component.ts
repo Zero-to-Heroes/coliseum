@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { GameTag } from '@firestone-hs/reference-data';
 import { AllCardsService, Entity } from '@firestone-hs/replay-parser';
 import { NGXLogger } from 'ngx-logger';
 
@@ -8,7 +9,16 @@ import { NGXLogger } from 'ngx-logger';
 	template: `
 		<div class="leaderboard-entity">
 			<img class="portrait" [src]="image" />
+			<div class="death-overlay" *ngIf="isDead"></div>
+			<div class="health-bar" *ngIf="!isDead">
+				<div class="health" [style.width.%]="percentageHealth"></div>
+			</div>
 			<img class="frame" [src]="leaderboardFrame" />
+			<img
+				class="skull"
+				src="https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/skull.png"
+				*ngIf="isDead"
+			/>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -18,6 +28,8 @@ export class LeaderboardEntityComponent {
 	leaderboardFrame: string;
 	_entity: Entity;
 	_isMainPlayer: boolean;
+	isDead: boolean;
+	percentageHealth: number;
 
 	constructor(private logger: NGXLogger, private cards: AllCardsService) {}
 
@@ -38,5 +50,17 @@ export class LeaderboardEntityComponent {
 		}
 		const frame = this._isMainPlayer ? 'leaderboard_frame_player' : 'leaderboard_frame_opponent';
 		this.leaderboardFrame = `https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/battlegrounds/${frame}.png`;
+		const maxHealth = this._entity.getTag(GameTag.HEALTH);
+		const damage = this._entity.getTag(GameTag.DAMAGE) || 0;
+		this.isDead = maxHealth - damage <= 0;
+		console.log(
+			'updating enityt',
+			this._entity,
+			this._entity.tags.toJS(),
+			this.percentageHealth,
+			maxHealth,
+			damage,
+		);
+		this.percentageHealth = (100 * (maxHealth - damage)) / maxHealth;
 	}
 }

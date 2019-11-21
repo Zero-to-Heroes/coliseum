@@ -13,3 +13,35 @@
 	left: -2%;
 	width: 105%;
 }
+
+.skull {
+	position: absolute;
+	width: 90%;
+	bottom: -25%;
+	left: 3%;
+}
+
+.death-overlay {
+	background: rgba(0, 0, 0, 0.5);
+	position: absolute;
+	top: 5%;
+	left: 5%;
+	right: 5%;
+	bottom: 5%;
+}
+
+.health-bar {
+	position: absolute;
+	height: 20%;
+	bottom: 13%;
+	left: 10%;
+	right: 10%;
+	background: rgba(33, 33, 33, 1);
+	border-radius: 16px;
+}
+
+.health {
+	height: 100%;
+	background: rgba(188, 25, 62, 1);
+	border-radius: 16px;
+}
