@@ -39,13 +39,6 @@ export class TavernButtonComponent {
 	constructor(private logger: NGXLogger, private renderer: Renderer2, private el: ElementRef) {}
 
 	@Input() set entity(value: Entity) {
-		console.log(
-			'setting entity',
-			value,
-			this._entity,
-			value && value.tags.toJS(),
-			this._entity && this._entity.tags.toJS(),
-		);
 		this.entityId = value ? value.id : undefined;
 		this.cardId = value ? value.cardID : undefined;
 		this.actionSrc = `https://static.zerotoheroes.com/hearthstone/cardart/256x/${this.cardId}.jpg`;
