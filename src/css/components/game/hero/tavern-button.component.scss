@@ -3,6 +3,7 @@
 .tavern-button {
 	position: relative;
 	display: flex;
+	transition: transform 0.6s;
 
 	&.highlight {
 		filter: $highlight;
@@ -23,4 +24,8 @@
 
 coin-cost {
 	z-index: 1;
+}
+
+.scale {
+	transform: scale(1.3);
 }

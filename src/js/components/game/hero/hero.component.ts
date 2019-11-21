@@ -20,19 +20,21 @@ import { GameHelper } from '../../../services/game-helper';
 				*ngIf="tavernUpgradeEntity"
 				[entity]="tavernUpgradeEntity"
 				[option]="isOption(tavernUpgradeEntity)"
-				(entityChanged)="onTavernUpgraded($event)"
+				[shouldAnimate]="shouldAnimate(tavernUpgradeEntity)"
 			></tavern-button>
 			<tavern-button
 				class="tavern-reroll"
 				*ngIf="tavernRerollEntity"
 				[entity]="tavernRerollEntity"
 				[option]="isOption(tavernRerollEntity)"
+				[shouldAnimate]="shouldAnimate(tavernRerollEntity)"
 			></tavern-button>
 			<tavern-button
 				class="tavern-freeze"
 				*ngIf="tavernFreezeEntity"
 				[entity]="tavernFreezeEntity"
 				[option]="isOption(tavernFreezeEntity)"
+				[shouldAnimate]="shouldAnimate(tavernFreezeEntity)"
 			></tavern-button>
 		</div>
 	`,
@@ -54,6 +56,7 @@ export class HeroComponent {
 	tavernUpgradeEntity: Entity;
 	tavernRerollEntity: Entity;
 	tavernFreezeEntity: Entity;
+	_entitiesToAnimate: readonly number[];
 
 	constructor(private logger: NGXLogger, private renderer: Renderer2, private el: ElementRef) {}
 
@@ -80,10 +83,19 @@ export class HeroComponent {
 		this.updateEntityGroups();
 	}
 
+	@Input() set entitiesToAnimate(value: readonly number[]) {
+		this._entitiesToAnimate = value;
+		this.updateEntityGroups();
+	}
+
 	isOption(entity: Entity): boolean {
 		const result = this.heroOptions && entity && this.heroOptions.indexOf(entity.id) !== -1;
 		// console.log('is option', entity && entity.id, result, this.heroOptions, entity);
 		return result;
+	}
+
+	shouldAnimate(entity: Entity) {
+		return entity && this._entitiesToAnimate && this._entitiesToAnimate.indexOf(entity.id) !== -1;
 	}
 
 	onTavernUpgraded(event) {

@@ -1,6 +1,12 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, ViewRef } from '@angular/core';
 import { GameTag } from '@firestone-hs/reference-data';
-import { Action, Entity, QuestCompletedAction, SecretRevealedAction } from '@firestone-hs/replay-parser';
+import {
+	Action,
+	ActionButtonUsedAction,
+	Entity,
+	QuestCompletedAction,
+	SecretRevealedAction,
+} from '@firestone-hs/replay-parser';
 import { Map } from 'immutable';
 import { NGXLogger } from 'ngx-logger';
 import { Events } from '../../services/events.service';
@@ -33,6 +39,7 @@ import { GameHelper } from '../../services/game-helper';
 					[opponentId]="_playerId"
 					[isMainPlayer]="false"
 					[isRecruitPhase]="isRecruitPhase"
+					[entitiesToAnimate]="_entitiesToAnimate"
 				>
 				</play-area>
 				<play-area
@@ -42,6 +49,7 @@ import { GameHelper } from '../../services/game-helper';
 					[options]="_options"
 					[playerId]="_playerId"
 					[isMainPlayer]="true"
+					[entitiesToAnimate]="_entitiesToAnimate"
 				>
 				</play-area>
 			</div>
@@ -94,6 +102,7 @@ export class GameComponent implements AfterViewInit {
 	_targets: readonly [number, number][] = [];
 	_options: readonly number[] = [];
 	_showHiddenCards: boolean;
+	_entitiesToAnimate: readonly number[];
 
 	_quest: Entity;
 	isOverlay: boolean;
@@ -166,6 +175,7 @@ export class GameComponent implements AfterViewInit {
 		this.updateActiveSpell();
 		this.updateSecretRevealed();
 		this.updateQuestCompleted();
+		this.updateEntitiesToAnimate();
 	}
 
 	onOverlayUpdated(event: { isOverlay: boolean; isDarkOverlay: boolean }) {
@@ -189,5 +199,12 @@ export class GameComponent implements AfterViewInit {
 
 	private updateQuestCompleted() {
 		this._questCompleted = this._entities && this.questCompletedId && this._entities.get(this.questCompletedId);
+	}
+
+	private updateEntitiesToAnimate() {
+		this._entitiesToAnimate = null;
+		if (this._currentAction instanceof ActionButtonUsedAction) {
+			this._entitiesToAnimate = [this._currentAction.entityId];
+		}
 	}
 }

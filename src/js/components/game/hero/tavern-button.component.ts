@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, Renderer2 } from '@angular/core';
 import { GameTag } from '@firestone-hs/reference-data';
 import { Entity } from '@firestone-hs/replay-parser';
 import { NGXLogger } from 'ngx-logger';
@@ -32,23 +32,51 @@ export class TavernButtonComponent {
 	_option: boolean;
 	actionSrc: string;
 
+	private _shouldAnimate: boolean;
+
 	@Output() entityChanged: EventEmitter<Entity> = new EventEmitter();
 
-	constructor(private logger: NGXLogger) {}
+	constructor(private logger: NGXLogger, private renderer: Renderer2, private el: ElementRef) {}
 
 	@Input() set entity(value: Entity) {
+		console.log(
+			'setting entity',
+			value,
+			this._entity,
+			value && value.tags.toJS(),
+			this._entity && this._entity.tags.toJS(),
+		);
 		this.entityId = value ? value.id : undefined;
 		this.cardId = value ? value.cardID : undefined;
 		this.actionSrc = `https://static.zerotoheroes.com/hearthstone/cardart/256x/${this.cardId}.jpg`;
 		this.cost = value ? value.getTag(GameTag.COST) : undefined;
-		if (value && this._entity && value.id !== this._entity.id) {
-			this.entityChanged.next(value);
-		}
+		// if (value && this._entity && value.id !== this._entity.id) {
+		// 	this.entityChanged.next(value);
+		// }
 		this._entity = value;
+		this.updateAnimations();
+	}
+
+	@Input() set shouldAnimate(value: boolean) {
+		this._shouldAnimate = value;
+		this.updateAnimations();
 	}
 
 	@Input('option') set option(value: boolean) {
 		this._option = value;
 		// console.log('setting option', this._entity && this._entity.id, value);
+	}
+
+	private updateAnimations() {
+		if (this._shouldAnimate) {
+			this._shouldAnimate = null;
+			const element = this.el.nativeElement.querySelector('.tavern-button');
+			console.log('element to animate', element);
+			if (element && !element.classList.contains('scale')) {
+				console.log('adding scale class');
+				this.renderer.addClass(element, 'scale');
+			}
+			setTimeout(() => this.renderer.removeClass(element, 'scale'), 300);
+		}
 	}
 }

@@ -11,7 +11,14 @@ import { GameHelper } from '../../services/game-helper';
 	template: `
 		<div class="play-area" [ngClass]="{ 'mulligan': _isMulligan }">
 			<hand [entities]="hand" [showCards]="_showCards" [options]="handOptions" [controller]="playerEntity"></hand>
-			<hero [entities]="_entities" [playerId]="_playerId" [opponentId]="opponentId" [options]="_options"> </hero>
+			<hero
+				[entities]="_entities"
+				[playerId]="_playerId"
+				[opponentId]="opponentId"
+				[options]="_options"
+				[entitiesToAnimate]="entitiesToAnimate"
+			>
+			</hero>
 			<board
 				[entities]="board"
 				[enchantmentCandidates]="enchantmentCandidates"
@@ -60,6 +67,7 @@ export class PlayAreaComponent {
 	@Input() opponentId: number;
 	@Input() isMainPlayer: boolean;
 	@Input() isRecruitPhase: boolean;
+	@Input() entitiesToAnimate: readonly number[];
 
 	@Input('mulligan') set mulligan(value: string) {
 		this.logger.debug('[play-area] setting mulligan', value);
