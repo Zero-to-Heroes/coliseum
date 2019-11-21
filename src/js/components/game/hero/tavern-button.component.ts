@@ -67,9 +67,7 @@ export class TavernButtonComponent {
 			this._shouldAnimate = null;
 			this._forceAnimation = null;
 			const element = this.el.nativeElement.querySelector('.tavern-button');
-			console.log('element to animate', element);
 			if (element && !element.classList.contains('scale')) {
-				console.log('adding scale class');
 				this.renderer.addClass(element, 'scale');
 			}
 			setTimeout(() => this.renderer.removeClass(element, 'scale'), 500);

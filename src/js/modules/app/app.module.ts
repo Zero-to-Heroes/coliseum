@@ -108,7 +108,7 @@ export class SentryErrorHandler implements ErrorHandler {
 		FormsModule,
 		BrowserAnimationsModule,
 		Ng2FittextModule,
-		LoggerModule.forRoot({ level: NgxLoggerLevel.INFO }),
+		LoggerModule.forRoot({ level: NgxLoggerLevel.WARN }),
 		ReplayParserModule.forRoot(),
 	],
 	declarations: [

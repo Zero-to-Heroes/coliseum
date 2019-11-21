@@ -85,7 +85,6 @@ export class HeroComponent {
 
 	@Input() set entitiesToAnimate(value: readonly number[]) {
 		this._entitiesToAnimate = value;
-		console.log('_entitiesToAnimate', this._entitiesToAnimate);
 		this.updateEntityGroups();
 	}
 

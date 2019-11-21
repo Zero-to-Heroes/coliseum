@@ -80,7 +80,7 @@ export class HeroPowerComponent {
 		this.logger.debug('[hero-power] setting new heroPower', heroPower, heroPower && heroPower.tags.toJS());
 		this.entity = heroPower;
 		if (!heroPower) {
-			console.log('no hero power, returning');
+			// console.log('no hero power, returning');
 			return;
 		}
 		this.entityId = heroPower.id;
@@ -88,7 +88,6 @@ export class HeroPowerComponent {
 		const exhausted =
 			heroPower.getTag(GameTag.EXHAUSTED) === 1 || heroPower.getTag(GameTag.HERO_POWER_DISABLED) === 1;
 		this.status = exhausted ? 'exhausted' : 'active';
-		console.log('is exhausted?', exhausted, this.status, heroPower.tags.toJS());
 		this.cost = heroPower.getTag(GameTag.COST);
 		this.premium = heroPower.getTag(GameTag.PREMIUM) === 1;
 	}
