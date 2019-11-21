@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Input, Renderer2 } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CardType, GameTag, Zone } from '@firestone-hs/reference-data';
 import { Entity } from '@firestone-hs/replay-parser';
 import { Map } from 'immutable';
-import { NGXLogger } from 'ngx-logger';
+import { GameConfService } from '../../../services/game-conf.service';
 import { GameHelper } from '../../../services/game-helper';
 
 @Component({
@@ -58,7 +58,7 @@ export class HeroComponent {
 	tavernFreezeEntity: Entity;
 	_entitiesToAnimate: readonly number[];
 
-	constructor(private logger: NGXLogger, private renderer: Renderer2, private el: ElementRef) {}
+	constructor(private conf: GameConfService) {}
 
 	@Input('entities') set entities(entities: Map<number, Entity>) {
 		// this.logger.debug('[hero] setting new entities', entities && entities.toJS());
@@ -119,14 +119,13 @@ export class HeroComponent {
 		this._secrets = this.getSecretEntities(this._entities, this._playerId);
 
 		// Battlegrounds stuff
-		const gameEntity = GameHelper.getGameEntity(this._entities);
 		const opponentEntity =
 			this._entities && this._entities.find(entity => entity.getTag(GameTag.PLAYER_ID) === this._opponentId);
 		this.tavernLevel =
 			opponentEntity &&
 			this._hero &&
 			this._hero.cardID === 'TB_BaconShopBob' &&
-			gameEntity.getTag(GameTag.TECH_LEVEL_MANA_GEM) &&
+			this.conf.isBattlegrounds() &&
 			opponentEntity.getTag(GameTag.PLAYER_TECH_LEVEL)
 				? opponentEntity.getTag(GameTag.PLAYER_TECH_LEVEL)
 				: 0;

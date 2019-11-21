@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CardClass, CardType, GameTag } from '@firestone-hs/reference-data';
 import { AllCardsService, Entity } from '@firestone-hs/replay-parser';
 import { NGXLogger } from 'ngx-logger';
+import { GameConfService } from '../../../services/game-conf.service';
 
 @Component({
 	selector: 'card',
@@ -70,7 +71,7 @@ export class CardComponent {
 	_forbiddenTargetSource = false;
 	_hasTooltip = true;
 
-	constructor(private cards: AllCardsService, private logger: NGXLogger) {}
+	constructor(private cards: AllCardsService, private conf: GameConfService, private logger: NGXLogger) {}
 
 	@Input('entity') set entity(entity: Entity) {
 		this.logger.debug('[card] setting entity', entity);
@@ -160,7 +161,7 @@ export class CardComponent {
 				this.originalCard && this.originalCard.playerClass
 					? CardClass[this.originalCard.playerClass.toUpperCase() as string]
 					: undefined;
-			this.tavernTier = this._entity.getTag(GameTag.TECH_LEVEL);
+			this.tavernTier = this.conf.isBattlegrounds() ? this._entity.getTag(GameTag.TECH_LEVEL) : 0;
 		}
 	}
 }

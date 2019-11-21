@@ -5,6 +5,7 @@ import { NGXLogger } from 'ngx-logger';
 import { Subscription } from 'rxjs';
 import { ReplayOptions } from '../models/replay-options';
 import { Events } from '../services/events.service';
+import { GameConfService } from '../services/game-conf.service';
 
 declare var ga;
 
@@ -83,6 +84,7 @@ export class AppComponent implements OnDestroy {
 
 	constructor(
 		private gameParser: GameParserService,
+		private gameConf: GameConfService,
 		private events: Events,
 		private cdr: ChangeDetectorRef,
 		private logger: NGXLogger,
@@ -261,6 +263,7 @@ export class AppComponent implements OnDestroy {
 	}
 
 	private populateInfo(complete = true) {
+		this.gameConf.updateConfig(this.game);
 		if (
 			!this.game ||
 			!this.game.turns ||
@@ -286,7 +289,7 @@ export class AppComponent implements OnDestroy {
 			this.currentTime = this.computeCurrentTime();
 			this.updateUrlQueryString();
 		}
-		this.logger.info(
+		console.log(
 			'[app] Considering action',
 			this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn],
 			this.game.turns.get(this.currentTurn).actions,
