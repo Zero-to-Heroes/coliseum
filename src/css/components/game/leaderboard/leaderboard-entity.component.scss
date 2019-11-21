@@ -36,12 +36,19 @@
 	bottom: 13%;
 	left: 10%;
 	right: 10%;
-	background: rgba(33, 33, 33, 1);
+	background: linear-gradient(white, rgba(33, 33, 33, 1) 25%);
 	border-radius: 16px;
 }
 
 .health {
 	height: 100%;
-	background: rgba(188, 25, 62, 1);
+	background: linear-gradient(white, rgba(188, 25, 62, 1) 25%);
 	border-radius: 16px;
+}
+
+tavern-level-icon {
+	position: absolute;
+	left: -15%;
+	width: 50%;
+	top: -17%;
 }

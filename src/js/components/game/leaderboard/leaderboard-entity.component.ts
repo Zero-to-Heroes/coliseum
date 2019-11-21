@@ -19,6 +19,7 @@ import { NGXLogger } from 'ngx-logger';
 				src="https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/skull.png"
 				*ngIf="isDead"
 			/>
+			<tavern-level-icon [level]="tavernLevel"></tavern-level-icon>
 		</div>
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -30,6 +31,7 @@ export class LeaderboardEntityComponent {
 	_isMainPlayer: boolean;
 	isDead: boolean;
 	percentageHealth: number;
+	tavernLevel: number;
 
 	constructor(private logger: NGXLogger, private cards: AllCardsService) {}
 
@@ -53,14 +55,7 @@ export class LeaderboardEntityComponent {
 		const maxHealth = this._entity.getTag(GameTag.HEALTH);
 		const damage = this._entity.getTag(GameTag.DAMAGE) || 0;
 		this.isDead = maxHealth - damage <= 0;
-		console.log(
-			'updating enityt',
-			this._entity,
-			this._entity.tags.toJS(),
-			this.percentageHealth,
-			maxHealth,
-			damage,
-		);
 		this.percentageHealth = (100 * (maxHealth - damage)) / maxHealth;
+		this.tavernLevel = this._entity.getTag(GameTag.PLAYER_TECH_LEVEL) || 1;
 	}
 }
