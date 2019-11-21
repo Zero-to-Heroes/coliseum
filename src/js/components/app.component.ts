@@ -289,18 +289,19 @@ export class AppComponent implements OnDestroy {
 			this.currentTime = this.computeCurrentTime();
 			this.updateUrlQueryString();
 		}
-		console.log(
-			'[app] Considering action',
-			this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn],
-			this.game.turns.get(this.currentTurn).actions,
-		);
+		// console.log(
+		// 	'[app] Considering action',
+		// 	this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn],
+		// 	this.game.turns.get(this.currentTurn).actions,
+		// );
 	}
 
 	private buildTotalTime() {
 		if (!this.game) {
 			return;
 		}
-		const lastTurn: Turn = this.game.turns.last();
+		const lastTurn: Turn = this.game.turns.get(this.game.turns.size - 1);
+		console.log('last turn', lastTurn, this.game.turns.size, this.game.turns.toJS());
 		if (!lastTurn) {
 			return;
 		}
