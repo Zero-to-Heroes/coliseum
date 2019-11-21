@@ -33,6 +33,7 @@ export class TavernButtonComponent {
 	actionSrc: string;
 
 	private _shouldAnimate: boolean;
+	private _forceAnimation: boolean;
 
 	@Output() entityChanged: EventEmitter<Entity> = new EventEmitter();
 
@@ -43,9 +44,10 @@ export class TavernButtonComponent {
 		this.cardId = value ? value.cardID : undefined;
 		this.actionSrc = `https://static.zerotoheroes.com/hearthstone/cardart/256x/${this.cardId}.jpg`;
 		this.cost = value ? value.getTag(GameTag.COST) : undefined;
-		// if (value && this._entity && value.id !== this._entity.id) {
-		// 	this.entityChanged.next(value);
-		// }
+		if (value && this._entity && value.id !== this._entity.id) {
+			this._forceAnimation = true;
+			this.entityChanged.next(value);
+		}
 		this._entity = value;
 		this.updateAnimations();
 	}
@@ -61,15 +63,16 @@ export class TavernButtonComponent {
 	}
 
 	private updateAnimations() {
-		if (this._shouldAnimate) {
+		if (this._shouldAnimate || this._forceAnimation) {
 			this._shouldAnimate = null;
+			this._forceAnimation = null;
 			const element = this.el.nativeElement.querySelector('.tavern-button');
 			console.log('element to animate', element);
 			if (element && !element.classList.contains('scale')) {
 				console.log('adding scale class');
 				this.renderer.addClass(element, 'scale');
 			}
-			setTimeout(() => this.renderer.removeClass(element, 'scale'), 300);
+			setTimeout(() => this.renderer.removeClass(element, 'scale'), 500);
 		}
 	}
 }

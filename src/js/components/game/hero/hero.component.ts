@@ -85,6 +85,7 @@ export class HeroComponent {
 
 	@Input() set entitiesToAnimate(value: readonly number[]) {
 		this._entitiesToAnimate = value;
+		console.log('_entitiesToAnimate', this._entitiesToAnimate);
 		this.updateEntityGroups();
 	}
 
@@ -98,15 +99,16 @@ export class HeroComponent {
 		return entity && this._entitiesToAnimate && this._entitiesToAnimate.indexOf(entity.id) !== -1;
 	}
 
-	onTavernUpgraded(event) {
-		const upgradeEl = this.el.nativeElement.querySelector('.tavern-upgrade');
-		console.log('tavern upgraded', upgradeEl);
-		if (!upgradeEl.classList.contains('scale')) {
-			console.log('adding class');
-			this.renderer.addClass(upgradeEl, 'scale');
-		}
-		setTimeout(() => this.renderer.removeClass(upgradeEl, 'scale'), 300);
-	}
+	// We need this because the "entitiesToAnimate" don't handle the change in entity
+	// onTavernUpgraded(event) {
+	// 	const upgradeEl = this.el.nativeElement.querySelector('.tavern-upgrade');
+	// 	console.log('tavern upgraded', upgradeEl);
+	// 	if (!upgradeEl.classList.contains('scale')) {
+	// 		console.log('adding class');
+	// 		this.renderer.addClass(upgradeEl, 'scale');
+	// 	}
+	// 	setTimeout(() => this.renderer.removeClass(upgradeEl, 'scale'), 300);
+	// }
 
 	private updateEntityGroups() {
 		this.playerEntity =
