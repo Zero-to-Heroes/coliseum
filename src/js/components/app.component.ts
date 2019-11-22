@@ -301,7 +301,7 @@ export class AppComponent implements OnDestroy {
 			return;
 		}
 		const lastTurn: Turn = this.game.turns.get(this.game.turns.size - 1);
-		console.log('last turn', lastTurn, this.game.turns.size, this.game.turns.toJS());
+		// console.log('last turn', lastTurn, this.game.turns.size, this.game.turns.toJS());
 		if (!lastTurn) {
 			return;
 		}
