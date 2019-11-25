@@ -176,13 +176,22 @@ export class AppComponent implements OnDestroy {
 
 					if (complete) {
 						this.status = null;
-						this.logger.info('[app] Received complete game', game.turns.size);
+						console.log('[app] Received complete game', game.turns.size);
 						ga('send', 'event', 'replay-loaded');
+
+						// if (game.turns.size === 0) {
+						// 	this.status = 'An error occured while parsing the replay';
+						// 	this.showPreloader = true;
+						// }
 					}
 
 					// We do this so that the initial drawing is already done when hiding the preloader
 					setTimeout(() => {
 						this.showPreloader = false;
+						if (game.turns.size === 0 && complete) {
+							this.status = 'error';
+							this.showPreloader = true;
+						}
 						if (!(this.cdr as ViewRef).destroyed) {
 							this.cdr.detectChanges();
 						}
