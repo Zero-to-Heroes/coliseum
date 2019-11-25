@@ -36,7 +36,7 @@ import { Events } from '../../../services/events.service';
 			>
 			</mulligan>
 			<hero-selection
-				*ngIf="_isHeroSelection"
+				*ngIf="_isHeroSelection && !_opponentsRevealed"
 				class="bottom"
 				[entities]="_entities"
 				[crossed]="_crossed"

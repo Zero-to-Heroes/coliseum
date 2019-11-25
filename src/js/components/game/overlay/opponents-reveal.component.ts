@@ -124,8 +124,9 @@ export class OpponentRevealedComponent {
 	private getPlayerEntity(): Entity {
 		return this._entities
 			.toArray()
+			.filter(entity => ['TB_BaconShop_HERO_PH', 'TB_BaconShopBob'].indexOf(entity.cardID) === -1)
 			.filter(entity => entity.getTag(GameTag.CONTROLLER) === this._playerId)
-			.filter(entity => entity.getTag(GameTag.ZONE) === Zone.PLAY)
+			.filter(entity => entity.getTag(GameTag.ZONE) === Zone.PLAY || entity.getTag(GameTag.ZONE) === Zone.HAND)
 			.filter(entity => entity.getCardType() === CardType.HERO)[0];
 	}
 }
