@@ -34,14 +34,19 @@ export class PreloaderComponent implements OnInit, AfterViewInit, OnDestroy {
 	cardName: string;
 
 	@Input() set status(value: string) {
+		const wasInError = this._status === 'error';
 		this._status = value;
 		if (value === 'error') {
 			this.quote =
 				'An error occured while parsing the replay. Please contact the support on <a href="https://twitter.com/ZerotoHeroes_HS" target="_blank">Twitter</a> or <a href="https://discord.gg/4Gpavvt" target="_blank">Discord</a>';
 			this.cardName = 'Alarm-o-Bot';
 			this.svg = null;
-			clearInterval(this.interval);
+			if (this.interval) {
+				clearInterval(this.interval);
+			}
 			this.cdr.detectChanges();
+		} else if (wasInError) {
+			this.startQuoteCarousel();
 		}
 	}
 
@@ -58,6 +63,13 @@ export class PreloaderComponent implements OnInit, AfterViewInit, OnDestroy {
 	async ngOnInit() {
 		await this.cards.initializeCardsDb();
 		this.cardsWithQuotes = this.cards.getCards().filter(card => card.flavor);
+		this.startQuoteCarousel();
+	}
+
+	private startQuoteCarousel() {
+		if (this.interval) {
+			clearInterval(this.interval);
+		}
 		this.chooseRandomQuote();
 		this.interval = setInterval(() => this.chooseRandomQuote(), 7000);
 	}
@@ -67,7 +79,13 @@ export class PreloaderComponent implements OnInit, AfterViewInit, OnDestroy {
 	}
 
 	private chooseRandomQuote() {
+		if (!this.cardsWithQuotes) {
+			return;
+		}
 		try {
+			if (this._status === 'error') {
+				return;
+			}
 			const card = this.cardsWithQuotes[Math.floor(Math.random() * this.cardsWithQuotes.length)];
 			this.quote = card.flavor;
 			this.cardName = card.name;
@@ -78,6 +96,8 @@ export class PreloaderComponent implements OnInit, AfterViewInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
-		clearInterval(this.interval);
+		if (this.interval) {
+			clearInterval(this.interval);
+		}
 	}
 }

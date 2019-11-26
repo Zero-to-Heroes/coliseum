@@ -189,6 +189,7 @@ export class AppComponent implements OnDestroy {
 					setTimeout(() => {
 						this.showPreloader = false;
 						if (game.turns.size === 0 && complete) {
+							console.log('showing error status because no turns');
 							this.status = 'error';
 							this.showPreloader = true;
 						}
@@ -196,6 +197,13 @@ export class AppComponent implements OnDestroy {
 							this.cdr.detectChanges();
 						}
 					}, 1500);
+				} else {
+					console.log('showing error status because no game');
+					this.showPreloader = true;
+					this.status = 'error';
+					if (!(this.cdr as ViewRef).destroyed) {
+						this.cdr.detectChanges();
+					}
 				}
 			},
 			error => {
