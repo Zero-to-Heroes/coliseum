@@ -4,6 +4,7 @@ import { Action, BaconBoardVisualStateAction, Game, GameParserService, Turn } fr
 import { NGXLogger } from 'ngx-logger';
 import { Subscription } from 'rxjs';
 import { ReplayOptions } from '../models/replay-options';
+import { AnalyticsService } from '../services/analytics.service';
 import { Events } from '../services/events.service';
 import { GameConfService } from '../services/game-conf.service';
 
@@ -89,6 +90,7 @@ export class AppComponent implements OnDestroy {
 		private cdr: ChangeDetectorRef,
 		private logger: NGXLogger,
 		private zone: NgZone,
+		private analytics: AnalyticsService,
 	) {
 		logger.debug('building coliseum app component');
 		const existingColiseum = window['coliseum'] || {};
@@ -101,9 +103,11 @@ export class AppComponent implements OnDestroy {
 	}
 
 	public reset(shouldUpdateQueryString = true) {
+		console.log('in reset');
 		this.status = null;
 		this.showPreloader = true;
 		this.reviewId = this.reviewId; // That was we can already start showing the links
+		delete this.game;
 		this.game = undefined;
 		this.currentAction = undefined;
 
@@ -128,6 +132,7 @@ export class AppComponent implements OnDestroy {
 	}
 
 	public updateStatus(newStatus: string) {
+		console.log('updating status', newStatus);
 		this.status = newStatus;
 		if (!(this.cdr as ViewRef).destroyed) {
 			this.cdr.detectChanges();
@@ -135,7 +140,7 @@ export class AppComponent implements OnDestroy {
 	}
 
 	public async loadReplay(replayXml: string, options?: ReplayOptions) {
-		ga('send', 'event', 'start-replay-load');
+		this.analytics.event('start-replay-load');
 		// Cache the info so that it's not erased by a reset
 		// const turn = parseInt(this.getSearchParam('turn')) || 0;
 		// const action = parseInt(this.getSearchParam('action')) || 0;
@@ -177,7 +182,7 @@ export class AppComponent implements OnDestroy {
 					if (complete) {
 						this.status = null;
 						console.log('[app] Received complete game', game.turns.size);
-						ga('send', 'event', 'replay-loaded');
+						this.analytics.event('replay-loaded');
 
 						// if (game.turns.size === 0) {
 						// 	this.status = 'An error occured while parsing the replay';

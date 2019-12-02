@@ -82,6 +82,7 @@ import { CardElementResizeDirective } from '../../directives/card-element-resize
 import { CardResizeDirective } from '../../directives/card-resize.directive';
 import { CardTooltipDirective } from '../../directives/card-tooltip.directive';
 import { TransitionGroupItemDirective } from '../../directives/transition-group-item.directive';
+import { AnalyticsService } from '../../services/analytics.service';
 import { Events } from '../../services/events.service';
 
 console.log('version is ' + process.env.APP_VERSION);
@@ -209,6 +210,7 @@ export class SentryErrorHandler implements ErrorHandler {
 		{ provide: ErrorHandler, useClass: SentryErrorHandler },
 
 		Events,
+		AnalyticsService,
 	],
 	entryComponents: [AppComponent],
 })

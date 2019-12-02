@@ -12,6 +12,7 @@ import {
 } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
 import { Key } from 'ts-keycode-enum';
+import { AnalyticsService } from '../services/analytics.service';
 
 declare var ga;
 
@@ -291,7 +292,7 @@ export class ControlsComponent implements OnInit, OnDestroy {
 
 	private playingTimeout: NodeJS.Timeout;
 
-	constructor(private cdr: ChangeDetectorRef, private logger: NGXLogger) {}
+	constructor(private cdr: ChangeDetectorRef, private logger: NGXLogger, private analytics: AnalyticsService) {}
 
 	ngOnInit() {
 		this.startPlayingControl();
@@ -351,27 +352,27 @@ export class ControlsComponent implements OnInit, OnDestroy {
 	}
 
 	goPreviousTurn() {
-		ga('send', 'event', 'controls', 'previous-turn');
+		this.analytics.event('controls', 'previous-turn');
 		this.previousTurn.next();
 	}
 
 	goPreviousAction() {
-		ga('send', 'event', 'controls', 'previous-action');
+		this.analytics.event('controls', 'previous-action');
 		this.previousAction.next();
 	}
 
 	goNextAction() {
-		ga('send', 'event', 'controls', 'next-action');
+		this.analytics.event('controls', 'next-action');
 		this.nextAction.next();
 	}
 
 	goNextTurn() {
-		ga('send', 'event', 'controls', 'next-turn');
+		this.analytics.event('controls', 'next-turn');
 		this.nextTurn.next();
 	}
 
 	togglePlayPause() {
-		ga('send', 'event', 'controls', 'toggle-play-pause');
+		this.analytics.event('controls', 'toggle-play-pause');
 		this.isPlaying = !this.isPlaying;
 		if (!(this.cdr as ViewRef).destroyed) {
 			this.cdr.detectChanges();
@@ -379,7 +380,7 @@ export class ControlsComponent implements OnInit, OnDestroy {
 	}
 
 	changeSpeed(newSpeed: number) {
-		ga('send', 'event', 'controls', 'change-speed', newSpeed);
+		this.analytics.event('controls', 'change-speed', '' + newSpeed);
 		this.currentSpeed = newSpeed;
 		if (!(this.cdr as ViewRef).destroyed) {
 			this.cdr.detectChanges();
@@ -387,7 +388,7 @@ export class ControlsComponent implements OnInit, OnDestroy {
 	}
 
 	toggleShowHiddenCards() {
-		ga('send', 'event', 'controls', 'toggle-show-hidden-cards');
+		this.analytics.event('controls', 'toggle-show-hidden-cards');
 		this.showingHiddenCards = !this.showingHiddenCards;
 		this.showHiddenCards.next(this.showingHiddenCards);
 	}
