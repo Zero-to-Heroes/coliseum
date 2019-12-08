@@ -98,17 +98,6 @@ export class HeroComponent {
 		return entity && this._entitiesToAnimate && this._entitiesToAnimate.indexOf(entity.id) !== -1;
 	}
 
-	// We need this because the "entitiesToAnimate" don't handle the change in entity
-	// onTavernUpgraded(event) {
-	// 	const upgradeEl = this.el.nativeElement.querySelector('.tavern-upgrade');
-	// 	console.log('tavern upgraded', upgradeEl);
-	// 	if (!upgradeEl.classList.contains('scale')) {
-	// 		console.log('adding class');
-	// 		this.renderer.addClass(upgradeEl, 'scale');
-	// 	}
-	// 	setTimeout(() => this.renderer.removeClass(upgradeEl, 'scale'), 300);
-	// }
-
 	private updateEntityGroups() {
 		this.playerEntity =
 			this._entities && this._entities.find(entity => entity.getTag(GameTag.PLAYER_ID) === this._playerId);
