@@ -55,6 +55,7 @@ export class CardFrameComponent {
 	private buildFrame(cardClass: CardClass, cardType: CardType, premium: boolean): string {
 		const strClass =
 			cardType === CardType.HERO_POWER ? '' : premium ? '-premium' : '-' + CardClass[cardClass].toLowerCase();
-		return `frame-${CardType[cardType].toLowerCase()}${strClass}`;
+		const strFrame = CardType[cardType] ? CardType[cardType].toLowerCase() : 'nuetral';
+		return `frame-${strFrame}${strClass}`;
 	}
 }
