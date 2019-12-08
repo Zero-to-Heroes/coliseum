@@ -56,6 +56,9 @@ export class TransitionGroupComponent {
 		}
 		const cssClass = this.class + '-move';
 		let el = item.el;
+		if (!el) {
+			return;
+		}
 		let style: any = el.style;
 		el.classList.add(cssClass);
 		style.transform = style.WebkitTransform = style.transitionDuration = '';

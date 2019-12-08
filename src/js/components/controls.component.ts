@@ -330,7 +330,7 @@ export class ControlsComponent implements OnInit, OnDestroy {
 				this.logger.debug('[controls] pressed space while focused on', focusedElement);
 				// If the focus is on a player control, we don't trigger the play action,
 				// so that the control's action can trigger instead
-				if (!focusedElement.classList.contains('player-control-element')) {
+				if (focusedElement && !focusedElement.classList.contains('player-control-element')) {
 					event.stopPropagation();
 					this.togglePlayPause();
 				}
