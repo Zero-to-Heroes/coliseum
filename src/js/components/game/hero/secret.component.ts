@@ -50,6 +50,8 @@ export class SecretComponent {
 				return this.getImage('secret_paladin');
 			case CardClass.ROGUE:
 				return this.getImage('secret_rogue');
+			case CardClass.NEUTRAL:
+				return this.getImage('secret_rogue');
 			default:
 				this.logger.error('[secret] invalid class requested', playerClass);
 				return '';
@@ -65,6 +67,8 @@ export class SecretComponent {
 			case 'PALADIN':
 				return this.getImage('secret_paladin');
 			case 'ROGUE':
+				return this.getImage('secret_rogue');
+			case 'NEUTRAL':
 				return this.getImage('secret_rogue');
 			default:
 				this.logger.error('[secret] invalid class requested', playerClass);
