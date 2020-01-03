@@ -47,7 +47,7 @@ export class CardFrameComponent {
 		const cardClass: CardClass =
 			originalCard && originalCard.playerClass
 				? CardClass[originalCard.playerClass.toUpperCase() as string]
-				: undefined;
+				: CardClass.NEUTRAL;
 		// Ysera
 		return cardClass === CardClass.DREAM ? CardClass.HUNTER : cardClass;
 	}
