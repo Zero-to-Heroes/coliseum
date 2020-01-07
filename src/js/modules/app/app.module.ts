@@ -1,10 +1,9 @@
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
-import { ErrorHandler, Injectable, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReplayParserModule } from '@firestone-hs/replay-parser';
-import { captureException, init } from '@sentry/browser';
 import { Ng2FittextModule } from 'ng2-fittext';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import { AppComponent } from '../../components/app.component';
@@ -88,20 +87,20 @@ import { Events } from '../../services/events.service';
 console.log('version is ' + process.env.APP_VERSION);
 console.log('environment is', process.env.NODE_ENV);
 
-init({
-	dsn: 'https://fe35eae785af4971a767bc8d4c1fe791@sentry.io/1532731',
-	enabled: process.env.NODE_ENV === 'production',
-	release: process.env.APP_VERSION,
-});
+// init({
+// 	dsn: 'https://fe35eae785af4971a767bc8d4c1fe791@sentry.io/1532731',
+// 	enabled: process.env.NODE_ENV === 'production',
+// 	release: process.env.APP_VERSION,
+// });
 
-@Injectable()
-export class SentryErrorHandler implements ErrorHandler {
-	constructor() {}
-	handleError(error) {
-		captureException(error.originalError || error);
-		throw error;
-	}
-}
+// @Injectable()
+// export class SentryErrorHandler implements ErrorHandler {
+// 	constructor() {}
+// 	handleError(error) {
+// 		captureException(error.originalError || error);
+// 		throw error;
+// 	}
+// }
 
 @NgModule({
 	imports: [
@@ -109,7 +108,7 @@ export class SentryErrorHandler implements ErrorHandler {
 		FormsModule,
 		BrowserAnimationsModule,
 		Ng2FittextModule,
-		LoggerModule.forRoot({ level: NgxLoggerLevel.WARN }),
+		LoggerModule.forRoot({ level: NgxLoggerLevel.DEBUG }),
 		ReplayParserModule.forRoot(),
 	],
 	declarations: [
@@ -207,7 +206,7 @@ export class SentryErrorHandler implements ErrorHandler {
 	providers: [
 		Location,
 		{ provide: LocationStrategy, useClass: PathLocationStrategy },
-		{ provide: ErrorHandler, useClass: SentryErrorHandler },
+		// { provide: ErrorHandler, useClass: SentryErrorHandler },
 
 		Events,
 		AnalyticsService,

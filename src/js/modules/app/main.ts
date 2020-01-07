@@ -27,17 +27,23 @@ platformBrowserDynamic()
 	})
 	.catch(err => console.log(err));
 
+const initInternal = callback => {
+	const container = document.getElementById('externalPlayer');
+	if (!container) {
+		console.warn('container not present yet, retrying');
+		setTimeout(() => initInternal(callback), 1000);
+		return;
+	}
+	callback(container);
+};
+
 const initColiseum = async () => {
 	console.log('request to manually inject coliseum');
 	return new Promise<void>((resolve, reject) => {
-		const container = document.getElementById('externalPlayer');
-		if (!container) {
-			console.log('container not present yet');
-			reject();
-			return;
-		}
-		ng2Loader.loadComponentAtDom(AppComponent, container);
-		resolve();
+		initInternal(container => {
+			ng2Loader.loadComponentAtDom(AppComponent, container);
+			resolve();
+		});
 	});
 };
 
