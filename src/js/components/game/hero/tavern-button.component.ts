@@ -70,7 +70,8 @@ export class TavernButtonComponent {
 			if (element && !element.classList.contains('scale')) {
 				this.renderer.addClass(element, 'scale');
 			}
-			setTimeout(() => this.renderer.removeClass(element, 'scale'), 500);
+			// Checking that element is there, otherwise it might cause issues when fast-forwarding through the replays
+			setTimeout(() => element && this.renderer.removeClass(element, 'scale'), 500);
 		}
 	}
 }
