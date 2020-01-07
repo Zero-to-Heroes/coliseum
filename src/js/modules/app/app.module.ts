@@ -108,7 +108,7 @@ console.log('environment is', process.env.NODE_ENV);
 		FormsModule,
 		BrowserAnimationsModule,
 		Ng2FittextModule,
-		LoggerModule.forRoot({ level: NgxLoggerLevel.DEBUG }),
+		LoggerModule.forRoot({ level: NgxLoggerLevel.WARN }),
 		ReplayParserModule.forRoot(),
 	],
 	declarations: [

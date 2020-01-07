@@ -75,7 +75,7 @@ export class TooltipsComponent implements AfterViewInit {
 		private cdr: ChangeDetectorRef,
 		private resolver: ComponentFactoryResolver,
 	) {
-		this.events.on(Events.SHOW_TOOLTIP).subscribe(data => {
+		this.events.on(Events.SHOW_TOOLTIP).subscribe(async data => {
 			this.destroy();
 			this.logger.debug('[tooltips] showing tooltip', data, this.rect);
 			if (!this.rect) {
@@ -89,6 +89,12 @@ export class TooltipsComponent implements AfterViewInit {
 			const elementWidth = data.data[4];
 			const elementHeight = data.data[5];
 			const enchantments = data.data[6];
+
+			await this.waitForTooltipInfoReady();
+
+			// if (!this.tooltipWidth || !this.tooltipHeight) {
+			// 	this.logger.warn('[tooltips] tooltip size not intiialized', this.tooltipWidth, this.tooltipHeight);
+			// }
 
 			// First try to fit it at the right of the element
 			let left = elementLeft + elementWidth + this.horizontalOffset;
@@ -166,23 +172,26 @@ export class TooltipsComponent implements AfterViewInit {
 		}
 		const styles = getComputedStyle(tooltipElement);
 		this.tooltipSize = parseInt(styles.width.split('%')[0]) * 0.01;
-		// this.logger.info('[tooltips] tooltip variables initialized', this.tooltipSize);
+		// this.logger.debug('[tooltips] tooltip variables initialized', this.tooltipSize);
 		this.cacheTooltipSize();
 	}
 
-	private cacheTooltipSize() {
+	private cacheTooltipSize(activeRefresh: boolean = false) {
 		this.rect = this.elRef.nativeElement.getBoundingClientRect();
 		const tooltipElement = this.elRef.nativeElement.querySelector('tooltip');
+		this.logger.debug('[tooltips] caching tooltip info');
 		if (!tooltipElement) {
 			setTimeout(() => this.cacheTooltipSize(), 20);
 			return;
 		}
-		// const styles = getComputedStyle(tooltipElement);
-		// this.logger.debug('[tooltips] tooltip size', this.tooltipSize, styles.width, styles);
 		this.tooltipWidth = this.rect.width * this.tooltipSize;
 		this.tooltipHeight = this.tooltipWidth * CARD_ASPECT_RATIO;
 		this.horizontalOffset = this.rect.width * 0.018;
-		// this.logger.info(
+		if (activeRefresh && (!this.tooltipWidth || !this.tooltipHeight)) {
+			setTimeout(() => this.cacheTooltipSize(), 1000);
+			return;
+		}
+		// this.logger.debug(
 		// 	'[tooltips] cached tooltip info',
 		// 	this.tooltipWidth,
 		// 	this.tooltipHeight,
@@ -204,5 +213,20 @@ export class TooltipsComponent implements AfterViewInit {
 				this.cdr.detectChanges();
 			}
 		}
+	}
+
+	private waitForTooltipInfoReady(): Promise<void> {
+		return new Promise<void>(resolve => {
+			const dbWait = () => {
+				if (this.tooltipHeight > 0 && this.tooltipWidth > 0) {
+					resolve();
+				} else {
+					this.cacheTooltipSize(true);
+					// console.log('[tooltips] waiting for init');
+					setTimeout(() => dbWait(), 100);
+				}
+			};
+			dbWait();
+		});
 	}
 }
