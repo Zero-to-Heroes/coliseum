@@ -31,6 +31,7 @@ $ npm run dev # For development
 $ npm run build # For release
 
 $ aws s3 cp ./dist s3://replays.firestoneapp.com --acl public-read --recursive
+$ aws s3 cp ./dependencies/cards.json s3://replays.firestoneapp.com --acl public-read
 ```
 
 # Local dev (just for me)
