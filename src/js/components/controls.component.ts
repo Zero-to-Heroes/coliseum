@@ -47,13 +47,6 @@ declare var ga;
 							href="http://replays.firestoneapp.com/?reviewId={{ _reviewId }}&source=game-summary"
 							>View online</a
 						>
-						<span class="divider">|</span>
-						<a
-							class="player-control-element discuss"
-							target="_blank"
-							href="https://www.zerotoheroes.com/r/hearthstone/{{ _reviewId }}"
-							>Discuss</a
-						>
 					</p>
 				</div>
 
