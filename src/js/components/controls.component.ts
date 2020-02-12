@@ -281,7 +281,7 @@ export class ControlsComponent implements OnInit, OnDestroy {
 	_reviewId: string;
 	isPlaying = false;
 	currentSpeed = 1;
-	showingHiddenCards = false;
+	showingHiddenCards = true;
 
 	private playingTimeout: NodeJS.Timeout;
 
@@ -301,7 +301,7 @@ export class ControlsComponent implements OnInit, OnDestroy {
 		// reset all the controls
 		this.isPlaying = false;
 		this.currentSpeed = 1;
-		this.showingHiddenCards = false;
+		this.showingHiddenCards = true;
 		this._reviewId = value;
 	}
 

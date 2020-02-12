@@ -73,7 +73,7 @@ export class AppComponent implements OnDestroy {
 	currentAction: Action;
 	text: string;
 	turnString: string;
-	showHiddenCards = false;
+	showHiddenCards = true;
 	totalTime: number;
 	currentTime = 0;
 	showPreloader = true;
@@ -113,7 +113,7 @@ export class AppComponent implements OnDestroy {
 
 		this.text = undefined;
 		this.turnString = undefined;
-		this.showHiddenCards = false;
+		this.showHiddenCards = true;
 		this.gameMode = undefined;
 		this.totalTime = undefined;
 		this.currentTime = 0;
@@ -181,7 +181,7 @@ export class AppComponent implements OnDestroy {
 
 					if (complete) {
 						this.status = null;
-						console.log('[app] Received complete game', game.turns.size);
+						console.log('[app] Received complete game', game.turns.size, game.fullStoryRaw);
 						this.analytics.event('replay-loaded');
 
 						// if (game.turns.size === 0) {
