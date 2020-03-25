@@ -45598,7 +45598,7 @@
 	{
 		"playerClass": "Mage",
 		"cost": 6,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"attack": 4,
 		"name": "The Amazing Reno",
 		"health": 12,
@@ -45615,7 +45615,7 @@
 	},
 	{
 		"playerClass": "Neutral",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Reno's Intuition",
 		"id": "DRGA_001e",
 		"audio": { "play": [], "death": [], "attack": [] },
@@ -45626,7 +45626,7 @@
 	},
 	{
 		"cost": 9,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"hideStats": true,
 		"health": 12,
 		"mechanics": ["TRIGGER_VISUAL", "UNTOUCHABLE"],
@@ -45641,7 +45641,7 @@
 	},
 	{
 		"cost": 5,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"health": 5,
 		"mechanics": ["BATTLECRY"],
 		"dbfId": 60139,
@@ -45662,7 +45662,7 @@
 	},
 	{
 		"cost": 4,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"race": "MURLOC",
 		"health": 3,
 		"mechanics": ["BATTLECRY"],
@@ -45683,7 +45683,7 @@
 	},
 	{
 		"cost": 5,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"health": 6,
 		"mechanics": ["BATTLECRY"],
 		"dbfId": 60141,
@@ -45705,7 +45705,7 @@
 	},
 	{
 		"cost": 8,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"race": "DRAGON",
 		"health": 300,
 		"dbfId": 60778,
@@ -45726,7 +45726,7 @@
 	{
 		"playerClass": "Neutral",
 		"cost": 0,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Wondrous Wisdomball",
 		"mechanics": ["DUNGEON_PASSIVE_BUFF", "ImmuneToSpellpower"],
 		"id": "DRGA_011",
@@ -45738,7 +45738,7 @@
 	},
 	{
 		"playerClass": "Neutral",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Wondrous Wisdomball Player Enchantment",
 		"id": "DRGA_011e",
 		"audio": { "play": [], "death": [], "attack": [] },
@@ -45748,7 +45748,7 @@
 	},
 	{
 		"playerClass": "Neutral",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Wondrous Wisdomball Ice Block",
 		"mechanics": ["TAG_ONE_TURN_EFFECT"],
 		"id": "DRGA_011e2",
@@ -45759,7 +45759,7 @@
 	},
 	{
 		"playerClass": "Neutral",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Wondrous Wisdomball Extra Spellcast",
 		"id": "DRGA_011e3",
 		"audio": { "play": [], "death": [], "attack": [] },
@@ -45770,7 +45770,7 @@
 	{
 		"playerClass": "Neutral",
 		"cost": 0,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"hideStats": true,
 		"name": "Wondrous Wisdomball",
 		"mechanics": ["DUNGEON_PASSIVE_BUFF"],
@@ -45784,7 +45784,7 @@
 	{
 		"playerClass": "Neutral",
 		"cost": 0,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Wondrous Wisdomball Copy Cards Tokenspell",
 		"id": "DRGA_011ts",
 		"audio": {
@@ -45801,7 +45801,7 @@
 	{
 		"playerClass": "Neutral",
 		"cost": 0,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Wondrous Wisdomball Empty Hand Tokenspell",
 		"id": "DRGA_011ts2",
 		"audio": {
@@ -45819,7 +45819,7 @@
 	{
 		"playerClass": "Neutral",
 		"cost": 0,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Wondrous Wisdomball Free Minions Tokenspell",
 		"id": "DRGA_011ts3",
 		"audio": {
@@ -45837,7 +45837,7 @@
 	{
 		"playerClass": "Neutral",
 		"cost": 0,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Wondrous Wisdomball Random Legendary Tokenspell",
 		"id": "DRGA_011ts4",
 		"audio": { "play": [], "death": [], "Goldenize_Idle_Sound": ["Goldenize_Idle_Sound.ogg"], "attack": [] },
@@ -45849,7 +45849,7 @@
 	{
 		"playerClass": "Neutral",
 		"cost": 0,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Wondrous Wisdomball Summon Taunts Tokenspell",
 		"id": "DRGA_011ts5",
 		"audio": { "play": [], "death": [], "attack": [] },
@@ -45862,7 +45862,7 @@
 		"playerClass": "Mage",
 		"elite": true,
 		"cost": 1,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Draconic Potential",
 		"id": "DRGA_01q",
 		"audio": { "play": [], "death": [], "attack": [] },
@@ -45875,7 +45875,7 @@
 	{
 		"playerClass": "Warlock",
 		"cost": 0,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "The Gauntlet of Origination",
 		"mechanics": ["TRIGGER_VISUAL"],
 		"id": "DRGA_06",
@@ -45887,7 +45887,7 @@
 	},
 	{
 		"playerClass": "Neutral",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"hideStats": true,
 		"name": "Impervious",
 		"mechanics": ["TRIGGER_VISUAL"],
@@ -45901,7 +45901,7 @@
 	{
 		"playerClass": "Neutral",
 		"cost": 0,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Domination",
 		"id": "DRGA_099t3",
 		"audio": { "play": [], "death": [], "attack": [] },
@@ -45913,7 +45913,7 @@
 	{
 		"playerClass": "Neutral",
 		"cost": 0,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Annihilation",
 		"mechanics": ["ImmuneToSpellpower"],
 		"id": "DRGA_099t4",
@@ -45925,7 +45925,7 @@
 	},
 	{
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"attack": 5,
 		"durability": 4,
 		"name": "Galakrond's Claw",
@@ -45937,7 +45937,7 @@
 	},
 	{
 		"playerClass": "Neutral",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Snapped",
 		"id": "DRGA_BOSS_01e",
 		"audio": { "play": [], "death": [], "attack": [] },
@@ -45948,7 +45948,7 @@
 	},
 	{
 		"playerClass": "Mage",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "The Amazing Reno",
 		"health": 40,
 		"id": "DRGA_BOSS_01h",
@@ -45963,7 +45963,7 @@
 	},
 	{
 		"playerClass": "Mage",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Renogos",
 		"health": 50,
 		"id": "DRGA_BOSS_01h2",
@@ -45978,7 +45978,7 @@
 	},
 	{
 		"playerClass": "Mage",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "The Amazing Reno",
 		"health": 30,
 		"id": "DRGA_BOSS_01h3",
@@ -45993,7 +45993,7 @@
 	},
 	{
 		"playerClass": "Mage",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "The Amazing Reno",
 		"health": 50,
 		"id": "DRGA_BOSS_01h4",
@@ -46009,7 +46009,7 @@
 	{
 		"playerClass": "Mage",
 		"cost": 0,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"hideStats": true,
 		"name": "Gatling Magic",
 		"mechanics": ["TRIGGER_VISUAL"],
@@ -46023,7 +46023,7 @@
 	{
 		"playerClass": "Mage",
 		"cost": 0,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"hideStats": true,
 		"name": "Flap-plosion",
 		"mechanics": ["TRIGGER_VISUAL"],
@@ -46037,7 +46037,7 @@
 	{
 		"playerClass": "Mage",
 		"cost": 0,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"hideStats": true,
 		"name": "Gatling Magic",
 		"mechanics": ["TRIGGER_VISUAL"],
@@ -46051,7 +46051,7 @@
 	{
 		"playerClass": "Mage",
 		"cost": 0,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"hideStats": true,
 		"name": "Gatling Magic",
 		"mechanics": ["TRIGGER_VISUAL"],
@@ -46065,7 +46065,7 @@
 	{
 		"playerClass": "Neutral",
 		"cost": 3,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"artist": "Akkapoj T.",
 		"name": "In a Snap",
 		"id": "DRGA_BOSS_01t",
@@ -46077,7 +46077,7 @@
 	},
 	{
 		"playerClass": "Druid",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Commander Elise",
 		"health": 30,
 		"id": "DRGA_BOSS_02h",
@@ -46092,7 +46092,7 @@
 	},
 	{
 		"playerClass": "Druid",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Commander Elise",
 		"health": 30,
 		"id": "DRGA_BOSS_02h2",
@@ -46108,7 +46108,7 @@
 	{
 		"playerClass": "Druid",
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Plan Ahead",
 		"id": "DRGA_BOSS_02p",
 		"audio": { "play": [], "death": [], "attack": [], "LOE_Boosh_Sound": ["LOE_Boosh_Sound.ogg"] },
@@ -46120,7 +46120,7 @@
 	{
 		"playerClass": "Druid",
 		"cost": 0,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "The Perfect Idea",
 		"id": "DRGA_BOSS_02t",
 		"audio": { "play": [], "death": [], "attack": [] },
@@ -46132,7 +46132,7 @@
 	{
 		"playerClass": "Druid",
 		"cost": 5,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Stand Against E.V.I.L.",
 		"id": "DRGA_BOSS_02t3",
 		"audio": { "play": [], "death": [], "attack": [], "Treant_CustomSpawn_1": ["Treant_CustomSpawn_1.ogg"] },
@@ -46144,7 +46144,7 @@
 	{
 		"playerClass": "Neutral",
 		"cost": 0,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "The Perfect Card",
 		"referencedTags": ["DISCOVER"],
 		"id": "DRGA_BOSS_02tt",
@@ -46156,7 +46156,7 @@
 	},
 	{
 		"playerClass": "Shaman",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "How relaxing...",
 		"id": "DRGA_BOSS_03e",
 		"audio": {
@@ -46171,7 +46171,7 @@
 	},
 	{
 		"playerClass": "Paladin",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Sir Finley",
 		"health": 30,
 		"id": "DRGA_BOSS_03h",
@@ -46182,7 +46182,7 @@
 	},
 	{
 		"playerClass": "Paladin",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Sir Finley",
 		"health": 30,
 		"id": "DRGA_BOSS_03h2",
@@ -46193,7 +46193,7 @@
 	},
 	{
 		"playerClass": "Paladin",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Sir Finley",
 		"health": 30,
 		"id": "DRGA_BOSS_03h2_H",
@@ -46205,7 +46205,7 @@
 	{
 		"playerClass": "Paladin",
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Lead the Charge",
 		"referencedTags": ["DIVINE_SHIELD", "RUSH"],
 		"id": "DRGA_BOSS_03p",
@@ -46218,7 +46218,7 @@
 	{
 		"playerClass": "Paladin",
 		"cost": 1,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Lead the Charge",
 		"referencedTags": ["DIVINE_SHIELD", "RUSH"],
 		"id": "DRGA_BOSS_03p_H",
@@ -46230,7 +46230,7 @@
 	},
 	{
 		"playerClass": "Neutral",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Valiantly Charging",
 		"id": "DRGA_BOSS_03pe",
 		"audio": { "play": [], "death": [], "attack": [] },
@@ -46242,7 +46242,7 @@
 	{
 		"playerClass": "Paladin",
 		"cost": 1,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Bubblehearth",
 		"mechanics": ["AI_MUST_PLAY", "SECRET"],
 		"id": "DRGA_BOSS_03t",
@@ -46255,7 +46255,7 @@
 	{
 		"playerClass": "Neutral",
 		"cost": 3,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "From the Depths",
 		"id": "DRGA_BOSS_03t2",
 		"audio": { "play": [], "death": [], "Splash_Impact_Sound": ["Splash_Impact_Sound.ogg"], "attack": [] },
@@ -46266,7 +46266,7 @@
 	},
 	{
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"race": "MURLOC",
 		"health": 1,
 		"mechanics": ["TRIGGER_VISUAL"],
@@ -46286,7 +46286,7 @@
 	},
 	{
 		"playerClass": "Paladin",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Bubblehearthing",
 		"mechanics": ["TAG_ONE_TURN_EFFECT"],
 		"id": "DRGA_BOSS_03te",
@@ -46298,7 +46298,7 @@
 	},
 	{
 		"playerClass": "Hunter",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Brann Bronzebeard",
 		"health": 30,
 		"id": "DRGA_BOSS_04h",
@@ -46313,7 +46313,7 @@
 	},
 	{
 		"playerClass": "Hunter",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Dragonrider Brann",
 		"health": 30,
 		"id": "DRGA_BOSS_04h2",
@@ -46329,7 +46329,7 @@
 	{
 		"playerClass": "Hunter",
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"artist": "Kagi",
 		"name": "Trusty Whip",
 		"id": "DRGA_BOSS_04p",
@@ -46351,7 +46351,7 @@
 	{
 		"playerClass": "Neutral",
 		"cost": 3,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Dragonbreath",
 		"id": "DRGA_BOSS_04t",
 		"audio": {
@@ -46367,7 +46367,7 @@
 	},
 	{
 		"playerClass": "Warrior",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Dr. Boom",
 		"health": 30,
 		"id": "DRGA_BOSS_05h",
@@ -46382,7 +46382,7 @@
 	},
 	{
 		"playerClass": "Warrior",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Dr. Boom",
 		"health": 30,
 		"id": "DRGA_BOSS_05h2",
@@ -46398,7 +46398,7 @@
 	{
 		"playerClass": "Warrior",
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"artist": "Nat Vitchayed",
 		"name": "SUMMON THE BOTS!",
 		"id": "DRGA_BOSS_05p",
@@ -46417,7 +46417,7 @@
 	{
 		"playerClass": "Warrior",
 		"cost": 1,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "SUMMON THE BOTS!",
 		"id": "DRGA_BOSS_05p_H",
 		"audio": {
@@ -46434,7 +46434,7 @@
 	},
 	{
 		"cost": 5,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"race": "MECH",
 		"health": 3,
 		"mechanics": ["DEATHRATTLE"],
@@ -46455,7 +46455,7 @@
 	{
 		"playerClass": "Neutral",
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Boom Barrage",
 		"id": "DRGA_BOSS_05t2",
 		"audio": {
@@ -46473,7 +46473,7 @@
 	},
 	{
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"race": "MECH",
 		"health": 2,
 		"referencedTags": ["BATTLECRY"],
@@ -46496,7 +46496,7 @@
 	},
 	{
 		"cost": 4,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"race": "MECH",
 		"health": 7,
 		"mechanics": ["DEATHRATTLE"],
@@ -46516,7 +46516,7 @@
 	},
 	{
 		"cost": 3,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"race": "MECH",
 		"health": 3,
 		"referencedTags": ["BATTLECRY", "SPARE_PART"],
@@ -46541,7 +46541,7 @@
 	},
 	{
 		"playerClass": "Shaman",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"artist": "Alex Horley Orlandelli",
 		"name": "Hagatha the Vengeful",
 		"health": 30,
@@ -46553,7 +46553,7 @@
 	},
 	{
 		"playerClass": "Shaman",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Hagatha the Vengeful",
 		"health": 30,
 		"id": "DRGA_BOSS_06h2",
@@ -46565,7 +46565,7 @@
 	{
 		"playerClass": "Shaman",
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Swampqueen's Touch",
 		"id": "DRGA_BOSS_06p",
 		"audio": {
@@ -46582,7 +46582,7 @@
 	{
 		"playerClass": "Shaman",
 		"cost": 1,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Swampqueen's Touch",
 		"id": "DRGA_BOSS_06p_H",
 		"audio": {
@@ -46599,7 +46599,7 @@
 	{
 		"playerClass": "Neutral",
 		"cost": 3,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"artist": "Alex Horley Orlandelli",
 		"name": "Wail of the Shudderwock",
 		"id": "DRGA_BOSS_06t",
@@ -46618,7 +46618,7 @@
 	{
 		"playerClass": "Neutral",
 		"cost": 5,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Wormhole",
 		"id": "DRGA_BOSS_06t2",
 		"audio": {
@@ -46636,7 +46636,7 @@
 	{
 		"playerClass": "Neutral",
 		"cost": 5,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"race": "BEAST",
 		"attack": 5,
 		"name": "Whole Worm",
@@ -46653,7 +46653,7 @@
 	},
 	{
 		"playerClass": "Warlock",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Rafaam, Prime Evil",
 		"health": 50,
 		"id": "DRGA_BOSS_07h",
@@ -46668,7 +46668,7 @@
 	},
 	{
 		"playerClass": "Warlock",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Rafaam, Prime Evil",
 		"health": 50,
 		"id": "DRGA_BOSS_07h2",
@@ -46683,7 +46683,7 @@
 	},
 	{
 		"playerClass": "Warlock",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Rafaam, Prime Evil",
 		"health": 50,
 		"id": "DRGA_BOSS_07h3",
@@ -46699,7 +46699,7 @@
 	{
 		"playerClass": "Warlock",
 		"cost": 1,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"artist": "Kagi",
 		"name": "Gauntlet of Origination",
 		"id": "DRGA_BOSS_07p",
@@ -46717,7 +46717,7 @@
 	{
 		"playerClass": "Warlock",
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"collectionText": "<b>Passive Hero Power</b>\nInvoke Galakrond 5 times to finish the ritual.",
 		"name": "Summon Galakrond",
 		"mechanics": ["TRIGGER_VISUAL"],
@@ -46731,7 +46731,7 @@
 	{
 		"playerClass": "Warlock",
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"collectionText": "<b>Passive Hero Power</b>\nInvoke Galakrond 5 times to finish the ritual.",
 		"name": "Summon Galakrond",
 		"mechanics": ["TRIGGER_VISUAL"],
@@ -46745,7 +46745,7 @@
 	{
 		"playerClass": "Warlock",
 		"cost": 1,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Gauntlet of Origination",
 		"referencedTags": ["DISCOVER"],
 		"id": "DRGA_BOSS_07p4",
@@ -46763,7 +46763,7 @@
 	{
 		"playerClass": "Neutral",
 		"cost": 4,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Master Plan",
 		"id": "DRGA_BOSS_07t",
 		"audio": {
@@ -46779,7 +46779,7 @@
 	},
 	{
 		"playerClass": "Rogue",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Waxrider Togwaggle",
 		"health": 30,
 		"id": "DRGA_BOSS_08h",
@@ -46794,7 +46794,7 @@
 	},
 	{
 		"playerClass": "Rogue",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Waxrider Togwaggle",
 		"health": 30,
 		"id": "DRGA_BOSS_08h2",
@@ -46810,7 +46810,7 @@
 	{
 		"playerClass": "Rogue",
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Maximum Waximum",
 		"id": "DRGA_BOSS_08p",
 		"audio": {
@@ -46829,7 +46829,7 @@
 	{
 		"playerClass": "Rogue",
 		"cost": 1,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Maximum Waximum",
 		"id": "DRGA_BOSS_08p_H",
 		"audio": {
@@ -46847,7 +46847,7 @@
 	},
 	{
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"durability": 1,
 		"mechanics": ["DEATHRATTLE"],
 		"dbfId": 58275,
@@ -46869,7 +46869,7 @@
 	},
 	{
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"artist": "Akkapoj T.",
 		"health": 1,
 		"mechanics": ["DEATHRATTLE"],
@@ -46889,7 +46889,7 @@
 	},
 	{
 		"playerClass": "Neutral",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Living Candle Wax",
 		"id": "DRGA_BOSS_08t2e",
 		"audio": { "play": [], "death": [], "attack": [] },
@@ -46900,7 +46900,7 @@
 	},
 	{
 		"playerClass": "Priest",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Puppetmaster Lazul",
 		"health": 30,
 		"id": "DRGA_BOSS_09h",
@@ -46915,7 +46915,7 @@
 	},
 	{
 		"playerClass": "Priest",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Puppetmaster Lazul",
 		"health": 30,
 		"id": "DRGA_BOSS_09h2",
@@ -46931,7 +46931,7 @@
 	{
 		"playerClass": "Priest",
 		"cost": 1,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Fortune",
 		"mechanics": ["DISCOVER"],
 		"id": "DRGA_BOSS_09p",
@@ -46944,7 +46944,7 @@
 	{
 		"playerClass": "Priest",
 		"cost": 1,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Fortune",
 		"mechanics": ["DISCOVER"],
 		"id": "DRGA_BOSS_09p_H",
@@ -46957,7 +46957,7 @@
 	{
 		"playerClass": "Priest",
 		"cost": 3,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Puppeteer",
 		"id": "DRGA_BOSS_09t",
 		"audio": {
@@ -46978,7 +46978,7 @@
 	{
 		"playerClass": "Neutral",
 		"cost": 6,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Old God Experiments",
 		"id": "DRGA_BOSS_09t2",
 		"audio": {
@@ -46995,7 +46995,7 @@
 	},
 	{
 		"playerClass": "Neutral",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Old God Experiments",
 		"id": "DRGA_BOSS_09t2e",
 		"audio": { "play": [], "death": [], "attack": [] },
@@ -47006,7 +47006,7 @@
 	},
 	{
 		"playerClass": "Priest",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Strings on Me",
 		"id": "DRGA_BOSS_09te",
 		"audio": { "play": [], "death": [], "attack": [] },
@@ -47017,7 +47017,7 @@
 	},
 	{
 		"playerClass": "Mage",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Avalanchan",
 		"health": 150,
 		"id": "DRGA_BOSS_10h",
@@ -47029,7 +47029,7 @@
 	{
 		"playerClass": "Mage",
 		"cost": 3,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Sculpted Ice",
 		"referencedTags": ["SILENCE"],
 		"id": "DRGA_BOSS_10p",
@@ -47050,7 +47050,7 @@
 	{
 		"playerClass": "Mage",
 		"cost": 1,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Sculpted Ice",
 		"referencedTags": ["SILENCE"],
 		"id": "DRGA_BOSS_10p_H",
@@ -47070,7 +47070,7 @@
 	},
 	{
 		"playerClass": "Warrior",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Shining Gold",
 		"id": "DRGA_BOSS_11e",
 		"audio": { "play": [], "death": [], "attack": [] },
@@ -47081,7 +47081,7 @@
 	},
 	{
 		"playerClass": "Paladin",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "George the Fallen",
 		"health": 30,
 		"id": "DRGA_BOSS_11h",
@@ -47092,7 +47092,7 @@
 	},
 	{
 		"playerClass": "Paladin",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "George and Karl",
 		"health": 30,
 		"id": "DRGA_BOSS_11h2",
@@ -47104,7 +47104,7 @@
 	{
 		"playerClass": "Paladin",
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Golden Blade",
 		"id": "DRGA_BOSS_11p",
 		"audio": {
@@ -47122,7 +47122,7 @@
 	{
 		"playerClass": "Paladin",
 		"cost": 1,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Golden Blade",
 		"id": "DRGA_BOSS_11p_H",
 		"audio": {
@@ -47139,7 +47139,7 @@
 	},
 	{
 		"playerClass": "Neutral",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Health Watcher",
 		"id": "DRGA_BOSS_11pe",
 		"audio": { "play": [], "death": [], "attack": [] },
@@ -47150,7 +47150,7 @@
 	{
 		"playerClass": "Paladin",
 		"cost": 4,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "High Five!",
 		"id": "DRGA_BOSS_11t",
 		"audio": {
@@ -47166,7 +47166,7 @@
 	},
 	{
 		"playerClass": "Neutral",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Up High",
 		"id": "DRGA_BOSS_11te",
 		"audio": { "play": [], "death": [], "attack": [] },
@@ -47177,7 +47177,7 @@
 	},
 	{
 		"playerClass": "Paladin",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Karl the Savior",
 		"health": 30,
 		"id": "DRGA_BOSS_12h",
@@ -47192,7 +47192,7 @@
 	},
 	{
 		"playerClass": "Paladin",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Karl and George",
 		"health": 30,
 		"id": "DRGA_BOSS_12h2",
@@ -47204,7 +47204,7 @@
 	{
 		"playerClass": "Paladin",
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Golden Aegis",
 		"mechanics": ["DIVINE_SHIELD"],
 		"id": "DRGA_BOSS_12p",
@@ -47225,7 +47225,7 @@
 	{
 		"playerClass": "Paladin",
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Golden Aegis",
 		"mechanics": ["DIVINE_SHIELD"],
 		"id": "DRGA_BOSS_12p_H",
@@ -47245,7 +47245,7 @@
 	},
 	{
 		"playerClass": "Paladin",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Golden Aegis Player Enchantment",
 		"mechanics": ["TRIGGER_VISUAL"],
 		"id": "DRGA_BOSS_12pe",
@@ -47258,7 +47258,7 @@
 	{
 		"playerClass": "Paladin",
 		"cost": 4,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "High Five!",
 		"referencedTags": ["DIVINE_SHIELD", "TAUNT"],
 		"id": "DRGA_BOSS_12t",
@@ -47275,7 +47275,7 @@
 	},
 	{
 		"playerClass": "Neutral",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Down Low",
 		"id": "DRGA_BOSS_12te",
 		"audio": {
@@ -47291,7 +47291,7 @@
 	},
 	{
 		"playerClass": "Priest",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Kriziki the Winged",
 		"health": 30,
 		"id": "DRGA_BOSS_13h",
@@ -47302,7 +47302,7 @@
 	},
 	{
 		"playerClass": "Priest",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Kriziki the Winged",
 		"health": 30,
 		"id": "DRGA_BOSS_13h2",
@@ -47314,7 +47314,7 @@
 	{
 		"playerClass": "Priest",
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Wings of Rebirth",
 		"id": "DRGA_BOSS_13p",
 		"audio": { "play": [], "death": [], "attack": [], "reborn_buff": ["reborn_buff.ogg"] },
@@ -47326,7 +47326,7 @@
 	{
 		"playerClass": "Priest",
 		"cost": 1,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Wings of Rebirth",
 		"id": "DRGA_BOSS_13p_H",
 		"audio": { "play": [], "death": [], "attack": [], "reborn_buff": ["reborn_buff.ogg"] },
@@ -47337,7 +47337,7 @@
 	},
 	{
 		"playerClass": "Neutral",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Wings of Rebirth",
 		"id": "DRGA_BOSS_13pe",
 		"audio": { "play": [], "death": [], "attack": [] },
@@ -47349,7 +47349,7 @@
 	{
 		"playerClass": "Priest",
 		"cost": 3,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Diamond Winds",
 		"id": "DRGA_BOSS_13t",
 		"audio": { "play": [], "death": [], "attack": [] },
@@ -47360,7 +47360,7 @@
 	},
 	{
 		"playerClass": "Neutral",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Second Wind",
 		"id": "DRGA_BOSS_13te",
 		"audio": { "play": [], "death": [], "attack": [] },
@@ -47371,7 +47371,7 @@
 	},
 	{
 		"playerClass": "Rogue",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Skybreaker Eudora",
 		"health": 30,
 		"id": "DRGA_BOSS_14h",
@@ -47383,7 +47383,7 @@
 	{
 		"playerClass": "Rogue",
 		"cost": 0,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"artist": "Kagi",
 		"name": "Guts and Glory",
 		"id": "DRGA_BOSS_14p",
@@ -47394,7 +47394,7 @@
 	},
 	{
 		"playerClass": "Rogue",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Sky Gen'ral Kragg",
 		"health": 30,
 		"id": "DRGA_BOSS_15h",
@@ -47406,7 +47406,7 @@
 	{
 		"playerClass": "Neutral",
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"artist": "Nat Vitchayed",
 		"name": "Hooked",
 		"id": "DRGA_BOSS_15p",
@@ -47426,7 +47426,7 @@
 	},
 	{
 		"cost": 0,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"health": 2,
 		"mechanics": ["RUSH"],
 		"dbfId": 58294,
@@ -47446,7 +47446,7 @@
 	{
 		"playerClass": "Neutral",
 		"cost": 3,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Bombs Away!",
 		"id": "DRGA_BOSS_15t2",
 		"audio": {
@@ -47464,7 +47464,7 @@
 	},
 	{
 		"playerClass": "Mage",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"artist": "SARIYA",
 		"name": "Rakanishu",
 		"health": 30,
@@ -47476,7 +47476,7 @@
 	},
 	{
 		"playerClass": "Mage",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"artist": "Akkapoj T.",
 		"name": "Rakanishu, Rekindled",
 		"health": 30,
@@ -47489,7 +47489,7 @@
 	{
 		"playerClass": "Mage",
 		"cost": 1,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"artist": "Akkapoj T.",
 		"name": "Burn...",
 		"id": "DRGA_BOSS_16p",
@@ -47508,7 +47508,7 @@
 	{
 		"playerClass": "Mage",
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"artist": "Akkapoj T.",
 		"name": "BURN!!!",
 		"id": "DRGA_BOSS_16p2",
@@ -47527,7 +47527,7 @@
 	},
 	{
 		"playerClass": "Druid",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Alexstrasza",
 		"health": 30,
 		"id": "DRGA_BOSS_17h",
@@ -47543,7 +47543,7 @@
 	{
 		"playerClass": "Neutral",
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Breath of Life",
 		"id": "DRGA_BOSS_17p",
 		"audio": {
@@ -47559,7 +47559,7 @@
 	},
 	{
 		"playerClass": "Neutral",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Breath of Life",
 		"id": "DRGA_BOSS_17pe",
 		"audio": { "play": [], "death": [], "attack": [] },
@@ -47570,7 +47570,7 @@
 	},
 	{
 		"playerClass": "Warlock",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "High Cultist Dawnshatter",
 		"health": 30,
 		"id": "DRGA_BOSS_18h",
@@ -47581,7 +47581,7 @@
 	},
 	{
 		"cost": 0,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"hideStats": true,
 		"mechanics": ["TRIGGER_VISUAL"],
 		"referencedTags": ["DEATHRATTLE"],
@@ -47596,7 +47596,7 @@
 	},
 	{
 		"cost": 0,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"hideStats": true,
 		"mechanics": ["TRIGGER_VISUAL"],
 		"referencedTags": ["DEATHRATTLE"],
@@ -47611,7 +47611,7 @@
 	},
 	{
 		"playerClass": "Warlock",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Dragon Graveyard",
 		"id": "DRGA_BOSS_18pe",
 		"audio": { "play": [], "death": [], "attack": [] },
@@ -47622,7 +47622,7 @@
 	},
 	{
 		"cost": 0,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"hideStats": true,
 		"health": 0,
 		"mechanics": ["TRIGGER_VISUAL"],
@@ -47637,7 +47637,7 @@
 	},
 	{
 		"playerClass": "Hunter",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Rotwing",
 		"health": 40,
 		"id": "DRGA_BOSS_19h",
@@ -47648,7 +47648,7 @@
 	},
 	{
 		"cost": 1,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"artist": "Kagi",
 		"mechanics": ["AI_MUST_PLAY"],
 		"referencedTags": ["DEATHRATTLE"],
@@ -47669,7 +47669,7 @@
 	{
 		"playerClass": "Hunter",
 		"cost": 1,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Rot Aura",
 		"mechanics": ["AI_MUST_PLAY"],
 		"referencedTags": ["DEATHRATTLE"],
@@ -47687,7 +47687,7 @@
 	},
 	{
 		"playerClass": "Shaman",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Nithogg",
 		"health": 30,
 		"id": "DRGA_BOSS_20h",
@@ -47699,7 +47699,7 @@
 	{
 		"playerClass": "Shaman",
 		"cost": 3,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"artist": "SARIYA",
 		"name": "Stormrage",
 		"id": "DRGA_BOSS_20p",
@@ -47717,7 +47717,7 @@
 	{
 		"playerClass": "Shaman",
 		"cost": 1,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Stormrage",
 		"id": "DRGA_BOSS_20p_H",
 		"audio": {
@@ -47734,7 +47734,7 @@
 	{
 		"playerClass": "Neutral",
 		"cost": 9,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Dragonstorm",
 		"id": "DRGA_BOSS_20t",
 		"audio": {
@@ -47750,7 +47750,7 @@
 	},
 	{
 		"playerClass": "Warlock",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Go'rath",
 		"health": 50,
 		"id": "DRGA_BOSS_21h",
@@ -47762,7 +47762,7 @@
 	{
 		"playerClass": "Warlock",
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "From Below",
 		"id": "DRGA_BOSS_21p",
 		"audio": {
@@ -47781,7 +47781,7 @@
 	},
 	{
 		"cost": 1,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"health": 4,
 		"mechanics": ["TRIGGER_VISUAL"],
 		"dbfId": 58312,
@@ -47800,7 +47800,7 @@
 	},
 	{
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"health": 1,
 		"mechanics": ["TRIGGER_VISUAL"],
 		"dbfId": 58313,
@@ -47819,7 +47819,7 @@
 	},
 	{
 		"playerClass": "Neutral",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Might of the Gronns",
 		"id": "DRGA_BOSS_22e",
 		"audio": { "play": [], "death": [], "attack": [] },
@@ -47830,7 +47830,7 @@
 	},
 	{
 		"playerClass": "Hunter",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Dragonslayer Skruk",
 		"health": 200,
 		"id": "DRGA_BOSS_22h",
@@ -47842,7 +47842,7 @@
 	{
 		"playerClass": "Hunter",
 		"cost": 0,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"artist": "SARIYA",
 		"name": "Gronnic Strength",
 		"mechanics": ["AI_MUST_PLAY"],
@@ -47861,7 +47861,7 @@
 	{
 		"playerClass": "Hunter",
 		"cost": 1,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Gronnic Strength",
 		"mechanics": ["AI_MUST_PLAY"],
 		"id": "DRGA_BOSS_22p_H",
@@ -47878,7 +47878,7 @@
 	},
 	{
 		"cost": 5,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"durability": 2,
 		"referencedTags": ["IMMUNE"],
 		"dbfId": 58316,
@@ -47894,7 +47894,7 @@
 	{
 		"playerClass": "Hunter",
 		"cost": 7,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Heartseeker",
 		"id": "DRGA_BOSS_22t2",
 		"audio": {
@@ -47912,7 +47912,7 @@
 	{
 		"playerClass": "Hunter",
 		"cost": 7,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Heartseeker",
 		"id": "DRGA_BOSS_22t3",
 		"audio": {
@@ -47929,7 +47929,7 @@
 	},
 	{
 		"cost": 5,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"durability": 2,
 		"referencedTags": ["IMMUNE"],
 		"dbfId": 60775,
@@ -47944,7 +47944,7 @@
 	},
 	{
 		"playerClass": "Neutral",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Dragonblood",
 		"id": "DRGA_BOSS_23e",
 		"audio": { "play": [], "death": [], "attack": [] },
@@ -47955,7 +47955,7 @@
 	},
 	{
 		"playerClass": "Paladin",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Dragonrider Talritha",
 		"health": 30,
 		"id": "DRGA_BOSS_23h",
@@ -47970,7 +47970,7 @@
 	},
 	{
 		"playerClass": "Paladin",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Dragonrider Talritha",
 		"health": 30,
 		"id": "DRGA_BOSS_23h2",
@@ -47982,7 +47982,7 @@
 	{
 		"playerClass": "Paladin",
 		"cost": 0,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"hideStats": true,
 		"name": "Dragonblood",
 		"mechanics": ["TRIGGER_VISUAL"],
@@ -47996,7 +47996,7 @@
 	{
 		"playerClass": "Paladin",
 		"cost": 5,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Will of the Forsaken",
 		"referencedTags": ["DEATHRATTLE"],
 		"id": "DRGA_BOSS_23t",
@@ -48008,7 +48008,7 @@
 	},
 	{
 		"playerClass": "Paladin",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Will of the Forsaken",
 		"id": "DRGA_BOSS_23te",
 		"audio": { "play": [], "death": [], "attack": [] },
@@ -48019,7 +48019,7 @@
 	},
 	{
 		"playerClass": "Neutral",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Galakrond Invocation Listener - Not Player Facing",
 		"mechanics": ["TRIGGER_VISUAL"],
 		"id": "DRGA_Boss_24e",
@@ -48030,7 +48030,7 @@
 	},
 	{
 		"playerClass": "Warlock",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Galakrond",
 		"health": 150,
 		"id": "DRGA_BOSS_24h",
@@ -48042,7 +48042,7 @@
 	{
 		"playerClass": "Warlock",
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Annihilation",
 		"id": "DRGA_BOSS_24p",
 		"audio": { "play": [], "death": [], "attack": [] },
@@ -48054,7 +48054,7 @@
 	{
 		"playerClass": "Warlock",
 		"cost": 1,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Annihilation",
 		"id": "DRGA_BOSS_24p_H",
 		"audio": { "play": [], "death": [], "attack": [] },
@@ -48065,7 +48065,7 @@
 	},
 	{
 		"playerClass": "Mage",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Chenvaala",
 		"health": 30,
 		"id": "DRGA_BOSS_25h",
@@ -48077,7 +48077,7 @@
 	{
 		"playerClass": "Mage",
 		"cost": 3,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Snowstorm",
 		"id": "DRGA_BOSS_25p",
 		"audio": {
@@ -48095,7 +48095,7 @@
 	{
 		"playerClass": "Mage",
 		"cost": 1,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Snowstorm",
 		"id": "DRGA_BOSS_25p_H",
 		"audio": {
@@ -48113,7 +48113,7 @@
 	{
 		"playerClass": "Mage",
 		"cost": 4,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"race": "ELEMENTAL",
 		"attack": 4,
 		"name": "Snow Elemental",
@@ -48130,7 +48130,7 @@
 	},
 	{
 		"cost": 10,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"hideStats": true,
 		"health": 100,
 		"mechanics": ["IGNORE_HIDE_STATS_FOR_BIG_CARD"],
@@ -48146,7 +48146,7 @@
 	},
 	{
 		"playerClass": "Mage",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Dragoncaster Askaara",
 		"health": 30,
 		"id": "DRGA_BOSS_26h",
@@ -48157,7 +48157,7 @@
 	},
 	{
 		"cost": 0,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"artist": "SARIYA",
 		"hideStats": true,
 		"mechanics": ["TRIGGER_VISUAL"],
@@ -48173,7 +48173,7 @@
 	{
 		"playerClass": "Mage",
 		"cost": 0,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"artist": "SARIYA",
 		"name": "Flame Affinity",
 		"mechanics": ["TRIGGER_VISUAL"],
@@ -48186,7 +48186,7 @@
 	},
 	{
 		"playerClass": "Neutral",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Affinity",
 		"id": "DRGA_BOSS_26pe",
 		"audio": { "play": [], "death": [], "attack": [] },
@@ -48197,7 +48197,7 @@
 	},
 	{
 		"playerClass": "Priest",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "United Sr. Explorers",
 		"health": 40,
 		"id": "DRGA_BOSS_27h",
@@ -48209,7 +48209,7 @@
 	{
 		"playerClass": "Neutral",
 		"cost": 1,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"artist": "Akkapoj T.",
 		"name": "Teamwork!",
 		"mechanics": ["AI_MUST_PLAY"],
@@ -48223,7 +48223,7 @@
 	{
 		"playerClass": "Neutral",
 		"cost": 0,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Teamwork!",
 		"mechanics": ["AI_MUST_PLAY"],
 		"id": "DRGA_BOSS_27p_H",
@@ -48235,7 +48235,7 @@
 	},
 	{
 		"cost": 6,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"health": 5,
 		"mechanics": ["BATTLECRY", "DEATHRATTLE"],
 		"dbfId": 58330,
@@ -48256,7 +48256,7 @@
 	},
 	{
 		"playerClass": "Warrior",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Kronx Dragonhoof",
 		"health": 40,
 		"id": "DRGA_BOSS_28h",
@@ -48272,7 +48272,7 @@
 	{
 		"playerClass": "Warrior",
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "True Power",
 		"id": "DRGA_BOSS_28p",
 		"audio": { "play": [], "death": [], "attack": [] },
@@ -48284,7 +48284,7 @@
 	{
 		"playerClass": "Warrior",
 		"cost": 0,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"hideStats": true,
 		"name": "Galakrond's Vanguard",
 		"mechanics": ["TRIGGER_VISUAL"],
@@ -48297,7 +48297,7 @@
 	},
 	{
 		"playerClass": "Neutral",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Galakrond's Vanguard (Lifesteal)",
 		"mechanics": ["TAG_ONE_TURN_EFFECT"],
 		"id": "DRGA_BOSS_28p2e",
@@ -48309,7 +48309,7 @@
 	},
 	{
 		"playerClass": "Rogue",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Waxadred",
 		"health": 30,
 		"id": "DRGA_BOSS_29h",
@@ -48325,7 +48325,7 @@
 	{
 		"playerClass": "Rogue",
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Wax Effigy",
 		"id": "DRGA_BOSS_29p",
 		"audio": {
@@ -48343,7 +48343,7 @@
 	},
 	{
 		"playerClass": "Neutral",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Wax Effigy",
 		"id": "DRGA_BOSS_29pe",
 		"audio": { "play": [], "death": [], "attack": [] },
@@ -48354,7 +48354,7 @@
 	},
 	{
 		"playerClass": "Warrior",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "The Wanderer",
 		"health": 30,
 		"id": "DRGA_BOSS_30h",
@@ -48369,7 +48369,7 @@
 	},
 	{
 		"playerClass": "Warrior",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "The Wanderer",
 		"health": 30,
 		"id": "DRGA_BOSS_30h2",
@@ -48381,7 +48381,7 @@
 	{
 		"playerClass": "Warrior",
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Prepare the Cannons!",
 		"id": "DRGA_BOSS_30p",
 		"audio": {
@@ -48399,7 +48399,7 @@
 	{
 		"playerClass": "Warrior",
 		"cost": 1,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Prepare the Cannons!",
 		"id": "DRGA_BOSS_30p_H",
 		"audio": {
@@ -48416,7 +48416,7 @@
 	},
 	{
 		"cost": 1,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"race": "MECH",
 		"health": 3,
 		"referencedTags": ["AUTOATTACK"],
@@ -48436,7 +48436,7 @@
 	},
 	{
 		"cost": 3,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"race": "MECH",
 		"health": 4,
 		"referencedTags": ["AUTOATTACK", "RUSH"],
@@ -48457,7 +48457,7 @@
 	},
 	{
 		"cost": 3,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"race": "MECH",
 		"health": 2,
 		"mechanics": ["RUSH", "TRIGGER_VISUAL"],
@@ -48477,7 +48477,7 @@
 	},
 	{
 		"cost": 4,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"race": "MECH",
 		"health": 4,
 		"referencedTags": ["AUTOATTACK"],
@@ -48497,7 +48497,7 @@
 	},
 	{
 		"cost": 3,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"race": "MECH",
 		"health": 2,
 		"referencedTags": ["AUTOATTACK"],
@@ -48517,7 +48517,7 @@
 	},
 	{
 		"cost": 6,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"race": "MECH",
 		"health": 6,
 		"referencedTags": ["AUTOATTACK"],
@@ -48537,7 +48537,7 @@
 	},
 	{
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"health": 2,
 		"referencedTags": ["AUTOATTACK"],
 		"dbfId": 58342,
@@ -48557,7 +48557,7 @@
 	{
 		"playerClass": "Neutral",
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Ready, Aim, FIRE!",
 		"referencedTags": ["AUTOATTACK"],
 		"id": "DRGA_BOSS_30t7",
@@ -48574,7 +48574,7 @@
 	},
 	{
 		"playerClass": "Rogue",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "The Slipstream",
 		"health": 30,
 		"id": "DRGA_BOSS_31h",
@@ -48589,7 +48589,7 @@
 	},
 	{
 		"playerClass": "Rogue",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "The Slipstream",
 		"health": 30,
 		"id": "DRGA_BOSS_31h2",
@@ -48604,7 +48604,7 @@
 	},
 	{
 		"playerClass": "Rogue",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "The Slipstream",
 		"health": 30,
 		"id": "DRGA_BOSS_31h3",
@@ -48620,7 +48620,7 @@
 	{
 		"playerClass": "Rogue",
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Prepare the Cannons!",
 		"id": "DRGA_BOSS_31p",
 		"audio": {
@@ -48638,7 +48638,7 @@
 	{
 		"playerClass": "Rogue",
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Prepare the Cannons!",
 		"id": "DRGA_BOSS_31p2",
 		"audio": {
@@ -48656,7 +48656,7 @@
 	{
 		"playerClass": "Rogue",
 		"cost": 1,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Prepare the Cannons!",
 		"id": "DRGA_BOSS_31p_H",
 		"audio": {
@@ -48673,7 +48673,7 @@
 	},
 	{
 		"cost": 4,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"collectionText": "\ndamage to enemies\nopposite this minion.\n<i>(Increases each turn!)</i>",
 		"race": "MECH",
 		"health": 8,
@@ -48694,7 +48694,7 @@
 	},
 	{
 		"playerClass": "Druid",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "The Dragonflights",
 		"health": 30,
 		"id": "DRGA_BOSS_32h",
@@ -48706,7 +48706,7 @@
 	{
 		"playerClass": "Druid",
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"artist": "Akkapoj T.",
 		"name": "Dragonflame",
 		"id": "DRGA_BOSS_32p",
@@ -48724,7 +48724,7 @@
 	{
 		"playerClass": "Druid",
 		"cost": 1,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Dragonflame",
 		"id": "DRGA_BOSS_32p_H",
 		"audio": {
@@ -48740,7 +48740,7 @@
 	},
 	{
 		"playerClass": "Warlock",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Rafaam & Galakrond",
 		"health": 100,
 		"id": "DRGA_BOSS_33h",
@@ -48751,7 +48751,7 @@
 	},
 	{
 		"playerClass": "Warlock",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Rafaam & Galakrond",
 		"health": 150,
 		"id": "DRGA_BOSS_33h2",
@@ -48763,7 +48763,7 @@
 	{
 		"playerClass": "Neutral",
 		"cost": 0,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Unleash Galakrond",
 		"mechanics": ["TRIGGER_VISUAL"],
 		"id": "DRGA_BOSS_33p",
@@ -48781,7 +48781,7 @@
 	{
 		"playerClass": "Neutral",
 		"cost": 0,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "DALA-SMASH!!",
 		"id": "DRGA_BOSS_33t",
 		"audio": { "play": [], "death": [], "attack": [] },
@@ -48792,7 +48792,7 @@
 	},
 	{
 		"playerClass": "Mage",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Archmage Modera",
 		"health": 30,
 		"id": "DRGA_BOSS_34h",
@@ -48804,7 +48804,7 @@
 	{
 		"playerClass": "Neutral",
 		"cost": 0,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "[TEMP]",
 		"id": "DRGA_BOSS_34p",
 		"audio": { "play": [], "death": [], "attack": [] },
@@ -48815,7 +48815,7 @@
 	{
 		"playerClass": "Neutral",
 		"cost": 0,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Meteorstorm",
 		"id": "DRGA_BOSS_34t",
 		"audio": { "play": [], "death": [], "attack": [] },
@@ -48825,7 +48825,7 @@
 	},
 	{
 		"playerClass": "Mage",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Archmage Khadgar",
 		"health": 30,
 		"id": "DRGA_BOSS_35h",
@@ -48837,7 +48837,7 @@
 	{
 		"playerClass": "Mage",
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Summon Elemental",
 		"id": "DRGA_BOSS_35p",
 		"audio": { "play": [], "death": [], "attack": [] },
@@ -48848,7 +48848,7 @@
 	},
 	{
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"race": "ELEMENTAL",
 		"health": 3,
 		"dbfId": 58440,
@@ -48867,7 +48867,7 @@
 	},
 	{
 		"playerClass": "Mage",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Chromie",
 		"health": 30,
 		"id": "DRGA_BOSS_36h",
@@ -48882,7 +48882,7 @@
 	},
 	{
 		"playerClass": "Mage",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Chronormu",
 		"health": 60,
 		"id": "DRGA_BOSS_36h2",
@@ -48898,7 +48898,7 @@
 	{
 		"playerClass": "Mage",
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Chronoecho",
 		"id": "DRGA_BOSS_36p",
 		"audio": { "play": [], "death": [], "attack": [], "SpawnToHand_Sand_FX": ["SpawnToHand_Sand_FX.ogg"] },
@@ -48910,7 +48910,7 @@
 	{
 		"playerClass": "Mage",
 		"cost": 0,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Chronomical Distortion",
 		"id": "DRGA_BOSS_36p2",
 		"audio": { "play": [], "death": [], "attack": [] },
@@ -48922,7 +48922,7 @@
 	{
 		"playerClass": "Neutral",
 		"cost": 5,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "The Sands of Time",
 		"id": "DRGA_BOSS_36t",
 		"audio": {
@@ -48940,7 +48940,7 @@
 	},
 	{
 		"cost": 1,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"health": 6,
 		"mechanics": ["TRIGGER_VISUAL"],
 		"dbfId": 58359,
@@ -48959,7 +48959,7 @@
 	},
 	{
 		"playerClass": "Neutral",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Defender of Stormwind",
 		"id": "DRGA_BOSS_37e",
 		"audio": { "play": [], "death": [], "attack": [] },
@@ -48970,7 +48970,7 @@
 	},
 	{
 		"playerClass": "Priest",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "King Anduin",
 		"health": 100,
 		"id": "DRGA_BOSS_37h",
@@ -48982,7 +48982,7 @@
 	{
 		"playerClass": "Priest",
 		"cost": 0,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "For the Alliance!",
 		"mechanics": ["AI_MUST_PLAY"],
 		"id": "DRGA_BOSS_37p",
@@ -48994,7 +48994,7 @@
 	},
 	{
 		"playerClass": "Neutral",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Defender of Orgrimmar",
 		"id": "DRGA_BOSS_38e",
 		"audio": { "play": [], "death": [], "attack": [] },
@@ -49006,7 +49006,7 @@
 	{
 		"playerClass": "Hunter",
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Warchief Sylvanas",
 		"health": 100,
 		"id": "DRGA_BOSS_38h",
@@ -49022,7 +49022,7 @@
 	{
 		"playerClass": "Hunter",
 		"cost": 0,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "For the Horde!",
 		"mechanics": ["AI_MUST_PLAY"],
 		"referencedTags": ["RUSH"],
@@ -147880,7 +147880,7 @@
 	{
 		"collectible": true,
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"artist": "Zoltan Boros",
 		"mechanics": ["CHOOSE_ONE"],
 		"dbfId": 56057,
@@ -147903,7 +147903,7 @@
 	{
 		"playerClass": "Druid",
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"artist": "Zoltan Boros",
 		"name": "Take Flight",
 		"id": "YOD_001b",
@@ -147922,7 +147922,7 @@
 	{
 		"playerClass": "Druid",
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"artist": "Zoltan Boros",
 		"name": "Swoop In",
 		"id": "YOD_001c",
@@ -147942,7 +147942,7 @@
 	},
 	{
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"race": "BEAST",
 		"artist": "Zoltan Boros",
 		"health": 2,
@@ -147962,7 +147962,7 @@
 	{
 		"playerClass": "Druid",
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Rising Winds",
 		"mechanics": ["CHOOSE_ONE"],
 		"id": "YOD_001ts",
@@ -147982,7 +147982,7 @@
 	{
 		"collectible": true,
 		"cost": 7,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"race": "BEAST",
 		"artist": "MAR Studio",
 		"health": 8,
@@ -148006,7 +148006,7 @@
 	{
 		"collectible": true,
 		"cost": 3,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"race": "MECH",
 		"artist": "Servando Lupini",
 		"health": 4,
@@ -148030,7 +148030,7 @@
 	{
 		"collectible": true,
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"artist": "Luca Zontini",
 		"dbfId": 56067,
 		"type": "Spell",
@@ -148052,7 +148052,7 @@
 	},
 	{
 		"playerClass": "Neutral",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Fresh Scent",
 		"id": "YOD_005e",
 		"audio": { "play": [], "death": [], "attack": [] },
@@ -148064,7 +148064,7 @@
 	{
 		"playerClass": "Hunter",
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Fresh Scent",
 		"id": "YOD_005ts",
 		"audio": {
@@ -148084,7 +148084,7 @@
 	{
 		"collectible": true,
 		"cost": 4,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"race": "BEAST",
 		"artist": "Gabe Gonzalez",
 		"health": 5,
@@ -148108,7 +148108,7 @@
 	{
 		"collectible": true,
 		"cost": 7,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"race": "ELEMENTAL",
 		"artist": "Ludo Lullabi",
 		"health": 6,
@@ -148134,7 +148134,7 @@
 	{
 		"collectible": true,
 		"cost": 3,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"race": "ELEMENTAL",
 		"artist": "Arthur Gimaldinov",
 		"health": 5,
@@ -148158,7 +148158,7 @@
 	{
 		"collectible": true,
 		"cost": 10,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"artist": "Konstantin Turovec",
 		"health": 30,
 		"mechanics": ["BATTLECRY"],
@@ -148182,7 +148182,7 @@
 	{
 		"playerClass": "Mage",
 		"cost": 0,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"artist": "Kagi",
 		"name": "What Does This Do?",
 		"mechanics": ["TRIGGER_VISUAL"],
@@ -148196,7 +148196,7 @@
 	{
 		"collectible": true,
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"race": "MECH",
 		"artist": "Phil Saunders",
 		"health": 2,
@@ -148219,7 +148219,7 @@
 	{
 		"collectible": true,
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"artist": "Ivan Fomin",
 		"referencedTags": ["TAUNT"],
 		"dbfId": 56086,
@@ -148241,7 +148241,7 @@
 	},
 	{
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"referencedTags": ["TAUNT"],
 		"dbfId": 56144,
 		"type": "Spell",
@@ -148262,7 +148262,7 @@
 	{
 		"collectible": true,
 		"cost": 1,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"artist": "Maria Trepalina",
 		"health": 1,
 		"mechanics": ["BATTLECRY", "DISCOVER"],
@@ -148285,7 +148285,7 @@
 	{
 		"collectible": true,
 		"cost": 6,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"race": "DRAGON",
 		"artist": "A.J. Nazzaro",
 		"health": 4,
@@ -148314,7 +148314,7 @@
 	{
 		"collectible": true,
 		"cost": 3,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"artist": "Vlad Botos",
 		"mechanics": ["DISCOVER"],
 		"dbfId": 56090,
@@ -148335,7 +148335,7 @@
 	},
 	{
 		"playerClass": "Neutral",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Prophecized",
 		"id": "YOD_015e",
 		"audio": { "play": [], "death": [], "attack": [] },
@@ -148347,7 +148347,7 @@
 	{
 		"collectible": true,
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"race": "PIRATE",
 		"artist": "Ludo Lullabi",
 		"health": 3,
@@ -148372,7 +148372,7 @@
 	{
 		"collectible": true,
 		"cost": 5,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"artist": "J. Axer",
 		"health": 2,
 		"mechanics": ["COMBO"],
@@ -148397,7 +148397,7 @@
 	{
 		"collectible": true,
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"artist": "Lloyd Hoshide",
 		"mechanics": ["DISCOVER"],
 		"referencedTags": ["BATTLECRY"],
@@ -148414,7 +148414,7 @@
 	},
 	{
 		"playerClass": "Rogue",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Forged in Wax",
 		"id": "YOD_018e",
 		"audio": { "play": [], "death": [], "attack": [] },
@@ -148426,7 +148426,7 @@
 	{
 		"collectible": true,
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"artist": "Rafael Zanchetin",
 		"dbfId": 56098,
 		"type": "Spell",
@@ -148447,7 +148447,7 @@
 	{
 		"collectible": true,
 		"cost": 1,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"race": "PIRATE",
 		"artist": "Anzka Nguyen",
 		"health": 3,
@@ -148471,7 +148471,7 @@
 	{
 		"collectible": true,
 		"cost": 1,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"artist": "Peter Stapleton",
 		"mechanics": ["DISCOVER", "GEARS"],
 		"dbfId": 56101,
@@ -148488,7 +148488,7 @@
 	{
 		"collectible": true,
 		"cost": 3,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"artist": "Adam Byrne",
 		"health": 3,
 		"mechanics": ["TRIGGER_VISUAL"],
@@ -148511,7 +148511,7 @@
 	{
 		"collectible": true,
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"artist": "Rafael Zanchetin",
 		"mechanics": ["DISCOVER"],
 		"dbfId": 56109,
@@ -148528,7 +148528,7 @@
 	{
 		"collectible": true,
 		"cost": 1,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"race": "DEMON",
 		"artist": "Mike Sass",
 		"health": 1,
@@ -148551,7 +148551,7 @@
 	},
 	{
 		"playerClass": "Neutral",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Servant's Sacrifice",
 		"id": "Yod_026e",
 		"audio": { "play": [], "death": [], "attack": [] },
@@ -148563,7 +148563,7 @@
 	{
 		"collectible": true,
 		"cost": 3,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"race": "DEMON",
 		"artist": "Alex Horley Orlandelli",
 		"health": 3,
@@ -148591,7 +148591,7 @@
 	},
 	{
 		"playerClass": "Warlock",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Withering Away",
 		"id": "YOD_027e",
 		"audio": { "play": [], "death": [], "attack": [] },
@@ -148603,7 +148603,7 @@
 	{
 		"collectible": true,
 		"cost": 3,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"artist": "Rafael Zanchetin",
 		"health": 2,
 		"mechanics": ["BATTLECRY"],
@@ -148626,7 +148626,7 @@
 	{
 		"collectible": true,
 		"cost": 5,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"race": "ELEMENTAL",
 		"artist": "Max Grecke",
 		"health": 4,
@@ -148652,7 +148652,7 @@
 	},
 	{
 		"cost": 1,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"race": "ELEMENTAL",
 		"artist": "Max Grecke",
 		"health": 1,
@@ -148674,7 +148674,7 @@
 	{
 		"collectible": true,
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"artist": "Rafael Zanchetin",
 		"health": 2,
 		"mechanics": ["BATTLECRY"],
@@ -148700,7 +148700,7 @@
 	{
 		"collectible": true,
 		"cost": 4,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"race": "DEMON",
 		"artist": "Nicola Saviori",
 		"health": 3,
@@ -148722,7 +148722,7 @@
 	},
 	{
 		"playerClass": "Neutral",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"race": "DEMON",
 		"name": "Frenzied",
 		"mechanics": ["TAG_ONE_TURN_EFFECT"],
@@ -148736,7 +148736,7 @@
 	{
 		"collectible": true,
 		"cost": 5,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"artist": "Adam Byrne",
 		"health": 5,
 		"mechanics": ["BATTLECRY"],
@@ -148760,7 +148760,7 @@
 	},
 	{
 		"playerClass": "Neutral",
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"name": "Smokescreen",
 		"id": "YOD_033e",
 		"audio": { "play": [], "death": [], "attack": [] },
@@ -148772,7 +148772,7 @@
 	{
 		"collectible": true,
 		"cost": 4,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"artist": "James Ryman",
 		"health": 3,
 		"mechanics": ["TRIGGER_VISUAL"],
@@ -148796,7 +148796,7 @@
 	{
 		"collectible": true,
 		"cost": 5,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"race": "DRAGON",
 		"artist": "Dave Allsop",
 		"health": 5,
@@ -148825,7 +148825,7 @@
 	{
 		"collectible": true,
 		"cost": 4,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"race": "PIRATE",
 		"artist": "Alex Horley Orlandelli",
 		"health": 3,
@@ -148852,7 +148852,7 @@
 	},
 	{
 		"cost": 4,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"race": "BEAST",
 		"health": 2,
 		"mechanics": ["RUSH"],
@@ -148874,7 +148874,7 @@
 	{
 		"collectible": true,
 		"cost": 2,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"race": "BEAST",
 		"artist": "Anton Zemskov",
 		"health": 3,
@@ -148898,7 +148898,7 @@
 	{
 		"collectible": true,
 		"cost": 10,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"artist": "Evgeniy Dlinnov",
 		"mechanics": ["OVERLOAD"],
 		"referencedTags": ["TAUNT"],
@@ -148923,7 +148923,7 @@
 	},
 	{
 		"cost": 5,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"race": "ELEMENTAL",
 		"artist": "Evgeniy Dlinnov",
 		"health": 6,
@@ -148945,7 +148945,7 @@
 	{
 		"collectible": true,
 		"cost": 4,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"artist": "Katherine Fortune",
 		"durability": 4,
 		"mechanics": ["TRIGGER_VISUAL"],
@@ -148965,7 +148965,7 @@
 	{
 		"collectible": true,
 		"cost": 5,
-		"set": "Year_of_the_dragon",
+		"set": "yod",
 		"race": "DRAGON",
 		"artist": "Ivan Fomin",
 		"health": 6,
