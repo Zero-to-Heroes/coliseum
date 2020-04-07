@@ -193,7 +193,7 @@ export class AppComponent implements OnDestroy {
 					// We do this so that the initial drawing is already done when hiding the preloader
 					setTimeout(() => {
 						this.showPreloader = false;
-						if (game.turns.size === 0 && complete) {
+						if (!game || !game.turns || (game.turns.size === 0 && complete)) {
 							console.log('showing error status because no turns');
 							this.status = 'error';
 							this.showPreloader = true;

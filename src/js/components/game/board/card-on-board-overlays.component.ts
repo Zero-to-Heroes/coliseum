@@ -24,6 +24,9 @@ export class CardOnBoardOverlaysComponent {
 	@Input('entity') set entity(value: Entity) {
 		this.logger.debug('[card-on-board-overlays] setting entity', value);
 		this.overlays = [];
+		if (!value) {
+			return;
+		}
 		if (value.getTag(GameTag.CANT_BE_DAMAGED) === 1) {
 			this.pushOverlay('minion_immune');
 		}
