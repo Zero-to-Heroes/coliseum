@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, ViewRef }
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { CardType, GameTag } from '@firestone-hs/reference-data';
 import { AllCardsService, Entity } from '@firestone-hs/replay-parser';
-import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'card-text',
@@ -32,23 +31,18 @@ export class CardTextComponent {
 	private _entity: Entity;
 	private _controller: Entity;
 
-	constructor(
-		private cards: AllCardsService,
-		private domSanitizer: DomSanitizer,
-		private logger: NGXLogger,
-		private cdr: ChangeDetectorRef,
-	) {
+	constructor(private cards: AllCardsService, private domSanitizer: DomSanitizer, private cdr: ChangeDetectorRef) {
 		document.addEventListener('card-resize', event => this.resizeText(), true);
 	}
 
 	@Input('entity') set entity(value: Entity) {
-		this.logger.debug('[card-text] setting entity', value.tags.toJS());
+		// console.debug('[card-text] setting entity', value.tags.toJS());
 		this._entity = value;
 		this.updateText();
 	}
 
 	@Input('controller') set controller(value: Entity) {
-		this.logger.debug('[card-text] setting controller', value && value.tags.toJS());
+		// console.debug('[card-text] setting controller', value && value.tags.toJS());
 		this._controller = value;
 		this.updateText();
 	}
@@ -109,7 +103,7 @@ export class CardTextComponent {
 	}
 
 	@Input('cardType') set cardType(cardType: CardType) {
-		this.logger.debug('[card-text] setting cardType', cardType);
+		// console.debug('[card-text] setting cardType', cardType);
 		this._cardType = CardType[cardType].toLowerCase();
 	}
 
