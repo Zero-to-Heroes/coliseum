@@ -46,10 +46,7 @@ export class SeekerComponent implements OnDestroy {
 		});
 		// Periodically send events to the parent, as it involves some computation each time
 		this.progressSubscription = this.progressChanged
-			.pipe(
-				distinctUntilChanged(),
-				debounceTime(100),
-			)
+			.pipe(distinctUntilChanged(), debounceTime(100))
 			.subscribe(newProgress => {
 				this.logger.debug(
 					'[seeker] emitting progress',

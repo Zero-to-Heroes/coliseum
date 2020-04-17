@@ -45,8 +45,8 @@ export class CardCostComponent {
 
 	@Input('cardType') set cardType(cardType: CardType) {
 		this.logger.debug('[card-text] setting cardType', cardType);
-		this._cardType = CardType[cardType].toLowerCase();
-		this.fontSizeRatio = this._cardType === CardType[CardType.HERO_POWER].toLowerCase() ? 0.6 : 0.8;
+		this._cardType = CardType[cardType]?.toLowerCase();
+		this.fontSizeRatio = this._cardType === CardType[CardType.HERO_POWER]?.toLowerCase() ? 0.6 : 0.8;
 		this.updateCost();
 	}
 

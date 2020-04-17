@@ -8,7 +8,7 @@ import { AnalyticsService } from '../services/analytics.service';
 import { Events } from '../services/events.service';
 import { GameConfService } from '../services/game-conf.service';
 
-declare var ga;
+declare let ga;
 
 @Component({
 	styleUrls: ['../../css/components/app.component.scss', '../../css/global/global.scss'],

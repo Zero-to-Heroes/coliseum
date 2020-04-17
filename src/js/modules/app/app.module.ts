@@ -214,5 +214,7 @@ console.log('environment is', process.env.NODE_ENV);
 	entryComponents: [AppComponent],
 })
 export class AppModule {
-	ngDoBootstrap() {}
+	ngDoBootstrap() {
+		// Do nothing
+	}
 }

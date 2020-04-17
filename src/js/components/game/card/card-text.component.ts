@@ -104,7 +104,7 @@ export class CardTextComponent {
 
 	@Input('cardType') set cardType(cardType: CardType) {
 		// console.debug('[card-text] setting cardType', cardType);
-		this._cardType = CardType[cardType].toLowerCase();
+		this._cardType = CardType[cardType]?.toLowerCase();
 	}
 
 	private resizeText() {

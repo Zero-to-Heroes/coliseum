@@ -25,6 +25,6 @@ export class CardArtComponent {
 
 	@Input('cardType') set cardType(cardType: CardType) {
 		this.logger.debug('[card-art] setting cardType', cardType);
-		this._cardType = cardType ? CardType[cardType].toLowerCase() : 'unknown';
+		this._cardType = cardType ? CardType[cardType]?.toLowerCase() : 'unknown';
 	}
 }

@@ -176,7 +176,7 @@ export class TooltipsComponent implements AfterViewInit {
 		this.cacheTooltipSize();
 	}
 
-	private cacheTooltipSize(activeRefresh: boolean = false) {
+	private cacheTooltipSize(activeRefresh = false) {
 		this.rect = this.elRef.nativeElement.getBoundingClientRect();
 		const tooltipElement = this.elRef.nativeElement.querySelector('tooltip');
 		this.logger.debug('[tooltips] caching tooltip info');

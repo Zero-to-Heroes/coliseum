@@ -36,14 +36,14 @@ export class CardNameComponent {
 				? undefined // Banner already included in frame art
 				: `https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/card/name-banner-${CardType[
 						cardType
-				  ].toLowerCase()}.png`;
+				  ]?.toLowerCase()}.png`;
 		this.textSvg = cardType
 			? this.domSanitizer.bypassSecurityTrustHtml(this.buildNameSvg(cardType, originalCard.name))
 			: undefined;
 	}
 
 	private buildNameSvg(cardType: CardType, name: string): string {
-		const pathId = `${CardType[cardType].toLowerCase()}Path`;
+		const pathId = `${CardType[cardType]?.toLowerCase()}Path`;
 		const path: string = this.buildPath(cardType, pathId);
 		return `
             <svg x="0" y ="0" viewBox="0 0 1000 200" id="svg">

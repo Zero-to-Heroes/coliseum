@@ -55,11 +55,11 @@ export class TransitionGroupComponent {
 			return;
 		}
 		const cssClass = this.class + '-move';
-		let el = item.el;
+		const el = item.el;
 		if (!el) {
 			return;
 		}
-		let style: any = el.style;
+		const style: any = el.style;
 		el.classList.add(cssClass);
 		style.transform = style.WebkitTransform = style.transitionDuration = '';
 		el.addEventListener(
@@ -86,7 +86,7 @@ export class TransitionGroupComponent {
 		const dy = item.prevPos.top - item.newPos.top;
 		if (dx || dy) {
 			item.moved = true;
-			let style: any = item.el.style;
+			const style: any = item.el.style;
 			style.transform = style.WebkitTransform = 'translate(' + dx + 'px,' + dy + 'px)';
 			style.transitionDuration = '0s';
 		}

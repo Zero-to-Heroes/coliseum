@@ -102,7 +102,8 @@ export class HeroStatsComponent {
 		if (this._armor == null) {
 			this._armor = originalCard.armor;
 		}
-		this.hasStats = originalCard.attack || originalCard.health || originalCard.durability || originalCard.armor;
+		this.hasStats =
+			originalCard.attack > 0 || originalCard.health > 0 || originalCard.durability > 0 || originalCard.armor > 0;
 
 		this.healthLeft = this._health - this._damage;
 		this.updateAttackClass(originalCard);

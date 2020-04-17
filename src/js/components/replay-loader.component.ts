@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AfterViewInit, ChangeDetectionStrategy, Component } from '@angular/core';
 
-declare var $;
+declare let $;
 
 const REPLAY_API = 'https://s3-us-west-2.amazonaws.com/com.zerotoheroes.output/';
 

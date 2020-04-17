@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
-var ga;
-var amplitude;
+let ga;
+let amplitude;
 
 @Injectable()
 export class AnalyticsService {

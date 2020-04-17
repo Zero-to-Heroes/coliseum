@@ -14,7 +14,7 @@ import { NGXLogger } from 'ngx-logger';
 import { Key } from 'ts-keycode-enum';
 import { AnalyticsService } from '../services/analytics.service';
 
-declare var ga;
+declare let ga;
 
 @Component({
 	selector: 'controls',

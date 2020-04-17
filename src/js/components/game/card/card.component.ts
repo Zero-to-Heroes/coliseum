@@ -152,7 +152,7 @@ export class CardComponent {
 			this.armor = this._entity.getTag(GameTag.ARMOR);
 			this.cost = this._entity.getTag(GameTag.COST);
 			this.originalCard = this.cards.getCard(this.cardId);
-			this.race = this.originalCard && this.originalCard.race ? this.originalCard.race.toLowerCase() : undefined;
+			this.race = this.originalCard?.race?.toLowerCase();
 			this.cardType =
 				this.originalCard && this.originalCard.type
 					? CardType[this.originalCard.type.toUpperCase() as string]
