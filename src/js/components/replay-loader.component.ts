@@ -57,7 +57,7 @@ export class ReplayLoaderComponent implements AfterViewInit {
 
 	private getSearchParam(name: string): string {
 		const searchString = window.location.search.substring(1);
-		const searchParams = searchString.split('&');
+		const searchParams = searchString?.split('&') || [];
 		return searchParams
 			.filter(param => param.indexOf('=') !== -1)
 			.filter(param => param.split('=')[0] === name)
