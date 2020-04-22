@@ -49,16 +49,20 @@ export class DeckComponent implements AfterViewInit {
 	}
 
 	private resizeText() {
-		const el = this.elRef.nativeElement.querySelector('.deck');
-		if (!el) {
-			setTimeout(() => this.resizeText());
-			return;
-		}
-		const fontSize = 0.5 * el.getBoundingClientRect().width;
-		const textEl = this.elRef.nativeElement.querySelector('.count');
-		textEl.style.fontSize = fontSize + 'px';
-		if (!(this.cdr as ViewRef).destroyed) {
-			this.cdr.detectChanges();
+		try {
+			const el = this.elRef.nativeElement.querySelector('.deck');
+			if (!el) {
+				setTimeout(() => this.resizeText());
+				return;
+			}
+			const fontSize = 0.5 * el.getBoundingClientRect().width;
+			const textEl = this.elRef.nativeElement.querySelector('.count');
+			textEl.style.fontSize = fontSize + 'px';
+			if (!(this.cdr as ViewRef).destroyed) {
+				this.cdr.detectChanges();
+			}
+		} catch (e) {
+			console.error('[deck] Exception in resizeText', e);
 		}
 	}
 }

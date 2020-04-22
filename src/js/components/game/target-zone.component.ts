@@ -1,15 +1,15 @@
 import {
-	Component,
-	ChangeDetectionStrategy,
-	Input,
-	ChangeDetectorRef,
-	ElementRef,
 	AfterViewInit,
+	ChangeDetectionStrategy,
+	ChangeDetectorRef,
+	Component,
+	ElementRef,
 	HostListener,
+	Input,
 	ViewRef,
 } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { NGXLogger } from 'ngx-logger';
-import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 
 @Component({
 	selector: 'target-zone',
@@ -92,25 +92,29 @@ export class TargetZoneComponent implements AfterViewInit {
 	}
 
 	private drawTargetLines() {
-		const allPaths = this._targets.map(target => this.drawTargetLine(target[0], target[1]));
-		if (allPaths.some(path => !path)) {
-			this.logger.warn('[targets] missing some elements, not drawing targets');
-			return;
-		}
-		const paths: string = allPaths.join('\n');
-		this.svg = this.sanitizer.bypassSecurityTrustHtml(`
-            <svg width="${this.width}px" height="${this.height}px" viewBox="0 0 ${this.width} ${this.height}">
-                <defs>
-                    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="6" orient="auto-start-reverse">
-                        <path d="M 0 0 L 10 5 L 0 10 z" />
-                    </marker>
-                </defs>
-                ${paths}
-            </svg>
-        `);
-		// console.log('built svg', this.svg);
-		if (!(this.cdr as ViewRef).destroyed) {
-			this.cdr.detectChanges();
+		try {
+			const allPaths = this._targets.map(target => this.drawTargetLine(target[0], target[1]));
+			if (allPaths.some(path => !path)) {
+				this.logger.warn('[targets] missing some elements, not drawing targets');
+				return;
+			}
+			const paths: string = allPaths.join('\n');
+			this.svg = this.sanitizer.bypassSecurityTrustHtml(`
+				<svg width="${this.width}px" height="${this.height}px" viewBox="0 0 ${this.width} ${this.height}">
+					<defs>
+						<marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="6" orient="auto-start-reverse">
+							<path d="M 0 0 L 10 5 L 0 10 z" />
+						</marker>
+					</defs>
+					${paths}
+				</svg>
+			`);
+			// console.log('built svg', this.svg);
+			if (!(this.cdr as ViewRef).destroyed) {
+				this.cdr.detectChanges();
+			}
+		} catch (e) {
+			console.error('[target-zone] Exception in drawTargetLines', e);
 		}
 	}
 

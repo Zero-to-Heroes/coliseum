@@ -28,13 +28,17 @@ platformBrowserDynamic()
 	.catch(err => console.log(err));
 
 const initInternal = callback => {
-	const container = document.getElementById('externalPlayer');
-	if (!container) {
-		console.warn('container not present yet, retrying');
-		setTimeout(() => initInternal(callback), 1000);
-		return;
+	try {
+		const container = document.getElementById('externalPlayer');
+		if (!container) {
+			console.warn('container not present yet, retrying');
+			setTimeout(() => initInternal(callback), 1000);
+			return;
+		}
+		callback(container);
+	} catch (e) {
+		console.error('[main] Exception in initInternal', e);
 	}
-	callback(container);
 };
 
 const initColiseum = async () => {

@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener, ViewRef, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Directive, ElementRef, HostListener, ViewRef } from '@angular/core';
 
 @Directive({
 	selector: '[cardResize]',
@@ -18,21 +18,25 @@ export class CardResizeDirective implements AfterViewInit {
 	}
 
 	private resize() {
-		const el = this.el.nativeElement;
-		const width = (120.0 / 187) * el.getBoundingClientRect().height;
-		const textEl = this.el.nativeElement;
-		textEl.style.width = width + 'px';
-		if (!(this.cdr as ViewRef).destroyed) {
-			this.cdr.detectChanges();
-		}
-		setTimeout(() => {
-			el.dispatchEvent(new Event('card-resize', { bubbles: false }));
+		try {
+			const el = this.el.nativeElement;
+			const width = (120.0 / 187) * el.getBoundingClientRect().height;
+			const textEl = this.el.nativeElement;
+			textEl.style.width = width + 'px';
+			if (!(this.cdr as ViewRef).destroyed) {
+				this.cdr.detectChanges();
+			}
 			setTimeout(() => {
-				this.el.nativeElement.style.opacity = 1;
-				if (!(this.cdr as ViewRef).destroyed) {
-					this.cdr.detectChanges();
-				}
+				el && el.dispatchEvent(new Event('card-resize', { bubbles: false }));
+				setTimeout(() => {
+					this.el.nativeElement.style.opacity = 1;
+					if (!(this.cdr as ViewRef).destroyed) {
+						this.cdr.detectChanges();
+					}
+				});
 			});
-		});
+		} catch (e) {
+			console.error('[card-resize] Exception in resize', e);
+		}
 	}
 }

@@ -146,58 +146,63 @@ export class TooltipsComponent implements AfterViewInit {
 
 	ngAfterViewInit() {
 		setTimeout(() => {
-			// We create a factory out of the component we want to create
-			const factory = this.resolver.resolveComponentFactory(TooltipComponent);
+			try {
+				// We create a factory out of the component we want to create
+				const factory = this.resolver.resolveComponentFactory(TooltipComponent);
 
-			// We create the component using the factory and the injector
-			this.tooltip = this.tooltips.createComponent(factory);
-			if (!(this.cdr as ViewRef).destroyed) {
-				this.cdr.detectChanges();
+				// We create the component using the factory and the injector
+				this.tooltip = this.tooltips.createComponent(factory);
+				if (!(this.cdr as ViewRef).destroyed) {
+					this.cdr.detectChanges();
+				}
+				this.tooltip.instance.display = 'block';
+				this.tooltip.instance.position = 'absolute';
+
+				// Cache the variables
+				setTimeout(() => this.initializeTooltipVariables());
+			} catch (e) {
+				console.error('[tooltips] Exception in ngAfterViewInit', e);
 			}
-			this.tooltip.instance.display = 'block';
-			this.tooltip.instance.position = 'absolute';
-
-			// Cache the variables
-			setTimeout(() => this.initializeTooltipVariables());
 		});
 	}
 
 	private initializeTooltipVariables() {
-		// We do this only at initialization, since afterwards the % size
-		// is replaced by a pixel size
-		const tooltipElement = this.elRef.nativeElement.querySelector('tooltip');
-		if (!tooltipElement) {
-			setTimeout(() => this.initializeTooltipVariables(), 20);
-			return;
+		try {
+			// We do this only at initialization, since afterwards the % size
+			// is replaced by a pixel size
+			const tooltipElement = this.elRef.nativeElement.querySelector('tooltip');
+			if (!tooltipElement) {
+				setTimeout(() => this.initializeTooltipVariables(), 20);
+				return;
+			}
+			const styles = getComputedStyle(tooltipElement);
+			this.tooltipSize = parseInt(styles.width.split('%')[0]) * 0.01;
+			// this.logger.debug('[tooltips] tooltip variables initialized', this.tooltipSize);
+			this.cacheTooltipSize();
+		} catch (e) {
+			console.error('[tooltips] Exception in initializeTooltipVariables', e);
 		}
-		const styles = getComputedStyle(tooltipElement);
-		this.tooltipSize = parseInt(styles.width.split('%')[0]) * 0.01;
-		// this.logger.debug('[tooltips] tooltip variables initialized', this.tooltipSize);
-		this.cacheTooltipSize();
 	}
 
 	private cacheTooltipSize(activeRefresh = false) {
-		this.rect = this.elRef.nativeElement.getBoundingClientRect();
-		const tooltipElement = this.elRef.nativeElement.querySelector('tooltip');
-		this.logger.debug('[tooltips] caching tooltip info');
-		if (!tooltipElement) {
-			setTimeout(() => this.cacheTooltipSize(), 20);
-			return;
+		try {
+			this.rect = this.elRef.nativeElement.getBoundingClientRect();
+			const tooltipElement = this.elRef.nativeElement.querySelector('tooltip');
+			this.logger.debug('[tooltips] caching tooltip info');
+			if (!tooltipElement) {
+				setTimeout(() => this.cacheTooltipSize(), 20);
+				return;
+			}
+			this.tooltipWidth = this.rect.width * this.tooltipSize;
+			this.tooltipHeight = this.tooltipWidth * CARD_ASPECT_RATIO;
+			this.horizontalOffset = this.rect.width * 0.018;
+			if (activeRefresh && (!this.tooltipWidth || !this.tooltipHeight)) {
+				setTimeout(() => this.cacheTooltipSize(), 1000);
+				return;
+			}
+		} catch (e) {
+			console.error('[tooltips] Exception in cacheTooltipSize', e);
 		}
-		this.tooltipWidth = this.rect.width * this.tooltipSize;
-		this.tooltipHeight = this.tooltipWidth * CARD_ASPECT_RATIO;
-		this.horizontalOffset = this.rect.width * 0.018;
-		if (activeRefresh && (!this.tooltipWidth || !this.tooltipHeight)) {
-			setTimeout(() => this.cacheTooltipSize(), 1000);
-			return;
-		}
-		// this.logger.debug(
-		// 	'[tooltips] cached tooltip info',
-		// 	this.tooltipWidth,
-		// 	this.tooltipHeight,
-		// 	this.horizontalOffset,
-		// 	this.rect,
-		// );
 	}
 
 	@HostListener('window:resize', ['$event'])

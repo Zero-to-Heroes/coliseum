@@ -123,16 +123,20 @@ export class BoardCardStatsComponent {
 	}
 
 	private resizeText() {
-		const el = this.elRef.nativeElement.querySelector('.card-stats');
-		if (!el) {
-			setTimeout(() => this.resizeText());
-			return;
-		}
-		const fontSize = 0.2 * el.getBoundingClientRect().width;
-		const textEl = this.elRef.nativeElement.querySelector('.card-stats');
-		textEl.style.fontSize = fontSize + 'px';
-		if (!(this.cdr as ViewRef).destroyed) {
-			this.cdr.detectChanges();
+		try {
+			const el = this.elRef.nativeElement.querySelector('.card-stats');
+			if (!el) {
+				setTimeout(() => this.resizeText());
+				return;
+			}
+			const fontSize = 0.2 * el.getBoundingClientRect().width;
+			const textEl = this.elRef.nativeElement.querySelector('.card-stats');
+			textEl.style.fontSize = fontSize + 'px';
+			if (!(this.cdr as ViewRef).destroyed) {
+				this.cdr.detectChanges();
+			}
+		} catch (e) {
+			console.error('[board-card-stats] Exception in resizeText', e);
 		}
 	}
 }

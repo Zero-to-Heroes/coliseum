@@ -75,9 +75,13 @@ export class TransitionGroupComponent {
 	}
 
 	refreshPosition(prop: string) {
-		this.items.forEach(item => {
-			item[prop] = item.el.getBoundingClientRect();
-		});
+		try {
+			this.items.forEach(item => {
+				item[prop] = item.el.getBoundingClientRect();
+			});
+		} catch (e) {
+			console.error('[transition-group] Exception in refreshPosition', e);
+		}
 	}
 
 	applyTranslation(item: TransitionGroupItemDirective) {

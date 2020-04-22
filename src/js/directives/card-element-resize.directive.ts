@@ -25,24 +25,28 @@ export class CardElementResizeDirective implements AfterViewInit {
 	}
 
 	private resizeText() {
-		const el = this.elRef.nativeElement;
-		if (!el) {
-			setTimeout(() => this.resizeText());
-			return;
-		}
-		const fontSize = this.fontSizeRatio * el.getBoundingClientRect().width;
-		const textEls = this.elRef.nativeElement.querySelectorAll('[resizeTarget]');
-		for (const textEl of textEls) {
-			textEl.style.fontSize = fontSize + 'px';
-			// console.log('resized element', textEl, textEls);
-			if (!this.keepOpacity) {
-				this.elRef.nativeElement.style.opacity = 1;
-			} else {
-				this.elRef.nativeElement.style.removeProperty('opacity');
+		try {
+			const el = this.elRef.nativeElement;
+			if (!el) {
+				setTimeout(() => this.resizeText());
+				return;
 			}
-			if (!(this.cdr as ViewRef).destroyed) {
-				this.cdr.detectChanges();
+			const fontSize = this.fontSizeRatio * el.getBoundingClientRect().width;
+			const textEls = this.elRef.nativeElement.querySelectorAll('[resizeTarget]');
+			for (const textEl of textEls) {
+				textEl.style.fontSize = fontSize + 'px';
+				// console.log('resized element', textEl, textEls);
+				if (!this.keepOpacity) {
+					this.elRef.nativeElement.style.opacity = 1;
+				} else {
+					this.elRef.nativeElement.style.removeProperty('opacity');
+				}
+				if (!(this.cdr as ViewRef).destroyed) {
+					this.cdr.detectChanges();
+				}
 			}
+		} catch (e) {
+			console.error('[card-element-resize] Exception in resizeText', e);
 		}
 	}
 }

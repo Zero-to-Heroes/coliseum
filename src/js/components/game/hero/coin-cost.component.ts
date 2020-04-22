@@ -81,16 +81,20 @@ export class CoinCostComponent implements AfterViewInit {
 	}
 
 	private resizeText() {
-		const el = this.elRef.nativeElement.querySelector('.coin-cost');
-		if (!el) {
-			setTimeout(() => this.resizeText());
-			return;
-		}
-		const fontSize = 0.6 * el.getBoundingClientRect().width;
-		const textEl = this.elRef.nativeElement.querySelector('.cost');
-		textEl.style.fontSize = fontSize + 'px';
-		if (!(this.cdr as ViewRef).destroyed) {
-			this.cdr.detectChanges();
+		try {
+			const el = this.elRef.nativeElement.querySelector('.coin-cost');
+			if (!el) {
+				setTimeout(() => this.resizeText());
+				return;
+			}
+			const fontSize = 0.6 * el.getBoundingClientRect().width;
+			const textEl = this.elRef.nativeElement.querySelector('.cost');
+			textEl.style.fontSize = fontSize + 'px';
+			if (!(this.cdr as ViewRef).destroyed) {
+				this.cdr.detectChanges();
+			}
+		} catch (e) {
+			console.error('[coin-cost] Exception in resizeText', e);
 		}
 	}
 }

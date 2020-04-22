@@ -152,7 +152,7 @@ export class AppComponent implements OnDestroy {
 		}
 
 		const gameObs = await this.gameParser.parse(replayXml);
-		console.log('gameObs', gameObs);
+		// console.log('gameObs', gameObs);
 		this.gameSub = gameObs.subscribe(
 			([game, status, complete]: [Game, string, boolean]) => {
 				this.status = status || this.status;
@@ -181,7 +181,12 @@ export class AppComponent implements OnDestroy {
 
 					if (complete) {
 						this.status = null;
-						console.log('[app] Received complete game', game.turns.size, game.fullStoryRaw);
+						console.log(
+							'[app] Received complete game',
+							game.turns.size,
+							game.fullStoryRaw,
+							game.turns.toJS(),
+						);
 						this.analytics.event('replay-loaded');
 
 						// if (game.turns.size === 0) {

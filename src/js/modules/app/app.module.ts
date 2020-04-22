@@ -94,11 +94,12 @@ console.log('environment is', process.env.NODE_ENV);
 // });
 
 // @Injectable()
-// export class SentryErrorHandler implements ErrorHandler {
-// 	constructor() {}
+// class UIErrorHandler extends ErrorHandler {
+// 	constructor() {
+// 		super();
+// 	}
 // 	handleError(error) {
-// 		captureException(error.originalError || error);
-// 		throw error;
+// 		super.handleError(error);
 // 	}
 // }
 

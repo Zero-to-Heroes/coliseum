@@ -1,14 +1,14 @@
 import {
-	Component,
 	ChangeDetectionStrategy,
-	Input,
-	ElementRef,
 	ChangeDetectorRef,
-	ViewRef,
+	Component,
+	ElementRef,
 	HostListener,
+	Input,
+	ViewRef,
 } from '@angular/core';
-import { NGXLogger } from 'ngx-logger';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { NGXLogger } from 'ngx-logger';
 import { playerName } from '../../../../assets/svg/player_name';
 
 @Component({
@@ -60,16 +60,20 @@ export class PlayerNameComponent {
 	}
 
 	private resizeText() {
-		const el = this.elRef.nativeElement.querySelector('.player-name');
-		if (!el) {
-			setTimeout(() => this.resizeText());
-			return;
-		}
-		const fontSize = 0.17 * el.getBoundingClientRect().height;
-		const textEl = this.elRef.nativeElement.querySelector('.text');
-		textEl.style.fontSize = fontSize + 'px';
-		if (!(this.cdr as ViewRef).destroyed) {
-			this.cdr.detectChanges();
+		try {
+			const el = this.elRef.nativeElement.querySelector('.player-name');
+			if (!el) {
+				setTimeout(() => this.resizeText());
+				return;
+			}
+			const fontSize = 0.17 * el.getBoundingClientRect().height;
+			const textEl = this.elRef.nativeElement.querySelector('.text');
+			textEl.style.fontSize = fontSize + 'px';
+			if (!(this.cdr as ViewRef).destroyed) {
+				this.cdr.detectChanges();
+			}
+		} catch (e) {
+			console.error('[player-name] Exception in resizeText', e);
 		}
 	}
 }
