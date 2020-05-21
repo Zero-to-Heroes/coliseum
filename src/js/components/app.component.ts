@@ -184,8 +184,8 @@ export class AppComponent implements OnDestroy {
 						console.log(
 							'[app] Received complete game',
 							game.turns.size,
-							game.fullStoryRaw,
-							game.turns.toJS(),
+							// game.fullStoryRaw,
+							// game.turns.toJS(),
 						);
 						this.analytics.event('replay-loaded');
 
