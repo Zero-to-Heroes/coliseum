@@ -144,8 +144,9 @@ export class AppComponent implements OnDestroy {
 		// Cache the info so that it's not erased by a reset
 		// const turn = parseInt(this.getSearchParam('turn')) || 0;
 		// const action = parseInt(this.getSearchParam('action')) || 0;
-		const reviewId = (options && options.reviewId) || this.getSearchParam('reviewId');
 		this.reset(false);
+		const reviewId = (options && options.reviewId) || this.getSearchParam('reviewId');
+		this.reviewId = reviewId;
 		this.status = 'Parsing replay file';
 		if (!(this.cdr as ViewRef).destroyed) {
 			this.cdr.detectChanges();

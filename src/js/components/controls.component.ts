@@ -20,7 +20,7 @@ declare let ga;
 	selector: 'controls',
 	styleUrls: ['../../css/components/controls.component.scss', '../../css/global/global.scss'],
 	template: `
-		<div class="player-controls light-theme" [ngClass]="{ 'player-controls-disabled': !_active }">
+		<div class="player-controls light-theme">
 			<div class="player-controls-buttons-wrapper">
 				<div class="player-controls-content player-controls-content-left">
 					<span class="gs-icon">
@@ -50,7 +50,10 @@ declare let ga;
 					</p>
 				</div>
 
-				<div class="player-controls-content player-controls-content-middle">
+				<div
+					class="player-controls-content player-controls-content-middle"
+					[ngClass]="{ 'player-controls-disabled': !_active }"
+				>
 					<button
 						class="gs-icon player-control-main player-control-element hint-tooltip-container"
 						(click)="goPreviousTurn()"
@@ -118,7 +121,10 @@ declare let ga;
 					</button>
 				</div>
 
-				<div class="player-controls-content player-controls-content-right">
+				<div
+					class="player-controls-content player-controls-content-right"
+					[ngClass]="{ 'player-controls-disabled': !_active }"
+				>
 					<div class="player-control-group hint-tooltip-container">
 						<button
 							class="gs-icon btn-gs-icon player-control player-control-element"
