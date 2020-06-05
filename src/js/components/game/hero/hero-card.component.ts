@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CardType, GameTag } from '@firestone-hs/reference-data';
 import { Entity } from '@firestone-hs/replay-parser';
-import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'hero-card',
@@ -42,10 +41,8 @@ export class HeroCardComponent {
 	_option: boolean;
 	_secrets: readonly Entity[];
 
-	constructor(private logger: NGXLogger) {}
-
 	@Input('hero') set hero(hero: Entity) {
-		this.logger.debug('[hero-card] setting hero', hero, hero && hero.tags.toJS());
+		// console.log('[hero-card] setting hero', hero, hero && hero.tags.toJS());
 		this._entity = hero;
 		this.updateInfo();
 	}
@@ -74,7 +71,7 @@ export class HeroCardComponent {
 	}
 
 	@Input('secrets') set secrets(value: readonly Entity[]) {
-		this.logger.debug('[hero-card] setting secrets', value);
+		// console.log('[hero-card] setting secrets', value);
 		this._secrets = value;
 	}
 }

@@ -61,13 +61,13 @@ export class HeroComponent {
 	constructor(private conf: GameConfService) {}
 
 	@Input('entities') set entities(entities: Map<number, Entity>) {
-		// this.logger.debug('[hero] setting new entities', entities && entities.toJS());
+		// console.log('[hero] setting new entities', entities && entities.toJS());
 		this._entities = entities;
 		this.updateEntityGroups();
 	}
 
 	@Input('playerId') set playerId(playerId: number) {
-		// this.logger.debug('[hero] setting playerId', playerId);
+		// console.log('[hero] setting playerId', playerId);
 		this._playerId = playerId;
 		this.updateEntityGroups();
 	}
@@ -99,10 +99,17 @@ export class HeroComponent {
 	}
 
 	private updateEntityGroups() {
+		if (!this._playerId || !this._entities) {
+			return;
+		}
 		this.playerEntity =
-			this._entities && this._entities.find(entity => entity.getTag(GameTag.PLAYER_ID) === this._playerId);
+			this._entities &&
+			this._entities.find(
+				entity =>
+					entity.getTag(GameTag.PLAYER_ID) === this._playerId &&
+					entity.getTag(GameTag.CARDTYPE) === CardType.PLAYER,
+			);
 		this._hero = this.getHeroEntity(this._entities, this.playerEntity);
-		// console.log('hero', this._hero, this._hero && this._hero.cardID, this._hero && this._hero.tags.toJS());
 		this._heroPower = this.getHeroPowerEntity(this._entities, this._playerId);
 		this._weapon = this.getWeaponEntity(this._entities, this._playerId);
 		this._secrets = this.getSecretEntities(this._entities, this._playerId);
@@ -138,7 +145,7 @@ export class HeroComponent {
 	}
 
 	private getHeroEntity(entities: Map<number, Entity>, playerEntity: Entity): Entity {
-		// console.log('getting hero from playerentity', playerEntity, playerEntity.tags.toJS());
+		// console.log('getting hero from playerentity', playerEntity, playerEntity?.tags?.toJS());
 		if (!entities || !playerEntity) {
 			return null;
 		}

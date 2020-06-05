@@ -1,5 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
-import { NGXLogger } from 'ngx-logger';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 @Component({
 	selector: 'hero-art',
@@ -12,10 +11,8 @@ import { NGXLogger } from 'ngx-logger';
 export class HeroArtComponent {
 	image: string;
 
-	constructor(private logger: NGXLogger) {}
-
 	@Input('cardId') set cardId(cardId: string) {
-		this.logger.debug('[hero-art] setting cardId', cardId);
+		// console.debug('[hero-art] setting cardId', cardId);
 		this.image = `https://static.zerotoheroes.com/hearthstone/cardart/256x/${cardId}.jpg`;
 	}
 }
