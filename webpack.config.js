@@ -6,11 +6,12 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const DefinePlugin = require('webpack').DefinePlugin;
 const AngularCompilerPlugin = webpack.AngularCompilerPlugin;
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const TerserPlugin = require('terser-webpack-plugin');
 
-var path = require('path');
+const path = require('path');
 
-var _root = path.resolve(__dirname, '.');
+const _root = path.resolve(__dirname, '.');
 
 function getRoot(args) {
 	args = Array.prototype.slice.call(arguments, 0);
@@ -28,7 +29,27 @@ module.exports = function(env, argv) {
 
 		target: 'web',
 
-		devtool: env.production ? false : 'inline-source-map',
+		devtool: 'inline-source-map',
+
+		optimization: env.production
+			? {
+					minimize: true,
+					minimizer: [
+						new TerserPlugin({
+							cache: true,
+							parallel: true,
+							sourceMap: true, // Must be set to true if using source-maps in production
+							terserOptions: {
+								mangle: false,
+								keep_classnames: true,
+								keep_fnames: true,
+							},
+						}),
+					],
+					namedModules: true,
+					namedChunks: true,
+			  }
+			: {},
 
 		watch: true,
 
@@ -83,7 +104,10 @@ module.exports = function(env, argv) {
 
 			new AngularCompilerPlugin({
 				tsConfigPath: './tsconfig.json',
-				entryModules: ['./src/js/modules/app/app.module#AppModule', './src/js/modules/loader/loader.module#LoaderModule'],
+				entryModules: [
+					'./src/js/modules/app/app.module#AppModule',
+					'./src/js/modules/loader/loader.module#LoaderModule',
+				],
 				sourceMap: true,
 			}),
 
