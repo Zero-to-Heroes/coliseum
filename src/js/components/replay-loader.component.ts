@@ -3,7 +3,7 @@ import { AfterViewInit, ChangeDetectionStrategy, Component } from '@angular/core
 
 declare let $;
 
-const REPLAY_API = 'http://xml.firestoneapp.com/';
+const REPLAY_API = 'https://xml.firestoneapp.com/';
 
 @Component({
 	selector: 'replay-loader',
