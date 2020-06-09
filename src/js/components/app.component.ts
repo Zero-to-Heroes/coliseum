@@ -356,7 +356,10 @@ export class AppComponent implements OnDestroy {
 			this.logger.warn('[app] game not present, not performing operation', 'computeGameMode');
 			return;
 		}
-		if (this.game.gameType === GameType.GT_BATTLEGROUNDS) {
+		if (
+			this.game.gameType === GameType.GT_BATTLEGROUNDS ||
+			this.game.gameType === GameType.GT_BATTLEGROUNDS_FRIENDLY
+		) {
 			return 'battlegrounds';
 		}
 		return null;

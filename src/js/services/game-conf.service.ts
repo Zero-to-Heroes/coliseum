@@ -13,6 +13,10 @@ export class GameConfService {
 	}
 
 	public isBattlegrounds(): boolean {
-		return this.game && this.game.gameType === GameType.GT_BATTLEGROUNDS;
+		return (
+			this.game &&
+			(this.game.gameType === GameType.GT_BATTLEGROUNDS ||
+				this.game.gameType === GameType.GT_BATTLEGROUNDS_FRIENDLY)
+		);
 	}
 }
