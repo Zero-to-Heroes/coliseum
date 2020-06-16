@@ -48,6 +48,7 @@ declare let ga;
 							>View online</a
 						>
 					</p>
+					<div class="replay-location-text">* This replay is stored online</div>
 				</div>
 
 				<div
