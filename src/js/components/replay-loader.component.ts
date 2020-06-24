@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AfterViewInit, ChangeDetectionStrategy, Component } from '@angular/core';
+import { loadAsync } from 'jszip';
 
 declare let $;
 
@@ -46,13 +47,30 @@ export class ReplayLoaderComponent implements AfterViewInit {
 			})
 			.toPromise();
 		console.log('review in coliseum', review);
-		const headers = new HttpHeaders({ 'Content-Type': 'text/xml' }).set('Accept', 'text/xml');
-		const replay = await this.http
-			.get(REPLAY_API + review.replayKey, { headers: headers, responseType: 'text' })
-			.toPromise();
+		const replay = await this.loadReplay(review.replayKey);
 		window['coliseum'].zone.run(() => {
 			window['coliseum'].component.loadReplay(replay);
 		});
+	}
+
+	private async loadReplay(replayKey: string): Promise<string> {
+		if (replayKey?.endsWith('.zip')) {
+			const headers = new HttpHeaders({ 'Content-Type': 'application/zip' }).set('Accept', 'application/zip');
+			const zippedReplay = await this.http
+				.get(REPLAY_API + replayKey, { headers: headers, responseType: 'blob' })
+				.toPromise();
+			const zipContent = await loadAsync(zippedReplay as any);
+			const file = Object.keys(zipContent.files)[0];
+			// console.log('files in zip', zipContent.files, file);
+			const replay = await zipContent.file(file).async('string');
+			return replay;
+		} else {
+			const headers = new HttpHeaders({ 'Content-Type': 'text/xml' }).set('Accept', 'text/xml');
+			const replay = await this.http
+				.get(REPLAY_API + replayKey, { headers: headers, responseType: 'text' })
+				.toPromise();
+			return replay;
+		}
 	}
 
 	private getSearchParam(name: string): string {
