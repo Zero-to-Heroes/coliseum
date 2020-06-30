@@ -29,7 +29,7 @@ module.exports = function(env, argv) {
 
 		target: 'web',
 
-		devtool: 'inline-source-map',
+		devtool: env.production ? false : 'inline-source-map',
 
 		optimization: env.production
 			? {
