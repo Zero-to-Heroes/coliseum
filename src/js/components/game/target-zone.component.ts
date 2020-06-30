@@ -131,12 +131,20 @@ export class TargetZoneComponent implements AfterViewInit {
 		}
 		const orX =
 			originElement.getBoundingClientRect().left + originElement.getBoundingClientRect().width / 2 - this.left;
+		const isOriginBelowTarget =
+			originElement.getBoundingClientRect().top > targetElement.getBoundingClientRect().top;
+		const orYOffset = isOriginBelowTarget ? -1 : 1;
 		const orY =
-			originElement.getBoundingClientRect().top + originElement.getBoundingClientRect().height / 2 - this.top;
+			originElement.getBoundingClientRect().top +
+			((1 + orYOffset * 0.5) * originElement.getBoundingClientRect().height) / 2 -
+			this.top;
 		const tarX =
 			targetElement.getBoundingClientRect().left + targetElement.getBoundingClientRect().width / 2 - this.left;
+		const tarYOffset = isOriginBelowTarget ? 1 : -1;
 		const tarY =
-			targetElement.getBoundingClientRect().top + targetElement.getBoundingClientRect().height / 2 - this.top;
+			targetElement.getBoundingClientRect().top +
+			((1 + tarYOffset * 0.5) * targetElement.getBoundingClientRect().height) / 2 -
+			this.top;
 		const svgPath = `
             <line x1="${orX}" y1="${orY}" x2="${tarX}" y2="${tarY}" class="arrow" marker-end="url(#arrow)"/>
         `;
