@@ -44,7 +44,7 @@ export class TargetZoneComponent implements AfterViewInit {
 	}
 
 	@Input('targets') set targets(value: readonly [number, number][]) {
-		this.logger.debug('[target-zone] setting targets', value);
+		// console.log('[target-zone] setting targets', value);
 		this._targets = value || [];
 		this.svg = undefined;
 
@@ -52,11 +52,20 @@ export class TargetZoneComponent implements AfterViewInit {
 		// We want to wait until the origin / target elements are rendered first
 		// The timeout value is totally arbitrary, and should be used only when going
 		// directly to a target game state from a hyperlink
-		setTimeout(() => this.drawTargetLines(), anyMissingTarget ? 1000 : 0);
+		setTimeout(
+			() => {
+				this.drawTargetLines();
+				// In case things move around, we redraw the lines
+				if (!anyMissingTarget) {
+					setTimeout(() => this.drawTargetLines(), 1000);
+				}
+			},
+			anyMissingTarget ? 1000 : 0,
+		);
 	}
 
 	@Input('active') set active(value: boolean) {
-		this.logger.debug('[target-zone] setting active', value);
+		// console.log('[target-zone] setting active', value);
 		this._active = value;
 	}
 
@@ -126,7 +135,7 @@ export class TargetZoneComponent implements AfterViewInit {
 			this.gameEl.querySelector(`[data-entity-id="${targetId}"]`) ||
 			this.gameEl.querySelector(`[data-player-entity-id="${targetId}"]`);
 		if (!originElement || !targetElement) {
-			this.logger.debug('[targets] missing some elements', originElement, originId, targetElement, targetId);
+			console.log('[targets] missing some elements', originElement, originId, targetElement, targetId);
 			return null;
 		}
 		const orX =

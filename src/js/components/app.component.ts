@@ -1,6 +1,14 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, NgZone, OnDestroy, ViewRef } from '@angular/core';
 import { GameType } from '@firestone-hs/reference-data';
-import { Action, BaconBoardVisualStateAction, Game, GameParserService, Turn } from '@firestone-hs/replay-parser';
+import {
+	Action,
+	BaconBoardVisualStateAction,
+	BattlegroundsSimulationParserService,
+	Game,
+	GameParserService,
+	Turn,
+} from '@firestone-hs/replay-parser';
+import { GameSample } from '@firestone-hs/simulate-bgs-battle/dist/simulation/spectator/game-sample';
 import { NGXLogger } from 'ngx-logger';
 import { Subscription } from 'rxjs';
 import { ReplayOptions } from '../models/replay-options';
@@ -68,6 +76,8 @@ declare let ga;
 })
 export class AppComponent implements OnDestroy {
 	reviewId: string;
+	bgsSimulationString: string;
+	bgsSimulationId: string;
 	status: string;
 	game: Game;
 	currentAction: Action;
@@ -85,6 +95,7 @@ export class AppComponent implements OnDestroy {
 
 	constructor(
 		private gameParser: GameParserService,
+		private bgsSimulationParser: BattlegroundsSimulationParserService,
 		private gameConf: GameConfService,
 		private events: Events,
 		private cdr: ChangeDetectorRef,
@@ -107,6 +118,8 @@ export class AppComponent implements OnDestroy {
 		this.status = null;
 		this.showPreloader = true;
 		this.reviewId = this.reviewId; // That was we can already start showing the links
+		this.bgsSimulationString = undefined;
+		this.bgsSimulationId = undefined;
 		delete this.game;
 		this.game = undefined;
 		this.currentAction = undefined;
@@ -137,6 +150,37 @@ export class AppComponent implements OnDestroy {
 		if (!(this.cdr as ViewRef).destroyed) {
 			this.cdr.detectChanges();
 		}
+	}
+
+	public async parseBgsSimulation(bgsSimulation: GameSample) {
+		this.analytics.event('start-bgs-simulation-parse');
+		this.reset(false);
+		this.bgsSimulationString = this.getSearchParam('bgsSimulation');
+		this.bgsSimulationId = this.getSearchParam('bgsSimulationId');
+		this.status = 'Parsing bgsSimulationString simulation';
+		if (!(this.cdr as ViewRef).destroyed) {
+			this.cdr.detectChanges();
+		}
+		const game = await this.bgsSimulationParser.parse(bgsSimulation);
+		console.log('parsed bgs simulation', game);
+		const turn = 0;
+		const action = 0;
+		this.game = game;
+		// this.reviewId = reviewId;
+		this.currentTurn = turn <= 0 ? 0 : turn >= this.game.turns.size ? this.game.turns.size - 1 : turn;
+		this.currentActionInTurn =
+			action <= 0
+				? 0
+				: action >= this.game.turns.get(this.currentTurn).actions.length
+				? this.game.turns.get(this.currentTurn).actions.length - 1
+				: action;
+		this.populateInfo(true);
+		this.showPreloader = false;
+		this.status = null;
+		if (!(this.cdr as ViewRef).destroyed) {
+			this.cdr.detectChanges();
+		}
+		this.analytics.event('bgs-simulation-loaded');
 	}
 
 	public async loadReplay(replayXml: string, options?: ReplayOptions) {
@@ -317,11 +361,11 @@ export class AppComponent implements OnDestroy {
 			this.currentTime = this.computeCurrentTime();
 			this.updateUrlQueryString();
 		}
-		// console.log(
-		// 	'[app] Considering action',
-		// 	this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn],
-		// 	this.game.turns.get(this.currentTurn).actions,
-		// );
+		console.log(
+			'[app] Considering action',
+			this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn],
+			this.game.turns.get(this.currentTurn).actions,
+		);
 	}
 
 	private buildTotalTime() {
@@ -503,7 +547,13 @@ export class AppComponent implements OnDestroy {
 
 	private updateUrlQueryString() {
 		const baseUrl = `${window.location.protocol}//${window.location.host}${window.location.pathname}`;
-		const reviewQuery = this.reviewId ? `reviewId=${this.reviewId}&` : '';
+		const reviewQuery = this.reviewId
+			? `reviewId=${this.reviewId}&`
+			: this.bgsSimulationString
+			? `bgsSimulation=${this.bgsSimulationString}&`
+			: this.bgsSimulationId
+			? `bgsSimulationId=${this.bgsSimulationId}&`
+			: '';
 		const queryString = `${reviewQuery}turn=${this.currentTurn}&action=${this.currentActionInTurn}`;
 		const newUrl = `${baseUrl}?${queryString}`;
 		window.history.replaceState({ path: newUrl }, '', newUrl);

@@ -1,10 +1,12 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AfterViewInit, ChangeDetectionStrategy, Component } from '@angular/core';
+import { GameSample } from '@firestone-hs/simulate-bgs-battle/dist/simulation/spectator/game-sample';
 import { loadAsync } from 'jszip';
 
 declare let $;
 
 const REPLAY_API = 'https://xml.firestoneapp.com/';
+const BGS_SAMPLE_API = 'https://static-api.firestoneapp.com/retrieveBgsSimulationSample/';
 
 @Component({
 	selector: 'replay-loader',
@@ -16,8 +18,10 @@ export class ReplayLoaderComponent implements AfterViewInit {
 
 	async ngAfterViewInit() {
 		const reviewId = this.getSearchParam('reviewId');
-		// console.log('reviewId', reviewId);
-		if (!reviewId) {
+		const bgsSimulation = this.getSearchParam('bgsSimulation');
+		const bgsSimulationId = this.getSearchParam('bgsSimulationId');
+		console.log('params', reviewId, bgsSimulationId, bgsSimulation);
+		if (!reviewId && !bgsSimulation && !bgsSimulationId) {
 			console.warn('loading default replay for demo purposes');
 			$.ajax({
 				url: 'replay.xml',
@@ -34,23 +38,69 @@ export class ReplayLoaderComponent implements AfterViewInit {
 			return;
 		}
 
-		window['coliseum'].zone.run(() => {
-			window['coliseum'].component.updateStatus('Downloading replay file');
-		});
-		console.log('sending request with creds');
-		const review: any = await this.http
-			.get(`https://nj8w9uc6p5.execute-api.us-west-2.amazonaws.com/Prod/${reviewId}`, {
-				headers: new HttpHeaders({
-					'Content-Type': 'application/json',
-				}).set('Accept', 'application/json'),
-				withCredentials: false,
-			})
-			.toPromise();
-		console.log('review in coliseum', review);
-		const replay = await this.loadReplay(review.replayKey);
-		window['coliseum'].zone.run(() => {
-			window['coliseum'].component.loadReplay(replay);
-		});
+		if (reviewId) {
+			window['coliseum'].zone.run(() => {
+				window['coliseum'].component.updateStatus('Downloading replay file');
+			});
+			console.log('sending request with creds');
+			const review: any = await this.http
+				.get(`https://nj8w9uc6p5.execute-api.us-west-2.amazonaws.com/Prod/${reviewId}`, {
+					headers: new HttpHeaders({
+						'Content-Type': 'application/json',
+					}).set('Accept', 'application/json'),
+					withCredentials: false,
+				})
+				.toPromise();
+			console.log('review in coliseum', review);
+			const replay = await this.loadReplay(review.replayKey);
+			window['coliseum'].zone.run(() => {
+				window['coliseum'].component.loadReplay(replay);
+			});
+		} else if (bgsSimulation) {
+			window['coliseum'].zone.run(() => {
+				window['coliseum'].component.updateStatus('Decoding battlegrounds simulation result');
+			});
+			console.log('decoding', bgsSimulation);
+			const decoded = atob(bgsSimulation);
+			console.log('decoded', decoded);
+			const parsed = JSON.parse(decoded);
+			console.log('parsed', parsed);
+			window['coliseum'].zone.run(() => {
+				window['coliseum'].component.parseBgsSimulation(parsed);
+			});
+		} else if (bgsSimulationId) {
+			window['coliseum'].zone.run(() => {
+				window['coliseum'].component.updateStatus('Loading battlegrounds simulation result');
+			});
+			console.log('loading', bgsSimulationId);
+			const gameSample = await this.retrieveEncodedSimulation(bgsSimulationId);
+			// console.log('decoding', encodedSimulation);
+			// const decoded = atob(encodedSimulation);
+			// console.log('decoded', decoded);
+			// const parsed = JSON.parse(decoded);
+			console.log('parsed', gameSample);
+			window['coliseum'].zone.run(() => {
+				window['coliseum'].component.parseBgsSimulation(gameSample);
+			});
+		}
+	}
+
+	private async retrieveEncodedSimulation(bgsSimulationId: string): Promise<GameSample> {
+		try {
+			const sample: GameSample = (await this.http
+				.get(BGS_SAMPLE_API + bgsSimulationId, {
+					headers: new HttpHeaders({
+						'Content-Type': 'application/json',
+					}).set('Accept', 'application/json'),
+					withCredentials: false,
+				})
+				.toPromise()) as GameSample;
+			console.log('retrieved sample', sample);
+			return sample;
+		} catch (e) {
+			console.error('issue retrieve bgs sample', bgsSimulationId, e.message, e);
+		}
+		return null;
 	}
 
 	private async loadReplay(replayKey: string): Promise<string> {

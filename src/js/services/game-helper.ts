@@ -18,6 +18,7 @@ export class GameHelper {
 	public static getTavernButton(entities: Map<number, Entity>, controllerId: number, slotPosition: number): Entity {
 		const gameEntity = GameHelper.getGameEntity(entities);
 		return (
+			gameEntity &&
 			entities &&
 			gameEntity.getTag(GameTag.TECH_LEVEL_MANA_GEM) &&
 			entities
