@@ -57,7 +57,7 @@ export class TargetZoneComponent implements AfterViewInit {
 				this.drawTargetLines();
 				// In case things move around, we redraw the lines
 				if (!anyMissingTarget) {
-					setTimeout(() => this.drawTargetLines(), 1000);
+					setTimeout(() => this.drawTargetLines(), 500);
 				}
 			},
 			anyMissingTarget ? 1000 : 0,
