@@ -104,7 +104,10 @@ export class ReplayLoaderComponent implements AfterViewInit {
 	}
 
 	private async loadReplay(replayKey: string): Promise<string> {
-		if (replayKey?.endsWith('.zip')) {
+		if (!replayKey) {
+			return null;
+		}
+		if (replayKey.endsWith('.zip')) {
 			const headers = new HttpHeaders({ 'Content-Type': 'application/zip' }).set('Accept', 'application/zip');
 			const zippedReplay = await this.http
 				.get(REPLAY_API + replayKey, { headers: headers, responseType: 'blob' })
