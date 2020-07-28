@@ -38,6 +38,5 @@ $ aws s3 cp ./dist/coliseum.js s3://replays.firestoneapp.com --acl public-read
 # Local dev (just for me)
 
 ```
-$ cp dist/coliseum.js ../overwolf-replay-viewer/dependencies/
 $ cp dist/coliseum.js ../firestone/core/dependencies/
 ```
