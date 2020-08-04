@@ -361,11 +361,11 @@ export class AppComponent implements OnDestroy {
 			this.currentTime = this.computeCurrentTime();
 			this.updateUrlQueryString();
 		}
-		console.log(
-			'[app] Considering action',
-			this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn],
-			this.game.turns.get(this.currentTurn).actions,
-		);
+		// console.log(
+		// 	'[app] Considering action',
+		// 	this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn],
+		// 	this.game.turns.get(this.currentTurn).actions,
+		// );
 	}
 
 	private buildTotalTime() {
