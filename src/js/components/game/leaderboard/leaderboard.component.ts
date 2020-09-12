@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { GameTag } from '@firestone-hs/reference-data';
+import { GameTag, Zone } from '@firestone-hs/reference-data';
 import { AllCardsService, Entity, PlayerEntity } from '@firestone-hs/replay-parser';
 import { Map } from 'immutable';
 import { NGXLogger } from 'ngx-logger';
@@ -68,8 +68,24 @@ export class LeaderboardComponent {
 		this.leaderboard = this._entities
 			.toArray()
 			.filter(entity => entity.getTag(GameTag.PLAYER_LEADERBOARD_PLACE) > 0)
+			.filter(
+				entity =>
+					entity.getTag(GameTag.CONTROLLER) !== this._playerId ||
+					![Zone.SETASIDE, Zone.GRAVEYARD].includes(entity.getTag(GameTag.ZONE)),
+			)
 			.sort((a, b) => a.getTag(GameTag.PLAYER_LEADERBOARD_PLACE) - b.getTag(GameTag.PLAYER_LEADERBOARD_PLACE));
-		// console.log('leaderboard', this.leaderboard.map(entity => entity.cardID));
+		// console.log(
+		// 	'leaderboard',
+		// 	this._playerId,
+		// 	this.leaderboard.map(entity => ({
+		// 		id: entity.id,
+		// 		cardId: entity.cardID,
+		// 		position: entity.getTag(GameTag.PLAYER_LEADERBOARD_PLACE),
+		// 		controller: entity.getTag(GameTag.CONTROLLER),
+		// 		zone: entity.getTag(GameTag.ZONE),
+		// 	})),
+		// 	this.playerEntity,
+		// );
 		this.nextOpponentPlayerId = this.playerEntity.getTag(GameTag.NEXT_OPPONENT_PLAYER_ID);
 	}
 }
