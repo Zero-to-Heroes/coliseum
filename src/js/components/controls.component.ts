@@ -40,7 +40,7 @@ declare let ga;
 							/>
 						</svg>
 					</span>
-					<p class="player-controls-content-note">
+					<p class="player-controls-content-note" *ngIf="reviewId">
 						<a
 							class="player-control-element view-online"
 							target="_blank"
@@ -48,7 +48,7 @@ declare let ga;
 							>View online</a
 						>
 					</p>
-					<div class="replay-location-text">* This replay is stored online</div>
+					<div class="replay-location-text" *ngIf="reviewId">* This replay is stored online</div>
 				</div>
 
 				<div
