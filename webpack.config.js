@@ -51,11 +51,11 @@ module.exports = function(env, argv) {
 			  }
 			: {},
 
-		watch: true,
+		// watch: false,
 
-		watchOptions: {
-			ignored: ['node_modules'],
-		},
+		// watchOptions: {
+		// 	ignored: ['node_modules'],
+		// },
 
 		output: {
 			path: getRoot('dist'),
