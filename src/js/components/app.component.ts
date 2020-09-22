@@ -118,6 +118,7 @@ export class AppComponent implements OnDestroy {
 		this.status = null;
 		this.showPreloader = true;
 		this.reviewId = this.reviewId; // That was we can already start showing the links
+		// console.log('resetting review id', this.reviewId);
 		this.bgsSimulationString = undefined;
 		this.bgsSimulationId = undefined;
 		delete this.game;
@@ -191,6 +192,7 @@ export class AppComponent implements OnDestroy {
 		this.reset(false);
 		const reviewId = (options && options.reviewId) || this.getSearchParam('reviewId');
 		this.reviewId = reviewId;
+		// console.log('setting review id', this.reviewId);
 		this.status = 'Parsing replay file';
 		if (!(this.cdr as ViewRef).destroyed) {
 			this.cdr.detectChanges();
@@ -212,6 +214,7 @@ export class AppComponent implements OnDestroy {
 					this.game = game;
 					this.totalTime = this.buildTotalTime();
 					this.reviewId = reviewId;
+					// console.log('re-setting review id', this.reviewId);
 					this.currentTurn = turn <= 0 ? 0 : turn >= this.game.turns.size ? this.game.turns.size - 1 : turn;
 					this.currentActionInTurn =
 						action <= 0

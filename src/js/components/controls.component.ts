@@ -40,7 +40,7 @@ declare let ga;
 							/>
 						</svg>
 					</span>
-					<p class="player-controls-content-note" *ngIf="reviewId">
+					<p class="player-controls-content-note" *ngIf="_reviewId">
 						<a
 							class="player-control-element view-online"
 							target="_blank"
@@ -310,6 +310,7 @@ export class ControlsComponent implements OnInit, OnDestroy {
 		this.currentSpeed = 1;
 		this.showingHiddenCards = true;
 		this._reviewId = value;
+		console.log('set review id', this._reviewId);
 	}
 
 	@Input() set active(value: boolean) {
