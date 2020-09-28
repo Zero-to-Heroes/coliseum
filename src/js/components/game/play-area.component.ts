@@ -135,6 +135,15 @@ export class PlayAreaComponent {
 	}
 
 	private getBoardEntities(playerId: number): readonly Entity[] {
+		// console.log(
+		// 	'getting board entities',
+		// 	playerId,
+		// 	this._entities.toArray().find(entity => entity.id === 35),
+		// 	this._entities
+		// 		.toArray()
+		// 		.find(entity => entity.id === 35)
+		// 		?.tags?.toJS(),
+		// );
 		return this._entities
 			.toArray()
 			.filter(entity => entity.getTag(GameTag.CONTROLLER) === playerId)
