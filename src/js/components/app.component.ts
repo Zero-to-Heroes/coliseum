@@ -113,12 +113,11 @@ export class AppComponent implements OnDestroy {
 		logger.debug('new coliseum', window['coliseum']);
 	}
 
-	public reset(shouldUpdateQueryString = true) {
-		console.log('in reset');
+	public reset(reviewId?: string, shouldUpdateQueryString = true) {
+		console.log('in reset', reviewId, shouldUpdateQueryString);
 		this.status = null;
 		this.showPreloader = true;
-		this.reviewId = this.reviewId; // That was we can already start showing the links
-		// console.log('resetting review id', this.reviewId);
+		this.reviewId = reviewId ?? this.reviewId; // That was we can already start showing the links
 		this.bgsSimulationString = undefined;
 		this.bgsSimulationId = undefined;
 		delete this.game;
@@ -155,7 +154,7 @@ export class AppComponent implements OnDestroy {
 
 	public async parseBgsSimulation(bgsSimulation: GameSample) {
 		this.analytics.event('start-bgs-simulation-parse');
-		this.reset(false);
+		this.reset(this.reviewId, false);
 		this.bgsSimulationString = this.getSearchParam('bgsSimulation');
 		this.bgsSimulationId = this.getSearchParam('bgsSimulationId');
 		this.status = 'Parsing bgsSimulationString simulation';
@@ -167,7 +166,6 @@ export class AppComponent implements OnDestroy {
 		const turn = 0;
 		const action = 0;
 		this.game = game;
-		// this.reviewId = reviewId;
 		this.currentTurn = turn <= 0 ? 0 : turn >= this.game.turns.size ? this.game.turns.size - 1 : turn;
 		this.currentActionInTurn =
 			action <= 0
@@ -189,10 +187,10 @@ export class AppComponent implements OnDestroy {
 		// Cache the info so that it's not erased by a reset
 		// const turn = parseInt(this.getSearchParam('turn')) || 0;
 		// const action = parseInt(this.getSearchParam('action')) || 0;
-		this.reset(false);
 		const reviewId = (options && options.reviewId) || this.getSearchParam('reviewId');
-		this.reviewId = reviewId;
-		// console.log('setting review id', this.reviewId);
+		// this.reviewId = reviewId;
+		this.reset(reviewId, false);
+		console.log('setting review id from loadReplay', this.reviewId);
 		this.status = 'Parsing replay file';
 		if (!(this.cdr as ViewRef).destroyed) {
 			this.cdr.detectChanges();
@@ -214,7 +212,7 @@ export class AppComponent implements OnDestroy {
 					this.game = game;
 					this.totalTime = this.buildTotalTime();
 					this.reviewId = reviewId;
-					// console.log('re-setting review id', this.reviewId);
+					console.log('re-setting review id', this.reviewId);
 					this.currentTurn = turn <= 0 ? 0 : turn >= this.game.turns.size ? this.game.turns.size - 1 : turn;
 					this.currentActionInTurn =
 						action <= 0
@@ -364,15 +362,15 @@ export class AppComponent implements OnDestroy {
 			this.currentTime = this.computeCurrentTime();
 			this.updateUrlQueryString();
 		}
-		console.log(
-			'[app] Considering action',
-			this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn],
-			this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].entities.get(35),
-			this.game.turns
-				.get(this.currentTurn)
-				.actions[this.currentActionInTurn].entities.get(35)
-				?.tags?.toJS(),
-		);
+		// console.log(
+		// 	'[app] Considering action',
+		// 	this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn],
+		// 	this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].entities.get(35),
+		// 	this.game.turns
+		// 		.get(this.currentTurn)
+		// 		.actions[this.currentActionInTurn].entities.get(35)
+		// 		?.tags?.toJS(),
+		// );
 	}
 
 	private buildTotalTime() {
