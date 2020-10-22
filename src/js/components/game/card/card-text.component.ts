@@ -74,9 +74,11 @@ export class CardTextComponent {
 		// Damage placeholder, influenced by spell damage
 		let damageBonus = 0;
 		let doubleDamage = 0;
+		// console.log('building text for', description);
 		if (this._controller) {
 			if (this._entity.getCardType() === CardType.SPELL) {
 				damageBonus = this._controller.getTag(GameTag.CURRENT_SPELLPOWER) || 0;
+				// console.log('damage bonus', damageBonus);
 				if (this._entity.getTag(GameTag.RECEIVES_DOUBLE_SPELLDAMAGE_BONUS) === 1) {
 					damageBonus *= 2;
 				}
@@ -92,6 +94,7 @@ export class CardTextComponent {
 			.replace('@', `${this._entity.getTag(GameTag.TAG_SCRIPT_DATA_NUM_1)}`)
 			.replace(/\$(\d+)/g, this.modifier(damageBonus, doubleDamage))
 			.replace(/\#(\d+)/g, this.modifier(damageBonus, doubleDamage));
+		// console.log('updated', description, damageBonus, doubleDamage, this._controller, this._entity);
 		this.text = this.domSanitizer.bypassSecurityTrustHtml(description);
 
 		// Text is not the same color for premium cards

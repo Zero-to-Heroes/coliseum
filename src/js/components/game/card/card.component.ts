@@ -14,6 +14,7 @@ import { GameConfService } from '../../../services/game-conf.service';
 			cardResize
 			cardTooltip
 			[tooltipEntity]="_entity"
+			[tooltipControllerEntity]="_controller"
 			[hasTooltip]="_showCard && _hasTooltip"
 			[attr.data-entity-id]="!forbiddenTargetSource && _entity.id"
 		>
