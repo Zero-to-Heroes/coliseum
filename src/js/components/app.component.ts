@@ -365,11 +365,7 @@ export class AppComponent implements OnDestroy {
 		// console.log(
 		// 	'[app] Considering action',
 		// 	this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn],
-		// 	this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].entities.get(35),
-		// 	this.game.turns
-		// 		.get(this.currentTurn)
-		// 		.actions[this.currentActionInTurn].entities.get(35)
-		// 		?.tags?.toJS(),
+		// 	this.game.turns.get(this.currentTurn).actions[this.currentActionInTurn].damages?.toJS(),
 		// );
 	}
 
