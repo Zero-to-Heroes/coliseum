@@ -29,51 +29,44 @@ export class SecretComponent {
 		if (value) {
 			this.entityId = value.id;
 			const playerClass: number = value.getTag(GameTag.CLASS);
+			const isSidequest = value.getTag(GameTag.SIDEQUEST) > 0;
 			if (playerClass) {
-				this.image = this.buildImage(playerClass);
+				this.image = this.buildImage(playerClass, isSidequest);
+				this.markImage = this.buildMark(playerClass, isSidequest);
 			} else if (value.cardID) {
 				const card = this.cards.getCard(value.cardID);
-				this.image = this.buildImageFromDb(card.cardClass);
+				this.image = this.buildImage(CardClass[card.cardClass], isSidequest);
+				this.markImage = this.buildMark(CardClass[card.cardClass], isSidequest);
 			} else {
 				this.logger.error('[secret] Could not assign player class', value, value.tags.toJS());
 			}
 		}
 	}
 
-	private buildImage(playerClass: number): string {
+	private buildImage(playerClass: CardClass, isSidequest: boolean): string {
+		const prefix = isSidequest ? 'sidequest' : 'secret';
 		switch (playerClass) {
 			case CardClass.HUNTER:
-				return this.getImage('secret_hunter');
+				return this.getImage(`${prefix}_hunter`);
 			case CardClass.MAGE:
-				return this.getImage('secret_mage');
+				return this.getImage(`${prefix}_mage`);
 			case CardClass.PALADIN:
-				return this.getImage('secret_paladin');
+				return this.getImage(`${prefix}_paladin`);
 			case CardClass.ROGUE:
-				return this.getImage('secret_rogue');
+				return this.getImage(`${prefix}_rogue`);
+			case CardClass.DRUID:
+				return this.getImage(`${prefix}_druid`);
 			case CardClass.NEUTRAL:
-				return this.getImage('secret_rogue');
 			default:
-				this.logger.error('[secret] invalid class requested', playerClass);
-				return '';
+				return this.getImage(`${prefix}_rogue`);
 		}
 	}
 
-	private buildImageFromDb(playerClass: string): string {
-		switch (playerClass) {
-			case 'HUNTER':
-				return this.getImage('secret_hunter');
-			case 'MAGE':
-				return this.getImage('secret_mage');
-			case 'PALADIN':
-				return this.getImage('secret_paladin');
-			case 'ROGUE':
-				return this.getImage('secret_rogue');
-			case 'NEUTRAL':
-				return this.getImage('secret_rogue');
-			default:
-				this.logger.error('[secret] invalid class requested', playerClass);
-				return '';
+	private buildMark(playerClass: CardClass, isSidequest: boolean): string {
+		if (!isSidequest) {
+			return 'https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/secrets/secret_question_mark.png';
 		}
+		return 'https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/secrets/quest_bang.png';
 	}
 
 	private getImage(image: string) {
