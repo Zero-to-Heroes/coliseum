@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CardClass, GameTag } from '@firestone-hs/reference-data';
 import { AllCardsService, Entity } from '@firestone-hs/replay-parser';
-import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'secret',
@@ -20,10 +19,10 @@ export class SecretComponent {
 	image: string;
 	markImage = 'https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/secrets/secret_question_mark.png';
 
-	constructor(private logger: NGXLogger, private cards: AllCardsService) {}
+	constructor(private cards: AllCardsService) {}
 
 	@Input('entity') set entity(value: Entity) {
-		this.logger.debug('[secret] setting new entity', value, value.tags.toJS());
+		console.debug('[secret] setting new entity', value, value.tags.toJS());
 		this._entity = value;
 		this.image = undefined;
 		if (value) {
@@ -38,7 +37,7 @@ export class SecretComponent {
 				this.image = this.buildImage(CardClass[card.cardClass], isSidequest);
 				this.markImage = this.buildMark(CardClass[card.cardClass], isSidequest);
 			} else {
-				this.logger.error('[secret] Could not assign player class', value, value.tags.toJS());
+				console.error('[secret] Could not assign player class', value, value.tags.toJS());
 			}
 		}
 	}

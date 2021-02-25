@@ -1,6 +1,6 @@
 {
 	"name": "coliseum",
-	"version": "3.0.3",
+	"version": "3.0.4",
 	"scripts": {
 		"lint": "eslint --color --fix --ext .ts ./src/",
 		"dev": "rimraf dist && webpack --config webpack.config.js --env.appversion=%npm_package_version% --env.development --progress --profile --bail --colors --watch",
@@ -16,7 +16,7 @@
 		"@angular/platform-browser": "8.2.9",
 		"@angular/platform-browser-dynamic": "8.2.9",
 		"@firestone-hs/reference-data": "^0.1.39",
-		"@firestone-hs/replay-parser": "^1.1.36",
+		"@firestone-hs/replay-parser": "^1.1.37",
 		"@firestone-hs/simulate-bgs-battle": "^1.1.29",
 		"@sentry/browser": "5.5.0",
 		"cross-fetch": "^3.0.4",
