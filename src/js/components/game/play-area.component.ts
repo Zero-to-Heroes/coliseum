@@ -104,6 +104,7 @@ export class PlayAreaComponent {
 		}
 
 		this.playerEntity = this._entities.find(entity => entity.getTag(GameTag.PLAYER_ID) === this._playerId);
+		console.debug('playerEntity', this.playerEntity);
 		this.hand = this.getHandEntities(this._playerId);
 		this.handOptions = GameHelper.getOptions(this.hand, this._options);
 		this.board = this.getBoardEntities(this._playerId);
@@ -135,15 +136,6 @@ export class PlayAreaComponent {
 	}
 
 	private getBoardEntities(playerId: number): readonly Entity[] {
-		// console.log(
-		// 	'getting board entities',
-		// 	playerId,
-		// 	this._entities.toArray().find(entity => entity.id === 35),
-		// 	this._entities
-		// 		.toArray()
-		// 		.find(entity => entity.id === 35)
-		// 		?.tags?.toJS(),
-		// );
 		return this._entities
 			.toArray()
 			.filter(entity => entity.getTag(GameTag.CONTROLLER) === playerId)

@@ -44,7 +44,7 @@ declare let ga;
 						<a
 							class="player-control-element view-online"
 							target="_blank"
-							href="http://replays.firestoneapp.com/?reviewId={{ _reviewId }}&source=game-summary"
+							href="https://replays.firestoneapp.com/?reviewId={{ _reviewId }}&source=game-summary"
 							>View online</a
 						>
 					</p>

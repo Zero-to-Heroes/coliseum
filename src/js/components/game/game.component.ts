@@ -49,6 +49,7 @@ import { GameHelper } from '../../services/game-helper';
 					[options]="_options"
 					[playerId]="_playerId"
 					[isMainPlayer]="true"
+					[isRecruitPhase]="isRecruitPhase"
 					[entitiesToAnimate]="_entitiesToAnimate"
 				>
 				</play-area>

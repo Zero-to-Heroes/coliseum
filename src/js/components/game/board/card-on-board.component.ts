@@ -15,7 +15,10 @@ import { NGXLogger } from 'ngx-logger';
 			[tooltipEnchantments]="_enchantments"
 			[attr.data-entity-id]="_entity.id"
 		>
-			<div class="main-card" [ngClass]="{ 'highlight': _option }">
+			<div
+				class="main-card"
+				[ngClass]="{ 'highlight': _option, 'in-recruit': isRecruitPhase, 'main-player': isMainPlayer }"
+			>
 				<card-art [cardId]="cardId" [cardType]="cardType"></card-art>
 				<board-card-frame [taunt]="taunt" [hideStats]="hideStats" [premium]="premium"> </board-card-frame>
 				<board-card-stats
