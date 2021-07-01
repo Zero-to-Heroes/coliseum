@@ -27,7 +27,7 @@ export class HeroOverlaysComponent {
 		if (!value) {
 			return;
 		}
-		if (value.getTag(GameTag.CANT_BE_DAMAGED) === 1) {
+		if (value.getTag(GameTag.IMMUNE) === 1) {
 			this.pushOverlay('hero_immune');
 		}
 		if (value.getTag(GameTag.HEAVILY_ARMORED) === 1) {

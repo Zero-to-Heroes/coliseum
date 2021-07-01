@@ -32,7 +32,7 @@ export class PowerIndicatorComponent {
 		} else if (value.getTag(GameTag.LIFESTEAL) === 1) {
 			this.effect = 'lifesteal';
 			image = 'icon_lifesteal';
-		} else if (value.getTag(GameTag.DEATH_RATTLE) === 1) {
+		} else if (value.getTag(GameTag.DEATHRATTLE) === 1) {
 			this.effect = 'deathrattle';
 			image = 'icon_deathrattle';
 		} else if (value.getTag(GameTag.INSPIRE) === 1) {
