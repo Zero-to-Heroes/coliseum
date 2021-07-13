@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { NGXLogger } from 'ngx-logger';
 
 @Component({
 	selector: 'mana-tray',
@@ -36,15 +35,13 @@ export class ManaTrayComponent {
 	emptyArray: number[];
 	lockedArray: number[];
 
-	constructor(private logger: NGXLogger) {}
-
 	@Input('total') set total(total: number) {
-		this.logger.debug('[mana-tray] setting total crystals', total);
+		// console.debug('[mana-tray] setting total crystals', total);
 		this._total = total;
 	}
 
 	@Input('available') set available(available: number) {
-		this.logger.debug('[mana-tray] setting available crystals', available);
+		// console.debug('[mana-tray] setting available crystals', available);
 		this._available = available;
 		if (available >= 0) {
 			this.availableArray = Array(available).fill(0);
@@ -52,7 +49,7 @@ export class ManaTrayComponent {
 	}
 
 	@Input('empty') set empty(empty: number) {
-		this.logger.debug('[mana-tray] setting empty crystals', empty);
+		// console.debug('[mana-tray] setting empty crystals', empty);
 		this._empty = empty;
 		if (empty >= 0) {
 			this.emptyArray = Array(empty).fill(0);
@@ -60,7 +57,7 @@ export class ManaTrayComponent {
 	}
 
 	@Input('locked') set locked(locked: number) {
-		this.logger.debug('[mana-tray] setting locked crystals', locked);
+		// console.debug('[mana-tray] setting locked crystals', locked);
 		this._locked = locked;
 		if (locked >= 0) {
 			this.lockedArray = Array(locked).fill(0);
@@ -68,7 +65,7 @@ export class ManaTrayComponent {
 	}
 
 	@Input('futureLocked') set futureLocked(futureLocked: number) {
-		this.logger.debug('[mana-tray] setting futureLocked crystals', futureLocked);
+		// console.debug('[mana-tray] setting futureLocked crystals', futureLocked);
 		this._futureLocked = futureLocked;
 	}
 }

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CardType, GameTag, Zone } from '@firestone-hs/reference-data';
-import { Entity } from '@firestone-hs/replay-parser';
+import { Entity, PlayerEntity } from '@firestone-hs/replay-parser';
 import { Map } from 'immutable';
 import { NGXLogger } from 'ngx-logger';
 import { GameHelper } from '../../services/game-helper';
@@ -70,41 +70,47 @@ export class PlayAreaComponent {
 	@Input() entitiesToAnimate: readonly number[];
 
 	@Input('mulligan') set mulligan(value: string) {
-		this.logger.debug('[play-area] setting mulligan', value);
+		// this.logger.debug('[play-area] setting mulligan', value);
 		this._isMulligan = value;
 	}
 
 	@Input('entities') set entities(entities: Map<number, Entity>) {
-		this.logger.debug('[play-area] setting new entities', entities && entities.toJS());
+		// this.logger.debug('[play-area] setting new entities', entities && entities.toJS());
 		this._entities = entities;
 		this.updateEntityGroups();
 	}
 
 	@Input('showCards') set showCards(value: boolean) {
-		this.logger.debug('[mulligan] setting showCards', value);
+		// this.logger.debug('[mulligan] setting showCards', value);
 		this._showCards = value;
 	}
 
 	@Input('options') set options(value: readonly number[]) {
-		this.logger.debug('[play-area] setting options', value);
+		// this.logger.debug('[play-area] setting options', value);
 		this._options = value;
 		this.updateEntityGroups();
 	}
 
 	@Input('playerId') set playerId(playerId: number) {
-		this.logger.debug('[play-area] setting playerId', playerId);
+		// this.logger.debug('[play-area] setting playerId', playerId);
 		this._playerId = playerId;
 		this.updateEntityGroups();
 	}
 
 	private updateEntityGroups() {
 		if (!this._entities || !this._playerId) {
-			this.logger.debug('[play-area] entities not initialized yet');
+			// this.logger.debug('[play-area] entities not initialized yet');
 			return;
 		}
 
-		this.playerEntity = this._entities.find(entity => entity.getTag(GameTag.PLAYER_ID) === this._playerId);
-		console.debug('playerEntity', this.playerEntity);
+		// In Battlegrounds, we can have the Player and the Hero who are different entities, and the
+		// resources / mana are attached to the player
+		// I didn't check how things were in constructed, but the new change doesn't break it
+		const allPlayerEntities = this._entities
+			.filter(entity => entity.getTag(GameTag.PLAYER_ID) === this._playerId)
+			.toArray();
+		this.playerEntity =
+			allPlayerEntities.find(entity => (entity as PlayerEntity).accountHi != null) ?? allPlayerEntities[0];
 		this.hand = this.getHandEntities(this._playerId);
 		this.handOptions = GameHelper.getOptions(this.hand, this._options);
 		this.board = this.getBoardEntities(this._playerId);
@@ -112,6 +118,8 @@ export class PlayAreaComponent {
 		this.enchantmentCandidates = this.getEnchantmentCandidates(this.board, this._entities.toArray());
 		this.deck = this.getDeckEntities(this._playerId);
 
+		// In BG, the resources are attached to the PlayerEntity, and not the hero
+		// const humainPlayerEntity = this._entities.find(entity => entity.)
 		this.totalCrystals = this.playerEntity.getTag(GameTag.RESOURCES) || 0;
 		this.availableCrystals = this.totalCrystals - (this.playerEntity.getTag(GameTag.RESOURCES_USED) || 0);
 		this.lockedCrystals = this.playerEntity.getTag(GameTag.OVERLOAD_LOCKED) || 0;
