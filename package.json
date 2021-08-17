@@ -21,7 +21,7 @@
 		"@sentry/browser": "5.5.0",
 		"cross-fetch": "^3.0.4",
 		"immutable": "3.8.2",
-		"jszip": "^3.5.0",
+		"jszip": "^3.7.0",
 		"lodash-es": "4.17.15",
 		"ng2-fittext": "1.2.0",
 		"ngx-logger": "3.3.11",
