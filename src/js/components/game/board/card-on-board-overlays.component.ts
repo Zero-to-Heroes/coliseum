@@ -33,6 +33,9 @@ export class CardOnBoardOverlaysComponent {
 		if (value.getTag(GameTag.DIVINE_SHIELD) === 1) {
 			this.pushOverlay('minion_divine_shield');
 		}
+		if (value.getTag(GameTag.REBORN) === 1) {
+			this.pushOverlay('minion_reborn');
+		}
 		if (value.getTag(GameTag.SILENCED) === 1) {
 			this.pushOverlay('minion_silenced'); // missing
 		}
@@ -59,7 +62,7 @@ export class CardOnBoardOverlaysComponent {
 	private pushOverlay(image: string) {
 		this.overlays.push([
 			image,
-			`https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/overlays/${image}.png`,
+			`https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/overlays/${image}.png?v=2`,
 		]);
 	}
 }
