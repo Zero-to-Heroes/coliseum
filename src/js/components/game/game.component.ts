@@ -159,7 +159,7 @@ export class GameComponent implements AfterViewInit {
 	}
 
 	@Input() set currentAction(value: Action) {
-		this.logger.debug('[game] setting new action', value);
+		console.debug('[game] setting new action', value);
 		this._currentAction = value;
 		this._entities = value ? value.entities : undefined;
 		this._activePlayer = value ? value.activePlayer : undefined;

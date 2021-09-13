@@ -44,7 +44,7 @@ export class TargetZoneComponent implements AfterViewInit {
 	}
 
 	@Input('targets') set targets(value: readonly [number, number][]) {
-		// console.log('[target-zone] setting targets', value);
+		console.log('[target-zone] setting targets', value);
 		this._targets = value || [];
 		this.svg = undefined;
 
