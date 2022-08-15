@@ -26,6 +26,10 @@
 		clip-path: inset(31% 4% 30% 0%);
 	}
 
+	&.location {
+		clip-path: polygon(0% 100%, 0% 37%, 50% 24%, 100% 37%, 100% 100%);
+	}
+
 	&.weapon {
 		clip-path: ellipse(37% 21% at 50% 50%);
 	}

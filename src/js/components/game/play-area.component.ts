@@ -148,7 +148,11 @@ export class PlayAreaComponent {
 			.toArray()
 			.filter(entity => entity.getTag(GameTag.CONTROLLER) === playerId)
 			.filter(entity => entity.getTag(GameTag.ZONE) === Zone.PLAY)
-			.filter(entity => entity.getTag(GameTag.CARDTYPE) === CardType.MINION)
+			.filter(
+				entity =>
+					entity.getTag(GameTag.CARDTYPE) === CardType.MINION ||
+					entity.getTag(GameTag.CARDTYPE) == CardType.LOCATION,
+			)
 			.sort((a, b) => a.getTag(GameTag.ZONE_POSITION) - b.getTag(GameTag.ZONE_POSITION));
 	}
 

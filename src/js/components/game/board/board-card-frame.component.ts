@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { CardType } from '@firestone-hs/reference-data';
 import { AllCardsService } from '@firestone-hs/replay-parser';
 import { NGXLogger } from 'ngx-logger';
 
@@ -20,32 +21,40 @@ export class BoardCardFrameComponent {
 
 	private _taunt: boolean;
 	private _hideStats: boolean;
+	private _cardType: CardType;
 
 	constructor(private cards: AllCardsService, private logger: NGXLogger) {}
 
-	@Input('taunt') set taunt(taunt: boolean) {
-		this.logger.debug('[board-card-frame] setting taunt', taunt);
+	@Input() set taunt(taunt: boolean) {
 		this._taunt = taunt;
 		this.updateImageTaunt();
 	}
 
-	@Input('premium') set premium(premium: boolean) {
-		this.logger.debug('[board-card-frame] setting premium', premium);
+	@Input() set premium(premium: boolean) {
 		this._premium = premium;
 		this.updateImage();
 		this.updateImageTaunt();
 	}
 
-	@Input('hideStats') set hideStats(value: boolean) {
-		this.logger.debug('[board-card-frame] setting hideStats', value);
+	@Input() set hideStats(value: boolean) {
 		this._hideStats = value;
 		this.updateImage();
 	}
 
+	@Input() set cardType(value: CardType) {
+		this._cardType = value;
+		this.updateImage();
+	}
+
 	private updateImage() {
-		const frame = this._hideStats ? 'onboard_minion_hide_stats' : 'onboard_minion_frame';
+		const frame =
+			this._cardType === CardType.LOCATION
+				? 'onboard_location'
+				: this._hideStats
+				? 'onboard_minion_hide_stats'
+				: 'onboard_minion_frame';
 		const premiumFrame = this._premium ? `${frame}_premium` : frame;
-		this.image = `https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/${premiumFrame}.png`;
+		this.image = `https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/${premiumFrame}.png?v=2`;
 	}
 
 	private updateImageTaunt() {

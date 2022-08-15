@@ -32,7 +32,7 @@ export class CardNameComponent {
 		const cardType: CardType =
 			originalCard && originalCard.type ? CardType[originalCard.type.toUpperCase() as string] : undefined;
 		this.banner =
-			cardType === CardType.HERO_POWER || !cardType
+			cardType === CardType.HERO_POWER || cardType === CardType.LOCATION || !cardType
 				? undefined // Banner already included in frame art
 				: `https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/card/name-banner-${CardType[
 						cardType
@@ -60,6 +60,8 @@ export class CardNameComponent {
 				return `<path id=${pathId} d="M 0,110 C 30,120 100,120 180,105 M 180,105 C 250,90 750,-35 1000,80" />`;
 			case CardType.SPELL:
 				return `<path id=${pathId} d="M 0,120 Q 500,-35 1000,120" />`;
+			case CardType.LOCATION:
+				return `<path id=${pathId} d="M 0,60 Q 500,215 1000,60" />`;
 			case CardType.WEAPON:
 				return `<path id=${pathId} d="M 0,35 H 1000" />`;
 			case CardType.HERO_POWER:

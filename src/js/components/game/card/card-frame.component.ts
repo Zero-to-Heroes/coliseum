@@ -40,7 +40,7 @@ export class CardFrameComponent {
 		const cardType: CardType =
 			originalCard && originalCard.type ? CardType[originalCard.type.toUpperCase() as string] : undefined;
 		const frame: string = this.buildFrame(cardClass, cardType, this._premium);
-		this.image = `https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/card/${frame}.png`;
+		this.image = `https://static.zerotoheroes.com/hearthstone/asset/coliseum/images/card/${frame}.png?v=3`;
 	}
 
 	private buildPlayerClass(originalCard): CardClass {
@@ -55,7 +55,7 @@ export class CardFrameComponent {
 	private buildFrame(cardClass: CardClass, cardType: CardType, premium: boolean): string {
 		const strClass =
 			cardType === CardType.HERO_POWER ? '' : premium ? '-premium' : '-' + CardClass[cardClass]?.toLowerCase();
-		const strFrame = CardType[cardType] ? CardType[cardType]?.toLowerCase() : 'nuetral';
+		const strFrame = CardType[cardType] ? CardType[cardType]?.toLowerCase() : 'neutral';
 		return `frame-${strFrame}${strClass}`;
 	}
 }

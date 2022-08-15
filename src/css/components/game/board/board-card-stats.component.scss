@@ -58,4 +58,14 @@
 	svg {
 		width: 80%;
 	}
+
+	&.location {
+		.attack {
+			display: none;
+		}
+		.health {
+			left: 35%;
+			top: 58%;
+		}
+	}
 }

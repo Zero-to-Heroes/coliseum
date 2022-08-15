@@ -20,13 +20,15 @@ import { NGXLogger } from 'ngx-logger';
 				[ngClass]="{ 'highlight': _option, 'in-recruit': isRecruitPhase, 'main-player': isMainPlayer }"
 			>
 				<card-art [cardId]="cardId" [cardType]="cardType"></card-art>
-				<board-card-frame [taunt]="taunt" [hideStats]="hideStats" [premium]="premium"> </board-card-frame>
+				<board-card-frame [taunt]="taunt" [hideStats]="hideStats" [premium]="premium" [cardType]="cardType">
+				</board-card-frame>
 				<board-card-stats
 					*ngIf="!hideStats"
 					[cardId]="cardId"
 					[attack]="attack"
 					[health]="health"
 					[damage]="damage"
+					[cardType]="cardType"
 				>
 				</board-card-stats>
 			</div>

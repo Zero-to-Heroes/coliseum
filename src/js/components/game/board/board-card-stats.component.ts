@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, ViewRef } from '@angular/core';
+import { CardType } from '@firestone-hs/reference-data';
 import { AllCardsService } from '@firestone-hs/replay-parser';
 import { NGXLogger } from 'ngx-logger';
 
@@ -10,7 +11,7 @@ import { NGXLogger } from 'ngx-logger';
 		'../../../../css/components/game/card/card-stats-colors.scss',
 	],
 	template: `
-		<div class="card-stats" *ngIf="hasStats">
+		<div class="card-stats {{ _cardType }}" *ngIf="hasStats">
 			<div class="stat {{ attackClass }}">
 				<div class="stat-value">
 					<svg viewBox="0 0 20 20">
@@ -37,6 +38,7 @@ export class BoardCardStatsComponent {
 	healthLeft: number;
 
 	_attack: number;
+	_cardType: string;
 
 	private _cardId: string;
 	private _health: number;
@@ -49,28 +51,28 @@ export class BoardCardStatsComponent {
 		private logger: NGXLogger,
 	) {}
 
-	@Input('cardId') set cardId(cardId: string) {
-		this.logger.debug('[board-card-stats] setting cardId', cardId);
+	@Input() set cardId(cardId: string) {
 		this._cardId = cardId;
 		this.updateStats();
 	}
 
-	@Input('attack') set attack(attack: number) {
-		this.logger.debug('[board-card-stats] setting attack', attack);
+	@Input() set attack(attack: number) {
 		this._attack = attack;
 		this.updateStats();
 	}
 
-	@Input('health') set health(health: number) {
-		this.logger.debug('[board-card-stats] setting health', health);
+	@Input() set health(health: number) {
 		this._health = health;
 		this.updateStats();
 	}
 
-	@Input('damage') set damage(damage: number) {
-		this.logger.debug('[board-card-stats] setting damage', damage);
+	@Input() set damage(damage: number) {
 		this._damage = damage;
 		this.updateStats();
+	}
+
+	@Input() set cardType(cardType: CardType) {
+		this._cardType = cardType ? CardType[cardType]?.toLowerCase() : '';
 	}
 
 	private updateStats() {
