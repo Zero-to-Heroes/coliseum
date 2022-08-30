@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	EventEmitter,
+	HostListener,
+	Input,
+	OnDestroy,
+	Output,
+} from '@angular/core';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { NGXLogger } from 'ngx-logger';
 import { Subject, Subscription } from 'rxjs';
@@ -82,6 +90,14 @@ export class SeekerComponent implements OnDestroy {
 
 	ngOnDestroy() {
 		this.progressSubscription.unsubscribe();
+	}
+
+	@HostListener('click', ['$event'])
+	@HostListener('mousedown', ['$event'])
+	onClick(event: MouseEvent) {
+		console.debug('click', event);
+		// event.preventDefault();
+		event.stopPropagation();
 	}
 
 	private updateProgress() {
