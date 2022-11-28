@@ -19,7 +19,7 @@
 		"@firestone-hs/replay-parser": "^1.1.47",
 		"@firestone-hs/simulate-bgs-battle": "^1.1.29",
 		"@sentry/browser": "5.5.0",
-		"cross-fetch": "^3.0.4",
+		"cross-fetch": "^3.1.5",
 		"immutable": "3.8.2",
 		"jszip": "^3.5.0",
 		"lodash-es": "4.17.15",
