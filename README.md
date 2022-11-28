@@ -38,4 +38,6 @@ aws s3 cp ./dist/coliseum.js s3://replays.firestoneapp.com --acl public-read
 
 ```
 cp dist/coliseum.js ../firestone/core/dependencies/
+cp dist/coliseum.js ../firestone-new/firestone/dependencies/
+cp dist/coliseum.js ../firestone-new/firestone/dist/apps/legacy/Files/
 ```

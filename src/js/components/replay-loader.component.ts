@@ -14,9 +14,12 @@ const BGS_SAMPLE_API = 'https://static-api.firestoneapp.com/retrieveBgsSimulatio
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ReplayLoaderComponent implements AfterViewInit {
-	constructor(private http: HttpClient) {}
+	constructor(private http: HttpClient) {
+		console.log('replay loader constructor');
+	}
 
 	async ngAfterViewInit() {
+		console.log('replay loader ngAfterViewInit');
 		const reviewId = this.getSearchParam('reviewId');
 		const bgsSimulation = this.getSearchParam('bgsSimulation');
 		const bgsSimulationId = this.getSearchParam('bgsSimulationId');
