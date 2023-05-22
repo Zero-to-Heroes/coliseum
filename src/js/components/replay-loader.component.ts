@@ -6,7 +6,7 @@ import { loadAsync } from 'jszip';
 declare let $;
 
 const REPLAY_API = 'https://xml.firestoneapp.com/';
-const BGS_SAMPLE_API = 'https://static-api.firestoneapp.com/retrieveBgsSimulationSample/';
+const BGS_SAMPLE_API = 'https://h7h6lfnlmd7vstumpqiz74xqoq0vhsnm.lambda-url.us-west-2.on.aws/';
 
 @Component({
 	selector: 'replay-loader',
