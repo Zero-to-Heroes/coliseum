@@ -6,6 +6,7 @@ import { loadAsync } from 'jszip';
 declare let $;
 
 const REPLAY_API = 'https://xml.firestoneapp.com/';
+const RETRIEVE_REVIEW_URL = 'https://itkmxena7k2kkmkgpevc6skcie0tlwmk.lambda-url.us-west-2.on.aws/';
 const BGS_SAMPLE_API = 'https://h7h6lfnlmd7vstumpqiz74xqoq0vhsnm.lambda-url.us-west-2.on.aws/';
 
 @Component({
@@ -47,7 +48,7 @@ export class ReplayLoaderComponent implements AfterViewInit {
 			});
 			console.log('sending request with creds');
 			const review: any = await this.http
-				.get(`https://nj8w9uc6p5.execute-api.us-west-2.amazonaws.com/Prod/${reviewId}`, {
+				.get(`${RETRIEVE_REVIEW_URL}/${reviewId}`, {
 					headers: new HttpHeaders({
 						'Content-Type': 'application/json',
 					}).set('Accept', 'application/json'),
